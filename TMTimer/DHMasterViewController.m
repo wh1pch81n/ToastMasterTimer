@@ -60,6 +60,11 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
+//    DHDetailViewController *dest = [DHDetailViewController new];
+//    [self prepareForSegue:[UIStoryboardSegue segueWithIdentifier:@"showDetail" source:self destination:dest performHandler:^{
+//        [self presentViewController:dest animated:YES completion:nil];
+//    }] sender:self];
+    
 }
 
 #pragma mark - Table View
@@ -229,7 +234,12 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     Event *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = object.timeStamp.description;
+    
+    cell.textLabel.text = object.name;
+    
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"mmm dd, yyyy hh:mm.ss"];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"Created %@", [format stringFromDate:object.timeStamp]];
 }
 
 @end

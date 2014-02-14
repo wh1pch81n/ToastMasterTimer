@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class Event;
 @interface DHDetailViewController : UIViewController <UISplitViewControllerDelegate>
 
-@property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) Event *detailItem;
 
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 @end

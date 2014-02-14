@@ -7,6 +7,7 @@
 //
 
 #import "DHDetailViewController.h"
+#import "Event.h"
 
 @interface DHDetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
