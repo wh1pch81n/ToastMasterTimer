@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class Event;
-@interface DHDetailViewController : UIViewController <UISplitViewControllerDelegate>
+@interface DHDetailViewController : UIViewController <UISplitViewControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (strong, nonatomic) Event *detailItem;
 
