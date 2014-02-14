@@ -9,13 +9,19 @@
 #import "DHDetailViewController.h"
 #import "Event.h"
 
+enum {
+    kTimeGreen,
+    kTimeYellow,
+    kTimeRed
+};
+
 @interface DHDetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (strong, nonatomic) NSTimer *timer;
 @property (weak, nonatomic) IBOutlet UILabel *timeReading;
-@property NSInteger timeGreen, timeYellow, timeRed;
+@property float timeGreen, timeYellow, timeRed;
 @end
 
 @implementation DHDetailViewController
@@ -51,9 +57,14 @@
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
     
-    [[self pickerView] selectRow:4 inComponent:0 animated:YES];
-    [[self pickerView] selectRow:5 inComponent:1 animated:YES];
-    [[self pickerView] selectRow:6 inComponent:2 animated:YES];
+    //Default values
+    self.timeGreen = 4;
+    self.timeRed = 6;
+    self.timeYellow = (self.timeGreen + self.timeRed)/2;
+    
+    [[self pickerView] selectRow:self.timeGreen inComponent:0 animated:YES];
+    [[self pickerView] selectRow:self.timeYellow inComponent:1 animated:YES];
+    [[self pickerView] selectRow:self.timeRed inComponent:2 animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -128,7 +139,30 @@
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    NSLog(@"%@", pickerView);
+    
+    UILabel *label = (UILabel *)[pickerView viewForRow:row forComponent:component];
+//    switch (component) {
+//        case kTimeGreen:
+//            self.timeGreen = label.text.floatValue;
+//            break;
+//        case kTimeYellow:
+//            self.timeYellow = label.text.floatValue;
+//            break;
+//        case kTimeRed:
+//            self.timeRed = label.text.floatValue;
+//            break;
+//            
+//    }
+
+    float dummy;
+    
+    ((component == kTimeGreen)? self.timeGreen:
+    (component == kTimeYellow)? self.timeYellow:
+    (component == kTimeRed)? self.timeRed:
+    dummy)
+    = label.text.floatValue;
+    
+    NSLog(@"%@", [pickerView viewForRow:row forComponent:component]);
 }
 
 #pragma mark - start and stop
