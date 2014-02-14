@@ -84,6 +84,9 @@
                                 <state key="normal" title="Start/Stop">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="tappedStartStopButton:" destination="Ah7-4n-0Wa" eventType="touchUpInside" id="RqA-Ow-5E9"/>
+                                </connections>
                             </button>
                             <pickerView contentMode="scaleToFill" id="u9G-nS-9Pu">
                                 <rect key="frame" x="0.0" y="386" width="320" height="162"/>
@@ -93,12 +96,20 @@
                                     <outlet property="delegate" destination="Ah7-4n-0Wa" id="kHU-ub-ko2"/>
                                 </connections>
                             </pickerView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="77x-FC-CAH">
+                                <rect key="frame" x="20" y="211" width="280" height="54"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Detail" id="cra-N8-TIN"/>
                     <connections>
                         <outlet property="pickerView" destination="u9G-nS-9Pu" id="r7b-5i-7Me"/>
+                        <outlet property="timeReading" destination="77x-FC-CAH" id="Wr1-mZ-YJ8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lrm-kH-fPn" sceneMemberID="firstResponder"/>

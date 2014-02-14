@@ -13,7 +13,9 @@
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
-
+@property (strong, nonatomic) NSTimer *timer;
+@property (weak, nonatomic) IBOutlet UILabel *timeReading;
+@property NSInteger timeGreen, timeYellow, timeRed;
 @end
 
 @implementation DHDetailViewController
@@ -126,8 +128,70 @@
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    
+    NSLog(@"%@", pickerView);
 }
 
+#pragma mark - start and stop
+
+- (IBAction)tappedStartStopButton:(id)sender {
+    static BOOL tempBool = 0;
+    if (tempBool) {
+        [[self detailItem] setEndDate:[NSDate date]];
+        
+        [self.timer invalidate];
+    } else {
+        NSDate *date = [NSDate date];
+        [[self detailItem] setStartDate:date];
+        [self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
+        [self.timer fire];
+    }
+    tempBool = !tempBool;
+    NSError *err = nil;
+    if(![self.context save:&err]) {
+        NSLog(@"Could not save");
+        abort();
+    }
+    
+    NSDate *start = self.detailItem.startDate;
+    NSDate *end = self.detailItem.endDate;
+    NSTimeInterval sec = [end timeIntervalSinceDate:start];
+    
+    NSLog(@"\n%@\n%@\n%@\n", start, end, [NSString stringWithFormat:@"%f", sec]);
+}
+
+- (void)updates {
+    [self updateTime];
+    [self updateBackground];
+}
+
+- (void)updateBackground {
+    NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
+    NSInteger minutes = (interval / 60);
+    
+    UIColor *color;
+    if(minutes < self.timeGreen)
+        color = [UIColor blackColor];
+    else if (minutes < self.timeYellow)
+        color = [UIColor greenColor];
+    else if (minutes < self.timeRed)
+        color = [UIColor yellowColor];
+    else
+        color = [UIColor redColor];
+    
+    [self.view setBackgroundColor:color];
+}
+
+- (void)updateTime {
+    NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
+    [self.timeReading setText:[self stringFromTimeInterval:interval]];
+}
+
+- (NSString *)stringFromTimeInterval:(NSTimeInterval)interval {
+    NSInteger ti = (NSInteger)interval;
+    NSInteger seconds = ti % 60;
+    NSInteger minutes = (ti / 60) % 60;
+    NSInteger hours = (ti / 3600);
+    return [NSString stringWithFormat:@"%02i:%02i.%02i", hours, minutes, seconds];
+}
 
 @end

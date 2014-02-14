@@ -12,6 +12,7 @@
 @interface DHDetailViewController : UIViewController <UISplitViewControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (strong, nonatomic) Event *detailItem;
+@property (weak, nonatomic) NSManagedObjectContext *context;
 
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 @end
