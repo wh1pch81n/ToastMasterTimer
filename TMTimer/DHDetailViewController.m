@@ -24,7 +24,7 @@ enum {
 - (void)configureView;
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (strong, nonatomic) NSTimer *timer;
-@property (weak, nonatomic) IBOutlet UILabel *timeReading;
+
 @property float *timeGreen, *timeYellow, *timeRed;
 @end
 
@@ -205,7 +205,7 @@ enum {
 
 - (void)updateTime {
     NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
-    [self.timeReading setText:[self stringFromTimeInterval:interval]];
+    [self.navigationItem setTitle:[self stringFromTimeInterval:interval]];
 }
 
 - (NSString *)stringFromTimeInterval:(NSTimeInterval)interval {
@@ -213,7 +213,7 @@ enum {
     NSInteger seconds = ti % 60;
     NSInteger minutes = (ti / 60) % 60;
     NSInteger hours = (ti / 3600);
-    return [NSString stringWithFormat:@"%02i:%02i.%02i", hours, minutes, seconds];
+    return [NSString stringWithFormat:@"%02d:%02d.%02d", hours, minutes, seconds];
 }
 
 @end
