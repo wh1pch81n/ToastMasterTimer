@@ -99,7 +99,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="HH:mm.ss" id="cra-N8-TIN">
-                        <barButtonItem key="rightBarButtonItem" title="Start" id="9ye-gd-yRN">
+                        <barButtonItem key="rightBarButtonItem" title="Restart" id="9ye-gd-yRN">
                             <connections>
                                 <action selector="tappedStartStopButton:" destination="Ah7-4n-0Wa" id="yqF-tE-cwd"/>
                             </connections>

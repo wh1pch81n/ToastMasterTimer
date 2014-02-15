@@ -161,7 +161,11 @@ enum {
         [[self detailItem] setEndDate:[NSDate date]];
         
         [self.timer invalidate];
+        [self.navigationItem setHidesBackButton:NO];
+        [self.navigationItem.rightBarButtonItem setTitle:@"Restart"];
     } else {
+        [self.navigationItem setHidesBackButton:YES];
+        [self.navigationItem.rightBarButtonItem setTitle:@"Stop"];
         NSDate *date = [NSDate date];
         [[self detailItem] setStartDate:date];
         [self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
