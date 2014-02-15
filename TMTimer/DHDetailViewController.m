@@ -159,6 +159,8 @@ enum {
 - (IBAction)tappedStartStopButton:(id)sender {
     static BOOL tempBool = 0;
     if (tempBool) {
+        [self.nameTextField setHidden:NO];
+        [self.pickerView setHidden:NO];
         [[self detailItem] setEndDate:[NSDate date]];
         
         [self.timer invalidate];
@@ -173,6 +175,8 @@ enum {
             abort();
         }
     } else {
+        [self.nameTextField setHidden:YES];
+        [self.pickerView setHidden:YES];
         [self.navigationItem setHidesBackButton:YES];
         [self.navigationItem.rightBarButtonItem setTitle:@"Stop"];
         NSDate *date = [NSDate date];
