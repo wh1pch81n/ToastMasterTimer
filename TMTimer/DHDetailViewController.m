@@ -12,16 +12,20 @@
 enum {
     kTimeGreen,
     kTimeYellow,
-    kTimeRed
+    kTimeRed,
+    kNumElementsInTimeEnum
 };
 
-@interface DHDetailViewController ()
+@interface DHDetailViewController () {
+    float timeColorArr[3];
+}
+
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (strong, nonatomic) NSTimer *timer;
 @property (weak, nonatomic) IBOutlet UILabel *timeReading;
-@property float timeGreen, timeYellow, timeRed;
+@property float *timeGreen, *timeYellow, *timeRed;
 @end
 
 @implementation DHDetailViewController
@@ -58,13 +62,17 @@ enum {
     [self configureView];
     
     //Default values
-    self.timeGreen = 4;
-    self.timeRed = 6;
-    self.timeYellow = (self.timeGreen + self.timeRed)/2;
-    
-    [[self pickerView] selectRow:self.timeGreen inComponent:0 animated:YES];
-    [[self pickerView] selectRow:self.timeYellow inComponent:1 animated:YES];
-    [[self pickerView] selectRow:self.timeRed inComponent:2 animated:YES];
+    for (int i = 0; i < kNumElementsInTimeEnum; ++i) {
+        timeColorArr[i] = i + 4;
+    }
+
+    self.timeGreen = &timeColorArr[0];
+    self.timeYellow = &timeColorArr[1];
+    self.timeRed = &timeColorArr[2];
+   
+    for (int i = 0; i < 3; ++i) {
+        [[self pickerView] selectRow:timeColorArr[i] inComponent:i animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -141,27 +149,7 @@ enum {
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     
     UILabel *label = (UILabel *)[pickerView viewForRow:row forComponent:component];
-//    switch (component) {
-//        case kTimeGreen:
-//            self.timeGreen = label.text.floatValue;
-//            break;
-//        case kTimeYellow:
-//            self.timeYellow = label.text.floatValue;
-//            break;
-//        case kTimeRed:
-//            self.timeRed = label.text.floatValue;
-//            break;
-//            
-//    }
-
-    float dummy;
-    
-    ((component == kTimeGreen)? self.timeGreen:
-    (component == kTimeYellow)? self.timeYellow:
-    (component == kTimeRed)? self.timeRed:
-    dummy)
-    = label.text.floatValue;
-    
+    timeColorArr[component] = label.text.floatValue;
     NSLog(@"%@", [pickerView viewForRow:row forComponent:component]);
 }
 
@@ -203,11 +191,11 @@ enum {
     NSInteger minutes = (interval / 60);
     
     UIColor *color;
-    if(minutes < self.timeGreen)
+    if(minutes < *self.timeGreen)
         color = [UIColor blackColor];
-    else if (minutes < self.timeYellow)
+    else if (minutes < *self.timeYellow)
         color = [UIColor greenColor];
-    else if (minutes < self.timeRed)
+    else if (minutes < *self.timeRed)
         color = [UIColor yellowColor];
     else
         color = [UIColor redColor];

@@ -240,7 +240,7 @@
     cell.textLabel.text = object.name;
     
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    [format setDateFormat:@"mmm dd, yyyy hh:mm.ss"];
+    [format setDateFormat:@"MMM dd, yyyy hh:mm.ss"];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"Created %@", [format stringFromDate:object.timeStamp]];
 }
 
