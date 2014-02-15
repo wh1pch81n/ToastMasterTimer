@@ -15,7 +15,6 @@
 		5095B4C118AE7C440023210E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5095B4C018AE7C440023210E /* main.m */; };
 		5095B4C518AE7C440023210E /* DHAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5095B4C418AE7C440023210E /* DHAppDelegate.m */; };
 		5095B4C818AE7C440023210E /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5095B4C618AE7C440023210E /* Main_iPhone.storyboard */; };
-		5095B4CB18AE7C440023210E /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5095B4C918AE7C440023210E /* Main_iPad.storyboard */; };
 		5095B4CE18AE7C440023210E /* TMTimer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5095B4CC18AE7C440023210E /* TMTimer.xcdatamodeld */; };
 		5095B4D118AE7C440023210E /* DHMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5095B4D018AE7C440023210E /* DHMasterViewController.m */; };
 		5095B4D418AE7C440023210E /* DHDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5095B4D318AE7C440023210E /* DHDetailViewController.m */; };
@@ -52,7 +51,6 @@
 		5095B4C318AE7C440023210E /* DHAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DHAppDelegate.h; sourceTree = "<group>"; };
 		5095B4C418AE7C440023210E /* DHAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DHAppDelegate.m; sourceTree = "<group>"; };
 		5095B4C718AE7C440023210E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		5095B4CA18AE7C440023210E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		5095B4CD18AE7C440023210E /* TMTimer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TMTimer.xcdatamodel; sourceTree = "<group>"; };
 		5095B4CF18AE7C440023210E /* DHMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DHMasterViewController.h; sourceTree = "<group>"; };
 		5095B4D018AE7C440023210E /* DHMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DHMasterViewController.m; sourceTree = "<group>"; };
@@ -132,7 +130,6 @@
 				5095B4C318AE7C440023210E /* DHAppDelegate.h */,
 				5095B4C418AE7C440023210E /* DHAppDelegate.m */,
 				5095B4C618AE7C440023210E /* Main_iPhone.storyboard */,
-				5095B4C918AE7C440023210E /* Main_iPad.storyboard */,
 				5095B4CF18AE7C440023210E /* DHMasterViewController.h */,
 				5095B4D018AE7C440023210E /* DHMasterViewController.m */,
 				5095B4D218AE7C440023210E /* DHDetailViewController.h */,
@@ -252,7 +249,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5095B4CB18AE7C440023210E /* Main_iPad.storyboard in Resources */,
 				5095B4D618AE7C440023210E /* Images.xcassets in Resources */,
 				5095B4C818AE7C440023210E /* Main_iPhone.storyboard in Resources */,
 				5095B4BF18AE7C440023210E /* InfoPlist.strings in Resources */,
@@ -316,14 +312,6 @@
 				5095B4C718AE7C440023210E /* Base */,
 			);
 			name = Main_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		5095B4C918AE7C440023210E /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5095B4CA18AE7C440023210E /* Base */,
-			);
-			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 		5095B4E618AE7C440023210E /* InfoPlist.strings */ = {
@@ -419,7 +407,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TMTimer/TMTimer-Prefix.pch";
 				INFOPLIST_FILE = "TMTimer/TMTimer-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -432,7 +422,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TMTimer/TMTimer-Prefix.pch";
 				INFOPLIST_FILE = "TMTimer/TMTimer-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
