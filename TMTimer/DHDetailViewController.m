@@ -157,8 +157,8 @@ enum {
 #pragma mark - start and stop
 
 - (IBAction)tappedStartStopButton:(id)sender {
-    static BOOL tempBool = 0;
-    if (tempBool) {
+    static BOOL tempBool = NO;
+    if (!(tempBool = !tempBool)) { //end timer
         [self.nameTextField setHidden:NO];
         [self.pickerView setHidden:NO];
         [[self detailItem] setEndDate:[NSDate date]];
@@ -166,15 +166,13 @@ enum {
         [self.timer invalidate];
         [self.navigationItem setHidesBackButton:NO];
         [self.navigationItem.rightBarButtonItem setTitle:@"Restart"];
+        [self.view setBackgroundColor:[UIColor whiteColor]];
         
         NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
         self.detailItem.totalTime = [self stringFromTimeInterval:interval];
-        NSError *err;
-        if (![self.context save:&err]) {
-            NSLog(@"Couldn't save");
-            abort();
-        }
-    } else {
+        [[UIApplication sharedApplication] setIdleTimerDisabled:NO];// re-enable sleep
+    } else { //start timer
+        [[UIApplication sharedApplication] setIdleTimerDisabled:YES]; //prevent sleep when running
         [self.nameTextField setHidden:YES];
         [self.pickerView setHidden:YES];
         [self.navigationItem setHidesBackButton:YES];
@@ -184,18 +182,12 @@ enum {
         [self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
         [self.timer fire];
     }
-    tempBool = !tempBool;
+    
     NSError *err = nil;
     if(![self.context save:&err]) {
         NSLog(@"Could not save");
         abort();
     }
-    
-    NSDate *start = self.detailItem.startDate;
-    NSDate *end = self.detailItem.endDate;
-    NSTimeInterval sec = [end timeIntervalSinceDate:start];
-    
-    NSLog(@"\n%@\n%@\n%@\n", start, end, [NSString stringWithFormat:@"%f", sec]);
 }
 
 - (void)updates {
