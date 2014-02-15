@@ -52,6 +52,7 @@ enum {
 
     if (self.detailItem) {
         self.nameTextField.text = self.detailItem.name;
+        [self.navigationItem setTitle:self.detailItem.totalTime];
     }
 }
 
@@ -163,6 +164,14 @@ enum {
         [self.timer invalidate];
         [self.navigationItem setHidesBackButton:NO];
         [self.navigationItem.rightBarButtonItem setTitle:@"Restart"];
+        
+        NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
+        self.detailItem.totalTime = [self stringFromTimeInterval:interval];
+        NSError *err;
+        if (![self.context save:&err]) {
+            NSLog(@"Couldn't save");
+            abort();
+        }
     } else {
         [self.navigationItem setHidesBackButton:YES];
         [self.navigationItem.rightBarButtonItem setTitle:@"Stop"];
@@ -231,6 +240,14 @@ enum {
         abort();
     }
     return NO;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
 }
 
 @end
