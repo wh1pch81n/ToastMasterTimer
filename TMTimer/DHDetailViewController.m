@@ -11,13 +11,12 @@
 
 enum {
     kTimeGreen,
-    kTimeYellow,
     kTimeRed,
     kNumElementsInTimeEnum
 };
 
 @interface DHDetailViewController () {
-    float timeColorArr[3];
+    float timeColorArr[2];
 }
 
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -25,7 +24,6 @@ enum {
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (strong, nonatomic) NSTimer *timer;
 
-@property float *timeGreen, *timeYellow, *timeRed;
 @end
 
 @implementation DHDetailViewController
@@ -63,17 +61,12 @@ enum {
     [self configureView];
     
     //Default values
-    for (int i = 0; i < kNumElementsInTimeEnum; ++i) {
-        timeColorArr[i] = i + 4;
-    }
-
-    self.timeGreen = &timeColorArr[0];
-    self.timeYellow = &timeColorArr[1];
-    self.timeRed = &timeColorArr[2];
-   
-    for (int i = 0; i < 3; ++i) {
-        [[self pickerView] selectRow:timeColorArr[i] inComponent:i animated:YES];
-    }
+    timeColorArr[kTimeGreen] = self.detailItem.minTime.floatValue;
+    timeColorArr[kTimeRed] = self.detailItem.maxTime.floatValue;
+    
+    [[self pickerView] selectRow:timeColorArr[kTimeGreen] inComponent:kTimeGreen animated:YES];
+    [[self pickerView] selectRow:timeColorArr[kTimeRed] inComponent:kTimeRed animated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -101,7 +94,7 @@ enum {
 #pragma mark - picker datasource
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 3; //three columns for green, yellow, then red card
+    return 2; //2 columns for green and red card
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
@@ -135,14 +128,12 @@ enum {
     if (component == 0) {
         color = [UIColor greenColor];
     } else if (component == 1) {
-        color = [UIColor yellowColor];
-    } else if (component == 2) {
         color = [UIColor redColor];
     } else {
         color = [UIColor blackColor];
     }
-    label.attributedText = [[NSAttributedString alloc] initWithString:options[row] attributes:@{NSForegroundColorAttributeName:color}];
-    [label setBackgroundColor:[UIColor blueColor]];
+    label.attributedText = [[NSAttributedString alloc] initWithString:options[row] attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
+    [label setBackgroundColor:color];
     [label setTextAlignment:NSTextAlignmentCenter];
     return label;
 }
@@ -151,7 +142,15 @@ enum {
     
     UILabel *label = (UILabel *)[pickerView viewForRow:row forComponent:component];
     timeColorArr[component] = label.text.floatValue;
-    NSLog(@"%@", [pickerView viewForRow:row forComponent:component]);
+    
+    [self.detailItem setMinTime:@(timeColorArr[kTimeGreen])];
+    [self.detailItem setMaxTime:@(timeColorArr[kTimeRed])];
+    
+    NSError *err;
+    if (![self.context save:&err]) {
+        NSLog(@"Can't save!");
+        abort();
+    }
 }
 
 #pragma mark - start and stop
@@ -200,11 +199,11 @@ enum {
     NSInteger minutes = (interval / 60);
     
     UIColor *color;
-    if(minutes < *self.timeGreen)
+    if(minutes < timeColorArr[kTimeGreen])
         color = [UIColor blackColor];
-    else if (minutes < *self.timeYellow)
+    else if (minutes < ((timeColorArr[kTimeGreen] + timeColorArr[kTimeRed])/2.0))
         color = [UIColor greenColor];
-    else if (minutes < *self.timeRed)
+    else if (minutes < timeColorArr[kTimeRed])
         color = [UIColor yellowColor];
     else
         color = [UIColor redColor];

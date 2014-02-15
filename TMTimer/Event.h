@@ -12,12 +12,12 @@
 
 @interface Event : NSManagedObject
 
-@property (nonatomic, retain) NSDate * timeStamp;
+@property (nonatomic, retain) NSDate * endDate;
+@property (nonatomic, retain) NSNumber * maxTime;
+@property (nonatomic, retain) NSNumber * minTime;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSDate * startDate;
-@property (nonatomic, retain) NSDate * endDate;
+@property (nonatomic, retain) NSDate * timeStamp;
 @property (nonatomic, retain) NSString * totalTime;
-@property (nonatomic, retain) NSString * minTime;
-@property (nonatomic, retain) NSString * maxTime;
 
 @end

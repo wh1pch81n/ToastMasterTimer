@@ -11,12 +11,12 @@
 
 @implementation Event
 
-@dynamic timeStamp;
+@dynamic endDate;
+@dynamic maxTime;
+@dynamic minTime;
 @dynamic name;
 @dynamic startDate;
-@dynamic endDate;
+@dynamic timeStamp;
 @dynamic totalTime;
-@dynamic minTime;
-@dynamic maxTime;
 
 @end
