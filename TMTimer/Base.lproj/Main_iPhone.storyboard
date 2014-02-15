@@ -97,9 +97,13 @@
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="xtz-1B-MUR" appends="YES" id="y9G-4e-iK2"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="HH:mm.ss" id="cra-N8-TIN">
-                        <barButtonItem key="rightBarButtonItem" title="Restart" id="9ye-gd-yRN">
+                        <barButtonItem key="rightBarButtonItem" title="Start" id="9ye-gd-yRN">
                             <connections>
                                 <action selector="tappedStartStopButton:" destination="Ah7-4n-0Wa" id="yqF-tE-cwd"/>
                             </connections>
@@ -108,9 +112,16 @@
                     <connections>
                         <outlet property="nameTextField" destination="xKm-t7-08K" id="YqJ-J2-8Sq"/>
                         <outlet property="pickerView" destination="u9G-nS-9Pu" id="r7b-5i-7Me"/>
+                        <outlet property="tapGesture" destination="xtz-1B-MUR" id="gHO-3N-JOm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lrm-kH-fPn" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer numberOfTapsRequired="2" numberOfTouchesRequired="2" id="xtz-1B-MUR">
+                    <connections>
+                        <action selector="tappedStartStopButton:" destination="Ah7-4n-0Wa" id="dWT-Ma-Qfw"/>
+                        <outlet property="delegate" destination="Ah7-4n-0Wa" id="xkB-Jx-SYP"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="902" y="64"/>
         </scene>

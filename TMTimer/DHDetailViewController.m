@@ -19,6 +19,7 @@ enum {
     float timeColorArr[2];
 }
 
+@property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
@@ -51,6 +52,7 @@ enum {
     if (self.detailItem) {
         self.nameTextField.text = self.detailItem.name;
         [self.navigationItem setTitle:self.detailItem.totalTime];
+        [self.tapGesture setEnabled:NO];
     }
 }
 
@@ -164,13 +166,15 @@ enum {
         
         [self.timer invalidate];
         [self.navigationItem setHidesBackButton:NO];
-        [self.navigationItem.rightBarButtonItem setTitle:@"Restart"];
+        [self.navigationItem.rightBarButtonItem setTitle:@"Start"];
         [self.view setBackgroundColor:[UIColor whiteColor]];
         
         NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
         self.detailItem.totalTime = [self stringFromTimeInterval:interval];
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];// re-enable sleep
+        [self.tapGesture setEnabled:NO]; //disallow double 2 finger tap
     } else { //start timer
+        [self.tapGesture setEnabled:YES]; //allow double 2 finger tap
         [[UIApplication sharedApplication] setIdleTimerDisabled:YES]; //prevent sleep when running
         [self.nameTextField setHidden:YES];
         [self.pickerView setHidden:YES];
@@ -196,7 +200,7 @@ enum {
 
 - (void)updateBackground {
     NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
-    NSInteger minutes = (interval / 60);
+    float minutes = (interval / 60.0);
     
     UIColor *color;
     if(minutes < timeColorArr[kTimeGreen])
