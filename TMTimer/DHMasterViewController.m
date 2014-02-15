@@ -238,10 +238,7 @@
     Event *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     cell.textLabel.text = object.name;
-    
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    [format setDateFormat:@"MMM dd, yyyy hh:mm.ss"];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"Created %@", [format stringFromDate:object.timeStamp]];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"totalTime %@", object.totalTime];
 }
 
 @end
