@@ -51,7 +51,7 @@ enum {
     // Update the user interface for the detail item.
 
     if (self.detailItem) {
-        self.detailDescriptionLabel.text = [[self.detailItem valueForKey:@"timeStamp"] description];
+        self.nameTextField.text = self.detailItem.name;
     }
 }
 
@@ -214,6 +214,19 @@ enum {
     NSInteger minutes = (ti / 60) % 60;
     NSInteger hours = (ti / 3600);
     return [NSString stringWithFormat:@"%02d:%02d.%02d", hours, minutes, seconds];
+}
+
+#pragma mark - Textfield Delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self.nameTextField resignFirstResponder];
+    self.detailItem.name = self.nameTextField.text;
+    NSError *err;
+    if (![self.context save:&err]) {
+        NSLog(@"Could not save");
+        abort();
+    }
+    return NO;
 }
 
 @end

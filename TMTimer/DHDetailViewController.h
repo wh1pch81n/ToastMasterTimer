@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @class Event;
-@interface DHDetailViewController : UIViewController <UISplitViewControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
+@interface DHDetailViewController : UIViewController <UISplitViewControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
 
 @property (strong, nonatomic) Event *detailItem;
 @property (weak, nonatomic) NSManagedObjectContext *context;
+@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 
-@property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 @end

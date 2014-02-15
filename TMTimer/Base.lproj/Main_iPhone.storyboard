@@ -86,10 +86,19 @@
                                     <outlet property="delegate" destination="Ah7-4n-0Wa" id="kHU-ub-ko2"/>
                                 </connections>
                             </pickerView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="John Doe" minimumFontSize="17" clearButtonMode="always" id="xKm-t7-08K">
+                                <rect key="frame" x="20" y="84" width="280" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Ah7-4n-0Wa" id="wdo-4W-Dkd"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Detail" id="cra-N8-TIN">
+                    <navigationItem key="navigationItem" title="HH:mm.ss" id="cra-N8-TIN">
                         <barButtonItem key="rightBarButtonItem" title="Start" id="9ye-gd-yRN">
                             <connections>
                                 <action selector="tappedStartStopButton:" destination="Ah7-4n-0Wa" id="yqF-tE-cwd"/>
@@ -97,6 +106,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="nameTextField" destination="xKm-t7-08K" id="YqJ-J2-8Sq"/>
                         <outlet property="pickerView" destination="u9G-nS-9Pu" id="r7b-5i-7Me"/>
                     </connections>
                 </viewController>
