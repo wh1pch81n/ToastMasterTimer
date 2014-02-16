@@ -160,28 +160,39 @@ enum {
 
 #pragma mark - start and stop
 
+/**
+ Formates the ui for set up  or for running the timer.
+ @param b if this is YES it will hide most things.  If No it will show all the set up gear
+ */
+- (void)formatForRunningTimer:(BOOL)b {
+    [self.nameTextField setHidden:b];
+    [self.pickerView setHidden:b];
+    [self.navigationItem setHidesBackButton:b];
+    [[UIApplication sharedApplication] setIdleTimerDisabled:b]; //toggle sleep
+    [self.tapGesture setEnabled:b]; //toggle double 2 finger tap
+    
+    [self.timer1_2 setHidden:b];
+    [self.timer2_3 setHidden:b];
+    [self.timer3_4 setHidden:b];
+    [self.timer4_6 setHidden:b];
+    [self.timer5_7 setHidden:b];
+    [self.timer8_10 setHidden:b];
+}
+
 - (IBAction)tappedStartStopButton:(id)sender {
     static BOOL tempBool = NO;
     if (!(tempBool = !tempBool)) { //end timer
-        [self.nameTextField setHidden:NO];
-        [self.pickerView setHidden:NO];
-        [[self detailItem] setEndDate:[NSDate date]];
+        [self formatForRunningTimer:NO];
         
+        [[self detailItem] setEndDate:[NSDate date]];
         [self.timer invalidate];
-        [self.navigationItem setHidesBackButton:NO];
         [self.navigationItem.rightBarButtonItem setTitle:@"Start"];
         [self.view setBackgroundColor:[UIColor whiteColor]];
-        
         NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
         self.detailItem.totalTime = [self stringFromTimeInterval:interval];
-        [[UIApplication sharedApplication] setIdleTimerDisabled:NO];// re-enable sleep
-        [self.tapGesture setEnabled:NO]; //disallow double 2 finger tap
     } else { //start timer
-        [self.tapGesture setEnabled:YES]; //allow double 2 finger tap
-        [[UIApplication sharedApplication] setIdleTimerDisabled:YES]; //prevent sleep when running
-        [self.nameTextField setHidden:YES];
-        [self.pickerView setHidden:YES];
-        [self.navigationItem setHidesBackButton:YES];
+        [self formatForRunningTimer:YES];
+        
         [self.navigationItem.rightBarButtonItem setTitle:@"Stop"];
         NSDate *date = [NSDate date];
         [[self detailItem] setStartDate:date];
