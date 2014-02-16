@@ -34,13 +34,7 @@ enum {
 - (void)configureView;
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (strong, nonatomic) NSTimer *timer;
-
-@property (weak, nonatomic) IBOutlet UIButton *timer1_2;
-@property (weak, nonatomic) IBOutlet UIButton *timer2_3;
-@property (weak, nonatomic) IBOutlet UIButton *timer3_4;
-@property (weak, nonatomic) IBOutlet UIButton *timer4_6;
-@property (weak, nonatomic) IBOutlet UIButton *timer5_7;
-@property (weak, nonatomic) IBOutlet UIButton *timer8_10;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *presetTimesSegment;
 
 @end
 
@@ -171,12 +165,7 @@ enum {
     [[UIApplication sharedApplication] setIdleTimerDisabled:b]; //toggle sleep
     [self.tapGesture setEnabled:b]; //toggle double 2 finger tap
     
-    [self.timer1_2 setHidden:b];
-    [self.timer2_3 setHidden:b];
-    [self.timer3_4 setHidden:b];
-    [self.timer4_6 setHidden:b];
-    [self.timer5_7 setHidden:b];
-    [self.timer8_10 setHidden:b];
+    [self.presetTimesSegment setHidden:b];
 }
 
 - (IBAction)tappedStartStopButton:(id)sender {
@@ -261,10 +250,12 @@ enum {
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [self.presetTimesSegment setHidden:YES];
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    [self.presetTimesSegment setHidden:NO];
     [self.navigationItem.rightBarButtonItem setEnabled:YES];
 }
 
@@ -295,41 +286,6 @@ enum {
             break;
         case kdummy6:
         case kdummy7:
-        case kPresetButton8_10:
-            min = 8;
-            max = 10;
-            break;
-        default:
-            return;
-            break;
-    }
-    
-    [self updateMin:@(min) max:@(max)];
-}
-
-- (IBAction)tappedPresetButton:(id)sender {
-    int min, max;
-    switch ([sender tag]) {
-        case kPresetButton1_2:
-            min = 1;
-            max = 2;
-            break;
-        case kPresetButton2_3:
-            min = 2;
-            max = 3;
-            break;
-        case kPresetButton3_4:
-            min = 3;
-            max = 4;
-            break;
-        case kPresetButton4_6:
-            min = 4;
-            max = 6;
-            break;
-        case kPresetButton5_7:
-            min = 5;
-            max = 7;
-            break;
         case kPresetButton8_10:
             min = 8;
             max = 10;

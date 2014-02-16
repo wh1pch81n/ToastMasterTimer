@@ -95,69 +95,9 @@
                                     <outlet property="delegate" destination="Ah7-4n-0Wa" id="wdo-4W-Dkd"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="CzV-pe-p90">
-                                <rect key="frame" x="20" y="225" width="50" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                <state key="normal" title="1 ~ 2">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="tappedPresetButton:" destination="Ah7-4n-0Wa" eventType="touchUpInside" id="2Dn-Fe-mS7"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2mh-Zp-LEH">
-                                <rect key="frame" x="20" y="259" width="50" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                <state key="normal" title="2 ~ 3">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="tappedPresetButton:" destination="Ah7-4n-0Wa" eventType="touchUpInside" id="S45-et-V8J"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Rwv-vx-HEt">
-                                <rect key="frame" x="76" y="259" width="50" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                <state key="normal" title="3 ~ 4">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="tappedPresetButton:" destination="Ah7-4n-0Wa" eventType="touchUpInside" id="g7Y-Ek-Yle"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fbD-L3-Wmv">
-                                <rect key="frame" x="134" y="259" width="50" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                <state key="normal" title="4 ~ 6">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="tappedPresetButton:" destination="Ah7-4n-0Wa" eventType="touchUpInside" id="srQ-Dp-qUC"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="lMg-jr-EEl">
-                                <rect key="frame" x="192" y="259" width="50" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                <state key="normal" title="5 ~ 7">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="tappedPresetButton:" destination="Ah7-4n-0Wa" eventType="touchUpInside" id="0aL-jK-nif"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="YRo-5W-JeY">
-                                <rect key="frame" x="250" y="259" width="50" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                <state key="normal" title="8 ~ 10">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="tappedPresetButton:" destination="Ah7-4n-0Wa" eventType="touchUpInside" id="Zsb-Op-MK0"/>
-                                </connections>
-                            </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" momentary="YES" id="xRo-Un-LpM">
-                                <rect key="frame" x="20" y="163" width="280" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="20" y="282" width="280" height="29"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <rect key="contentStretch" x="0.0" y="0.0" width="0.049999999999999684" height="1"/>
                                 <segments>
                                     <segment title="1 ~ 2"/>
@@ -191,13 +131,8 @@
                     <connections>
                         <outlet property="nameTextField" destination="xKm-t7-08K" id="YqJ-J2-8Sq"/>
                         <outlet property="pickerView" destination="u9G-nS-9Pu" id="r7b-5i-7Me"/>
+                        <outlet property="presetTimesSegment" destination="xRo-Un-LpM" id="eB0-QZ-x1r"/>
                         <outlet property="tapGesture" destination="xtz-1B-MUR" id="gHO-3N-JOm"/>
-                        <outlet property="timer1_2" destination="CzV-pe-p90" id="vTi-do-t7J"/>
-                        <outlet property="timer2_3" destination="2mh-Zp-LEH" id="Tff-HU-dCg"/>
-                        <outlet property="timer3_4" destination="Rwv-vx-HEt" id="Tb2-1g-jg5"/>
-                        <outlet property="timer4_6" destination="fbD-L3-Wmv" id="sYy-Fm-NZH"/>
-                        <outlet property="timer5_7" destination="lMg-jr-EEl" id="eHW-Cu-ARg"/>
-                        <outlet property="timer8_10" destination="YRo-5W-JeY" id="DVo-oU-z8s"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lrm-kH-fPn" sceneMemberID="firstResponder"/>
