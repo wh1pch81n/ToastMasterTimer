@@ -274,9 +274,29 @@ enum {
  
  */
 - (void)enableNavItemButtons:(BOOL)b {
-
-    [self.navigationItem.rightBarButtonItem setEnabled:b];
-    [self.navigationItem setHidesBackButton:!b animated:YES];
+    UINavigationBar *navBar = self.navigationController.navigationBar;
+    int navBarHeight = navBar.frame.size.height;
+    const CGRect frame = CGRectOffset(self.view.frame, 0, navBarHeight* (b?1:-1));
+    static const float kSec0_5 = 0.5;
+    static const float kSec0_25 = 0.25;
+    
+    if (!b) {
+        [UIView animateWithDuration:kSec0_5 animations:^{
+            [self.view setFrame:frame];
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:kSec0_25 animations:^{
+                [navBar setAlpha:b];
+            }];
+        }];
+    } else {
+        [UIView animateWithDuration:kSec0_25 animations:^{
+            [navBar setAlpha:b];
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:kSec0_5 animations:^{
+                [self.view setFrame:frame];
+            }];
+        }];
+    }
 }
 
 #pragma mark - preset Buttons
