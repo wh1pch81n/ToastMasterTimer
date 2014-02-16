@@ -250,13 +250,45 @@ enum {
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    [self.presetTimesSegment setHidden:YES];
-    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    [self enableNavItemButtons:NO];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    [self.presetTimesSegment setHidden:NO];
-    [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    [self enableNavItemButtons:YES];
+}
+
+/**
+ enables or disables the navigation buttons
+ @param b if yes, the left and right buttons are enabled.  otherwise they are disabled
+ 
+ */
+- (void)enableNavItemButtons:(BOOL)b {
+    UINavigationBar *navBar = self.navigationController.navigationBar;
+    int navBarHeight = navBar.frame.size.height;
+    const CGRect frame = CGRectOffset(self.view.frame, 0, navBarHeight* (b?1:-1));
+    static const float kSec0_5 = 0.5;
+    static const float kSec0_25 = 0.25;
+    
+    if (!b) {
+        [UIView animateWithDuration:kSec0_5 animations:^{
+            [self.view setFrame:frame];
+            [self.presetTimesSegment setAlpha:b];
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:kSec0_25 animations:^{
+                [navBar setAlpha:b];
+            }];
+        }];
+    } else {
+        [UIView animateWithDuration:kSec0_25 animations:^{
+            [navBar setAlpha:b];
+            
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:kSec0_5 animations:^{
+                [self.view setFrame:frame];
+                [self.presetTimesSegment setAlpha:b];
+            }];
+        }];
+    }
 }
 
 #pragma mark - preset Buttons
