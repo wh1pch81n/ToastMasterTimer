@@ -112,7 +112,7 @@ enum {
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return 59; //pick a number from 0 to 9
+    return 60; //pick a number from 0 to 59
 }
 
 #pragma mark - picker delegate
@@ -184,18 +184,21 @@ enum {
     if (!(tempBool = !tempBool)) { //end timer
         [self formatForRunningTimer:NO];
         
+        [self.navigationItem.rightBarButtonItem setTitle:@"Start"];
         [[self detailItem] setEndDate:[NSDate date]];
         [self.timer invalidate];
-        [self.navigationItem.rightBarButtonItem setTitle:@"Start"];
+        
         [self.view setBackgroundColor:[UIColor whiteColor]];
-        NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
+
+        
+        NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
         self.detailItem.totalTime = [self stringFromTimeInterval:interval];
     } else { //start timer
         [self formatForRunningTimer:YES];
         
         [self.navigationItem.rightBarButtonItem setTitle:@"Stop"];
-        NSDate *date = [NSDate date];
-        [[self detailItem] setStartDate:date];
+        [[self detailItem] setStartDate:[NSDate date]];
+        
         [self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
         [self.timer fire];
     }
