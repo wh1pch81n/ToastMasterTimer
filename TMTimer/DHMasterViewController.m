@@ -238,7 +238,7 @@
     Event *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     cell.textLabel.text = object.name;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"Total Time: %@", object.totalTime];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"Total Time: %@ @ %d~%d", object.totalTime, object.minTime.intValue, object.maxTime.intValue];
 }
 
 @end

@@ -189,7 +189,6 @@ enum {
         [self.timer invalidate];
         
         [self.view setBackgroundColor:[UIColor whiteColor]];
-
         
         NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
         self.detailItem.totalTime = [self stringFromTimeInterval:interval];
