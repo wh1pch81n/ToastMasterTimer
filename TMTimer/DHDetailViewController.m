@@ -261,11 +261,22 @@ enum {
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    [self enableNavItemButtons:NO];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    [self enableNavItemButtons:YES];
+}
+
+/**
+ enables or disables the navigation buttons
+ @param b if yes, the left and right buttons are enabled.  otherwise they are disabled
+ 
+ */
+- (void)enableNavItemButtons:(BOOL)b {
+
+    [self.navigationItem.rightBarButtonItem setEnabled:b];
+    [self.navigationItem setHidesBackButton:!b animated:YES];
 }
 
 #pragma mark - preset Buttons
