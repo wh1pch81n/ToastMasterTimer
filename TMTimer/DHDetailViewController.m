@@ -126,12 +126,12 @@ enum {
 // for the view versions, we cache any hidden and thus unused views and pass them back for reuse.
 // If you return back a different object, the old one will be released. the view will be centered in the row rect
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return [NSString stringWithFormat:@"%d", row];
+    return [NSString stringWithFormat:@"%ld", (long)row];
 }
 
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
-    NSString *text = [NSString stringWithFormat:@"%d", row];
+    NSString *text = [NSString stringWithFormat:@"%ld", (long)row];
     UILabel *label = [[UILabel alloc] init];
     UIColor *color;
     if (component == 0) {
@@ -244,7 +244,7 @@ enum {
     NSInteger seconds = ti % 60;
     NSInteger minutes = (ti / 60) % 60;
     NSInteger hours = (ti / 3600);
-    return [NSString stringWithFormat:@"%02d:%02d.%02d", hours, minutes, seconds];
+    return [NSString stringWithFormat:@"%02d:%02d.%02d", (int)hours, (int)minutes, (int)seconds];
 }
 
 #pragma mark - Textfield Delegate
