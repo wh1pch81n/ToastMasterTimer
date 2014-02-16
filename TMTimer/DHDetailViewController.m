@@ -34,13 +34,7 @@ enum {
 - (void)configureView;
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (strong, nonatomic) NSTimer *timer;
-
-@property (weak, nonatomic) IBOutlet UIButton *timer1_2;
-@property (weak, nonatomic) IBOutlet UIButton *timer2_3;
-@property (weak, nonatomic) IBOutlet UIButton *timer3_4;
-@property (weak, nonatomic) IBOutlet UIButton *timer4_6;
-@property (weak, nonatomic) IBOutlet UIButton *timer5_7;
-@property (weak, nonatomic) IBOutlet UIButton *timer8_10;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *presetTimesSegment;
 
 @end
 
@@ -171,12 +165,7 @@ enum {
     [[UIApplication sharedApplication] setIdleTimerDisabled:b]; //toggle sleep
     [self.tapGesture setEnabled:b]; //toggle double 2 finger tap
     
-    [self.timer1_2 setHidden:b];
-    [self.timer2_3 setHidden:b];
-    [self.timer3_4 setHidden:b];
-    [self.timer4_6 setHidden:b];
-    [self.timer5_7 setHidden:b];
-    [self.timer8_10 setHidden:b];
+    [self.presetTimesSegment setHidden:b];
 }
 
 - (IBAction)tappedStartStopButton:(id)sender {
@@ -283,6 +272,7 @@ enum {
     if (!b) {
         [UIView animateWithDuration:kSec0_5 animations:^{
             [self.view setFrame:frame];
+            [self.presetTimesSegment setAlpha:b];
         } completion:^(BOOL finished) {
             [UIView animateWithDuration:kSec0_25 animations:^{
                 [navBar setAlpha:b];
@@ -291,9 +281,11 @@ enum {
     } else {
         [UIView animateWithDuration:kSec0_25 animations:^{
             [navBar setAlpha:b];
+            
         } completion:^(BOOL finished) {
             [UIView animateWithDuration:kSec0_5 animations:^{
                 [self.view setFrame:frame];
+                [self.presetTimesSegment setAlpha:b];
             }];
         }];
     }
@@ -301,9 +293,9 @@ enum {
 
 #pragma mark - preset Buttons
 
-- (IBAction)tappedPresetButton:(id)sender {
+- (IBAction)tappedSegmentedPresetButton:(UISegmentedControl *)sender {
     int min, max;
-    switch ([sender tag]) {
+    switch ([sender selectedSegmentIndex]+1) {
         case kPresetButton1_2:
             min = 1;
             max = 2;
@@ -324,6 +316,8 @@ enum {
             min = 5;
             max = 7;
             break;
+        case kdummy6:
+        case kdummy7:
         case kPresetButton8_10:
             min = 8;
             max = 10;
