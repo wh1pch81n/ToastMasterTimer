@@ -270,6 +270,43 @@ enum {
 
 #pragma mark - preset Buttons
 
+- (IBAction)tappedSegmentedPresetButton:(UISegmentedControl *)sender {
+    int min, max;
+    switch ([sender selectedSegmentIndex]+1) {
+        case kPresetButton1_2:
+            min = 1;
+            max = 2;
+            break;
+        case kPresetButton2_3:
+            min = 2;
+            max = 3;
+            break;
+        case kPresetButton3_4:
+            min = 3;
+            max = 4;
+            break;
+        case kPresetButton4_6:
+            min = 4;
+            max = 6;
+            break;
+        case kPresetButton5_7:
+            min = 5;
+            max = 7;
+            break;
+        case kdummy6:
+        case kdummy7:
+        case kPresetButton8_10:
+            min = 8;
+            max = 10;
+            break;
+        default:
+            return;
+            break;
+    }
+    
+    [self updateMin:@(min) max:@(max)];
+}
+
 - (IBAction)tappedPresetButton:(id)sender {
     int min, max;
     switch ([sender tag]) {
