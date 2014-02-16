@@ -10,20 +10,37 @@
 #import "Event.h"
 
 enum {
+    kdummy0,
+    kPresetButton1_2,
+    kPresetButton2_3,
+    kPresetButton3_4,
+    kPresetButton4_6,
+    kPresetButton5_7,
+    kdummy6,
+    kdummy7,
+    kPresetButton8_10
+};
+
+enum {
     kTimeGreen,
     kTimeRed,
     kNumElementsInTimeEnum
 };
 
-@interface DHDetailViewController () {
-    float timeColorArr[2];
-}
+@interface DHDetailViewController ()
 
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (strong, nonatomic) NSTimer *timer;
+
+@property (weak, nonatomic) IBOutlet UIButton *timer1_2;
+@property (weak, nonatomic) IBOutlet UIButton *timer2_3;
+@property (weak, nonatomic) IBOutlet UIButton *timer3_4;
+@property (weak, nonatomic) IBOutlet UIButton *timer4_6;
+@property (weak, nonatomic) IBOutlet UIButton *timer5_7;
+@property (weak, nonatomic) IBOutlet UIButton *timer8_10;
 
 @end
 
@@ -39,16 +56,16 @@ enum {
         // Update the view.
         [self configureView];
     }
-
+    
     if (self.masterPopoverController != nil) {
         [self.masterPopoverController dismissPopoverAnimated:YES];
-    }        
+    }
 }
 
 - (void)configureView
 {
     // Update the user interface for the detail item.
-
+    
     if (self.detailItem) {
         self.nameTextField.text = self.detailItem.name;
         [self.navigationItem setTitle:self.detailItem.totalTime];
@@ -63,12 +80,7 @@ enum {
     [self configureView];
     
     //Default values
-    timeColorArr[kTimeGreen] = self.detailItem.minTime.floatValue;
-    timeColorArr[kTimeRed] = self.detailItem.maxTime.floatValue;
-    
-    [[self pickerView] selectRow:timeColorArr[kTimeGreen] inComponent:kTimeGreen animated:YES];
-    [[self pickerView] selectRow:timeColorArr[kTimeRed] inComponent:kTimeRed animated:YES];
-    
+    [self updateMin:@(self.detailItem.minTime.floatValue) max:@(self.detailItem.maxTime.floatValue)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -100,7 +112,7 @@ enum {
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return 10; //pick a number from 0 to 9
+    return 59; //pick a number from 0 to 9
 }
 
 #pragma mark - picker delegate
@@ -110,21 +122,16 @@ enum {
     return pickerView.frame.size.width/3 -10;
 }
 
-//- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
-//    return pickerView.frame.size.height;
-//}
-
 // these methods return either a plain NSString, a NSAttributedString, or a view (e.g UILabel) to display the row for the component.
 // for the view versions, we cache any hidden and thus unused views and pass them back for reuse.
 // If you return back a different object, the old one will be released. the view will be centered in the row rect
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    NSArray *options = @[@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9"];
-    return options[row];
+    return [NSString stringWithFormat:@"%d", row];
 }
 
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
-    NSArray *options = @[@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9"];
+    NSString *text = [NSString stringWithFormat:@"%d", row];
     UILabel *label = [[UILabel alloc] init];
     UIColor *color;
     if (component == 0) {
@@ -134,7 +141,7 @@ enum {
     } else {
         color = [UIColor blackColor];
     }
-    label.attributedText = [[NSAttributedString alloc] initWithString:options[row] attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
+    label.attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
     [label setBackgroundColor:color];
     [label setTextAlignment:NSTextAlignmentCenter];
     return label;
@@ -143,15 +150,11 @@ enum {
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     
     UILabel *label = (UILabel *)[pickerView viewForRow:row forComponent:component];
-    timeColorArr[component] = label.text.floatValue;
     
-    [self.detailItem setMinTime:@(timeColorArr[kTimeGreen])];
-    [self.detailItem setMaxTime:@(timeColorArr[kTimeRed])];
-    
-    NSError *err;
-    if (![self.context save:&err]) {
-        NSLog(@"Can't save!");
-        abort();
+    if (component == kTimeGreen) {
+        [self updateMin:@(label.text.integerValue) max:self.detailItem.maxTime];
+    } else if (component == kTimeRed) {
+        [self updateMin:self.detailItem.minTime max:@(label.text.integerValue)];
     }
 }
 
@@ -202,12 +205,15 @@ enum {
     NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
     float minutes = (interval / 60.0);
     
+    NSInteger min = self.detailItem.minTime.integerValue;
+    NSInteger max = self.detailItem.maxTime.integerValue;
+    
     UIColor *color;
-    if(minutes < timeColorArr[kTimeGreen])
+    if(minutes < min)
         color = [UIColor blackColor];
-    else if (minutes < ((timeColorArr[kTimeGreen] + timeColorArr[kTimeRed])/2.0))
+    else if (minutes < ((min + max)/2.0))
         color = [UIColor greenColor];
-    else if (minutes < timeColorArr[kTimeRed])
+    else if (minutes < max)
         color = [UIColor yellowColor];
     else
         color = [UIColor redColor];
@@ -247,6 +253,60 @@ enum {
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [self.navigationItem.rightBarButtonItem setEnabled:YES];
+}
+
+#pragma mark - preset Buttons
+
+- (IBAction)tappedPresetButton:(id)sender {
+    int min, max;
+    switch ([sender tag]) {
+        case kPresetButton1_2:
+            min = 1;
+            max = 2;
+            break;
+        case kPresetButton2_3:
+            min = 2;
+            max = 3;
+            break;
+        case kPresetButton3_4:
+            min = 3;
+            max = 4;
+            break;
+        case kPresetButton4_6:
+            min = 4;
+            max = 6;
+            break;
+        case kPresetButton5_7:
+            min = 5;
+            max = 7;
+            break;
+        case kPresetButton8_10:
+            min = 8;
+            max = 10;
+            break;
+        default:
+            return;
+            break;
+    }
+    
+    [self updateMin:@(min) max:@(max)];
+}
+
+/**
+ Sets the picker view to the right places, then updates the context
+ */
+- (void)updateMin:(NSNumber *)min max:(NSNumber *)max {
+    [[self pickerView] selectRow:min.integerValue inComponent:kTimeGreen animated:YES];
+    [[self pickerView] selectRow:max.integerValue inComponent:kTimeRed animated:YES];
+    
+    [[self detailItem] setMinTime:min];
+    [[self detailItem] setMaxTime:max];
+    
+    NSError *err;
+    if (![self.context save:&err]) {
+        NSLog(@"Can't save!");
+        abort();
+    }
 }
 
 @end

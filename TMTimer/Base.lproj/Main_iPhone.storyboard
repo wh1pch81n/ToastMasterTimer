@@ -95,53 +95,71 @@
                                     <outlet property="delegate" destination="Ah7-4n-0Wa" id="wdo-4W-Dkd"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="CzV-pe-p90">
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="CzV-pe-p90">
                                 <rect key="frame" x="20" y="107" width="120" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="1 to 2 minutes">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="tappedPresetButton:" destination="Ah7-4n-0Wa" eventType="touchUpInside" id="2Dn-Fe-mS7"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2mh-Zp-LEH">
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2mh-Zp-LEH">
                                 <rect key="frame" x="20" y="145" width="120" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="2 to 3 minutes">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="tappedPresetButton:" destination="Ah7-4n-0Wa" eventType="touchUpInside" id="S45-et-V8J"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Rwv-vx-HEt">
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Rwv-vx-HEt">
                                 <rect key="frame" x="20" y="183" width="120" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="3 to 4 minutes">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="tappedPresetButton:" destination="Ah7-4n-0Wa" eventType="touchUpInside" id="g7Y-Ek-Yle"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fbD-L3-Wmv">
+                            <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fbD-L3-Wmv">
                                 <rect key="frame" x="20" y="221" width="120" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="4 to 6 minutes">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="tappedPresetButton:" destination="Ah7-4n-0Wa" eventType="touchUpInside" id="srQ-Dp-qUC"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="lMg-jr-EEl">
+                            <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="lMg-jr-EEl">
                                 <rect key="frame" x="20" y="259" width="120" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="5 to 7 minutes">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="tappedPresetButton:" destination="Ah7-4n-0Wa" eventType="touchUpInside" id="0aL-jK-nif"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="YRo-5W-JeY">
+                            <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="YRo-5W-JeY">
                                 <rect key="frame" x="180" y="107" width="120" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="8 to 10 minutes">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="tappedPresetButton:" destination="Ah7-4n-0Wa" eventType="touchUpInside" id="Zsb-Op-MK0"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -164,6 +182,12 @@
                         <outlet property="nameTextField" destination="xKm-t7-08K" id="YqJ-J2-8Sq"/>
                         <outlet property="pickerView" destination="u9G-nS-9Pu" id="r7b-5i-7Me"/>
                         <outlet property="tapGesture" destination="xtz-1B-MUR" id="gHO-3N-JOm"/>
+                        <outlet property="timer1_2" destination="CzV-pe-p90" id="vTi-do-t7J"/>
+                        <outlet property="timer2_3" destination="2mh-Zp-LEH" id="Tff-HU-dCg"/>
+                        <outlet property="timer3_4" destination="Rwv-vx-HEt" id="Tb2-1g-jg5"/>
+                        <outlet property="timer4_6" destination="fbD-L3-Wmv" id="sYy-Fm-NZH"/>
+                        <outlet property="timer5_7" destination="lMg-jr-EEl" id="eHW-Cu-ARg"/>
+                        <outlet property="timer8_10" destination="YRo-5W-JeY" id="DVo-oU-z8s"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lrm-kH-fPn" sceneMemberID="firstResponder"/>
