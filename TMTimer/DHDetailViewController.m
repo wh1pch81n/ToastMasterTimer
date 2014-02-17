@@ -173,16 +173,17 @@ enum {
 - (IBAction)tappedStartStopButton:(id)sender {
     static BOOL tempBool = NO;
     if (!(tempBool = !tempBool)) { //end timer
-        [self formatForRunningTimer:NO];
-        
-        [self.navigationItem.rightBarButtonItem setTitle:@"Start"];
-        [[self detailItem] setEndDate:[NSDate date]];
         [self.timer invalidate];
         
-        [self.view setBackgroundColor:[UIColor whiteColor]];
+        [self formatForRunningTimer:NO];
+        [self.navigationItem.rightBarButtonItem setTitle:@"Start"];
+        [[self detailItem] setEndDate:[NSDate date]];
+        
+        [[self detailItem] setBgColorDataWithColor:self.view.backgroundColor]; //save current color
         
         NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
         self.detailItem.totalTime = [self stringFromTimeInterval:interval];
+        
     } else { //start timer
         [self formatForRunningTimer:YES];
         
@@ -198,6 +199,8 @@ enum {
         NSLog(@"Could not save");
         abort();
     }
+    
+    [self.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
 }
 
 - (void)updates {

@@ -52,7 +52,7 @@
     // If appropriate, configure the new managed object.
     // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
     [newManagedObject setTimeStamp:[NSDate date]];
-    [newManagedObject setBgColorDataWithColor:[UIColor redColor]]; //Default bg color is white
+    [newManagedObject setBgColorDataWithColor:[UIColor whiteColor]]; //Default bg color is white
   
     // Save the context.
     NSError *error = nil;
@@ -241,7 +241,9 @@
     
     cell.textLabel.text = object.name;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"Total Time: %@ @ %d~%d", object.totalTime, object.minTime.intValue, object.maxTime.intValue];
-    [cell setBackgroundColor:object.bgColorFromData];
+    //[cell setBackgroundColor:object.bgColorFromData]; //this can't be set
+    [cell.textLabel setBackgroundColor:object.bgColorFromData];
+    //[cell.textLabel setTextColor:object.bgColorFromData];
     //cell.colorFlag = object.bgColorFromData;
 }
 
