@@ -241,7 +241,7 @@
     
     cell.textLabel.text = object.name;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"Total Time: %@ @ %d~%d", object.totalTime, object.minTime.intValue, object.maxTime.intValue];
-    [cell.textLabel setTextColor:object.bgColorFromData];
+    [cell setBackgroundColor:object.bgColorFromData];
     //cell.colorFlag = object.bgColorFromData;
 }
 
