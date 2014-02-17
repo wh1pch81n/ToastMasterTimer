@@ -65,7 +65,6 @@ enum {
         self.nameTextField.text = self.detailItem.name;
         [self.navigationItem setTitle:self.detailItem.totalTime];
         [self.tapGesture setEnabled:NO];
-        [self.view setBackgroundColor:[UIColor whiteColor]];
     }
 }
 
@@ -74,6 +73,7 @@ enum {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     [self configureView];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
     
     //Default values
     [self updateMin:@(self.detailItem.minTime.floatValue) max:@(self.detailItem.maxTime.floatValue)];

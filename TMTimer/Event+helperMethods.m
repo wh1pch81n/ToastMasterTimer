@@ -15,7 +15,7 @@
 }
 
 - (UIColor *)bgColorFromData {
-    return [NSKeyedUnarchiver unarchiveObjectWithData:self.bgColor];
+    return (UIColor *)[NSKeyedUnarchiver unarchiveObjectWithData:self.bgColor];
 }
 
 @end
