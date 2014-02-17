@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		501518E518B1968300CC286D /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 501518E418B1968300CC286D /* Event.m */; };
+		501518E818B1979200CC286D /* Event+helperMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 501518E718B1979200CC286D /* Event+helperMethods.m */; };
 		5095B4B318AE7C440023210E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5095B4B218AE7C440023210E /* Foundation.framework */; };
 		5095B4B518AE7C440023210E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5095B4B418AE7C440023210E /* CoreGraphics.framework */; };
 		5095B4B718AE7C440023210E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5095B4B618AE7C440023210E /* UIKit.framework */; };
@@ -25,7 +27,6 @@
 		5095B4E018AE7C440023210E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5095B4B818AE7C440023210E /* CoreData.framework */; };
 		5095B4E818AE7C440023210E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5095B4E618AE7C440023210E /* InfoPlist.strings */; };
 		5095B4EA18AE7C440023210E /* TMTimerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5095B4E918AE7C440023210E /* TMTimerTests.m */; };
-		5095B4F918AF41050023210E /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 5095B4F818AF41050023210E /* Event.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		501518E218B195ED00CC286D /* TMTimer 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TMTimer 3.xcdatamodel"; sourceTree = "<group>"; };
+		501518E318B1968300CC286D /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		501518E418B1968300CC286D /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
+		501518E618B1979200CC286D /* Event+helperMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Event+helperMethods.h"; sourceTree = "<group>"; };
+		501518E718B1979200CC286D /* Event+helperMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Event+helperMethods.m"; sourceTree = "<group>"; };
 		5095B4AF18AE7C440023210E /* TMTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TMTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5095B4B218AE7C440023210E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5095B4B418AE7C440023210E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -62,9 +68,7 @@
 		5095B4E518AE7C440023210E /* TMTimerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TMTimerTests-Info.plist"; sourceTree = "<group>"; };
 		5095B4E718AE7C440023210E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5095B4E918AE7C440023210E /* TMTimerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TMTimerTests.m; sourceTree = "<group>"; };
-		5095B4F318AE7DC80023210E /* TMTimer 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TMTimer 2.xcdatamodel"; sourceTree = "<group>"; };
-		5095B4F718AF41050023210E /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
-		5095B4F818AF41050023210E /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
+		5095B4F318AE7DC80023210E /* TMTimer 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TMTimer 2.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,9 +139,11 @@
 				5095B4D218AE7C440023210E /* DHDetailViewController.h */,
 				5095B4D318AE7C440023210E /* DHDetailViewController.m */,
 				5095B4D518AE7C440023210E /* Images.xcassets */,
-				5095B4F718AF41050023210E /* Event.h */,
-				5095B4F818AF41050023210E /* Event.m */,
 				5095B4CC18AE7C440023210E /* TMTimer.xcdatamodeld */,
+				501518E318B1968300CC286D /* Event.h */,
+				501518E418B1968300CC286D /* Event.m */,
+				501518E618B1979200CC286D /* Event+helperMethods.h */,
+				501518E718B1979200CC286D /* Event+helperMethods.m */,
 				5095B4BB18AE7C440023210E /* Supporting Files */,
 			);
 			path = TMTimer;
@@ -273,10 +279,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5095B4F918AF41050023210E /* Event.m in Sources */,
+				501518E518B1968300CC286D /* Event.m in Sources */,
 				5095B4D418AE7C440023210E /* DHDetailViewController.m in Sources */,
 				5095B4CE18AE7C440023210E /* TMTimer.xcdatamodeld in Sources */,
 				5095B4C518AE7C440023210E /* DHAppDelegate.m in Sources */,
+				501518E818B1979200CC286D /* Event+helperMethods.m in Sources */,
 				5095B4D118AE7C440023210E /* DHMasterViewController.m in Sources */,
 				5095B4C118AE7C440023210E /* main.m in Sources */,
 			);
@@ -499,6 +506,7 @@
 				5095B4EF18AE7C440023210E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5095B4F018AE7C440023210E /* Build configuration list for PBXNativeTarget "TMTimerTests" */ = {
 			isa = XCConfigurationList;
@@ -507,6 +515,7 @@
 				5095B4F218AE7C440023210E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
@@ -514,10 +523,11 @@
 		5095B4CC18AE7C440023210E /* TMTimer.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				501518E218B195ED00CC286D /* TMTimer 3.xcdatamodel */,
 				5095B4F318AE7DC80023210E /* TMTimer 2.xcdatamodel */,
 				5095B4CD18AE7C440023210E /* TMTimer.xcdatamodel */,
 			);
-			currentVersion = 5095B4CD18AE7C440023210E /* TMTimer.xcdatamodel */;
+			currentVersion = 501518E218B195ED00CC286D /* TMTimer 3.xcdatamodel */;
 			path = TMTimer.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -9,6 +9,7 @@
 #import "DHMasterViewController.h"
 #import "Event.h"
 #import "DHDetailViewController.h"
+#import "Event+helperMethods.h"
 
 @interface DHMasterViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -51,7 +52,8 @@
     // If appropriate, configure the new managed object.
     // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
     [newManagedObject setTimeStamp:[NSDate date]];
-    
+    [newManagedObject setBgColorDataWithColor:[UIColor whiteColor]]; //Default bg color is white
+  
     // Save the context.
     NSError *error = nil;
     if (![context save:&error]) {
@@ -239,6 +241,7 @@
     
     cell.textLabel.text = object.name;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"Total Time: %@ @ %d~%d", object.totalTime, object.minTime.intValue, object.maxTime.intValue];
+    //cell.colorFlag = object.bgColorFromData;
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import "DHDetailViewController.h"
 #import "Event.h"
+#import "Event+helperMethods.h"
 
 enum {
     kdummy0,
@@ -27,7 +28,17 @@ enum {
     kNumElementsInTimeEnum
 };
 
-@interface DHDetailViewController ()
+enum {
+    kColorArrWhite,
+    kColorArrBlack,
+    kColorArrGreen,
+    kColorArrYellow,
+    kColorArrRed,
+};
+
+@interface DHDetailViewController () {
+    __strong NSArray *_colorArr;
+}
 
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -35,10 +46,12 @@ enum {
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (strong, nonatomic) NSTimer *timer;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *presetTimesSegment;
+@property (strong, nonatomic, readonly)NSArray *colorArray;
 
 @end
 
 @implementation DHDetailViewController
+@synthesize colorArray = _colorArray;
 
 #pragma mark - Managing the detail item
 
@@ -64,13 +77,23 @@ enum {
         self.nameTextField.text = self.detailItem.name;
         [self.navigationItem setTitle:self.detailItem.totalTime];
         [self.tapGesture setEnabled:NO];
+        [self.view setBackgroundColor:self.colorArray[kColorArrWhite]];
     }
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	//set up the colorArray
+    _colorArray = @[
+                    [UIColor whiteColor],// kColorArrWhite
+                    [UIColor blackColor],// kColorArrBlack
+                    [UIColor greenColor],// kColorArrGreen
+                    [UIColor yellowColor],// kColorArrYellow
+                    [UIColor redColor]// kColorArrRed
+                    ];
+    
+    // Do any additional setup after loading the view, typically from a nib.
     [self configureView];
     
     //Default values
@@ -129,11 +152,11 @@ enum {
     UILabel *label = [[UILabel alloc] init];
     UIColor *color;
     if (component == 0) {
-        color = [UIColor greenColor];
+        color = self.colorArray[kColorArrGreen];
     } else if (component == 1) {
-        color = [UIColor redColor];
+        color = self.colorArray[kColorArrRed];
     } else {
-        color = [UIColor blackColor];
+        color = self.colorArray[kColorArrBlack];
     }
     label.attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
     [label setBackgroundColor:color];

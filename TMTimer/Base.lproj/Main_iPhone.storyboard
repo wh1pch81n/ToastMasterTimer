@@ -96,7 +96,7 @@
                                 </connections>
                             </textField>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" momentary="YES" id="xRo-Un-LpM">
-                                <rect key="frame" x="20" y="282" width="280" height="29"/>
+                                <rect key="frame" x="0.0" y="282" width="320" height="29"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <rect key="contentStretch" x="0.0" y="0.0" width="0.049999999999999684" height="1"/>
                                 <segments>

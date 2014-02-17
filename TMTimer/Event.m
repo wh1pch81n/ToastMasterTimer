@@ -2,7 +2,7 @@
 //  Event.m
 //  TMTimer
 //
-//  Created by ryukkusakku on 2/14/14.
+//  Created by ryukkusakku on 2/16/14.
 //  Copyright (c) 2014 ryukkusakku. All rights reserved.
 //
 
@@ -18,5 +18,6 @@
 @dynamic startDate;
 @dynamic timeStamp;
 @dynamic totalTime;
+@dynamic bgColor;
 
 @end
