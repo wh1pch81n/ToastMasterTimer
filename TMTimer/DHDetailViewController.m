@@ -179,6 +179,7 @@ enum {
         [self.navigationItem.rightBarButtonItem setTitle:@"Start"];
         [[self detailItem] setEndDate:[NSDate date]];
         
+        //TODO: Figure out why there is a flicker in the background color of the textlabel.  why does it flicker correct while transitioning but becomes wrong when the animation stops?.  Why does it seem to be correct on launch?
         [[self detailItem] setBgColorDataWithColor:self.view.backgroundColor]; //save current color
         
         NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
