@@ -11,7 +11,7 @@
 @interface DHTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *contestantName;
-@property (weak, nonatomic) IBOutlet UILabel *modifiedDate;
+@property (weak, nonatomic) IBOutlet UILabel *creationDate;
 @property (weak, nonatomic) IBOutlet UILabel *elapsedTime;
 @property (weak, nonatomic) IBOutlet UILabel *timeRange;
 @property (weak, nonatomic) IBOutlet UIView *flag;
