@@ -28,6 +28,9 @@ enum {
     kNumElementsInTimeEnum
 };
 
+NSString *const kStart = @"Start";
+NSString *const kStop = @"Stop";
+
 @interface DHDetailViewController ()
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -171,12 +174,11 @@ enum {
 }
 
 - (IBAction)tappedStartStopButton:(id)sender {
-    static BOOL tempBool = NO;
-    if (!(tempBool = !tempBool)) { //end timer
+    if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) { //end timer
         [self.timer invalidate];
         
         [self formatForRunningTimer:NO];
-        [self.navigationItem.rightBarButtonItem setTitle:@"Start"];
+        [self.navigationItem.rightBarButtonItem setTitle:kStart];
         [[self detailItem] setEndDate:[NSDate date]];
         
         //TODO: Figure out why there is a flicker in the background color of the textlabel.  why does it flicker correct while transitioning but becomes wrong when the animation stops?.  Why does it seem to be correct on launch?
@@ -188,7 +190,7 @@ enum {
     } else { //start timer
         [self formatForRunningTimer:YES];
         
-        [self.navigationItem.rightBarButtonItem setTitle:@"Stop"];
+        [self.navigationItem.rightBarButtonItem setTitle:kStop];
         [[self detailItem] setStartDate:[NSDate date]];
         
         [self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
