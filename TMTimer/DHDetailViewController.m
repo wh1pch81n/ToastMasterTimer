@@ -182,7 +182,7 @@ NSString *const kStop = @"Stop";
         [[self detailItem] setEndDate:[NSDate date]];
         
         //TODO: Figure out why there is a flicker in the background color of the textlabel.  why does it flicker correct while transitioning but becomes wrong when the animation stops?.  Why does it seem to be correct on launch?
-        [[self detailItem] setBgColorDataWithColor:self.view.backgroundColor]; //save current color
+        //[[self detailItem] setBgColorDataWithColor:self.view.backgroundColor]; //save current color
         
         NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
         self.detailItem.totalTime = [self stringFromTimeInterval:interval];
@@ -213,22 +213,26 @@ NSString *const kStop = @"Stop";
 
 - (void)updateBackground {
     NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
-    float minutes = (interval / 60.0);
+    NSInteger seconds = interval;
     
-    NSInteger min = self.detailItem.minTime.integerValue;
-    NSInteger max = self.detailItem.maxTime.integerValue;
+    static const int k60Seconds = 60;
+    NSInteger min = self.detailItem.minTime.integerValue *k60Seconds;
+    NSInteger max = self.detailItem.maxTime.integerValue *k60Seconds;
     
     UIColor *color;
-    if(minutes < min)
+    if (seconds == 1 )
         color = [UIColor blackColor];
-    else if (minutes < ((min + max)/2.0))
+    else if(seconds == min)
         color = [UIColor greenColor];
-    else if (minutes < max)
+    else if (seconds == ((min + max) >> 1))
         color = [UIColor yellowColor];
-    else
+    else if (seconds == max)
         color = [UIColor redColor];
+    else
+        return;
     
     [self.view setBackgroundColor:color];
+    [self.detailItem setBgColorDataWithColor:color];
 }
 
 - (void)updateTime {
