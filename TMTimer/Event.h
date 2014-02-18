@@ -12,7 +12,6 @@
 
 @interface Event : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * bgColor;
 @property (nonatomic, retain) NSDate * endDate;
 @property (nonatomic, retain) NSNumber * maxTime;
 @property (nonatomic, retain) NSNumber * minTime;
@@ -20,5 +19,6 @@
 @property (nonatomic, retain) NSDate * startDate;
 @property (nonatomic, retain) NSDate * timeStamp;
 @property (nonatomic, retain) NSString * totalTime;
+@property (nonatomic, retain) NSNumber * bgColor;
 
 @end

@@ -11,7 +11,6 @@
 
 @implementation Event
 
-@dynamic bgColor;
 @dynamic endDate;
 @dynamic maxTime;
 @dynamic minTime;
@@ -19,5 +18,6 @@
 @dynamic startDate;
 @dynamic timeStamp;
 @dynamic totalTime;
+@dynamic bgColor;
 
 @end

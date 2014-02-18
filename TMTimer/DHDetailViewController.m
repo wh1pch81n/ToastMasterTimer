@@ -222,14 +222,14 @@ NSString *const kStop = @"Stop";
     NSInteger max = self.detailItem.maxTime.integerValue *k60Seconds;
     
     UIColor *color;
-    if (seconds == 0 )
-        color = [UIColor blackColor];
-    else if(seconds == min)
-        color = [UIColor greenColor];
-    else if (seconds == ((min + max) >> 1))
-        color = [UIColor yellowColor];
-    else if (seconds == max)
+    if (seconds == max )
         color = [UIColor redColor];
+    else if(seconds == ((min + max) >> 1))
+        color = [UIColor yellowColor];
+    else if (seconds == min)
+        color = [UIColor greenColor];
+    else if (seconds == 0)
+        color = [UIColor blackColor];
     else
         return;
     
