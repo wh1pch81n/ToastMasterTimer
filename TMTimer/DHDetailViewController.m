@@ -186,7 +186,7 @@ NSString *const kStop = @"Stop";
         
         NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
         self.detailItem.totalTime = [self stringFromTimeInterval:interval];
-        
+        [self.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
     } else { //start timer
         [self formatForRunningTimer:YES];
         
@@ -202,8 +202,6 @@ NSString *const kStop = @"Stop";
         NSLog(@"Could not save");
         abort();
     }
-    
-    [self.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
 }
 
 - (void)updates {
@@ -220,7 +218,7 @@ NSString *const kStop = @"Stop";
     NSInteger max = self.detailItem.maxTime.integerValue *k60Seconds;
     
     UIColor *color;
-    if (seconds == 1 )
+    if (seconds == 0 )
         color = [UIColor blackColor];
     else if(seconds == min)
         color = [UIColor greenColor];
