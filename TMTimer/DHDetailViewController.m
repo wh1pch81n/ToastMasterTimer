@@ -82,6 +82,16 @@ NSString *const kStop = @"Stop";
     [self updateMin:@(self.detailItem.minTime.floatValue) max:@(self.detailItem.maxTime.floatValue)];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    //Save context before leaving
+    NSError *err;
+    if (![self.context save:&err]) {
+        NSLog(@"Could not save");
+        abort();
+    }
+    [super viewWillDisappear:animated];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -196,12 +206,6 @@ NSString *const kStop = @"Stop";
         [self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
         [self.timer fire];
     }
-    
-    NSError *err = nil;
-    if(![self.context save:&err]) {
-        NSLog(@"Could not save");
-        abort();
-    }
 }
 
 - (void)updates {
@@ -251,11 +255,6 @@ NSString *const kStop = @"Stop";
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self.nameTextField resignFirstResponder];
     self.detailItem.name = self.nameTextField.text;
-    NSError *err;
-    if (![self.context save:&err]) {
-        NSLog(@"Could not save");
-        abort();
-    }
     return NO;
 }
 
@@ -349,12 +348,6 @@ NSString *const kStop = @"Stop";
     
     [[self detailItem] setMinTime:min];
     [[self detailItem] setMaxTime:max];
-    
-    NSError *err;
-    if (![self.context save:&err]) {
-        NSLog(@"Can't save!");
-        abort();
-    }
 }
 
 @end
