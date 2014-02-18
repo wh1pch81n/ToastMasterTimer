@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class Event;
 @interface DHTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *contestantName;
@@ -15,5 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *elapsedTime;
 @property (weak, nonatomic) IBOutlet UILabel *timeRange;
 @property (weak, nonatomic) IBOutlet UIView *flag;
+@property (strong, nonatomic) Event *entity;
 
 @end

@@ -245,10 +245,6 @@
 //    cell.detailTextLabel.text = [NSString stringWithFormat:@"Total Time: %@ @ %d~%d", object.totalTime, object.minTime.intValue, object.maxTime.intValue];
     [[dhCell contestantName] setText:[object name]];
     [[dhCell flag] setBackgroundColor:[object bgColorFromData]];
-    [[dhCell flag] setBackgroundColor:[object bgColorFromData]];
-    [[dhCell flag] setBackgroundColor:[object bgColorFromData]];
-    [[dhCell flag] setBackgroundColor:[object bgColorFromData]];
-    [[dhCell flag] setBackgroundColor:[object bgColorFromData]];
     
     NSDateFormatter *dateFormat = [NSDateFormatter new];
     [dateFormat setDateFormat:@"MMM dd, yyyy"];
@@ -259,6 +255,8 @@
     
     NSString *qualifyingTime = [NSString stringWithFormat:@"(%d~%d)", [[object minTime] intValue], [[object maxTime] intValue]];
     [[dhCell timeRange] setText:qualifyingTime];
+    
+    [dhCell setEntity:object];
 }
 
 @end

@@ -8,45 +8,40 @@
 
 #import "Event+helperMethods.h"
 
-static const NSInteger kOneByteMaxValue = 255;
-static const NSInteger kNumBitsInOneByte = 8;
-static const NSInteger kNumBitsInTwoBytes = 16;
-static const NSInteger kNumBitsInThreeBytes = 24;
-static const NSInteger kMaskRed = 0xFF000000;
-static const NSInteger kMaskGrn = 0x00FF0000;
-static const NSInteger kMaskBlu = 0x0000FF00;
-static const NSInteger kMaskAlf = 0x000000FF;
-
+static const NSInteger kColorBlack = 1;
+static const NSInteger kColorClear = 2;
+static const NSInteger kColorRed = 3;
+static const NSInteger kColorYellow = 4;
+static const NSInteger kColorGreen = 5;
+static const NSInteger kColorUnknown = -1;
 
 @implementation Event (helperMethods)
 
 - (void)setBgColorDataWithColor:(UIColor *)color {
-    CGFloat red, grn, blu, alf;
-    [color getRed:&red green:&grn blue:&blu alpha:&alf];
-   
-    NSInteger r, g, b, a;
-    r = red * kOneByteMaxValue;
-    g = grn * kOneByteMaxValue;
-    b = blu * kOneByteMaxValue;
-    a = alf * kOneByteMaxValue;
-    
-    NSNumber *hex = @((r << kNumBitsInThreeBytes) | (g << kNumBitsInTwoBytes) | (b << kNumBitsInOneByte) | (a));
-    
-    [self setBgColor:hex];
+    if ([color isEqual:[UIColor blackColor]]) {
+        self.bgColor = @(kColorBlack);
+    } else if ([color isEqual:[UIColor clearColor]]) {
+        self.bgColor = @(kColorClear);
+    } else if ([color isEqual:[UIColor redColor]]) {
+        self.bgColor = @(kColorRed);
+    } else if ([color isEqual:[UIColor yellowColor]]) {
+        self.bgColor = @(kColorYellow);
+    } else if ([color isEqual:[UIColor greenColor]]) {
+        self.bgColor = @(kColorGreen);
+    } else  {
+        self.bgColor = @(kColorUnknown);
+    }
 }
-
 - (UIColor *)bgColorFromData {
-    NSInteger r, g, b, a;
-    r = (self.bgColor.integerValue & kMaskRed) >> kNumBitsInThreeBytes;
-    g = (self.bgColor.integerValue & kMaskGrn) >> kNumBitsInTwoBytes;
-    b = (self.bgColor.integerValue & kMaskBlu) >> kNumBitsInOneByte;
-    a = (self.bgColor.integerValue & kMaskAlf);
-    
-    UIColor *color = [UIColor colorWithRed:(CGFloat)r/kOneByteMaxValue
-                                     green:(CGFloat)g/kOneByteMaxValue
-                                      blue:(CGFloat)b/kOneByteMaxValue
-                                     alpha:(CGFloat)a/kOneByteMaxValue];
-    return color;
+    switch (self.bgColor.integerValue) {
+        case kColorBlack:return [UIColor blackColor];
+        case kColorClear:return [UIColor clearColor];
+        case kColorGreen:return [UIColor greenColor];
+        case kColorRed:return [UIColor redColor];
+        case kColorYellow:return [UIColor yellowColor];
+        default:
+            return [UIColor magentaColor];
+    }
 }
 
 @end
