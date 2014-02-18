@@ -8,6 +8,7 @@
 
 #import "DHDetailViewController.h"
 #import "Event.h"
+#import "Event+helperMethods.h"
 
 enum {
     kdummy0,
@@ -27,14 +28,17 @@ enum {
     kNumElementsInTimeEnum
 };
 
-@interface DHDetailViewController ()
+NSString *const kStart = @"Start";
+NSString *const kStop = @"Stop";
 
+@interface DHDetailViewController ()
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (strong, nonatomic) NSTimer *timer;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *presetTimesSegment;
+
 
 @end
 
@@ -70,11 +74,22 @@ enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    // Do any additional setup after loading the view, typically from a nib.
     [self configureView];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
     
     //Default values
     [self updateMin:@(self.detailItem.minTime.floatValue) max:@(self.detailItem.maxTime.floatValue)];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    //Save context before leaving
+    NSError *err;
+    if (![self.context save:&err]) {
+        NSLog(@"Could not save");
+        abort();
+    }
+    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -128,9 +143,9 @@ enum {
     NSString *text = [NSString stringWithFormat:@"%ld", (long)row];
     UILabel *label = [[UILabel alloc] init];
     UIColor *color;
-    if (component == 0) {
+    if (component == kTimeGreen) {
         color = [UIColor greenColor];
-    } else if (component == 1) {
+    } else if (component == kTimeRed) {
         color = [UIColor redColor];
     } else {
         color = [UIColor blackColor];
@@ -169,32 +184,27 @@ enum {
 }
 
 - (IBAction)tappedStartStopButton:(id)sender {
-    static BOOL tempBool = NO;
-    if (!(tempBool = !tempBool)) { //end timer
-        [self formatForRunningTimer:NO];
-        
-        [self.navigationItem.rightBarButtonItem setTitle:@"Start"];
-        [[self detailItem] setEndDate:[NSDate date]];
+    if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) { //end timer
         [self.timer invalidate];
         
-        [self.view setBackgroundColor:[UIColor whiteColor]];
+        [self formatForRunningTimer:NO];
+        [self.navigationItem.rightBarButtonItem setTitle:kStart];
+        [[self detailItem] setEndDate:[NSDate date]];
+        
+        //TODO: Figure out why there is a flicker in the background color of the textlabel.  why does it flicker correct while transitioning but becomes wrong when the animation stops?.  Why does it seem to be correct on launch?
+        //[[self detailItem] setBgColorDataWithColor:self.view.backgroundColor]; //save current color
         
         NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
         self.detailItem.totalTime = [self stringFromTimeInterval:interval];
+        [self.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
     } else { //start timer
         [self formatForRunningTimer:YES];
         
-        [self.navigationItem.rightBarButtonItem setTitle:@"Stop"];
+        [self.navigationItem.rightBarButtonItem setTitle:kStop];
         [[self detailItem] setStartDate:[NSDate date]];
         
         [self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
         [self.timer fire];
-    }
-    
-    NSError *err = nil;
-    if(![self.context save:&err]) {
-        NSLog(@"Could not save");
-        abort();
     }
 }
 
@@ -205,22 +215,26 @@ enum {
 
 - (void)updateBackground {
     NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
-    float minutes = (interval / 60.0);
+    NSInteger seconds = interval;
     
-    NSInteger min = self.detailItem.minTime.integerValue;
-    NSInteger max = self.detailItem.maxTime.integerValue;
+    static const int k60Seconds = 60;
+    NSInteger min = self.detailItem.minTime.integerValue *k60Seconds;
+    NSInteger max = self.detailItem.maxTime.integerValue *k60Seconds;
     
     UIColor *color;
-    if(minutes < min)
-        color = [UIColor blackColor];
-    else if (minutes < ((min + max)/2.0))
-        color = [UIColor greenColor];
-    else if (minutes < max)
-        color = [UIColor yellowColor];
-    else
+    if (seconds == max )
         color = [UIColor redColor];
+    else if(seconds == ((min + max) >> 1))
+        color = [UIColor yellowColor];
+    else if (seconds == min)
+        color = [UIColor greenColor];
+    else if (seconds == 0)
+        color = [UIColor blackColor];
+    else
+        return;
     
     [self.view setBackgroundColor:color];
+    [self.detailItem setBgColorDataWithColor:color];
 }
 
 - (void)updateTime {
@@ -241,11 +255,6 @@ enum {
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self.nameTextField resignFirstResponder];
     self.detailItem.name = self.nameTextField.text;
-    NSError *err;
-    if (![self.context save:&err]) {
-        NSLog(@"Could not save");
-        abort();
-    }
     return NO;
 }
 
@@ -339,12 +348,6 @@ enum {
     
     [[self detailItem] setMinTime:min];
     [[self detailItem] setMaxTime:max];
-    
-    NSError *err;
-    if (![self.context save:&err]) {
-        NSLog(@"Can't save!");
-        abort();
-    }
 }
 
 @end

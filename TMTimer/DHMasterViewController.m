@@ -9,6 +9,8 @@
 #import "DHMasterViewController.h"
 #import "Event.h"
 #import "DHDetailViewController.h"
+#import "Event+helperMethods.h"
+#import "DHTableViewCell.h"
 
 @interface DHMasterViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -51,7 +53,8 @@
     // If appropriate, configure the new managed object.
     // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
     [newManagedObject setTimeStamp:[NSDate date]];
-    
+    [newManagedObject setBgColorDataWithColor:[UIColor clearColor]]; //Default bg color
+  
     // Save the context.
     NSError *error = nil;
     if (![context save:&error]) {
@@ -235,10 +238,25 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    DHTableViewCell *dhCell = (DHTableViewCell *)cell;
     Event *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    cell.textLabel.text = object.name;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"Total Time: %@ @ %d~%d", object.totalTime, object.minTime.intValue, object.maxTime.intValue];
+//    cell.textLabel.text = object.name;
+//    cell.detailTextLabel.text = [NSString stringWithFormat:@"Total Time: %@ @ %d~%d", object.totalTime, object.minTime.intValue, object.maxTime.intValue];
+    [[dhCell contestantName] setText:[object name]];
+    [[dhCell flag] setBackgroundColor:[object bgColorFromData]];
+    
+    NSDateFormatter *dateFormat = [NSDateFormatter new];
+    [dateFormat setDateFormat:@"MMM dd, yyyy"];
+    NSString *creationDate = [dateFormat stringFromDate:[object timeStamp]];
+    [[dhCell creationDate] setText:[NSString stringWithFormat:@"%@ %@", @"Created: ", creationDate]];
+    
+    [[dhCell elapsedTime] setText:[object totalTime]];
+    
+    NSString *qualifyingTime = [NSString stringWithFormat:@"(%d~%d)", [[object minTime] intValue], [[object maxTime] intValue]];
+    [[dhCell timeRange] setText:qualifyingTime];
+    
+    [dhCell setEntity:object];
 }
 
 @end

@@ -2,7 +2,7 @@
 //  Event.h
 //  TMTimer
 //
-//  Created by ryukkusakku on 2/14/14.
+//  Created by ryukkusakku on 2/17/14.
 //  Copyright (c) 2014 ryukkusakku. All rights reserved.
 //
 
@@ -19,5 +19,6 @@
 @property (nonatomic, retain) NSDate * startDate;
 @property (nonatomic, retain) NSDate * timeStamp;
 @property (nonatomic, retain) NSString * totalTime;
+@property (nonatomic, retain) NSNumber * bgColor;
 
 @end
