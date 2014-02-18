@@ -21,15 +21,9 @@
     return self;
 }
 
-
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-    UIColor *color = [self.entity bgColorFromData];
     [super setSelected:selected animated:animated];
-    NSLog(@"\n%@\n%@\n",
-          color,
-          self.flag.backgroundColor);
     // Configure the view for the selected state
 }
 
@@ -37,7 +31,5 @@
     [super layoutSubviews];
     [self.flag setBackgroundColor:self.entity.bgColorFromData];
 }
-
-
 
 @end
