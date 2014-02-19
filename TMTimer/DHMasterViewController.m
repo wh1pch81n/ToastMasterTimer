@@ -12,6 +12,9 @@
 #import "Event+helperMethods.h"
 #import "DHTableViewCell.h"
 
+NSString *const kJohnDoe = @"John Doe";
+NSString *const kJaneDough = @"Jane Dough";
+
 @interface DHMasterViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
@@ -241,9 +244,12 @@
     DHTableViewCell *dhCell = (DHTableViewCell *)cell;
     Event *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-//    cell.textLabel.text = object.name;
-//    cell.detailTextLabel.text = [NSString stringWithFormat:@"Total Time: %@ @ %d~%d", object.totalTime, object.minTime.intValue, object.maxTime.intValue];
+    //handle J.D.
     [[dhCell contestantName] setText:[object name]];
+    if (object.name == Nil || [object.name isEqualToString:@""]) {
+        [[dhCell contestantName] setText:kJohnDoe];
+    }
+    
     [[dhCell flag] setBackgroundColor:[object bgColorFromData]];
     
     NSDateFormatter *dateFormat = [NSDateFormatter new];
