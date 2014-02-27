@@ -139,6 +139,7 @@
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="xtz-1B-MUR" appends="YES" id="y9G-4e-iK2"/>
+                            <outletCollection property="gestureRecognizers" destination="Dzb-Hk-PoY" appends="YES" id="HID-78-m0M"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="HH:mm.ss" id="cra-N8-TIN">
@@ -155,14 +156,21 @@
                         <outlet property="nameTextField" destination="xKm-t7-08K" id="YqJ-J2-8Sq"/>
                         <outlet property="pickerView" destination="u9G-nS-9Pu" id="r7b-5i-7Me"/>
                         <outlet property="presetTimesSegment" destination="xRo-Un-LpM" id="eB0-QZ-x1r"/>
-                        <outlet property="tapGesture" destination="xtz-1B-MUR" id="gHO-3N-JOm"/>
+                        <outlet property="tapGesture1f1t" destination="Dzb-Hk-PoY" id="BUc-Lr-XGX"/>
+                        <outlet property="tapGesture2f2t" destination="xtz-1B-MUR" id="JuW-AV-Wc1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lrm-kH-fPn" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer numberOfTapsRequired="2" numberOfTouchesRequired="2" id="xtz-1B-MUR">
                     <connections>
-                        <action selector="tappedStartStopButton:" destination="Ah7-4n-0Wa" id="dWT-Ma-Qfw"/>
+                        <action selector="tappedTwiceWithTwoFingers:" destination="Ah7-4n-0Wa" id="NeT-ro-ay5"/>
                         <outlet property="delegate" destination="Ah7-4n-0Wa" id="xkB-Jx-SYP"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="Dzb-Hk-PoY">
+                    <connections>
+                        <action selector="tappedOnceWithOneFinger:" destination="Ah7-4n-0Wa" id="Nfp-rJ-ZV8"/>
+                        <outlet property="delegate" destination="Ah7-4n-0Wa" id="GQJ-ko-2D5"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

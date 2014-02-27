@@ -30,11 +30,13 @@ enum {
 };
 
 @interface DHDetailViewController ()
-@property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture;
+@property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture2f2t;
+@property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture1f1t;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (strong, nonatomic) NSTimer *timer;
+@property (strong, nonatomic) NSTimer *timeout;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *presetTimesSegment;
 
 
@@ -65,7 +67,6 @@ enum {
     if (self.detailItem) {
         self.nameTextField.text = self.detailItem.name;
         [self.navigationItem setTitle:self.detailItem.totalTime];
-        [self.tapGesture setEnabled:NO];
     }
 }
 
@@ -74,7 +75,7 @@ enum {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     [self configureView];
-    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self FSM_idle];
     
     //Default values
     [self updateMin:@(self.detailItem.minTime.floatValue) max:@(self.detailItem.maxTime.floatValue)];
@@ -197,30 +198,17 @@ enum {
     [self.pickerView setHidden:b];
     [self.navigationItem setHidesBackButton:b];
     [[UIApplication sharedApplication] setIdleTimerDisabled:b]; //toggle sleep
-    [self.tapGesture setEnabled:b]; //toggle double 2 finger tap
+    [self.tapGesture2f2t setEnabled:b]; //toggle double 2 finger tap
     
     [self.presetTimesSegment setHidden:b];
 }
 
 - (IBAction)tappedStartStopButton:(id)sender {
+    NSLog(@"start stop");
     if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) { //end timer
-        [self.timer invalidate];
-        
-        [self formatForRunningTimer:NO];
-        [self.navigationItem.rightBarButtonItem setTitle:kStart];
-        [[self detailItem] setEndDate:[NSDate date]];
-        
-        NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
-        self.detailItem.totalTime = [self stringFromTimeInterval:interval];
-        [self.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
+        [self FSM_idle];
     } else { //start timer
-        [self formatForRunningTimer:YES];
-        
-        [self.navigationItem.rightBarButtonItem setTitle:kStop];
-        [[self detailItem] setStartDate:[NSDate date]];
-        
-        [self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
-        [self.timer fire];
+        [self FSM_runTimer];
     }
 }
 
@@ -264,6 +252,64 @@ enum {
     NSInteger hours = (ti / 3600);
     return [NSString stringWithFormat:@"%02d:%02d.%02d", (int)hours, (int)minutes, (int)seconds];
 }
+
+#pragma mark - Finite State Machine
+
+- (IBAction)tappedOnceWithOneFinger:(id)sender {
+    NSLog(@"one finger");
+}
+
+- (IBAction)tappedTwiceWithTwoFingers:(id)sender {
+    NSLog(@"two finger");
+}
+
+- (void)FSM_idle {
+    if (_timer != nil) {
+        [_timer invalidate];
+        _timer = nil;
+    }
+
+    if (_timeout != nil) {
+        [_timeout invalidate];
+        _timeout = nil;
+    }
+    
+    [self.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
+    [self.nameTextField setHidden:NO];
+    [self.pickerView setHidden:NO];
+    [self.presetTimesSegment setHidden:NO];
+    [self.navigationItem setHidesBackButton:NO];
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO]; //toggle sleep
+    [self.tapGesture2f2t setEnabled:NO]; //toggle double 2 finger tap
+    [self.tapGesture1f1t setEnabled:NO];
+    [self.navigationItem.rightBarButtonItem setTitle:kStart];
+    
+    [[self detailItem] setEndDate:[NSDate date]];
+    
+    NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
+    self.detailItem.totalTime = [self stringFromTimeInterval:interval];
+}
+
+- (void)FSM_runTimer {
+    [self.nameTextField setHidden:YES];
+    [self.pickerView setHidden:YES];
+    [self.presetTimesSegment setHidden:YES];
+    [self.navigationItem setHidesBackButton:YES];
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES]; //toggle sleep
+    [self.tapGesture2f2t setEnabled:YES]; //toggle double 2 finger tap
+    [self.tapGesture1f1t setEnabled:YES];
+    [self.navigationItem.rightBarButtonItem setTitle:kStop];
+    
+    [[self detailItem] setStartDate:[NSDate date]];
+    
+    [self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
+    [self.timer fire];
+}
+
+- (void)FSM_editingOnTheFly {
+    
+}
+
 
 #pragma mark - Textfield Delegate
 
