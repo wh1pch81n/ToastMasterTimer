@@ -17,4 +17,7 @@
 #define kStart @"Start"
 #define kStop @"Stop"
 
+#define kTotalTime @"totalTime"
+#define kbgColor @"bgColor"
+
 #endif
