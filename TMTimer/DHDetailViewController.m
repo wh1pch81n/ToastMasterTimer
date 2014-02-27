@@ -261,6 +261,8 @@ enum {
 
 - (IBAction)tappedTwiceWithTwoFingers:(id)sender {
     NSLog(@"two finger");
+    [self FSM_idle];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)FSM_idle {
