@@ -260,6 +260,10 @@ enum {
 
 - (IBAction)tappedOnceWithOneFinger:(id)sender {
     NSLog(@"one finger");
+    if (_timeout != nil) {
+        [_timeout invalidate];
+        _timeout = nil;
+    }
     _timeout = [self createTimeOutTimer];
     [self FSM_editingOnTheFly];
 }
@@ -285,6 +289,11 @@ enum {
     [self.nameTextField setHidden:NO];
     [self.pickerView setHidden:NO];
     [self.presetTimesSegment setHidden:NO];
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.nameTextField setAlpha:1];
+        [self.pickerView setAlpha:1];
+        [self.presetTimesSegment setAlpha:1];
+    }];
     [self.navigationItem setHidesBackButton:NO];
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO]; //toggle sleep
     [self.tapGesture2f2t setEnabled:NO]; //toggle double 2 finger tap
@@ -298,9 +307,15 @@ enum {
 }
 
 - (void)FSM_runTimer {
-    [self.nameTextField setHidden:YES];
-    [self.pickerView setHidden:YES];
-    [self.presetTimesSegment setHidden:YES];
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.nameTextField setAlpha:0];
+        [self.pickerView setAlpha:0];
+        [self.presetTimesSegment setAlpha:0];
+    } completion:^(BOOL finished) {
+        [self.nameTextField setHidden:YES];
+        [self.pickerView setHidden:YES];
+        [self.presetTimesSegment setHidden:YES];
+    }];
     [self.navigationItem setHidesBackButton:YES];
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES]; //toggle sleep
     [self.tapGesture2f2t setEnabled:YES]; //toggle double 2 finger tap
@@ -310,7 +325,9 @@ enum {
 
 - (void)FSM_editingOnTheFly {
     [self.pickerView setHidden:NO];
+    [self.pickerView setAlpha:1];
     [self.presetTimesSegment setHidden:NO];
+    [self.presetTimesSegment setAlpha:1];
 }
 
 #pragma mark - timers 
