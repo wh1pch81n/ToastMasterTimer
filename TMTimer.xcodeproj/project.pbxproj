@@ -71,6 +71,7 @@
 		5095B4E718AE7C440023210E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5095B4E918AE7C440023210E /* TMTimerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TMTimerTests.m; sourceTree = "<group>"; };
 		5095B4F318AE7DC80023210E /* TMTimer 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TMTimer 2.xcdatamodel"; sourceTree = "<group>"; };
+		50A3ECE718BF10FF00DB3981 /* DHGlobalConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHGlobalConstants.h; sourceTree = "<group>"; };
 		50B0FC5F18B2FFC0007694F3 /* TMTimer 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TMTimer 5.xcdatamodel"; sourceTree = "<group>"; };
 		50B0FC6018B3002A007694F3 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		50B0FC6118B3002A007694F3 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
@@ -152,6 +153,7 @@
 				5095B4BB18AE7C440023210E /* Supporting Files */,
 				502B46B618B4063000A61D24 /* DHTableViewCell.h */,
 				502B46B718B4063000A61D24 /* DHTableViewCell.m */,
+				50A3ECE718BF10FF00DB3981 /* DHGlobalConstants.h */,
 			);
 			path = TMTimer;
 			sourceTree = "<group>";

@@ -9,6 +9,7 @@
 #import "DHDetailViewController.h"
 #import "Event.h"
 #import "Event+helperMethods.h"
+#import "DHGlobalConstants.h"
 
 enum {
     kdummy0,
@@ -27,9 +28,6 @@ enum {
     kTimeRed,
     kNumElementsInTimeEnum
 };
-
-NSString *const kStart = @"Start";
-NSString *const kStop = @"Stop";
 
 @interface DHDetailViewController ()
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture;
@@ -191,9 +189,6 @@ NSString *const kStop = @"Stop";
         [self.navigationItem.rightBarButtonItem setTitle:kStart];
         [[self detailItem] setEndDate:[NSDate date]];
         
-        //TODO: Figure out why there is a flicker in the background color of the textlabel.  why does it flicker correct while transitioning but becomes wrong when the animation stops?.  Why does it seem to be correct on launch?
-        //[[self detailItem] setBgColorDataWithColor:self.view.backgroundColor]; //save current color
-        
         NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
         self.detailItem.totalTime = [self stringFromTimeInterval:interval];
         [self.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
@@ -276,7 +271,6 @@ NSString *const kStop = @"Stop";
     static const float kSec0_25 = 0.25;
     static const float kMiddleAlpha = 0.5;
     UINavigationBar *navBar = self.navigationController.navigationBar;
-    UINavigationItem *navButtons = self.navigationItem;
     
     [navBar setUserInteractionEnabled:b];
     if (!b) {
@@ -340,6 +334,9 @@ NSString *const kStop = @"Stop";
     
     [[self detailItem] setMinTime:min];
     [[self detailItem] setMaxTime:max];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:min forKey:kUserDefaultMinTime];
+    [[NSUserDefaults standardUserDefaults] setObject:max forKey:kUserDefaultMaxTime];
 }
 
 @end
