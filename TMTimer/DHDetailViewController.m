@@ -317,6 +317,7 @@ enum {
 
 - (UIResponder *)nextResponder {
     if (_timeout != nil) {
+        NSLog(@"interationdetected");
         [self createTimeOutTimer];
     }
     return [super nextResponder];
@@ -427,6 +428,33 @@ enum {
     
     [[NSUserDefaults standardUserDefaults] setObject:min forKey:kUserDefaultMinTime];
     [[NSUserDefaults standardUserDefaults] setObject:max forKey:kUserDefaultMaxTime];
+    
+    if (_timeout != nil) {
+        [self realignBackgroundWithMinAndMax];
+    }
+}
+
+- (void)realignBackgroundWithMinAndMax {
+    NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
+    NSInteger seconds = interval;
+    
+    static const int k60Seconds = 60;
+    NSInteger min = self.detailItem.minTime.integerValue *k60Seconds;
+    NSInteger max = self.detailItem.maxTime.integerValue *k60Seconds;
+    
+    UIColor *color;
+    if (seconds >= max )
+        color = [UIColor redColor];
+    else if(seconds >= ((min + max) >> 1))
+        color = [UIColor yellowColor];
+    else if (seconds >= min)
+        color = [UIColor greenColor];
+    else if (seconds >= 0)
+        color = [UIColor blackColor];
+    else
+        return;
+    
+    [self.detailItem setBgColorDataWithColor:color];
 }
 
 @end
