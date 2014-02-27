@@ -11,9 +11,7 @@
 #import "DHDetailViewController.h"
 #import "Event+helperMethods.h"
 #import "DHTableViewCell.h"
-
-NSString *const kJohnDoe = @"John Doe";
-NSString *const kJaneDough = @"Jane Dough";
+#import "DHGlobalConstants.h"
 
 @interface DHMasterViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -34,6 +32,11 @@ NSString *const kJaneDough = @"Jane Dough";
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{
+                                                              kUserDefaultMinTime:@4,
+                                                              kUserDefaultMaxTime:@6
+                                                              }];
+    
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
@@ -57,6 +60,11 @@ NSString *const kJaneDough = @"Jane Dough";
     // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
     [newManagedObject setTimeStamp:[NSDate date]];
     [newManagedObject setBgColorDataWithColor:[UIColor clearColor]]; //Default bg color
+    
+    //get default values
+    NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
+    [newManagedObject setMinTime:[UD objectForKey:kUserDefaultMinTime]];
+    [newManagedObject setMaxTime:[UD objectForKey:kUserDefaultMaxTime]];
   
     // Save the context.
     NSError *error = nil;
@@ -66,11 +74,6 @@ NSString *const kJaneDough = @"Jane Dough";
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
-//    DHDetailViewController *dest = [DHDetailViewController new];
-//    [self prepareForSegue:[UIStoryboardSegue segueWithIdentifier:@"showDetail" source:self destination:dest performHandler:^{
-//        [self presentViewController:dest animated:YES completion:nil];
-//    }] sender:self];
-    
 }
 
 #pragma mark - Table View
