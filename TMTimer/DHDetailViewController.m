@@ -78,9 +78,15 @@ enum {
     
     //Default values
     [self updateMin:@(self.detailItem.minTime.floatValue) max:@(self.detailItem.maxTime.floatValue)];
+
+    //enable KVO
+    [[self detailItem] addObserver:self forKeyPath:kTotalTime options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    //disable KVO
+    [[self detailItem] removeObserver:self forKeyPath:kTotalTime context:nil];
+    
     //Save context before leaving
     NSError *err;
     if (![self.context save:&err]) {
@@ -94,6 +100,14 @@ enum {
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - KVO delegate
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:kTotalTime]) {
+        [self.navigationItem setTitle:[(Event *)object totalTime]];
+    }
 }
 
 #pragma mark - Split view
@@ -234,7 +248,7 @@ enum {
 
 - (void)updateTime {
     NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
-    [self.navigationItem setTitle:[self stringFromTimeInterval:interval]];
+    [self.detailItem setTotalTime:[self stringFromTimeInterval:interval]];
 }
 
 - (NSString *)stringFromTimeInterval:(NSTimeInterval)interval {
