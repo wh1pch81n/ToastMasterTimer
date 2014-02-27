@@ -208,6 +208,8 @@ enum {
     if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) { //end timer
         [self FSM_idle];
     } else { //start timer
+        [self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
+        [self.timer fire];
         [self FSM_runTimer];
     }
 }
@@ -257,6 +259,7 @@ enum {
 
 - (IBAction)tappedOnceWithOneFinger:(id)sender {
     NSLog(@"one finger");
+    [self FSM_editingOnTheFly];
 }
 
 - (IBAction)tappedTwiceWithTwoFingers:(id)sender {
@@ -303,9 +306,6 @@ enum {
     [self.navigationItem.rightBarButtonItem setTitle:kStop];
     
     [[self detailItem] setStartDate:[NSDate date]];
-    
-    [self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
-    [self.timer fire];
 }
 
 - (void)FSM_editingOnTheFly {
