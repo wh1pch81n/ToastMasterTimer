@@ -81,11 +81,13 @@ enum {
 
     //enable KVO
     [[self detailItem] addObserver:self forKeyPath:kTotalTime options:NSKeyValueObservingOptionNew context:nil];
+    [[self detailItem] addObserver:self forKeyPath:kbgColor options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     //disable KVO
     [[self detailItem] removeObserver:self forKeyPath:kTotalTime context:nil];
+    [[self detailItem] removeObserver:self forKeyPath:kbgColor context:nil];
     
     //Save context before leaving
     NSError *err;
@@ -105,8 +107,13 @@ enum {
 #pragma mark - KVO delegate
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    
+    Event *event = (Event *)object;
+    
     if ([keyPath isEqualToString:kTotalTime]) {
-        [self.navigationItem setTitle:[(Event *)object totalTime]];
+        [self.navigationItem setTitle:event.totalTime];
+    } else if ([keyPath isEqualToString:kbgColor]) {
+        [self.view setBackgroundColor:event.bgColorFromData];
     }
 }
 
@@ -242,7 +249,6 @@ enum {
     else
         return;
     
-    [self.view setBackgroundColor:color];
     [self.detailItem setBgColorDataWithColor:color];
 }
 
