@@ -209,14 +209,15 @@ enum {
         [self FSM_idle];
     } else { //start timer
         [self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
+        [[self detailItem] setStartDate:[NSDate date]];
         [self.timer fire];
         [self FSM_runTimer];
     }
 }
 
 - (void)updates {
-    [self updateTime];
     [self updateBackground];
+    [self updateTime];
 }
 
 - (void)updateBackground {
@@ -259,6 +260,7 @@ enum {
 
 - (IBAction)tappedOnceWithOneFinger:(id)sender {
     NSLog(@"one finger");
+    _timeout = [self createTimeOutTimer];
     [self FSM_editingOnTheFly];
 }
 
@@ -304,14 +306,34 @@ enum {
     [self.tapGesture2f2t setEnabled:YES]; //toggle double 2 finger tap
     [self.tapGesture1f1t setEnabled:YES];
     [self.navigationItem.rightBarButtonItem setTitle:kStop];
-    
-    [[self detailItem] setStartDate:[NSDate date]];
 }
 
 - (void)FSM_editingOnTheFly {
-    
+    [self.pickerView setHidden:NO];
+    [self.presetTimesSegment setHidden:NO];
 }
 
+#pragma mark - timers 
+
+- (UIResponder *)nextResponder {
+    if (_timeout != nil) {
+        [self createTimeOutTimer];
+    }
+    return [super nextResponder];
+}
+
+- (NSTimer *)createTimeOutTimer {
+    static const int kTimeOutInterval = 5;
+    return [NSTimer scheduledTimerWithTimeInterval:kTimeOutInterval target:self selector:@selector(exceededTimeOut) userInfo:nil repeats:NO];
+}
+
+- (void)exceededTimeOut {
+    if (_timeout != nil) {
+        [_timeout invalidate];
+        _timeout = nil;
+    }
+    [self FSM_runTimer];
+}
 
 #pragma mark - Textfield Delegate
 
