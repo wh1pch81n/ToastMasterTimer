@@ -260,11 +260,7 @@ enum {
 
 - (IBAction)tappedOnceWithOneFinger:(id)sender {
     NSLog(@"one finger");
-    if (_timeout != nil) {
-        [_timeout invalidate];
-        _timeout = nil;
-    }
-    _timeout = [self createTimeOutTimer];
+    [self invalidateTimeOutTimerThenSetItWithNewlyCreatedOne];
     [self FSM_editingOnTheFly];
 }
 
@@ -275,25 +271,21 @@ enum {
 }
 
 - (void)FSM_idle {
-    if (_timer != nil) {
-        [_timer invalidate];
-        _timer = nil;
-    }
-
-    if (_timeout != nil) {
-        [_timeout invalidate];
-        _timeout = nil;
-    }
+    [self.timer invalidate];
+    self.timer = nil;
+    
+    [self.timeout invalidate];
+    self.timeout = nil;
     
     [self.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
     [self.nameTextField setHidden:NO];
     [self.pickerView setHidden:NO];
     [self.presetTimesSegment setHidden:NO];
-    [UIView animateWithDuration:0.5 animations:^{
-        [self.nameTextField setAlpha:1];
-        [self.pickerView setAlpha:1];
-        [self.presetTimesSegment setAlpha:1];
-    }];
+//    [UIView animateWithDuration:0.5 animations:^{
+//        [self.nameTextField setAlpha:1];
+//        [self.pickerView setAlpha:1];
+//        [self.presetTimesSegment setAlpha:1];
+//    }];
     [self.navigationItem setHidesBackButton:NO];
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO]; //toggle sleep
     [self.tapGesture2f2t setEnabled:NO]; //toggle double 2 finger tap
@@ -307,15 +299,16 @@ enum {
 }
 
 - (void)FSM_runTimer {
-    [UIView animateWithDuration:0.5 animations:^{
-        [self.nameTextField setAlpha:0];
-        [self.pickerView setAlpha:0];
-        [self.presetTimesSegment setAlpha:0];
-    } completion:^(BOOL finished) {
-        [self.nameTextField setHidden:YES];
-        [self.pickerView setHidden:YES];
-        [self.presetTimesSegment setHidden:YES];
-    }];
+    NSLog(@"runTimer");
+    //    [UIView animateWithDuration:0.5 animations:^{
+    //        [self.nameTextField setAlpha:0];
+    //        [self.pickerView setAlpha:0];
+    //        [self.presetTimesSegment setAlpha:0];
+    //    } completion:^(BOOL finished) {
+    [self.nameTextField setHidden:YES];
+    [self.pickerView setHidden:YES];
+    [self.presetTimesSegment setHidden:YES];
+    //    }];
     [self.navigationItem setHidesBackButton:YES];
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES]; //toggle sleep
     [self.tapGesture2f2t setEnabled:YES]; //toggle double 2 finger tap
@@ -333,24 +326,35 @@ enum {
 #pragma mark - timers 
 
 - (UIResponder *)nextResponder {
-    if (_timeout != nil) {
-        NSLog(@"interationdetected");
-        [self createTimeOutTimer];
+    NSLog(@"interationdetected");
+    if (self.timeout != nil) {
+        NSLog(@"refreshing timeout timer");
+        [self invalidateTimeOutTimerThenSetItWithNewlyCreatedOne];
     }
     return [super nextResponder];
 }
 
 - (NSTimer *)createTimeOutTimer {
-    static const int kTimeOutInterval = 5;
+    const NSTimeInterval kTimeOutInterval = 5.0;
     return [NSTimer scheduledTimerWithTimeInterval:kTimeOutInterval target:self selector:@selector(exceededTimeOut) userInfo:nil repeats:NO];
 }
 
 - (void)exceededTimeOut {
-    if (_timeout != nil) {
-        [_timeout invalidate];
-        _timeout = nil;
-    }
+    NSLog(@"exceed time out");
+    //NSLog(@"\n%@\n%@", refTimeOut, self.timeout);
+    [self.timeout invalidate];
+    self.timeout = nil;
     [self FSM_runTimer];
+}
+
+/**
+ invalidates the currect timeout timer.  Sets it to point to a new one.  
+ It will fire on its own after a certain time interval as passed.
+ */
+- (void)invalidateTimeOutTimerThenSetItWithNewlyCreatedOne {
+    NSLog(@"invalidate then fire");
+    [[self timeout] invalidate];
+    [self setTimeout:[self createTimeOutTimer]];
 }
 
 #pragma mark - Textfield Delegate
@@ -446,7 +450,9 @@ enum {
     [[NSUserDefaults standardUserDefaults] setObject:min forKey:kUserDefaultMinTime];
     [[NSUserDefaults standardUserDefaults] setObject:max forKey:kUserDefaultMaxTime];
     
-    if (_timeout != nil) {
+    if (self.timeout != nil) {
+        NSLog(@"update colors");
+        [self invalidateTimeOutTimerThenSetItWithNewlyCreatedOne];
         [self realignBackgroundWithMinAndMax];
     }
 }
