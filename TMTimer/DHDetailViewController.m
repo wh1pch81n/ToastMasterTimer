@@ -30,11 +30,13 @@ enum {
 };
 
 @interface DHDetailViewController ()
-@property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture;
+@property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture2f2t;
+@property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture1f1t;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (strong, nonatomic) NSTimer *timer;
+@property (strong, nonatomic) NSTimer *timeout;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *presetTimesSegment;
 
 
@@ -61,11 +63,9 @@ enum {
 - (void)configureView
 {
     // Update the user interface for the detail item.
-    
     if (self.detailItem) {
         self.nameTextField.text = self.detailItem.name;
         [self.navigationItem setTitle:self.detailItem.totalTime];
-        [self.tapGesture setEnabled:NO];
     }
 }
 
@@ -74,7 +74,7 @@ enum {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     [self configureView];
-    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self FSM_idle];
     
     //Default values
     [self updateMin:@(self.detailItem.minTime.floatValue) max:@(self.detailItem.maxTime.floatValue)];
@@ -150,13 +150,9 @@ enum {
     return pickerView.frame.size.width/3 -10;
 }
 
-// these methods return either a plain NSString, a NSAttributedString, or a view (e.g UILabel) to display the row for the component.
-// for the view versions, we cache any hidden and thus unused views and pass them back for reuse.
-// If you return back a different object, the old one will be released. the view will be centered in the row rect
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     return [NSString stringWithFormat:@"%ld", (long)row];
 }
-
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
     NSString *text = [NSString stringWithFormat:@"%ld", (long)row];
@@ -188,47 +184,25 @@ enum {
 
 #pragma mark - start and stop
 
-/**
- Formates the ui for set up  or for running the timer.
- @param b if this is YES it will hide most things.  If No it will show all the set up gear
- */
-- (void)formatForRunningTimer:(BOOL)b {
-    [self.nameTextField setHidden:b];
-    [self.pickerView setHidden:b];
-    [self.navigationItem setHidesBackButton:b];
-    [[UIApplication sharedApplication] setIdleTimerDisabled:b]; //toggle sleep
-    [self.tapGesture setEnabled:b]; //toggle double 2 finger tap
-    
-    [self.presetTimesSegment setHidden:b];
-}
-
 - (IBAction)tappedStartStopButton:(id)sender {
     if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) { //end timer
-        [self.timer invalidate];
-        
-        [self formatForRunningTimer:NO];
-        [self.navigationItem.rightBarButtonItem setTitle:kStart];
-        [[self detailItem] setEndDate:[NSDate date]];
-        
-        NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
-        self.detailItem.totalTime = [self stringFromTimeInterval:interval];
-        [self.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
+        [self FSM_idle];
     } else { //start timer
-        [self formatForRunningTimer:YES];
-        
-        [self.navigationItem.rightBarButtonItem setTitle:kStop];
-        [[self detailItem] setStartDate:[NSDate date]];
-        
         [self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
+        [[self detailItem] setStartDate:[NSDate date]];
         [self.timer fire];
+        [self FSM_runTimer];
     }
 }
 
 - (void)updates {
-    [self updateTime];
     [self updateBackground];
+    [self updateTime];
 }
 
+/**
+ Updates the bdColor property of the Model
+ */
 - (void)updateBackground {
     NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
     NSInteger seconds = interval;
@@ -252,11 +226,17 @@ enum {
     [self.detailItem setBgColorDataWithColor:color];
 }
 
+/**
+ Updates the TotalTime property of the model
+ */
 - (void)updateTime {
     NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
     [self.detailItem setTotalTime:[self stringFromTimeInterval:interval]];
 }
 
+/**
+ Converts a timeinterval into hours:minutes:seconds
+ */
 - (NSString *)stringFromTimeInterval:(NSTimeInterval)interval {
     NSInteger ti = (NSInteger)interval;
     NSInteger seconds = ti % 60;
@@ -265,11 +245,116 @@ enum {
     return [NSString stringWithFormat:@"%02d:%02d.%02d", (int)hours, (int)minutes, (int)seconds];
 }
 
+#pragma mark - Finite State Machine
+
+- (IBAction)tappedOnceWithOneFinger:(id)sender {
+    [self invalidateTimeOutTimerThenSetItWithNewlyCreatedOne];
+    [self FSM_editingOnTheFly];
+}
+
+- (IBAction)tappedTwiceWithTwoFingers:(id)sender {
+    [self FSM_idle];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)FSM_idle {
+    [self.timer invalidate];
+    self.timer = nil;
+    
+    [self.timeout invalidate];
+    self.timeout = nil;
+    
+    [self enableNavItemButtons:YES];
+    [self.nameTextField setHidden:NO];
+    [self.pickerView setHidden:NO];
+    [self.presetTimesSegment setHidden:NO];
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
+        [self.nameTextField setAlpha:1];
+        [self.pickerView setAlpha:1];
+        [self.presetTimesSegment setAlpha:1];
+    }];
+    [self.navigationItem setHidesBackButton:NO];
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO]; //toggle sleep
+    [self.tapGesture2f2t setEnabled:NO]; //toggle double 2 finger tap
+    [self.tapGesture1f1t setEnabled:NO];
+    [self.navigationItem.rightBarButtonItem setTitle:kStart];
+    
+    [[self detailItem] setEndDate:[NSDate date]];
+    
+    NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
+    self.detailItem.totalTime = [self stringFromTimeInterval:interval];
+}
+
+- (void)FSM_runTimer {
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.nameTextField setAlpha:0];
+        [self.pickerView setAlpha:0];
+        [self.presetTimesSegment setAlpha:0];
+    } completion:^(BOOL finished) {
+        [self.nameTextField setHidden:YES];
+        [self.nameTextField resignFirstResponder];
+        [self.pickerView setHidden:YES];
+        [self.presetTimesSegment setHidden:YES];
+    }];
+    [self.navigationItem setHidesBackButton:YES];
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES]; //toggle sleep
+    [self.tapGesture2f2t setEnabled:YES]; //toggle double 2 finger tap
+    [self.tapGesture1f1t setEnabled:YES];
+    [self.navigationItem.rightBarButtonItem setTitle:kStop];
+}
+
+- (void)FSM_editingOnTheFly {
+    [self.pickerView setHidden:NO];
+    [self.pickerView setAlpha:1];
+    [self.presetTimesSegment setHidden:NO];
+    [self.presetTimesSegment setAlpha:1];
+    [self.nameTextField setHidden:NO];
+    [self.nameTextField setAlpha:1];
+}
+
+#pragma mark - timers 
+
+/**
+ Called whenever interaction is detected. 
+ Not used when pickerview is being pressed.
+ Not used when presettimesSegment Buttons are pressed
+ Called for events that end up being recieved by the viewcontroller
+ */
+- (UIResponder *)nextResponder {
+    if (self.timeout != nil) {
+        [self invalidateTimeOutTimerThenSetItWithNewlyCreatedOne];
+    }
+    return [super nextResponder];
+}
+
+- (NSTimer *)createTimeOutTimer {
+    const NSTimeInterval kTimeOutInterval = 5.0;
+    return [NSTimer scheduledTimerWithTimeInterval:kTimeOutInterval target:self selector:@selector(exceededTimeOut) userInfo:nil repeats:NO];
+}
+
+/**
+ invalidates the timeout then goes to the runTimer State
+ */
+- (void)exceededTimeOut {
+    [self.timeout invalidate];
+    self.timeout = nil;
+    [self FSM_runTimer];
+}
+
+/**
+ invalidates the currect timeout timer.  Sets it to point to a new one.  
+ It will fire on its own after a certain time interval as passed.
+ */
+- (void)invalidateTimeOutTimerThenSetItWithNewlyCreatedOne {
+    [[self timeout] invalidate];
+    [self setTimeout:[self createTimeOutTimer]];
+}
+
 #pragma mark - Textfield Delegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self.nameTextField resignFirstResponder];
-    self.detailItem.name = self.nameTextField.text;
     return NO;
 }
 
@@ -278,6 +363,7 @@ enum {
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.detailItem.name = self.nameTextField.text;
     [self enableNavItemButtons:YES];
 }
 
@@ -357,6 +443,38 @@ enum {
     
     [[NSUserDefaults standardUserDefaults] setObject:min forKey:kUserDefaultMinTime];
     [[NSUserDefaults standardUserDefaults] setObject:max forKey:kUserDefaultMaxTime];
+    
+    if (self.timeout != nil) {
+        [self invalidateTimeOutTimerThenSetItWithNewlyCreatedOne];
+        [self realignBackgroundWithMinAndMax];
+    }
+}
+
+/**
+ Updates the model to have the correct color given the min and max values.
+ Can be inefficient if called many times, back to back.
+ */
+- (void)realignBackgroundWithMinAndMax {
+    NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
+    NSInteger seconds = interval;
+    
+    static const int k60Seconds = 60;
+    NSInteger min = self.detailItem.minTime.integerValue *k60Seconds;
+    NSInteger max = self.detailItem.maxTime.integerValue *k60Seconds;
+    
+    UIColor *color;
+    if (seconds >= max )
+        color = [UIColor redColor];
+    else if(seconds >= ((min + max) >> 1))
+        color = [UIColor yellowColor];
+    else if (seconds >= min)
+        color = [UIColor greenColor];
+    else if (seconds >= 0)
+        color = [UIColor blackColor];
+    else
+        return;
+    
+    [self.detailItem setBgColorDataWithColor:color];
 }
 
 @end
