@@ -277,6 +277,7 @@ enum {
     [self.timeout invalidate];
     self.timeout = nil;
     
+    [self enableNavItemButtons:YES];
     [self.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
     [self.nameTextField setHidden:NO];
     [self.pickerView setHidden:NO];
@@ -306,6 +307,7 @@ enum {
     //        [self.presetTimesSegment setAlpha:0];
     //    } completion:^(BOOL finished) {
     [self.nameTextField setHidden:YES];
+    [self.nameTextField resignFirstResponder];
     [self.pickerView setHidden:YES];
     [self.presetTimesSegment setHidden:YES];
     //    }];
@@ -321,6 +323,8 @@ enum {
     [self.pickerView setAlpha:1];
     [self.presetTimesSegment setHidden:NO];
     [self.presetTimesSegment setAlpha:1];
+    [self.nameTextField setHidden:NO];
+    [self.nameTextField setAlpha:1];
 }
 
 #pragma mark - timers 
@@ -361,7 +365,6 @@ enum {
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self.nameTextField resignFirstResponder];
-    self.detailItem.name = self.nameTextField.text;
     return NO;
 }
 
@@ -370,6 +373,7 @@ enum {
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.detailItem.name = self.nameTextField.text;
     [self enableNavItemButtons:YES];
 }
 
