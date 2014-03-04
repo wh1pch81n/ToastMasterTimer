@@ -66,6 +66,8 @@
 		50143E9E18C55A6700350947 /* Default_320x480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default_320x480.png; sourceTree = "<group>"; };
 		50143E9F18C55A6700350947 /* Default_640x1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default_640x1136.png; sourceTree = "<group>"; };
 		50143EA018C55A6700350947 /* Default_640x960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default_640x960.png; sourceTree = "<group>"; };
+		50143EA618C55FDA00350947 /* TMIcon.pxm */ = {isa = PBXFileReference; lastKnownFileType = file; path = TMIcon.pxm; sourceTree = "<group>"; };
+		50143EA718C55FDA00350947 /* TMLaunchImage.pxm */ = {isa = PBXFileReference; lastKnownFileType = file; path = TMLaunchImage.pxm; sourceTree = "<group>"; };
 		501518E218B195ED00CC286D /* TMTimer 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TMTimer 3.xcdatamodel"; sourceTree = "<group>"; };
 		501518E618B1979200CC286D /* Event+helperMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Event+helperMethods.h"; sourceTree = "<group>"; };
 		501518E718B1979200CC286D /* Event+helperMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Event+helperMethods.m"; sourceTree = "<group>"; };
@@ -146,6 +148,8 @@
 		5071126618C518E0000790E1 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				50143EA618C55FDA00350947 /* TMIcon.pxm */,
+				50143EA718C55FDA00350947 /* TMLaunchImage.pxm */,
 				50143E9C18C55A6700350947 /* Default_1536x2048.png */,
 				50143E9D18C55A6700350947 /* Default_768x1024.png */,
 				50143E9E18C55A6700350947 /* Default_320x480.png */,
