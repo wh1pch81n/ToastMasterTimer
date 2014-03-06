@@ -13,6 +13,8 @@
 #import "DHTableViewCell.h"
 #import "DHGlobalConstants.h"
 
+NSString *const kMasterViewControllerTitle = @"Speakers";
+
 @interface DHMasterViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
@@ -42,6 +44,8 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (DHDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+	
+	[self.navigationItem setTitle:kMasterViewControllerTitle];
 }
 
 - (void)didReceiveMemoryWarning

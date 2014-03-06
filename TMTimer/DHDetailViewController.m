@@ -87,6 +87,10 @@ enum {
 	[[self detailItem] addObserver:self forKeyPath:kbgColor options:NSKeyValueObservingOptionNew context:nil];
 	
 	//Ads
+	[self setupIADS];
+}
+
+- (void)setupIADS {
 	float ios_version = [[[UIDevice currentDevice] systemVersion] floatValue];
 	if (ios_version >= kIOS_version_7) {
 		self.canDisplayBannerAds = YES;
