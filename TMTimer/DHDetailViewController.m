@@ -10,6 +10,7 @@
 #import "Event.h"
 #import "Event+helperMethods.h"
 #import "DHGlobalConstants.h"
+#import "DHAppDelegate.h"
 
 enum {
     kdummy0,
@@ -85,17 +86,14 @@ enum {
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    //disable KVO
-    [[self detailItem] removeObserver:self forKeyPath:kTotalTime context:nil];
-    [[self detailItem] removeObserver:self forKeyPath:kbgColor context:nil];
-    
-    //Save context before leaving
-    NSError *err;
-    if (![self.context save:&err]) {
-        NSLog(@"Could not save");
-        abort();
-    }
-    [super viewWillDisappear:animated];
+	//disable KVO
+	[[self detailItem] removeObserver:self forKeyPath:kTotalTime context:nil];
+	[[self detailItem] removeObserver:self forKeyPath:kbgColor context:nil];
+  
+	//Save context before leaving
+	DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
+	[appDelegate saveContext];
+	[super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
