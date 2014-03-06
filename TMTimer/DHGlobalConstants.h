@@ -6,9 +6,6 @@
 //  Copyright (c) 2014 ryukkusakku. All rights reserved.
 //
 
-#ifndef _constants_
-#define _constants_
-
 #define kJohnDoe @"John Doe"
 #define kJaneDough @"Jane Dough"
 #define kUserDefaultMinTime @"UDMinTime"
@@ -20,4 +17,6 @@
 #define kTotalTime @"totalTime"
 #define kbgColor @"bgColor"
 
-#endif
+#define kIOS_version_7 7.0
+#define kIOS_version_6 6.0
+
