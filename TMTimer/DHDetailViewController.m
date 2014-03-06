@@ -75,8 +75,6 @@ enum {
 	[super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 	[self configureView];
-	
-	
 	[self FSM_idle];
 	
 	//Default values

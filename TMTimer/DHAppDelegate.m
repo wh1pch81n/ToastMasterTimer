@@ -7,7 +7,7 @@
 //
 
 #import "DHAppDelegate.h"
-
+#import "DHGlobalConstants.h"
 #import "DHMasterViewController.h"
 
 @implementation DHAppDelegate
@@ -32,6 +32,10 @@
         DHMasterViewController *controller = (DHMasterViewController *)navigationController.topViewController;
         controller.managedObjectContext = self.managedObjectContext;
     }
+	
+	[[UINavigationBar appearance] setTitleTextAttributes:
+	 @{UITextAttributeFont: [UIFont systemFontOfSize:kNavBarFontSize]}];
+	
     return YES;
 }
 							
