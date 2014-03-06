@@ -12,7 +12,7 @@
 #import "Event+helperMethods.h"
 #import "DHTableViewCell.h"
 #import "DHGlobalConstants.h"
-
+#import "DHAppDelegate.h"
 
 @interface DHMasterViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -68,13 +68,8 @@
 	[newManagedObject setMaxTime:[UD objectForKey:kUserDefaultMaxTime]];
   
 	// Save the context.
-	NSError *error = nil;
-	if (![context save:&error]) {
-		// Replace this implementation with code to handle the error appropriately.
-		// abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-		abort();
-	}
+	DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
+	[appDelegate saveContext];
 }
 
 #pragma mark - Table View
