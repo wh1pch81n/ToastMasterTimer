@@ -489,7 +489,8 @@ enum {
 
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
 	//Stop timer
-	return YES;
+	//return YES;
+	return NO;
 }
 
 - (void)bannerViewActionDidFinish:(ADBannerView *)banner {
