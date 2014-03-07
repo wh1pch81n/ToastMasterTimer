@@ -134,6 +134,13 @@
                                     <action selector="tappedSegmentedPresetButton:" destination="Ah7-4n-0Wa" eventType="valueChanged" id="DMW-cl-cYa"/>
                                 </connections>
                             </segmentedControl>
+                            <adBannerView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="EJw-e2-M4e">
+                                <rect key="frame" x="0.0" y="430" width="320" height="50"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Ah7-4n-0Wa" id="3IQ-fH-Lq5"/>
+                                </connections>
+                            </adBannerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -153,6 +160,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="bannerView" destination="EJw-e2-M4e" id="MxQ-Jk-3U6"/>
                         <outlet property="nameTextField" destination="xKm-t7-08K" id="YqJ-J2-8Sq"/>
                         <outlet property="pickerView" destination="u9G-nS-9Pu" id="r7b-5i-7Me"/>
                         <outlet property="presetTimesSegment" destination="xRo-Un-LpM" id="eB0-QZ-x1r"/>

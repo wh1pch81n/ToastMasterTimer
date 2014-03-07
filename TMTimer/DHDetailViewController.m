@@ -30,7 +30,7 @@ enum {
 	kNumElementsInTimeEnum
 };
 
-@interface DHDetailViewController ()
+@interface DHDetailViewController () <ADBannerViewDelegate>
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture2f2t;
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture1f1t;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -40,7 +40,7 @@ enum {
 @property (strong, nonatomic) NSTimer *timeout;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *presetTimesSegment;
 
-
+@property (weak, nonatomic) IBOutlet ADBannerView *bannerView;
 @end
 
 @implementation DHDetailViewController
@@ -83,18 +83,6 @@ enum {
 	//enable KVO
 	[[self detailItem] addObserver:self forKeyPath:kTotalTime options:NSKeyValueObservingOptionNew context:nil];
 	[[self detailItem] addObserver:self forKeyPath:kbgColor options:NSKeyValueObservingOptionNew context:nil];
-	
-	//Ads
-	[self setupIADS];
-}
-
-- (void)setupIADS {
-	float ios_version = [[[UIDevice currentDevice] systemVersion] floatValue];
-	if (ios_version >= kIOS_version_7) {
-		self.canDisplayBannerAds = YES;
-	} else if (ios_version >= kIOS_version_6) {
-		
-	}
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -277,6 +265,7 @@ enum {
 	[self.timeout invalidate];
 	self.timeout = nil;
 	
+	[self.bannerView setHidden:YES];
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
 	[self.pickerView setHidden:NO];
@@ -309,6 +298,7 @@ enum {
 		[self.nameTextField resignFirstResponder];
 		[self.pickerView setHidden:YES];
 		[self.presetTimesSegment setHidden:YES];
+		[self.bannerView setHidden:NO];
 	}];
 	[self.navigationItem setHidesBackButton:YES];
 	[[UIApplication sharedApplication] setIdleTimerDisabled:YES]; //toggle sleep
@@ -318,6 +308,7 @@ enum {
 }
 
 - (void)FSM_editingOnTheFly {
+	[self.bannerView setHidden:YES];
 	[self.pickerView setHidden:NO];
 	[self.pickerView setAlpha:1];
 	[self.presetTimesSegment setHidden:NO];
@@ -488,6 +479,27 @@ enum {
 		return;
 	
 	[self.detailItem setBgColorDataWithColor:color];
+}
+
+#pragma mark - iAd's delegate methods
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner {
+
+}
+
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
+	//Stop timer
+	return YES;
+}
+
+- (void)bannerViewActionDidFinish:(ADBannerView *)banner {
+	//resume timer
+	
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+	[banner removeFromSuperview];
+	[self.view layoutIfNeeded];
 }
 
 @end
