@@ -1,0 +1,23 @@
+===========================
+March 8, 2014
+Version 1.0.0
+---------------------------
+
+[Why should you care]
+Need to prepare for Toastmaster's speech?  Need someone to time you?  Look no further than "Toastmaster Timer",  an app that you can use to simulate the role of the Timer whenever you need it.
+
+Let's say you are preparing for a Tabletopics speech (which is 1 to 2 minutes).
+Start the timer and time will begin and the screen will appear black.
+It will turn green when the timer reaches the given minimum time (e.g. one minute).
+It will turn red when the timer reaches the given maximum time (e.g. two minutes).
+Press the Stop button when you are finished.
+
+Are you the timer of the day?  Want to save a few trees? 
+
+You can add new Speakers by pressing the "+" button.  You can create a just a single entry or a whole list!  Tap an entry and you can enter their names and their speech times before the event starts. Click Start when it is their turn!
+
+[On-the-fly editing.]
+Did you start the timer, but enter their info wrong? single tap to bring up the editing UI to edit while the timer is still running.
+
+[Quick stop]
+Is pressing stop then back too many steps for you?  You can do both of those steps with one gesture.  When the timer is running,  simply double tap with two fingers to save the time and get back to the list of speakers.
