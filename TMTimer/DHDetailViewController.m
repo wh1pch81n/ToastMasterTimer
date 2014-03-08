@@ -187,6 +187,10 @@ enum {
 
 - (IBAction)tappedStartStopButton:(id)sender {
 	if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) { //end timer
+		[[self detailItem] setEndDate:[NSDate date]];
+		
+		NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
+		self.detailItem.totalTime = [self stringFromTimeInterval:interval];
 		[self FSM_idle];
 	} else { //start timer
 		[self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
@@ -281,11 +285,6 @@ enum {
 	[self.tapGesture2f2t setEnabled:NO]; //toggle double 2 finger tap
 	[self.tapGesture1f1t setEnabled:NO];
 	[self.navigationItem.rightBarButtonItem setTitle:kStart];
-	
-	[[self detailItem] setEndDate:[NSDate date]];
-	
-	NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
-	self.detailItem.totalTime = [self stringFromTimeInterval:interval];
 }
 
 - (void)FSM_runTimer {
