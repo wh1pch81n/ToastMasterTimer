@@ -10,7 +10,6 @@
 #import "Event.h"
 #import "Event+helperMethods.h"
 #import "DHGlobalConstants.h"
-#import <iAd/iAd.h>
 
 enum {
 	kdummy0,
@@ -30,7 +29,7 @@ enum {
 	kNumElementsInTimeEnum
 };
 
-@interface DHDetailViewController () <ADBannerViewDelegate>
+@interface DHDetailViewController () 
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture2f2t;
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture1f1t;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -490,6 +489,7 @@ enum {
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+	NSLog(@"timerview could not load Ads");
 	[banner removeFromSuperview];
 	[self.view layoutIfNeeded];
 }

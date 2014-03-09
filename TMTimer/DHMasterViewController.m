@@ -16,6 +16,8 @@
 NSString *const kMasterViewControllerTitle = @"Speakers";
 
 @interface DHMasterViewController ()
+
+@property (strong, nonatomic) ADBannerView *bannerView;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
@@ -32,20 +34,25 @@ NSString *const kMasterViewControllerTitle = @"Speakers";
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+	[super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{
-                                                              kUserDefaultMinTime:@4,
-                                                              kUserDefaultMaxTime:@6
-                                                              }];
-    
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    self.navigationItem.rightBarButtonItem = addButton;
-    self.detailViewController = (DHDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+	[[NSUserDefaults standardUserDefaults] registerDefaults:@{
+																														kUserDefaultMinTime:@4,
+																														kUserDefaultMaxTime:@6
+																														}];
+	
+	self.navigationItem.leftBarButtonItem = self.editButtonItem;
+	
+	UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+	self.navigationItem.rightBarButtonItem = addButton;
+	self.detailViewController = (DHDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	
 	[self.navigationItem setTitle:kMasterViewControllerTitle];
+
+	//set up iAd's
+	self.bannerView = [[ADBannerView alloc] initWithFrame:CGRectZero];
+	[self.bannerView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+	[self.bannerView setDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -271,5 +278,30 @@ NSString *const kMasterViewControllerTitle = @"Speakers";
     
     [dhCell setEntity:object];
 }
+
+#pragma mark - iAd's delegate methods
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner {
+	[self.tableView setTableHeaderView:self.bannerView];
+}
+
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
+	//Stop timer
+	//return YES;
+	return NO;
+}
+
+- (void)bannerViewActionDidFinish:(ADBannerView *)banner {
+	//resume timer
+	
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+	NSLog(@"TableView could not load Ads");
+	[banner removeFromSuperview];
+	[self.tableView layoutIfNeeded];
+	[self.tableView setTableHeaderView:nil];
+}
+
 
 @end
