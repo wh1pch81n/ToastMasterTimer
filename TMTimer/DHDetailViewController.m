@@ -40,7 +40,7 @@ enum {
 @property (strong, nonatomic) NSTimer *timeout;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *presetTimesSegment;
 
-
+@property (weak, nonatomic) IBOutlet ADBannerView *bannerView;
 @end
 
 @implementation DHDetailViewController
@@ -89,10 +89,13 @@ enum {
 	//disable KVO
 	[[self detailItem] removeObserver:self forKeyPath:kTotalTime context:nil];
 	[[self detailItem] removeObserver:self forKeyPath:kbgColor context:nil];
-  
+
+  [[self detailItem] setBgColorDataWithColor:[self realignBackgroundWithMinAndMax]];
+	
 	//Save context before leaving
 	DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
 	[appDelegate saveContext];
+
 	[super viewWillDisappear:animated];
 }
 
@@ -184,10 +187,15 @@ enum {
 
 - (IBAction)tappedStartStopButton:(id)sender {
 	if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) { //end timer
+		[[self detailItem] setEndDate:[NSDate date]];
+		
+		NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
+		self.detailItem.totalTime = [self stringFromTimeInterval:interval];
 		[self FSM_idle];
 	} else { //start timer
 		[self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
 		[[self detailItem] setStartDate:[NSDate date]];
+		[[self detailItem] setEndDate:nil];
 		[self.timer fire];
 		[self FSM_runTimer];
 	}
@@ -202,26 +210,7 @@ enum {
  Updates the bdColor property of the Model
  */
 - (void)updateBackground {
-	NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
-	NSInteger seconds = interval;
-	
-	static const int k60Seconds = 60;
-	NSInteger min = self.detailItem.minTime.integerValue *k60Seconds;
-	NSInteger max = self.detailItem.maxTime.integerValue *k60Seconds;
-	
-	UIColor *color;
-	if (seconds == max )
-		color = [UIColor redColor];
-	else if(seconds == ((min + max) >> 1))
-		color = [UIColor yellowColor];
-	else if (seconds == min)
-		color = [UIColor greenColor];
-	else if (seconds == 0)
-		color = [UIColor blackColor];
-	else
-		return;
-	
-	[self.detailItem setBgColorDataWithColor:color];
+	[self realignBackgroundWithMinAndMax];
 }
 
 /**
@@ -262,6 +251,7 @@ enum {
 	[self.timeout invalidate];
 	self.timeout = nil;
 	
+	[self.bannerView setHidden:YES];
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
 	[self.pickerView setHidden:NO];
@@ -277,11 +267,6 @@ enum {
 	[self.tapGesture2f2t setEnabled:NO]; //toggle double 2 finger tap
 	[self.tapGesture1f1t setEnabled:NO];
 	[self.navigationItem.rightBarButtonItem setTitle:kStart];
-	
-	[[self detailItem] setEndDate:[NSDate date]];
-	
-	NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
-	self.detailItem.totalTime = [self stringFromTimeInterval:interval];
 }
 
 - (void)FSM_runTimer {
@@ -294,6 +279,7 @@ enum {
 		[self.nameTextField resignFirstResponder];
 		[self.pickerView setHidden:YES];
 		[self.presetTimesSegment setHidden:YES];
+		[self.bannerView setHidden:NO];
 	}];
 	[self.navigationItem setHidesBackButton:YES];
 	[[UIApplication sharedApplication] setIdleTimerDisabled:YES]; //toggle sleep
@@ -303,6 +289,7 @@ enum {
 }
 
 - (void)FSM_editingOnTheFly {
+	[self.bannerView setHidden:YES];
 	[self.pickerView setHidden:NO];
 	[self.pickerView setAlpha:1];
 	[self.presetTimesSegment setHidden:NO];
@@ -444,16 +431,23 @@ enum {
 	
 	if (self.timeout != nil) {
 		[self invalidateTimeOutTimerThenSetItWithNewlyCreatedOne];
-		[self realignBackgroundWithMinAndMax];
 	}
 }
 
 /**
  Updates the model to have the correct color given the min and max values.
  Can be inefficient if called many times, back to back.
+ 
+ @returns the color that was used to set the bg property
  */
-- (void)realignBackgroundWithMinAndMax {
-	NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
+- (UIColor *)realignBackgroundWithMinAndMax {
+	Event *detail = self.detailItem;
+	NSTimeInterval interval;
+	if (detail.endDate != nil)
+		interval = [detail.endDate timeIntervalSinceDate:detail.startDate];
+	else
+		interval = [[NSDate new] timeIntervalSinceDate:detail.startDate];
+	
 	NSInteger seconds = interval;
 	
 	static const int k60Seconds = 60;
@@ -470,9 +464,32 @@ enum {
 	else if (seconds >= 0)
 		color = [UIColor blackColor];
 	else
-		return;
+		return Nil;
 	
 	[self.detailItem setBgColorDataWithColor:color];
+	return color;
+}
+
+#pragma mark - iAd's delegate methods
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner {
+}
+
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
+	//Stop timer
+	//return YES;
+	return NO;
+}
+
+- (void)bannerViewActionDidFinish:(ADBannerView *)banner {
+	//resume timer
+	
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+	NSLog(@"timerview could not load Ads");
+	[banner removeFromSuperview];
+	[self.view layoutIfNeeded];
 }
 
 @end

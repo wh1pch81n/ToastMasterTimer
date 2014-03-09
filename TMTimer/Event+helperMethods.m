@@ -40,7 +40,7 @@ static const NSInteger kColorUnknown = -1;
         case kColorRed:return [UIColor redColor];
         case kColorYellow:return [UIColor yellowColor];
         default:
-            return [UIColor magentaColor];
+            return [UIColor clearColor];
     }
 }
 

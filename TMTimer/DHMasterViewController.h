@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <iAd/iAd.h>
 
 @class DHDetailViewController;
 
 #import <CoreData/CoreData.h>
 
-@interface DHMasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface DHMasterViewController : UITableViewController <NSFetchedResultsControllerDelegate, ADBannerViewDelegate>
 
 @property (strong, nonatomic) DHDetailViewController *detailViewController;
 

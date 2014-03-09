@@ -48,6 +48,8 @@
 		5095B4E818AE7C440023210E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5095B4E618AE7C440023210E /* InfoPlist.strings */; };
 		5095B4EA18AE7C440023210E /* TMTimerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5095B4E918AE7C440023210E /* TMTimerTests.m */; };
 		50B0FC6218B3002A007694F3 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B0FC6118B3002A007694F3 /* Event.m */; };
+		7F0C3FCB18CBCD3D0068B26C /* Release Notes in Resources */ = {isa = PBXBuildFile; fileRef = 7F0C3FCA18CBCD3D0068B26C /* Release Notes */; };
+		7F75F66D18C9142F0040986B /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F75F66C18C9142F0040986B /* iAd.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +119,8 @@
 		50B0FC5F18B2FFC0007694F3 /* TMTimer 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TMTimer 5.xcdatamodel"; sourceTree = "<group>"; };
 		50B0FC6018B3002A007694F3 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		50B0FC6118B3002A007694F3 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
+		7F0C3FCA18CBCD3D0068B26C /* Release Notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Release Notes"; path = "TMTimer/Release Notes"; sourceTree = "<group>"; };
+		7F75F66C18C9142F0040986B /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F75F66D18C9142F0040986B /* iAd.framework in Frameworks */,
 				5095B4B518AE7C440023210E /* CoreGraphics.framework in Frameworks */,
 				5095B4B918AE7C440023210E /* CoreData.framework in Frameworks */,
 				5095B4B718AE7C440023210E /* UIKit.framework in Frameworks */,
@@ -177,6 +182,7 @@
 		5095B4A618AE7C440023210E = {
 			isa = PBXGroup;
 			children = (
+				7F0C3FCA18CBCD3D0068B26C /* Release Notes */,
 				5095B4BA18AE7C440023210E /* TMTimer */,
 				5095B4E318AE7C440023210E /* TMTimerTests */,
 				5095B4B118AE7C440023210E /* Frameworks */,
@@ -196,6 +202,7 @@
 		5095B4B118AE7C440023210E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7F75F66C18C9142F0040986B /* iAd.framework */,
 				5095B4B218AE7C440023210E /* Foundation.framework */,
 				5095B4B418AE7C440023210E /* CoreGraphics.framework */,
 				5095B4B618AE7C440023210E /* UIKit.framework */,
@@ -346,6 +353,7 @@
 				50143EA118C55A6700350947 /* Default_1536x2048.png in Resources */,
 				50143EA318C55A6700350947 /* Default_320x480.png in Resources */,
 				5095B4D618AE7C440023210E /* Images.xcassets in Resources */,
+				7F0C3FCB18CBCD3D0068B26C /* Release Notes in Resources */,
 				5095B4C818AE7C440023210E /* Main_iPhone.storyboard in Resources */,
 				507112A918C51B3C000790E1 /* Icon@2x.png in Resources */,
 				507112AD18C51DBA000790E1 /* Icon-57.png in Resources */,
@@ -523,7 +531,7 @@
 				INFOPLIST_FILE = "TMTimer/TMTimer-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "1E14C705-33B9-4A99-805C-EC2C46367F14";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -541,7 +549,7 @@
 				INFOPLIST_FILE = "TMTimer/TMTimer-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "366A1FCE-4532-4D47-8051-5442C2520B17";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
