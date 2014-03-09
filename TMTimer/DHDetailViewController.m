@@ -10,6 +10,7 @@
 #import "Event.h"
 #import "Event+helperMethods.h"
 #import "DHGlobalConstants.h"
+#import "DHAppDelegate.h"
 
 enum {
 	kdummy0,
@@ -29,7 +30,7 @@ enum {
 	kNumElementsInTimeEnum
 };
 
-@interface DHDetailViewController () 
+@interface DHDetailViewController ()
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture2f2t;
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture1f1t;
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -88,15 +89,13 @@ enum {
 	//disable KVO
 	[[self detailItem] removeObserver:self forKeyPath:kTotalTime context:nil];
 	[[self detailItem] removeObserver:self forKeyPath:kbgColor context:nil];
-	
-	[[self detailItem] setBgColorDataWithColor:[self realignBackgroundWithMinAndMax]];
+
+  [[self detailItem] setBgColorDataWithColor:[self realignBackgroundWithMinAndMax]];
 	
 	//Save context before leaving
-	NSError *err;
-	if (![self.context save:&err]) {
-		NSLog(@"Could not save");
-		abort();
-	}
+	DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
+	[appDelegate saveContext];
+
 	[super viewWillDisappear:animated];
 }
 
@@ -152,6 +151,10 @@ enum {
 	return pickerView.frame.size.width/3 -10;
 }
 
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
+	return 30;
+}
+
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
 	return [NSString stringWithFormat:@"%ld", (long)row];
 }
@@ -161,13 +164,22 @@ enum {
 	UILabel *label = [[UILabel alloc] init];
 	UIColor *color;
 	if (component == kTimeGreen) {
-		color = [UIColor greenColor];
+		color = kPickerViewMinColumnColor;
 	} else if (component == kTimeRed) {
-		color = [UIColor redColor];
+		color = kPickerViewMaxColumnColor;
 	} else {
 		color = [UIColor blackColor];
 	}
-	label.attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
+	
+
+	NSDictionary *attr = @{
+												 NSStrokeWidthAttributeName: @(kPickerViewTextOutlineSize),
+												 NSStrokeColorAttributeName: kPickerViewTextOutlineColor,
+												 NSForegroundColorAttributeName: kPickerViewTextColor,
+												 NSFontAttributeName: [UIFont systemFontOfSize:kNavBarFontSize]
+												 };
+	
+	label.attributedText = [[NSAttributedString alloc] initWithString:text attributes:attr];
 	[label setBackgroundColor:color];
 	[label setTextAlignment:NSTextAlignmentCenter];
 	return label;
@@ -474,7 +486,6 @@ enum {
 #pragma mark - iAd's delegate methods
 
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner {
-
 }
 
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
