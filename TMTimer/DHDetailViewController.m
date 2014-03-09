@@ -90,6 +90,8 @@ enum {
 	[[self detailItem] removeObserver:self forKeyPath:kTotalTime context:nil];
 	[[self detailItem] removeObserver:self forKeyPath:kbgColor context:nil];
 	
+	[[self detailItem] setBgColorDataWithColor:[self realignBackgroundWithMinAndMax]];
+	
 	//Save context before leaving
 	NSError *err;
 	if (![self.context save:&err]) {
@@ -195,6 +197,7 @@ enum {
 	} else { //start timer
 		[self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
 		[[self detailItem] setStartDate:[NSDate date]];
+		[[self detailItem] setEndDate:nil];
 		[self.timer fire];
 		[self FSM_runTimer];
 	}
@@ -209,26 +212,7 @@ enum {
  Updates the bdColor property of the Model
  */
 - (void)updateBackground {
-	NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
-	NSInteger seconds = interval;
-	
-	static const int k60Seconds = 60;
-	NSInteger min = self.detailItem.minTime.integerValue *k60Seconds;
-	NSInteger max = self.detailItem.maxTime.integerValue *k60Seconds;
-	
-	UIColor *color;
-	if (seconds == max )
-		color = [UIColor redColor];
-	else if(seconds == ((min + max) >> 1))
-		color = [UIColor yellowColor];
-	else if (seconds == min)
-		color = [UIColor greenColor];
-	else if (seconds == 0)
-		color = [UIColor blackColor];
-	else
-		return;
-	
-	[self.detailItem setBgColorDataWithColor:color];
+	[self realignBackgroundWithMinAndMax];
 }
 
 /**
@@ -449,16 +433,23 @@ enum {
 	
 	if (self.timeout != nil) {
 		[self invalidateTimeOutTimerThenSetItWithNewlyCreatedOne];
-		[self realignBackgroundWithMinAndMax];
 	}
 }
 
 /**
  Updates the model to have the correct color given the min and max values.
  Can be inefficient if called many times, back to back.
+ 
+ @returns the color that was used to set the bg property
  */
-- (void)realignBackgroundWithMinAndMax {
-	NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
+- (UIColor *)realignBackgroundWithMinAndMax {
+	Event *detail = self.detailItem;
+	NSTimeInterval interval;
+	if (detail.endDate != nil)
+		interval = [detail.endDate timeIntervalSinceDate:detail.startDate];
+	else
+		interval = [[NSDate new] timeIntervalSinceDate:detail.startDate];
+	
 	NSInteger seconds = interval;
 	
 	static const int k60Seconds = 60;
@@ -475,9 +466,10 @@ enum {
 	else if (seconds >= 0)
 		color = [UIColor blackColor];
 	else
-		return;
+		return Nil;
 	
 	[self.detailItem setBgColorDataWithColor:color];
+	return color;
 }
 
 #pragma mark - iAd's delegate methods
