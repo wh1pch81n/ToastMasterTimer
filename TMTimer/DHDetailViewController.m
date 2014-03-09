@@ -151,6 +151,10 @@ enum {
 	return pickerView.frame.size.width/3 -10;
 }
 
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
+	return 30;
+}
+
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
 	return [NSString stringWithFormat:@"%ld", (long)row];
 }
@@ -160,13 +164,22 @@ enum {
 	UILabel *label = [[UILabel alloc] init];
 	UIColor *color;
 	if (component == kTimeGreen) {
-		color = [UIColor greenColor];
+		color = kPickerViewMinColumnColor;
 	} else if (component == kTimeRed) {
-		color = [UIColor redColor];
+		color = kPickerViewMaxColumnColor;
 	} else {
 		color = [UIColor blackColor];
 	}
-	label.attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
+	
+
+	NSDictionary *attr = @{
+												 NSStrokeWidthAttributeName: @(kPickerViewTextOutlineSize),
+												 NSStrokeColorAttributeName: kPickerViewTextOutlineColor,
+												 NSForegroundColorAttributeName: kPickerViewTextColor,
+												 NSFontAttributeName: [UIFont systemFontOfSize:kNavBarFontSize]
+												 };
+	
+	label.attributedText = [[NSAttributedString alloc] initWithString:text attributes:attr];
 	[label setBackgroundColor:color];
 	[label setTextAlignment:NSTextAlignmentCenter];
 	return label;
