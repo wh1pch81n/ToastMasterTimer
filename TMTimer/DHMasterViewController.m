@@ -50,11 +50,17 @@ NSString *const kMasterViewControllerTitle = @"Speakers";
 	self.detailViewController = (DHDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	
 	[self.navigationItem setTitle:kMasterViewControllerTitle];
+	
+	[self createAdForBanner];
+}
 
-	//set up iAd's
-	self.bannerView = [[ADBannerView alloc] initWithFrame:CGRectZero];
-	[self.bannerView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-	[self.bannerView setDelegate:self];
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+	[self.tableView setTableHeaderView:nil];
+	[super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -287,10 +293,18 @@ NSString *const kMasterViewControllerTitle = @"Speakers";
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
 	NSLog(@"TableView banner 0");
 	[banner setAlpha:NO];
-	[self.bannerView removeFromSuperview];
-	[self setBannerView:nil];
 	[self.tableView setTableHeaderView:Nil];
 }
 
+- (void)createAdForBanner {
+	self.bannerView = [[ADBannerView alloc] initWithFrame:CGRectZero];
+	[self.bannerView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+	[self.bannerView setDelegate:self];
+}
+
+- (void)removeAdForBanner {
+	[self.bannerView removeFromSuperview];
+	[self setBannerView:nil];
+}
 
 @end
