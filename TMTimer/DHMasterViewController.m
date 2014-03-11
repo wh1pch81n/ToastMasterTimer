@@ -272,7 +272,9 @@ NSString *const kMasterViewControllerTitle = @"Speakers";
 #pragma mark - iAd's delegate methods
 
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner {
-	[self.tableView setTableHeaderView:self.bannerView];
+	NSLog(@"tableview banner 1");
+	[banner setAlpha:YES];
+	[self.tableView setTableHeaderView:banner];
 }
 
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
@@ -283,10 +285,11 @@ NSString *const kMasterViewControllerTitle = @"Speakers";
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
-	NSLog(@"TableView could not load Ads");
-	[banner removeFromSuperview];
-	[self.tableView layoutIfNeeded];
-	[self.tableView setTableHeaderView:nil];
+	NSLog(@"TableView banner 0");
+	[banner setAlpha:NO];
+	[self.bannerView removeFromSuperview];
+	[self setBannerView:nil];
+	[self.tableView setTableHeaderView:Nil];
 }
 
 
