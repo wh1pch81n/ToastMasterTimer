@@ -51,6 +51,13 @@ NSString *const kMasterViewControllerTitle = @"Speakers";
 	
 	[self.navigationItem setTitle:kMasterViewControllerTitle];
 	
+	
+	//enable ads
+	float version = [[UIDevice currentDevice] systemVersion].floatValue;
+	if (version >= 7) {
+		[self canDisplayBannerAds];
+	}
+	
 	[self createAdForBanner];
 }
 

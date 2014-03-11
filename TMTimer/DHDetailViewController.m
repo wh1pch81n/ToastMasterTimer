@@ -83,6 +83,12 @@ enum {
 	//enable KVO
 	[[self detailItem] addObserver:self forKeyPath:kTotalTime options:NSKeyValueObservingOptionNew context:nil];
 	[[self detailItem] addObserver:self forKeyPath:kbgColor options:NSKeyValueObservingOptionNew context:nil];
+	
+	//enable adds
+	float version = [[UIDevice currentDevice] systemVersion].floatValue;
+	if (version >= 7) {
+		[self canDisplayBannerAds];
+	}
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -504,7 +510,7 @@ enum {
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
 	NSLog(@"timerview banner 0");
 	[banner setAlpha:NO];
-	[banner removeFromSuperview];
+	[banner setHidden:YES];
 }
 
 @end
