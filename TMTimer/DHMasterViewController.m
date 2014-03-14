@@ -50,11 +50,24 @@ NSString *const kMasterViewControllerTitle = @"Speakers";
 	self.detailViewController = (DHDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	
 	[self.navigationItem setTitle:kMasterViewControllerTitle];
+	
+	
+	//enable ads
+	float version = [[UIDevice currentDevice] systemVersion].floatValue;
+	if (version >= 7) {
+		[self canDisplayBannerAds];
+	}
+	
+	[self createAdForBanner];
+}
 
-	//set up iAd's
-	self.bannerView = [[ADBannerView alloc] initWithFrame:CGRectZero];
-	[self.bannerView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-	[self.bannerView setDelegate:self];
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+	[self.tableView setTableHeaderView:nil];
+	[super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -272,7 +285,9 @@ NSString *const kMasterViewControllerTitle = @"Speakers";
 #pragma mark - iAd's delegate methods
 
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner {
-	[self.tableView setTableHeaderView:self.bannerView];
+	NSLog(@"tableview banner 1");
+	[banner setAlpha:YES];
+	[self.tableView setTableHeaderView:banner];
 }
 
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
@@ -283,11 +298,20 @@ NSString *const kMasterViewControllerTitle = @"Speakers";
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
-	NSLog(@"TableView could not load Ads");
-	[banner removeFromSuperview];
-	[self.tableView layoutIfNeeded];
-	[self.tableView setTableHeaderView:nil];
+	NSLog(@"TableView banner 0");
+	[banner setAlpha:NO];
+	[self.tableView setTableHeaderView:Nil];
 }
 
+- (void)createAdForBanner {
+	self.bannerView = [[ADBannerView alloc] initWithFrame:CGRectZero];
+	[self.bannerView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+	[self.bannerView setDelegate:self];
+}
+
+- (void)removeAdForBanner {
+	[self.bannerView removeFromSuperview];
+	[self setBannerView:nil];
+}
 
 @end

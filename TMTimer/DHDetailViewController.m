@@ -83,6 +83,12 @@ enum {
 	//enable KVO
 	[[self detailItem] addObserver:self forKeyPath:kTotalTime options:NSKeyValueObservingOptionNew context:nil];
 	[[self detailItem] addObserver:self forKeyPath:kbgColor options:NSKeyValueObservingOptionNew context:nil];
+	
+	//enable adds
+	float version = [[UIDevice currentDevice] systemVersion].floatValue;
+	if (version >= 7) {
+		[self canDisplayBannerAds];
+	}
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -486,6 +492,8 @@ enum {
 #pragma mark - iAd's delegate methods
 
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner {
+	NSLog(@"timmerview banner 1");
+	[banner setAlpha:YES];
 }
 
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
@@ -500,9 +508,9 @@ enum {
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
-	NSLog(@"timerview could not load Ads");
-	[banner removeFromSuperview];
-	[self.view layoutIfNeeded];
+	NSLog(@"timerview banner 0");
+	[banner setAlpha:NO];
+	[banner setHidden:YES];
 }
 
 @end
