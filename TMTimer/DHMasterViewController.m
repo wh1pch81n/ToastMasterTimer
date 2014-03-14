@@ -43,7 +43,9 @@ NSString *const kMasterViewControllerTitle = @"Speakers";
 																														kUserDefaultMaxTime:@6
 																														}];
 	
-	self.navigationItem.leftBarButtonItem = self.editButtonItem;
+	UIBarButtonItem *moreButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStyleBordered target:self action:@selector(moreView:)];
+	
+	self.navigationItem.leftBarButtonItem = moreButtonItem;
 	
 	UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
 	self.navigationItem.rightBarButtonItem = addButton;
@@ -74,6 +76,15 @@ NSString *const kMasterViewControllerTitle = @"Speakers";
 {
 	[super didReceiveMemoryWarning];
 	// Dispose of any resources that can be recreated.
+}
+
+#pragma mark - bar button actions
+
+/**
+ launches a view that reveals extra options
+ */
+- (void)moreView:(id)sender {
+	NSLog(@"Pressed more view button");
 }
 
 - (void)insertNewObject:(id)sender
