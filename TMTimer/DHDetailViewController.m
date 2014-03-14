@@ -194,12 +194,23 @@ enum {
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
 	
 	UILabel *label = (UILabel *)[pickerView viewForRow:row forComponent:component];
-	
+
+	NSInteger greenVal = 0;
+	NSInteger redVal =0;
 	if (component == kTimeGreen) {
-		[self updateMin:@(label.text.integerValue) max:self.detailItem.maxTime];
+		greenVal = label.text.integerValue;
+		redVal = self.detailItem.maxTime.integerValue;
+		if (greenVal >= redVal) {
+			redVal = greenVal + 1;
+		}
 	} else if (component == kTimeRed) {
-		[self updateMin:self.detailItem.minTime max:@(label.text.integerValue)];
+		greenVal = self.detailItem.minTime.integerValue;
+		redVal = label.text.integerValue;
+		if (greenVal >= redVal) {
+			greenVal = redVal - 1;
+		}
 	}
+	[self updateMin:@(greenVal) max:@(redVal)];
 }
 
 #pragma mark - start and stop
@@ -511,7 +522,6 @@ enum {
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
 	NSLog(@"timerview banner 0");
 	[banner setAlpha:NO];
-	[banner setHidden:YES];
 }
 
 @end
