@@ -15,7 +15,7 @@
 #import "DHAppDelegate.h"
 #import "DHError.h"
 
-NSString *const kMasterViewControllerTitle = @"Speakers List";
+NSString *const kMasterViewControllerTitle = @"Speakers";
 NSString *const kMore = @"More";
 NSString *const kMoreViewSegue = @"MoreView";
 
@@ -40,10 +40,6 @@ NSString *const kMoreViewSegue = @"MoreView";
 {
 	[super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-	[[NSUserDefaults standardUserDefaults] registerDefaults:@{
-																														kUserDefaultMinTime:@4,
-																														kUserDefaultMaxTime:@6
-																														}];
 	
 	UIBarButtonItem *moreButtonItem = [[UIBarButtonItem alloc] initWithTitle:kMore style:UIBarButtonItemStyleBordered target:self action:@selector(moreView:)];
 	

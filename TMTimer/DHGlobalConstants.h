@@ -10,6 +10,7 @@
 #define kJaneDough @"Jane Dough"
 #define kUserDefaultMinTime @"UDMinTime"
 #define kUserDefaultMaxTime @"UDMaxTime"
+#define kUserDefault3SecondDelay @"UDDelay"
 
 #define kStart @"Start"
 #define kStop @"Stop"
