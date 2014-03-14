@@ -162,11 +162,12 @@ enum {
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-	return [NSString stringWithFormat:@"%ld", (long)row];
+	//component 0 goes from 0-59 but component 1 goes from 1-60
+	return [NSString stringWithFormat:@"%ld", (long)(row + component)];
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
-	NSString *text = [NSString stringWithFormat:@"%ld", (long)row];
+	NSString *text = [NSString stringWithFormat:@"%ld", (long)(row + component)];
 	UILabel *label = [[UILabel alloc] init];
 	UIColor *color;
 	if (component == kTimeGreen) {
@@ -177,10 +178,9 @@ enum {
 		color = [UIColor blackColor];
 	}
 	
-
 	NSDictionary *attr = @{
-												 NSStrokeWidthAttributeName: @(kPickerViewTextOutlineSize),
-												 NSStrokeColorAttributeName: kPickerViewTextOutlineColor,
+												 //NSStrokeWidthAttributeName: @(kPickerViewTextOutlineSize),
+												 //NSStrokeColorAttributeName: kPickerViewTextOutlineColor,
 												 NSForegroundColorAttributeName: kPickerViewTextColor,
 												 NSFontAttributeName: [UIFont systemFontOfSize:kNavBarFontSize]
 												 };
