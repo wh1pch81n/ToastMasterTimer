@@ -162,11 +162,12 @@ enum {
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-	return [NSString stringWithFormat:@"%ld", (long)row];
+	//component 0 goes from 0-59 but component 1 goes from 1-60
+	return [NSString stringWithFormat:@"%ld", (long)(row + component)];
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
-	NSString *text = [NSString stringWithFormat:@"%ld", (long)row];
+	NSString *text = [NSString stringWithFormat:@"%ld", (long)(row + component)];
 	UILabel *label = [[UILabel alloc] init];
 	UIColor *color;
 	if (component == kTimeGreen) {
@@ -177,10 +178,9 @@ enum {
 		color = [UIColor blackColor];
 	}
 	
-
 	NSDictionary *attr = @{
-												 NSStrokeWidthAttributeName: @(kPickerViewTextOutlineSize),
-												 NSStrokeColorAttributeName: kPickerViewTextOutlineColor,
+												 //NSStrokeWidthAttributeName: @(kPickerViewTextOutlineSize),
+												 //NSStrokeColorAttributeName: kPickerViewTextOutlineColor,
 												 NSForegroundColorAttributeName: kPickerViewTextColor,
 												 NSFontAttributeName: [UIFont systemFontOfSize:kNavBarFontSize]
 												 };
@@ -194,12 +194,23 @@ enum {
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
 	
 	UILabel *label = (UILabel *)[pickerView viewForRow:row forComponent:component];
-	
+
+	NSInteger greenVal = 0;
+	NSInteger redVal =0;
 	if (component == kTimeGreen) {
-		[self updateMin:@(label.text.integerValue) max:self.detailItem.maxTime];
+		greenVal = label.text.integerValue;
+		redVal = self.detailItem.maxTime.integerValue;
+		if (greenVal >= redVal) {
+			redVal = greenVal + 1;
+		}
 	} else if (component == kTimeRed) {
-		[self updateMin:self.detailItem.minTime max:@(label.text.integerValue)];
+		greenVal = self.detailItem.minTime.integerValue;
+		redVal = label.text.integerValue;
+		if (greenVal >= redVal) {
+			greenVal = redVal - 1;
+		}
 	}
+	[self updateMin:@(greenVal) max:@(redVal)];
 }
 
 #pragma mark - start and stop
@@ -439,8 +450,9 @@ enum {
  Sets the picker view to the right places, then updates the context
  */
 - (void)updateMin:(NSNumber *)min max:(NSNumber *)max {
+	NSLog(@"%@   %@", min, max);
 	[[self pickerView] selectRow:min.integerValue inComponent:kTimeGreen animated:YES];
-	[[self pickerView] selectRow:max.integerValue inComponent:kTimeRed animated:YES];
+	[[self pickerView] selectRow:max.integerValue-kPickerViewRedReelOffset inComponent:kTimeRed animated:YES];
 	
 	[[self detailItem] setMinTime:min];
 	[[self detailItem] setMaxTime:max];
@@ -510,7 +522,6 @@ enum {
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
 	NSLog(@"timerview banner 0");
 	[banner setAlpha:NO];
-	[banner setHidden:YES];
 }
 
 @end
