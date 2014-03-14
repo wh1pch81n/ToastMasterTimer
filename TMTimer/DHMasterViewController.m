@@ -15,7 +15,9 @@
 #import "DHAppDelegate.h"
 #import "DHError.h"
 
-NSString *const kMasterViewControllerTitle = @"Speakers";
+NSString *const kMasterViewControllerTitle = @"Speakers List";
+NSString *const kMore = @"More";
+NSString *const kMoreViewSegue = @"MoreView";
 
 @interface DHMasterViewController ()
 
@@ -43,7 +45,7 @@ NSString *const kMasterViewControllerTitle = @"Speakers";
 																														kUserDefaultMaxTime:@6
 																														}];
 	
-	UIBarButtonItem *moreButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStyleBordered target:self action:@selector(moreView:)];
+	UIBarButtonItem *moreButtonItem = [[UIBarButtonItem alloc] initWithTitle:kMore style:UIBarButtonItemStyleBordered target:self action:@selector(moreView:)];
 	
 	self.navigationItem.leftBarButtonItem = moreButtonItem;
 	
@@ -85,6 +87,7 @@ NSString *const kMasterViewControllerTitle = @"Speakers";
  */
 - (void)moreView:(id)sender {
 	NSLog(@"Pressed more view button");
+	[self performSegueWithIdentifier:kMoreViewSegue sender:sender];
 }
 
 - (void)insertNewObject:(id)sender
