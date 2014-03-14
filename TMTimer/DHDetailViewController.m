@@ -439,8 +439,9 @@ enum {
  Sets the picker view to the right places, then updates the context
  */
 - (void)updateMin:(NSNumber *)min max:(NSNumber *)max {
+	NSLog(@"%@   %@", min, max);
 	[[self pickerView] selectRow:min.integerValue inComponent:kTimeGreen animated:YES];
-	[[self pickerView] selectRow:max.integerValue inComponent:kTimeRed animated:YES];
+	[[self pickerView] selectRow:max.integerValue-kPickerViewRedReelOffset inComponent:kTimeRed animated:YES];
 	
 	[[self detailItem] setMinTime:min];
 	[[self detailItem] setMaxTime:max];

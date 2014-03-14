@@ -29,3 +29,4 @@ extern NSString *const kMasterViewControllerTitle;
 #define kPickerViewTextOutlineSize -5
 #define kPickerViewTextOutlineColor [UIColor whiteColor]
 #define kPickerViewTextColor [UIColor blackColor]
+#define kPickerViewRedReelOffset 1
