@@ -223,11 +223,20 @@ enum {
 		self.detailItem.totalTime = [self stringFromTimeInterval:interval];
 		[self FSM_idle];
 	} else { //start timer
-		[self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
-		[[self detailItem] setStartDate:[NSDate date]];
-		[[self detailItem] setEndDate:nil];
-		[self.timer fire];
-		[self FSM_runTimer];
+		self.navigationItem.title = @"3 sec Delay";
+		[self enableNavItemButtons:NO];
+		
+		double delayInSeconds = 3.0 * [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
+		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+			[self enableNavItemButtons:YES];
+			[self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
+			[[self detailItem] setStartDate:[NSDate date]];
+			[[self detailItem] setEndDate:nil];
+			[self.timer fire];
+			[self FSM_runTimer];
+		});
+
 	}
 }
 
