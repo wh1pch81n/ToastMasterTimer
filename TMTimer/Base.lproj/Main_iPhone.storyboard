@@ -147,6 +147,7 @@
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="xtz-1B-MUR" appends="YES" id="y9G-4e-iK2"/>
                             <outletCollection property="gestureRecognizers" destination="Dzb-Hk-PoY" appends="YES" id="HID-78-m0M"/>
+                            <outletCollection property="gestureRecognizers" destination="3qM-70-MZH" appends="YES" id="sXy-vl-NhT"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="HH:mm.ss" id="cra-N8-TIN">
@@ -181,6 +182,12 @@
                         <outlet property="delegate" destination="Ah7-4n-0Wa" id="GQJ-ko-2D5"/>
                     </connections>
                 </tapGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="3qM-70-MZH">
+                    <connections>
+                        <action selector="swipedRight:" destination="Ah7-4n-0Wa" id="0VG-YO-6OS"/>
+                        <outlet property="delegate" destination="Ah7-4n-0Wa" id="Nwc-aI-CSX"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="902" y="64"/>
         </scene>

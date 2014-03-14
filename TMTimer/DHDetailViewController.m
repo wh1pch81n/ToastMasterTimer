@@ -262,6 +262,14 @@ enum {
 	return [NSString stringWithFormat:@"%02d:%02d.%02d", (int)hours, (int)minutes, (int)seconds];
 }
 
+/**
+ A combination of two actions.  Stopping the timer and pressing back button of the navigationBar
+ */
+- (void)quickStop:(id)sender {
+	[self FSM_idle];
+	[self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - Finite State Machine
 
 - (IBAction)tappedOnceWithOneFinger:(id)sender {
@@ -270,8 +278,11 @@ enum {
 }
 
 - (IBAction)tappedTwiceWithTwoFingers:(id)sender {
-	[self FSM_idle];
-	[self.navigationController popViewControllerAnimated:YES];
+	[self quickStop:sender];
+}
+
+- (IBAction)swipedRight:(id)sender {
+	[self quickStop:sender];
 }
 
 - (void)FSM_idle {
