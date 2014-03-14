@@ -21,6 +21,8 @@
 #define kIOS_version_7 7.0
 #define kIOS_version_6 6.0
 
+#define kThreeSeconds 3
+
 #define kNavBarFontSize 25
 
 extern NSString *const kMasterViewControllerTitle;

@@ -30,6 +30,8 @@ enum {
 	kNumElementsInTimeEnum
 };
 
+NSString *const kDelayTitle = @"3-2-1 Delay";
+
 @interface DHDetailViewController ()
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture2f2t;
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture1f1t;
@@ -223,10 +225,10 @@ enum {
 		self.detailItem.totalTime = [self stringFromTimeInterval:interval];
 		[self FSM_idle];
 	} else { //start timer
-		self.navigationItem.title = @"3 sec Delay";
+		self.navigationItem.title = kDelayTitle;
 		[self enableNavItemButtons:NO];
 		
-		double delayInSeconds = 3.0 * [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
+		double delayInSeconds = kThreeSeconds * [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
 		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 			[self enableNavItemButtons:YES];
