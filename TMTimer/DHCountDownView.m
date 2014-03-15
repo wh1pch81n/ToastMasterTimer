@@ -56,7 +56,7 @@
 				}
 			} else {
 				NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:[charArr substringWithRange:NSMakeRange(delay, 1)] attributes:
-																			 @{UITextAttributeFont: [UIFont systemFontOfSize:200]
+																			 @{NSFontAttributeName: [UIFont systemFontOfSize:200]
 																				 }];
 				[self.characterDisplayed setAttributedText:attrStr];
 				[self.characterDisplayed setTextAlignment:NSTextAlignmentCenter];
