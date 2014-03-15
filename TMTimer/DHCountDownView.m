@@ -19,6 +19,8 @@
 	self = [super initWithFrame:frame];
 	if (self) {
 		self.characterDisplayed = [[UILabel alloc] initWithFrame:frame];
+		[self addSubview:self.characterDisplayed];
+		self.backgroundColor = [UIColor redColor];
 	}
 	return self;
 }
@@ -38,16 +40,18 @@
 	}
 	NSString *charArr = [self.delegate stringOfCharactersToCountDown];
 	for(int delay = 0; delay <= charArr.length; ++delay) {
-		if (delay == charArr.length) {
-			if (complete) {
-				complete();
-			}
-			break;
-		}
-		double delayInSeconds = [self.delegate characterDelay];
+
+		double delayInSeconds = [self.delegate characterDelay]* delay;
 		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-			[self.characterDisplayed setText:[charArr substringWithRange:NSMakeRange(delay, 1)]];
+			if (delay == charArr.length) {
+				if (complete) {
+					complete();
+				}
+			} else {
+				[self.characterDisplayed setText:[charArr substringWithRange:NSMakeRange(delay, 1)]];
+				NSLog(@"%@", self.characterDisplayed.text);
+			}
 		});
 	}
 }

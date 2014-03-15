@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <iAd/iAd.h>
+#import "DHCountDownView.h"
 
 @class Event;
-@interface DHDetailViewController : UIViewController <UISplitViewControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, ADBannerViewDelegate>
+@interface DHDetailViewController : UIViewController <UISplitViewControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, ADBannerViewDelegate, DHCountDownViewDelegate>
 
 @property (strong, nonatomic) Event *detailItem;
 @property (weak, nonatomic) NSManagedObjectContext *context;

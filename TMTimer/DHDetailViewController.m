@@ -225,6 +225,15 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 		self.detailItem.totalTime = [self stringFromTimeInterval:interval];
 		[self FSM_idle];
 	} else { //start timer
+		
+		DHCountDownView *countDownView = [[DHCountDownView alloc] initWithFrame:self.view.frame];
+		[self.view addSubview:countDownView];
+		countDownView.delegate = self;
+		[countDownView runCountDownThenDoThisWhenComplete:^{
+			[countDownView removeFromSuperview];
+		}];
+		
+		
 		self.navigationItem.title = kDelayTitle;
 		[self enableNavItemButtons:NO];
 		
@@ -544,6 +553,16 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
 	NSLog(@"timerview banner 0");
 	[banner setAlpha:NO];
+}
+
+#pragma mark - Count down Delegate
+
+- (float)characterDelay {
+	return 1.0;
+}
+
+- (NSString *)stringOfCharactersToCountDown {
+	return @"321";
 }
 
 @end
