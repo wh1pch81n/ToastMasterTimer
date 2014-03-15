@@ -24,5 +24,5 @@
 @interface DHCountDownView : UIView
 @property (weak, nonatomic) id <DHCountDownViewDelegate> delegate;
 
-- (void)runCountDownThenDoThisWhenComplete:(void(^)())complete;
+- (void)runCountDown:(BOOL)run ThenDoThisWhenComplete:(void(^)())complete;
 @end

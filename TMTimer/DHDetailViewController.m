@@ -97,13 +97,13 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	//disable KVO
 	[[self detailItem] removeObserver:self forKeyPath:kTotalTime context:nil];
 	[[self detailItem] removeObserver:self forKeyPath:kbgColor context:nil];
-
+	
   [[self detailItem] setBgColorDataWithColor:[self realignBackgroundWithMinAndMax]];
 	
 	//Save context before leaving
 	DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
 	[appDelegate saveContext];
-
+	
 	[super viewWillDisappear:animated];
 }
 
@@ -196,7 +196,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
 	
 	UILabel *label = (UILabel *)[pickerView viewForRow:row forComponent:component];
-
+	
 	NSInteger greenVal = 0;
 	NSInteger redVal =0;
 	if (component == kTimeGreen) {
@@ -226,28 +226,30 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 		[self FSM_idle];
 	} else { //start timer
 		
-		DHCountDownView *countDownView = [[DHCountDownView alloc] initWithFrame:self.view.frame];
-		[self.view addSubview:countDownView];
-		countDownView.delegate = self;
-		[countDownView runCountDownThenDoThisWhenComplete:^{
-			[countDownView removeFromSuperview];
-		}];
+		
 		
 		
 		self.navigationItem.title = kDelayTitle;
 		[self enableNavItemButtons:NO];
+		BOOL delayIsEnabled = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
 		
-		double delayInSeconds = kThreeSeconds * [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
-		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+		void (^startTimer)() = ^(void){
 			[self enableNavItemButtons:YES];
+			[self FSM_runTimer];
 			[self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
 			[[self detailItem] setStartDate:[NSDate date]];
 			[[self detailItem] setEndDate:nil];
 			[self.timer fire];
-			[self FSM_runTimer];
-		});
-
+		};
+		
+		
+		DHCountDownView *countDownView = [[DHCountDownView alloc] initWithFrame:self.view.frame];
+		[self.view addSubview:countDownView];
+		countDownView.delegate = self;
+		[countDownView runCountDown:delayIsEnabled ThenDoThisWhenComplete:^{
+			startTimer();
+			[countDownView removeFromSuperview];
+		}];
 	}
 }
 
@@ -428,11 +430,13 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	if (!b) {
 		[UIView animateWithDuration:kSec0_5 animations:^{
 			[self.presetTimesSegment setAlpha:b];
+			[self.pickerView setAlpha:b];
 			[navBar setAlpha:kMiddleAlpha];
 		}];
 	} else {
 		[UIView animateWithDuration:kSec0_25 animations:^{
 			[navBar setAlpha:b];
+			[self.pickerView setAlpha:b];
 			[self.presetTimesSegment setAlpha:b];
 		}];
 	}

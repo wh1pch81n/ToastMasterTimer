@@ -20,7 +20,7 @@
 	if (self) {
 		self.characterDisplayed = [[UILabel alloc] initWithFrame:frame];
 		[self addSubview:self.characterDisplayed];
-		self.backgroundColor = [UIColor redColor];
+		self.backgroundColor = [UIColor whiteColor];
 	}
 	return self;
 }
@@ -34,8 +34,14 @@
 }
 */
 
-- (void)runCountDownThenDoThisWhenComplete:(void (^)())complete {
+- (void)runCountDown:(BOOL)run ThenDoThisWhenComplete:(void (^)())complete {
 	if (!self.delegate) {
+		return;
+	}
+	if (run == NO) {
+		if (complete) {
+			complete();
+		}
 		return;
 	}
 	NSString *charArr = [self.delegate stringOfCharactersToCountDown];
@@ -49,7 +55,14 @@
 					complete();
 				}
 			} else {
-				[self.characterDisplayed setText:[charArr substringWithRange:NSMakeRange(delay, 1)]];
+				NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:[charArr substringWithRange:NSMakeRange(delay, 1)] attributes:
+																			 @{UITextAttributeFont: [UIFont systemFontOfSize:200]
+																				 }];
+				[self.characterDisplayed setAttributedText:attrStr];
+				[self.characterDisplayed setTextAlignment:NSTextAlignmentCenter];
+//				[UIView animateWithDuration:delayInSeconds/2 animations:^{
+//					self.characterDisplayed.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.5, 0.5);
+//				} completion:Nil];
 				NSLog(@"%@", self.characterDisplayed.text);
 			}
 		});
