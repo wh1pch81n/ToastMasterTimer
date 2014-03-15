@@ -51,6 +51,7 @@
 		7F0C3FCB18CBCD3D0068B26C /* Release Notes in Resources */ = {isa = PBXBuildFile; fileRef = 7F0C3FCA18CBCD3D0068B26C /* Release Notes */; };
 		7F75F66D18C9142F0040986B /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F75F66C18C9142F0040986B /* iAd.framework */; };
 		7F86595118D3C4C50045F9F2 /* DHUserPreferenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */; };
+		7F86595418D3D0090045F9F2 /* DHCountDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F86595318D3D0090045F9F2 /* DHCountDownView.m */; };
 		7F94EE1318CD0FC3005390C3 /* DHError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F94EE1218CD0FC3005390C3 /* DHError.m */; };
 /* End PBXBuildFile section */
 
@@ -125,6 +126,8 @@
 		7F75F66C18C9142F0040986B /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		7F86594F18D3C4C50045F9F2 /* DHUserPreferenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHUserPreferenceViewController.h; sourceTree = "<group>"; };
 		7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHUserPreferenceViewController.m; sourceTree = "<group>"; };
+		7F86595218D3D0090045F9F2 /* DHCountDownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHCountDownView.h; sourceTree = "<group>"; };
+		7F86595318D3D0090045F9F2 /* DHCountDownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHCountDownView.m; sourceTree = "<group>"; };
 		7F94EE1118CD0FC3005390C3 /* DHError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHError.h; sourceTree = "<group>"; };
 		7F94EE1218CD0FC3005390C3 /* DHError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHError.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -231,6 +234,8 @@
 				5095B4D318AE7C440023210E /* DHDetailViewController.m */,
 				7F86594F18D3C4C50045F9F2 /* DHUserPreferenceViewController.h */,
 				7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */,
+				7F86595218D3D0090045F9F2 /* DHCountDownView.h */,
+				7F86595318D3D0090045F9F2 /* DHCountDownView.m */,
 				5095B4D518AE7C440023210E /* Images.xcassets */,
 				5095B4CC18AE7C440023210E /* TMTimer.xcdatamodeld */,
 				50B0FC6018B3002A007694F3 /* Event.h */,
@@ -399,6 +404,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5095B4D418AE7C440023210E /* DHDetailViewController.m in Sources */,
+				7F86595418D3D0090045F9F2 /* DHCountDownView.m in Sources */,
 				5095B4CE18AE7C440023210E /* TMTimer.xcdatamodeld in Sources */,
 				5095B4C518AE7C440023210E /* DHAppDelegate.m in Sources */,
 				7F94EE1318CD0FC3005390C3 /* DHError.m in Sources */,
