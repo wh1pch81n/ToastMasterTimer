@@ -20,7 +20,7 @@
 	if (self) {
 		self.characterDisplayed = [[UILabel alloc] initWithFrame:frame];
 		[self addSubview:self.characterDisplayed];
-		self.backgroundColor = [UIColor whiteColor];
+		self.backgroundColor = [UIColor clearColor];
 	}
 	return self;
 }
