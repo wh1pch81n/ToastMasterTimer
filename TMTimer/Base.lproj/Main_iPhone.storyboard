@@ -172,14 +172,13 @@
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" momentary="YES" id="xRo-Un-LpM">
                                 <rect key="frame" x="0.0" y="282" width="320" height="29"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <rect key="contentStretch" x="0.0" y="0.0" width="0.049999999999999684" height="1"/>
                                 <segments>
                                     <segment title="1 ~ 2"/>
                                     <segment title="2 ~ 3"/>
-                                    <segment title="3 ~ 4"/>
                                     <segment title="4 ~ 6"/>
                                     <segment title="5 ~ 7"/>
-                                    <segment title="8 ~ 10"/>
                                 </segments>
                                 <connections>
                                     <action selector="tappedSegmentedPresetButton:" destination="Ah7-4n-0Wa" eventType="valueChanged" id="DMW-cl-cYa"/>

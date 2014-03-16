@@ -225,23 +225,18 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 		self.detailItem.totalTime = [self stringFromTimeInterval:interval];
 		[self FSM_idle];
 	} else { //start timer
-		
-		
-		
-		
 		self.navigationItem.title = kDelayTitle;
 		[self enableNavItemButtons:NO];
+		[self FSM_runTimer];
 		BOOL delayIsEnabled = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
-		
+		//TODO: move this to a method call.  Probably not worth it to make it a block
 		void (^startTimer)() = ^(void){
 			[self enableNavItemButtons:YES];
-			[self FSM_runTimer];
 			[self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
 			[[self detailItem] setStartDate:[NSDate date]];
 			[[self detailItem] setEndDate:nil];
 			[self.timer fire];
 		};
-		
 		
 		DHCountDownView *countDownView = [[DHCountDownView alloc] initWithFrame:self.view.frame];
 		[self.view addSubview:countDownView];
