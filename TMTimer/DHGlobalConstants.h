@@ -10,6 +10,8 @@
 #define kJaneDough @"Jane Dough"
 #define kUserDefaultMinTime @"UDMinTime"
 #define kUserDefaultMaxTime @"UDMaxTime"
+#define kUserDefault3SecondDelay @"UDDelay"
+#define kUserDefaultShowRunningTimer @"UDRunningTimer"
 
 #define kStart @"Start"
 #define kStop @"Stop"
@@ -20,9 +22,14 @@
 #define kIOS_version_7 7.0
 #define kIOS_version_6 6.0
 
+#define kThreeSeconds 3
+
 #define kNavBarFontSize 25
 
 extern NSString *const kMasterViewControllerTitle;
+extern NSString *const kMore;
+extern NSString *const kMoreViewSegue;
+
 #define kPickerViewMinColumnColor [UIColor colorWithRed:0.5 green:1.0 blue:0.5 alpha:1]
 #define kPickerViewMaxColumnColor [UIColor colorWithRed:1.0 green:0.5 blue:0.5 alpha:1]
 

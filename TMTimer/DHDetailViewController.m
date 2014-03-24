@@ -11,6 +11,7 @@
 #import "Event+helperMethods.h"
 #import "DHGlobalConstants.h"
 #import "DHAppDelegate.h"
+#import "DHNavigationItem.h"
 
 enum {
 	kdummy0,
@@ -30,6 +31,8 @@ enum {
 	kNumElementsInTimeEnum
 };
 
+NSString *const kDelayTitle = @"3-2-1 Delay";
+
 @interface DHDetailViewController ()
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture2f2t;
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture1f1t;
@@ -41,6 +44,7 @@ enum {
 @property (weak, nonatomic) IBOutlet UISegmentedControl *presetTimesSegment;
 
 @property (weak, nonatomic) IBOutlet ADBannerView *bannerView;
+@property (weak, nonatomic) IBOutlet DHNavigationItem *navItem;
 @end
 
 @implementation DHDetailViewController
@@ -66,7 +70,14 @@ enum {
 	// Update the user interface for the detail item.
 	if (self.detailItem) {
 		self.nameTextField.text = self.detailItem.name;
-		[self.navigationItem setTitle:self.detailItem.totalTime];
+		
+		BOOL titleIsVisible = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowRunningTimer] boolValue];
+		if (titleIsVisible) {
+			[[self navItem] setTitle:self.detailItem.totalTime];
+		} else {
+			[[self navItem] setTitle:@""];
+		}
+		
 	}
 }
 
@@ -95,13 +106,13 @@ enum {
 	//disable KVO
 	[[self detailItem] removeObserver:self forKeyPath:kTotalTime context:nil];
 	[[self detailItem] removeObserver:self forKeyPath:kbgColor context:nil];
-
+	
   [[self detailItem] setBgColorDataWithColor:[self realignBackgroundWithMinAndMax]];
 	
 	//Save context before leaving
 	DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
 	[appDelegate saveContext];
-
+	
 	[super viewWillDisappear:animated];
 }
 
@@ -118,7 +129,12 @@ enum {
 	Event *event = (Event *)object;
 	
 	if ([keyPath isEqualToString:kTotalTime]) {
-		[self.navigationItem setTitle:event.totalTime];
+		BOOL titleIsVisible = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowRunningTimer] boolValue];
+		if (titleIsVisible) {
+			[[self navItem] setTitle:event.totalTime];
+		} else {
+			[[self navItem] setTitle:@""];
+		}
 	} else if ([keyPath isEqualToString:kbgColor]) {
 		[self.view setBackgroundColor:event.bgColorFromData];
 	}
@@ -194,7 +210,7 @@ enum {
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
 	
 	UILabel *label = (UILabel *)[pickerView viewForRow:row forComponent:component];
-
+	
 	NSInteger greenVal = 0;
 	NSInteger redVal =0;
 	if (component == kTimeGreen) {
@@ -223,11 +239,26 @@ enum {
 		self.detailItem.totalTime = [self stringFromTimeInterval:interval];
 		[self FSM_idle];
 	} else { //start timer
-		[self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
-		[[self detailItem] setStartDate:[NSDate date]];
-		[[self detailItem] setEndDate:nil];
-		[self.timer fire];
+		self.navigationItem.title = kDelayTitle;
+		[self enableNavItemButtons:NO];
 		[self FSM_runTimer];
+		BOOL delayIsEnabled = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
+		//TODO: move this to a method call.  Probably not worth it to make it a block
+		void (^startTimer)() = ^(void){
+			[self enableNavItemButtons:YES];
+			[self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
+			[[self detailItem] setStartDate:[NSDate date]];
+			[[self detailItem] setEndDate:nil];
+			[self.timer fire];
+		};
+		
+		DHCountDownView *countDownView = [[DHCountDownView alloc] initWithFrame:self.view.frame];
+		[self.view addSubview:countDownView];
+		countDownView.delegate = self;
+		[countDownView runCountDown:delayIsEnabled ThenDoThisWhenComplete:^{
+			startTimer();
+			[countDownView removeFromSuperview];
+		}];
 	}
 }
 
@@ -262,6 +293,14 @@ enum {
 	return [NSString stringWithFormat:@"%02d:%02d.%02d", (int)hours, (int)minutes, (int)seconds];
 }
 
+/**
+ A combination of two actions.  Stopping the timer and pressing back button of the navigationBar
+ */
+- (void)quickStop:(id)sender {
+	[self FSM_idle];
+	[self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - Finite State Machine
 
 - (IBAction)tappedOnceWithOneFinger:(id)sender {
@@ -270,8 +309,11 @@ enum {
 }
 
 - (IBAction)tappedTwiceWithTwoFingers:(id)sender {
-	[self FSM_idle];
-	[self.navigationController popViewControllerAnimated:YES];
+	[self quickStop:sender];
+}
+
+- (IBAction)swipedRight:(id)sender {
+	[self quickStop:sender];
 }
 
 - (void)FSM_idle {
@@ -297,6 +339,7 @@ enum {
 	[self.tapGesture2f2t setEnabled:NO]; //toggle double 2 finger tap
 	[self.tapGesture1f1t setEnabled:NO];
 	[self.navigationItem.rightBarButtonItem setTitle:kStart];
+	[self.navItem setTitle:self.detailItem.totalTime];
 }
 
 - (void)FSM_runTimer {
@@ -397,11 +440,13 @@ enum {
 	if (!b) {
 		[UIView animateWithDuration:kSec0_5 animations:^{
 			[self.presetTimesSegment setAlpha:b];
+			[self.pickerView setAlpha:b];
 			[navBar setAlpha:kMiddleAlpha];
 		}];
 	} else {
 		[UIView animateWithDuration:kSec0_25 animations:^{
 			[navBar setAlpha:b];
+			[self.pickerView setAlpha:b];
 			[self.presetTimesSegment setAlpha:b];
 		}];
 	}
@@ -522,6 +567,16 @@ enum {
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
 	NSLog(@"timerview banner 0");
 	[banner setAlpha:NO];
+}
+
+#pragma mark - Count down Delegate
+
+- (float)characterDelay {
+	return 1.0;
+}
+
+- (NSString *)stringOfCharactersToCountDown {
+	return @"321";
 }
 
 @end

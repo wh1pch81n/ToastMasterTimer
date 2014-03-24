@@ -16,6 +16,8 @@
 #import "DHError.h"
 
 NSString *const kMasterViewControllerTitle = @"Speakers";
+NSString *const kMore = @"More";
+NSString *const kMoreViewSegue = @"MoreView";
 
 @interface DHMasterViewController ()
 
@@ -38,12 +40,10 @@ NSString *const kMasterViewControllerTitle = @"Speakers";
 {
 	[super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-	[[NSUserDefaults standardUserDefaults] registerDefaults:@{
-																														kUserDefaultMinTime:@4,
-																														kUserDefaultMaxTime:@6
-																														}];
 	
-	self.navigationItem.leftBarButtonItem = self.editButtonItem;
+	UIBarButtonItem *moreButtonItem = [[UIBarButtonItem alloc] initWithTitle:kMore style:UIBarButtonItemStyleBordered target:self action:@selector(moreView:)];
+	
+	self.navigationItem.leftBarButtonItem = moreButtonItem;
 	
 	UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
 	self.navigationItem.rightBarButtonItem = addButton;
@@ -74,6 +74,16 @@ NSString *const kMasterViewControllerTitle = @"Speakers";
 {
 	[super didReceiveMemoryWarning];
 	// Dispose of any resources that can be recreated.
+}
+
+#pragma mark - bar button actions
+
+/**
+ launches a view that reveals extra options
+ */
+- (void)moreView:(id)sender {
+	NSLog(@"Pressed more view button");
+	[self performSegueWithIdentifier:kMoreViewSegue sender:sender];
 }
 
 - (void)insertNewObject:(id)sender

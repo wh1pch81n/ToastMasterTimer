@@ -37,6 +37,8 @@
 	[[UINavigationBar appearance] setTitleTextAttributes:
 	 @{UITextAttributeFont: [UIFont systemFontOfSize:kNavBarFontSize]}];
 	
+	[self registeringUserPreferences];
+	
 	return YES;
 }
 
@@ -146,6 +148,18 @@
 - (NSURL *)applicationDocumentsDirectory
 {
 	return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+#pragma mark - User Preferences
+
+- (void)registeringUserPreferences {
+	[[NSUserDefaults standardUserDefaults] registerDefaults:
+	 @{
+		 kUserDefaultMinTime:@4,
+		 kUserDefaultMaxTime:@6,
+		 kUserDefault3SecondDelay:@YES,
+		 kUserDefaultShowRunningTimer:@YES
+		 }];
 }
 
 @end
