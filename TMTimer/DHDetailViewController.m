@@ -90,8 +90,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	
 	//Default values
 	[self updateMin:@(self.detailItem.minTime.floatValue) max:@(self.detailItem.maxTime.floatValue)];
-	BOOL titleIsVisible = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowRunningTimer] boolValue];
-	[[self navItem] showTitleView:titleIsVisible];
 	
 	//enable KVO
 	[[self detailItem] addObserver:self forKeyPath:kTotalTime options:NSKeyValueObservingOptionNew context:nil];
@@ -341,6 +339,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[self.tapGesture2f2t setEnabled:NO]; //toggle double 2 finger tap
 	[self.tapGesture1f1t setEnabled:NO];
 	[self.navigationItem.rightBarButtonItem setTitle:kStart];
+	[self.navItem setTitle:self.detailItem.totalTime];
 }
 
 - (void)FSM_runTimer {
