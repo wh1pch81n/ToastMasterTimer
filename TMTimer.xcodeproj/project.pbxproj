@@ -53,6 +53,7 @@
 		7F86595118D3C4C50045F9F2 /* DHUserPreferenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */; };
 		7F86595418D3D0090045F9F2 /* DHCountDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F86595318D3D0090045F9F2 /* DHCountDownView.m */; };
 		7F94EE1318CD0FC3005390C3 /* DHError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F94EE1218CD0FC3005390C3 /* DHError.m */; };
+		7FD4ABDF18E0F488004DA1DF /* DHNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,6 +131,8 @@
 		7F86595318D3D0090045F9F2 /* DHCountDownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHCountDownView.m; sourceTree = "<group>"; };
 		7F94EE1118CD0FC3005390C3 /* DHError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHError.h; sourceTree = "<group>"; };
 		7F94EE1218CD0FC3005390C3 /* DHError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHError.m; sourceTree = "<group>"; };
+		7FD4ABDD18E0F488004DA1DF /* DHNavigationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHNavigationItem.h; sourceTree = "<group>"; };
+		7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHNavigationItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,6 +239,8 @@
 				7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */,
 				7F86595218D3D0090045F9F2 /* DHCountDownView.h */,
 				7F86595318D3D0090045F9F2 /* DHCountDownView.m */,
+				7FD4ABDD18E0F488004DA1DF /* DHNavigationItem.h */,
+				7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */,
 				5095B4D518AE7C440023210E /* Images.xcassets */,
 				5095B4CC18AE7C440023210E /* TMTimer.xcdatamodeld */,
 				50B0FC6018B3002A007694F3 /* Event.h */,
@@ -403,6 +408,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FD4ABDF18E0F488004DA1DF /* DHNavigationItem.m in Sources */,
 				5095B4D418AE7C440023210E /* DHDetailViewController.m in Sources */,
 				7F86595418D3D0090045F9F2 /* DHCountDownView.m in Sources */,
 				5095B4CE18AE7C440023210E /* TMTimer.xcdatamodeld in Sources */,

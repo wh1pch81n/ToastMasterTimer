@@ -153,11 +153,13 @@
 #pragma mark - User Preferences
 
 - (void)registeringUserPreferences {
-	[[NSUserDefaults standardUserDefaults] registerDefaults:@{
-																														kUserDefaultMinTime:@4,
-																														kUserDefaultMaxTime:@6,
-																														kUserDefault3SecondDelay:@YES
-																														}];
+	[[NSUserDefaults standardUserDefaults] registerDefaults:
+	 @{
+		 kUserDefaultMinTime:@4,
+		 kUserDefaultMaxTime:@6,
+		 kUserDefault3SecondDelay:@YES,
+		 kUserDefaultShowRunningTimer:@YES
+		 }];
 }
 
 @end

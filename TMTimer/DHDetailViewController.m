@@ -11,6 +11,7 @@
 #import "Event+helperMethods.h"
 #import "DHGlobalConstants.h"
 #import "DHAppDelegate.h"
+#import "DHNavigationItem.h"
 
 enum {
 	kdummy0,
@@ -43,6 +44,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 @property (weak, nonatomic) IBOutlet UISegmentedControl *presetTimesSegment;
 
 @property (weak, nonatomic) IBOutlet ADBannerView *bannerView;
+@property (weak, nonatomic) IBOutlet DHNavigationItem *navItem;
 @end
 
 @implementation DHDetailViewController
@@ -68,7 +70,14 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	// Update the user interface for the detail item.
 	if (self.detailItem) {
 		self.nameTextField.text = self.detailItem.name;
-		[self.navigationItem setTitle:self.detailItem.totalTime];
+		
+		BOOL titleIsVisible = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowRunningTimer] boolValue];
+		if (titleIsVisible) {
+			[[self navItem] setTitle:self.detailItem.totalTime];
+		} else {
+			[[self navItem] setTitle:@""];
+		}
+		
 	}
 }
 
@@ -81,6 +90,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	
 	//Default values
 	[self updateMin:@(self.detailItem.minTime.floatValue) max:@(self.detailItem.maxTime.floatValue)];
+	BOOL titleIsVisible = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowRunningTimer] boolValue];
+	[[self navItem] showTitleView:titleIsVisible];
 	
 	//enable KVO
 	[[self detailItem] addObserver:self forKeyPath:kTotalTime options:NSKeyValueObservingOptionNew context:nil];
@@ -120,7 +131,12 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	Event *event = (Event *)object;
 	
 	if ([keyPath isEqualToString:kTotalTime]) {
-		[self.navigationItem setTitle:event.totalTime];
+		BOOL titleIsVisible = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowRunningTimer] boolValue];
+		if (titleIsVisible) {
+			[[self navItem] setTitle:event.totalTime];
+		} else {
+			[[self navItem] setTitle:@""];
+		}
 	} else if ([keyPath isEqualToString:kbgColor]) {
 		[self.view setBackgroundColor:event.bgColorFromData];
 	}

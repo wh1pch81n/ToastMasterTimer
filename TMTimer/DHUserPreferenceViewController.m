@@ -11,7 +11,7 @@
 
 @interface DHUserPreferenceViewController ()
 @property (weak, nonatomic) IBOutlet UISwitch *threeSecondDelay;
-
+@property (weak, nonatomic) IBOutlet UISwitch *showRunningTimer;
 @end
 
 @implementation DHUserPreferenceViewController
@@ -33,6 +33,10 @@
 	NSNumber *threeSecondDelay = [UD objectForKey:kUserDefault3SecondDelay];
 	[self.threeSecondDelay setOn:threeSecondDelay.boolValue animated:YES];
 	NSLog(@"ThreeSecondDelay is %d", threeSecondDelay.boolValue);
+	
+	NSNumber *showRunningTimer = [UD objectForKey:kUserDefaultShowRunningTimer];
+	[self.showRunningTimer setOn:showRunningTimer.boolValue animated:YES];
+	NSLog(@"showRunningTimer is %d", showRunningTimer.boolValue);
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,5 +49,8 @@
 	NSLog(@"ThreeSecondDelay became %d", self.threeSecondDelay.on);
 	NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
 	[UD setObject:@(self.threeSecondDelay.on) forKey:kUserDefault3SecondDelay];
+	
+	NSLog(@"showRunningTimer became %d", self.showRunningTimer.on);
+	[UD setObject:@(self.showRunningTimer.on) forKey:kUserDefaultShowRunningTimer];
 }
 @end

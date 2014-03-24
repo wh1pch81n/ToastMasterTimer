@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DHUserPreferenceViewController : UIViewController
+@interface DHUserPreferenceViewController : UITableViewController//UIViewController
 
 @end
