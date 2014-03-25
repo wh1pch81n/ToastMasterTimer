@@ -54,6 +54,7 @@
 		7F86595418D3D0090045F9F2 /* DHCountDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F86595318D3D0090045F9F2 /* DHCountDownView.m */; };
 		7F94EE1318CD0FC3005390C3 /* DHError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F94EE1218CD0FC3005390C3 /* DHError.m */; };
 		7FD4ABDF18E0F488004DA1DF /* DHNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */; };
+		7FD4ABE218E0FD99004DA1DF /* DHNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4ABE118E0FD99004DA1DF /* DHNavigationBar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +134,8 @@
 		7F94EE1218CD0FC3005390C3 /* DHError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHError.m; sourceTree = "<group>"; };
 		7FD4ABDD18E0F488004DA1DF /* DHNavigationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHNavigationItem.h; sourceTree = "<group>"; };
 		7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHNavigationItem.m; sourceTree = "<group>"; };
+		7FD4ABE018E0FD99004DA1DF /* DHNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHNavigationBar.h; sourceTree = "<group>"; };
+		7FD4ABE118E0FD99004DA1DF /* DHNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHNavigationBar.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,6 +244,8 @@
 				7F86595318D3D0090045F9F2 /* DHCountDownView.m */,
 				7FD4ABDD18E0F488004DA1DF /* DHNavigationItem.h */,
 				7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */,
+				7FD4ABE018E0FD99004DA1DF /* DHNavigationBar.h */,
+				7FD4ABE118E0FD99004DA1DF /* DHNavigationBar.m */,
 				5095B4D518AE7C440023210E /* Images.xcassets */,
 				5095B4CC18AE7C440023210E /* TMTimer.xcdatamodeld */,
 				50B0FC6018B3002A007694F3 /* Event.h */,
@@ -331,7 +336,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = DH;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = ryukkusakku;
 				TargetAttributes = {
 					5095B4AE18AE7C440023210E = {
@@ -418,6 +423,7 @@
 				502B46B818B4063000A61D24 /* DHTableViewCell.m in Sources */,
 				501518E818B1979200CC286D /* Event+helperMethods.m in Sources */,
 				5095B4D118AE7C440023210E /* DHMasterViewController.m in Sources */,
+				7FD4ABE218E0FD99004DA1DF /* DHNavigationBar.m in Sources */,
 				5095B4C118AE7C440023210E /* main.m in Sources */,
 				50B0FC6218B3002A007694F3 /* Event.m in Sources */,
 			);
@@ -473,7 +479,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -513,7 +518,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -582,7 +586,6 @@
 		5095B4F118AE7C440023210E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TMTimer.app/TMTimer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -605,7 +608,6 @@
 		5095B4F218AE7C440023210E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TMTimer.app/TMTimer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
