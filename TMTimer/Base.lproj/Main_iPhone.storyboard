@@ -186,15 +186,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <pickerView contentMode="scaleToFill" id="u9G-nS-9Pu">
-                                <rect key="frame" x="0.0" y="318" width="320" height="162"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="Ah7-4n-0Wa" id="dn0-f5-OQY"/>
-                                    <outlet property="delegate" destination="Ah7-4n-0Wa" id="kHU-ub-ko2"/>
-                                </connections>
-                            </pickerView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="John Doe" minimumFontSize="17" clearButtonMode="whileEditing" id="xKm-t7-08K">
                                 <rect key="frame" x="20" y="69" width="280" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
@@ -204,21 +195,6 @@
                                     <outlet property="delegate" destination="Ah7-4n-0Wa" id="wdo-4W-Dkd"/>
                                 </connections>
                             </textField>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" momentary="YES" id="xRo-Un-LpM">
-                                <rect key="frame" x="0.0" y="282" width="320" height="29"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <rect key="contentStretch" x="0.0" y="0.0" width="0.049999999999999684" height="1"/>
-                                <segments>
-                                    <segment title="1 ~ 2"/>
-                                    <segment title="2 ~ 3"/>
-                                    <segment title="4 ~ 6"/>
-                                    <segment title="5 ~ 7"/>
-                                </segments>
-                                <connections>
-                                    <action selector="tappedSegmentedPresetButton:" destination="Ah7-4n-0Wa" eventType="valueChanged" id="DMW-cl-cYa"/>
-                                </connections>
-                            </segmentedControl>
                             <adBannerView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="EJw-e2-M4e">
                                 <rect key="frame" x="0.0" y="430" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -226,6 +202,35 @@
                                     <outlet property="delegate" destination="Ah7-4n-0Wa" id="3IQ-fH-Lq5"/>
                                 </connections>
                             </adBannerView>
+                            <view contentMode="scaleToFill" id="UgY-RK-qPL">
+                                <rect key="frame" x="0.0" y="267" width="320" height="213"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" momentary="YES" id="xRo-Un-LpM">
+                                        <rect key="frame" x="10" y="5" width="300" height="29"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <rect key="contentStretch" x="0.0" y="0.0" width="0.049999999999999684" height="1"/>
+                                        <segments>
+                                            <segment title="1 ~ 2"/>
+                                            <segment title="2 ~ 3"/>
+                                            <segment title="4 ~ 6"/>
+                                            <segment title="5 ~ 7"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="tappedSegmentedPresetButton:" destination="Ah7-4n-0Wa" eventType="valueChanged" id="DMW-cl-cYa"/>
+                                        </connections>
+                                    </segmentedControl>
+                                    <pickerView contentMode="scaleToFill" id="u9G-nS-9Pu">
+                                        <rect key="frame" x="0.0" y="51" width="320" height="162"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="Ah7-4n-0Wa" id="dn0-f5-OQY"/>
+                                            <outlet property="delegate" destination="Ah7-4n-0Wa" id="kHU-ub-ko2"/>
+                                        </connections>
+                                    </pickerView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -254,6 +259,7 @@
                         <outlet property="presetTimesSegment" destination="xRo-Un-LpM" id="eB0-QZ-x1r"/>
                         <outlet property="tapGesture1f1t" destination="Dzb-Hk-PoY" id="BUc-Lr-XGX"/>
                         <outlet property="tapGesture2f2t" destination="xtz-1B-MUR" id="JuW-AV-Wc1"/>
+                        <outlet property="timeChooserParentView" destination="UgY-RK-qPL" id="hOW-4H-l17"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lrm-kH-fPn" sceneMemberID="firstResponder"/>

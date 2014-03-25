@@ -42,6 +42,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 @property (strong, nonatomic) NSTimer *timer;
 @property (strong, nonatomic) NSTimer *timeout;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *presetTimesSegment;
+@property (weak, nonatomic) IBOutlet UIView *timeChooserParentView;
 
 @property (weak, nonatomic) IBOutlet ADBannerView *bannerView;
 @property (weak, nonatomic) IBOutlet DHNavigationItem *navItem;
@@ -326,13 +327,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[self.bannerView setHidden:YES];
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
-	[self.pickerView setHidden:NO];
-	[self.presetTimesSegment setHidden:NO];
+	[self.timeChooserParentView setHidden:NO];
 	[UIView animateWithDuration:0.5 animations:^{
 		[self.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
 		[self.nameTextField setAlpha:1];
-		[self.pickerView setAlpha:1];
-		[self.presetTimesSegment setAlpha:1];
+			[self.timeChooserParentView setAlpha:1];
 	}];
 	[self.navigationItem setHidesBackButton:NO];
 	[[UIApplication sharedApplication] setIdleTimerDisabled:NO]; //toggle sleep
@@ -345,13 +344,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 - (void)FSM_runTimer {
 	[UIView animateWithDuration:0.5 animations:^{
 		[self.nameTextField setAlpha:0];
-		[self.pickerView setAlpha:0];
-		[self.presetTimesSegment setAlpha:0];
+		[self.timeChooserParentView setAlpha:0];
 	} completion:^(BOOL finished) {
 		[self.nameTextField setHidden:YES];
 		[self.nameTextField resignFirstResponder];
-		[self.pickerView setHidden:YES];
-		[self.presetTimesSegment setHidden:YES];
+		[self.timeChooserParentView setHidden:YES];
 		[self.bannerView setHidden:NO];
 	}];
 	[self.navigationItem setHidesBackButton:YES];
@@ -363,10 +360,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)FSM_editingOnTheFly {
 	[self.bannerView setHidden:YES];
-	[self.pickerView setHidden:NO];
-	[self.pickerView setAlpha:1];
-	[self.presetTimesSegment setHidden:NO];
-	[self.presetTimesSegment setAlpha:1];
+	[self.timeChooserParentView setAlpha:1];
+	[self.timeChooserParentView setHidden:NO];
 	[self.nameTextField setHidden:NO];
 	[self.nameTextField setAlpha:1];
 }
