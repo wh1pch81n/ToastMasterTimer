@@ -55,6 +55,7 @@
 		7F94EE1318CD0FC3005390C3 /* DHError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F94EE1218CD0FC3005390C3 /* DHError.m */; };
 		7FD4ABDF18E0F488004DA1DF /* DHNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */; };
 		7FD4ABE218E0FD99004DA1DF /* DHNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4ABE118E0FD99004DA1DF /* DHNavigationBar.m */; };
+		7FD4ABE518E1089D004DA1DF /* DHGradients.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4ABE418E1089D004DA1DF /* DHGradients.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +137,8 @@
 		7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHNavigationItem.m; sourceTree = "<group>"; };
 		7FD4ABE018E0FD99004DA1DF /* DHNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHNavigationBar.h; sourceTree = "<group>"; };
 		7FD4ABE118E0FD99004DA1DF /* DHNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHNavigationBar.m; sourceTree = "<group>"; };
+		7FD4ABE318E1089D004DA1DF /* DHGradients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHGradients.h; sourceTree = "<group>"; };
+		7FD4ABE418E1089D004DA1DF /* DHGradients.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHGradients.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +249,8 @@
 				7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */,
 				7FD4ABE018E0FD99004DA1DF /* DHNavigationBar.h */,
 				7FD4ABE118E0FD99004DA1DF /* DHNavigationBar.m */,
+				7FD4ABE318E1089D004DA1DF /* DHGradients.h */,
+				7FD4ABE418E1089D004DA1DF /* DHGradients.m */,
 				5095B4D518AE7C440023210E /* Images.xcassets */,
 				5095B4CC18AE7C440023210E /* TMTimer.xcdatamodeld */,
 				50B0FC6018B3002A007694F3 /* Event.h */,
@@ -420,6 +425,7 @@
 				5095B4C518AE7C440023210E /* DHAppDelegate.m in Sources */,
 				7F94EE1318CD0FC3005390C3 /* DHError.m in Sources */,
 				7F86595118D3C4C50045F9F2 /* DHUserPreferenceViewController.m in Sources */,
+				7FD4ABE518E1089D004DA1DF /* DHGradients.m in Sources */,
 				502B46B818B4063000A61D24 /* DHTableViewCell.m in Sources */,
 				501518E818B1979200CC286D /* Event+helperMethods.m in Sources */,
 				5095B4D118AE7C440023210E /* DHMasterViewController.m in Sources */,
