@@ -32,8 +32,10 @@ static const NSInteger kGodsMagicNumber = 77;
 												 urColor:topColor
 												 llColor:bottomColor
 												 lrColor:bottomColor];
-	
-	[DHGradients produceRandomDots:kGodsMagicNumber inFrame:rect];
+	UIColor *sprinkleColor = [UIColor colorWithRed:49/255.0 green:249/255.0 blue:236/255.0 alpha:0.5];
+	[DHGradients produceRandomDots:kGodsMagicNumber
+												 inFrame:rect
+											 withColor:sprinkleColor];
 }
 
 @end

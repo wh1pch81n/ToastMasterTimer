@@ -35,7 +35,10 @@
 	}
 	
 	[[UINavigationBar appearance] setTitleTextAttributes:
-	 @{UITextAttributeFont: [UIFont systemFontOfSize:kNavBarFontSize]}];
+	 @{
+		 UITextAttributeFont: [UIFont systemFontOfSize:kNavBarFontSize],
+		 NSForegroundColorAttributeName: [UIColor whiteColor]
+		 }];
 	
 	[self registeringUserPreferences];
 	

@@ -9,10 +9,10 @@
 #import "DHGradients.h"
 
 @implementation DHGradients
-+ (void)produceRandomDots:(NSUInteger)numLines inFrame:(CGRect)rect{
++ (void)produceRandomDots:(NSUInteger)numLines inFrame:(CGRect)rect withColor:(UIColor *)color{
 	for (int i = 0; i < numLines; ++i) {
     CGPoint p0 = CGPointMake(arc4random() % (int)rect.size.width, arc4random() % (int)rect.size.height);
-		[self drawPoint:p0 withColor:[UIColor colorWithRed:49/255.0 green:249/255.0 blue:236/255.0 alpha:0.5]];
+		[self drawPoint:p0 withColor:color];
 	}
 }
 

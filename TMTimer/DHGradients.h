@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface DHGradients : NSObject
-+ (void)produceRandomDots:(NSUInteger)numLines inFrame:(CGRect)rect;
++ (void)produceRandomDots:(NSUInteger)numLines inFrame:(CGRect)rect withColor:(UIColor *)color;
 + (void)drawLineFromPointA:(CGPoint)pA toPointB:(CGPoint)pB withColorA:(UIColor *)colorA toColorB:(UIColor *)colorB;
 
 /**
