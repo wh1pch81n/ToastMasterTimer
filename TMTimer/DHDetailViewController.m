@@ -464,8 +464,12 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 #pragma mark - preset Buttons
 
 - (IBAction)tappedSegmentedPresetButton:(UISegmentedControl *)sender {
+    NSString *str = [sender titleForSegmentAtIndex:sender.selectedSegmentIndex];
+    NSArray *arr = [str componentsSeparatedByString:@"~"];
 	int min, max;
-	switch ([sender selectedSegmentIndex]+1) {
+    min = [[arr firstObject] intValue];
+    max = [[arr lastObject] intValue];
+/*	switch ([sender selectedSegmentIndex]+1) {
 		case kPresetButton1_2:
 			min = 1;
 			max = 2;
@@ -496,7 +500,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 			return;
 			break;
 	}
-	
+	*/
 	[self updateMin:@(min) max:@(max)];
 }
 
