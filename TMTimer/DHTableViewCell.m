@@ -9,6 +9,7 @@
 #import "DHTableViewCell.h"
 #import "Event.h"
 #import "Event+helperMethods.h"
+#import "DHColorForTime.h"
 
 @implementation DHTableViewCell
 
@@ -29,7 +30,16 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    [self.flag setBackgroundColor:self.entity.bgColorFromData];
+    //[self.flag setBackgroundColor:self.entity.bgColorFromData];
+    Event *object = self.entity;
+    NSTimeInterval total = [object.endDate timeIntervalSinceDate:object.startDate];
+    UIColor *bgColor = [[DHColorForTime shared] colorForSeconds:total
+                                                            min:object.minTime.integerValue
+                                                            max:object.maxTime.integerValue];
+    if ([bgColor isEqual:[UIColor blackColor]]) {
+        bgColor = [UIColor clearColor];
+    }
+    [self.flag setBackgroundColor:bgColor];
 }
 
 @end

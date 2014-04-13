@@ -10,7 +10,7 @@
 
 @interface Event (helperMethods)
 
-- (void)setBgColorDataWithColor:(UIColor *)color;
-- (UIColor *)bgColorFromData;
+- (void)setBgColorDataWithColor:(UIColor *)color __attribute__((deprecated));
+- (UIColor *)bgColorFromData __attribute__((deprecated));
 
 @end

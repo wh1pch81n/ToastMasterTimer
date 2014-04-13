@@ -18,9 +18,9 @@
 {
 	self = [super initWithFrame:frame];
 	if (self) {
-		self.characterDisplayed = [[UILabel alloc] initWithFrame:frame];
+       	self.characterDisplayed = [[UILabel alloc] initWithFrame:frame];
 		[self addSubview:self.characterDisplayed];
-		self.backgroundColor = [UIColor clearColor];
+		self.backgroundColor = [UIColor grayColor];
 	}
 	return self;
 }

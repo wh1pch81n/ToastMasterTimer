@@ -183,11 +183,11 @@
             <objects>
                 <viewController title="Detail" id="Ah7-4n-0Wa" customClass="DHDetailViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MMQ-IT-qOo">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="John Doe" minimumFontSize="17" clearButtonMode="whileEditing" id="xKm-t7-08K">
-                                <rect key="frame" x="20" y="69" width="280" height="30"/>
+                                <rect key="frame" x="20" y="93" width="280" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done"/>
@@ -196,14 +196,14 @@
                                 </connections>
                             </textField>
                             <adBannerView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="EJw-e2-M4e">
-                                <rect key="frame" x="0.0" y="430" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="454" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="Ah7-4n-0Wa" id="3IQ-fH-Lq5"/>
                                 </connections>
                             </adBannerView>
                             <view contentMode="scaleToFill" id="UgY-RK-qPL">
-                                <rect key="frame" x="0.0" y="267" width="320" height="213"/>
+                                <rect key="frame" x="0.0" y="291" width="320" height="213"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" momentary="YES" id="xRo-Un-LpM">
@@ -247,9 +247,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="bannerView" destination="EJw-e2-M4e" id="MxQ-Jk-3U6"/>
                         <outlet property="nameTextField" destination="xKm-t7-08K" id="YqJ-J2-8Sq"/>
@@ -257,6 +254,7 @@
                         <outlet property="navigationItem" destination="cra-N8-TIN" id="V9h-An-ZdL"/>
                         <outlet property="pickerView" destination="u9G-nS-9Pu" id="r7b-5i-7Me"/>
                         <outlet property="presetTimesSegment" destination="xRo-Un-LpM" id="eB0-QZ-x1r"/>
+                        <outlet property="swipeGesture" destination="3qM-70-MZH" id="D45-mj-fd8"/>
                         <outlet property="tapGesture1f1t" destination="Dzb-Hk-PoY" id="BUc-Lr-XGX"/>
                         <outlet property="tapGesture2f2t" destination="xtz-1B-MUR" id="JuW-AV-Wc1"/>
                         <outlet property="timeChooserParentView" destination="UgY-RK-qPL" id="hOW-4H-l17"/>

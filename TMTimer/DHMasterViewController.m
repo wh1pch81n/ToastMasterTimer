@@ -14,6 +14,7 @@
 #import "DHGlobalConstants.h"
 #import "DHAppDelegate.h"
 #import "DHError.h"
+#import "DHColorForTime.h"
 
 NSString *const kMasterViewControllerTitle = @"Speakers";
 NSString *const kMore = @"More";
@@ -66,8 +67,13 @@ NSString *const kMoreViewSegue = @"MoreView";
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-	[self.tableView setTableHeaderView:nil];
+	//[self.tableView setTableHeaderView:nil];
 	[super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self.tableView setTableHeaderView:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -95,7 +101,7 @@ NSString *const kMoreViewSegue = @"MoreView";
 	// If appropriate, configure the new managed object.
 	// Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
 	[newManagedObject setTimeStamp:[NSDate date]];
-	[newManagedObject setBgColorDataWithColor:[UIColor clearColor]]; //Default bg color
+	//[newManagedObject setBgColorDataWithColor:[UIColor clearColor]]; //Default bg color
 	
 	//get default values
 	NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
@@ -277,7 +283,15 @@ NSString *const kMoreViewSegue = @"MoreView";
 		[[dhCell contestantName] setText:kJohnDoe];
 	}
 	
-	[[dhCell flag] setBackgroundColor:[object bgColorFromData]];
+    NSTimeInterval total = [object.endDate timeIntervalSinceDate:object.startDate];
+    UIColor *bgColor = [[DHColorForTime shared] colorForSeconds:total
+                                                            min:object.minTime.integerValue
+                                                            max:object.maxTime.integerValue];
+    if ([bgColor isEqual:[UIColor blackColor]]) {
+        bgColor = [UIColor clearColor];
+    }
+    [[dhCell flag] setBackgroundColor:bgColor];
+	//[[dhCell flag] setBackgroundColor:[object bgColorFromData]];
 	
 	NSDateFormatter *dateFormat = [NSDateFormatter new];
 	[dateFormat setDateFormat:@"MMM dd, yyyy"];
