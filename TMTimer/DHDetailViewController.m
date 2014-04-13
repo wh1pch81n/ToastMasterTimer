@@ -338,7 +338,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     
     BOOL delayIsEnabled = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
 
-    DHCountDownView *countDownView = [[DHCountDownView alloc] initWithFrame:self.view.frame];
+    CGRect rect = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
+    
+    DHCountDownView *countDownView = [[DHCountDownView alloc] initWithFrame:rect];
     [self.view addSubview:countDownView];
     countDownView.delegate = self;
     [countDownView runCountDown:delayIsEnabled ThenDoThisWhenComplete:^{
