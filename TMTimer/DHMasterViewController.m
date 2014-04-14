@@ -371,4 +371,18 @@ NSString *const kMoreViewSegue = @"MoreView";
 	[self setBannerView:nil];
 }
 
+#pragma mark quickStartPanel
+
+- (IBAction)quickTableTopics:(id)sender {
+    [self insertNewObject:sender];
+    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]
+                                animated:YES
+                          scrollPosition:UITableViewScrollPositionTop];
+    
+    [self performSegueWithIdentifier:@"showDetail" sender:sender];
+    //add a quick start code
+    
+}
+
+
 @end
