@@ -335,6 +335,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 - (void)FSM_startTimer {
     self.navigationItem.title = kDelayTitle;
     [self enableNavItemButtons:NO];
+    [self FSM_runTimerWithAnimations:NO];
     
     BOOL delayIsEnabled = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
 
@@ -344,7 +345,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     [self.view addSubview:countDownView];
     countDownView.delegate = self;
     [countDownView runCountDown:delayIsEnabled ThenDoThisWhenComplete:^{
-       [self FSM_runTimerWithAnimations:NO];
+       
         [self enableNavItemButtons:YES];
         [self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
         [[self detailItem] setStartDate:[NSDate date]];
@@ -448,15 +449,15 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[navBar setUserInteractionEnabled:b];
 	if (!b) {
 		[UIView animateWithDuration:kSec0_5 animations:^{
-			[self.presetTimesSegment setAlpha:b];
-			[self.pickerView setAlpha:b];
+			//[self.presetTimesSegment setAlpha:b];
+			//[self.pickerView setAlpha:b];
 			[navBar setAlpha:kMiddleAlpha];
 		}];
 	} else {
 		[UIView animateWithDuration:kSec0_25 animations:^{
 			[navBar setAlpha:b];
-			[self.pickerView setAlpha:b];
-			[self.presetTimesSegment setAlpha:b];
+			//[self.pickerView setAlpha:b];
+			//[self.presetTimesSegment setAlpha:b];
 		}];
 	}
 }

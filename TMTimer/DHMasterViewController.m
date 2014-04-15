@@ -19,6 +19,7 @@
 NSString *const kMasterViewControllerTitle = @"Speakers";
 NSString *const kMore = @"More";
 NSString *const kMoreViewSegue = @"MoreView";
+NSString *const kTableTopics = @"Table Topics";
 
 @interface DHMasterViewController ()
 
@@ -374,10 +375,23 @@ NSString *const kMoreViewSegue = @"MoreView";
 #pragma mark quickStartPanel
 
 - (IBAction)quickTableTopics:(id)sender {
+    //[[NSUserDefaults standardUserDefaults] setObject:@(1) forKey:kUserDefaultMinTime];
+	//[[NSUserDefaults standardUserDefaults] setObject:@(2) forKey:kUserDefaultMaxTime];
+    
     [self insertNewObject:sender];
-    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]
+    NSIndexPath *tableViewIndexPath = [NSIndexPath indexPathForItem:0 inSection:1];
+    [self.tableView selectRowAtIndexPath:tableViewIndexPath
                                 animated:YES
                           scrollPosition:UITableViewScrollPositionTop];
+    
+    NSIndexPath *frc_indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+    Event *obj = [self.fetchedResultsController objectAtIndexPath:frc_indexPath];
+    [obj setName:kTableTopics];
+    [obj setMinTime:@(kTableTopicsMin)];
+    [obj setMaxTime:@(kTableTopicsMax)];
+    
+    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
+	[appDelegate saveContext];
     
     [self performSegueWithIdentifier:@"showDetail" sender:sender];
     //add a quick start code

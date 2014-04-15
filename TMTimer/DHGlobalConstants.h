@@ -27,9 +27,13 @@
 
 #define kNavBarFontSize 25
 
+#define kTableTopicsMin 1
+#define kTableTopicsMax 2
+
 extern NSString *const kMasterViewControllerTitle;
 extern NSString *const kMore;
 extern NSString *const kMoreViewSegue;
+extern NSString *const kTableTopics;
 
 #define kPickerViewMinColumnColor [UIColor colorWithRed:0.5 green:1.0 blue:0.5 alpha:1]
 #define kPickerViewMaxColumnColor [UIColor colorWithRed:1.0 green:0.5 blue:0.5 alpha:1]
