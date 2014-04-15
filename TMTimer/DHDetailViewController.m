@@ -120,6 +120,17 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[super viewWillDisappear:animated];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    NSNumber *shouldQuickStart = [[NSUserDefaults standardUserDefaults] objectForKey:kQuickStart];
+    NSLog(@"should quick start %@", shouldQuickStart);
+    if (shouldQuickStart.boolValue == YES) {
+        [self tappedStartStopButton:self];
+        [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:kQuickStart];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
 	[super didReceiveMemoryWarning];
