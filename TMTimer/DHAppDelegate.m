@@ -40,6 +40,9 @@
 		 NSForegroundColorAttributeName: [UIColor whiteColor]
 		 }];
 	
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
 	[self registeringUserPreferences];
 	
 	return YES;

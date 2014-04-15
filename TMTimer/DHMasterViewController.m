@@ -381,7 +381,7 @@ NSString *const kMoreViewSegue = @"MoreView";
     
     [self performSegueWithIdentifier:@"showDetail" sender:sender];
     //add a quick start code
-    
+    // set the defaults then in the detail view make som elogic to start right away if the default is on, then turn it off there
 }
 
 
