@@ -13,6 +13,7 @@
 #import "DHAppDelegate.h"
 #import "DHNavigationItem.h"
 #import "DHColorForTime.h"
+#import "UISegmentedControl+extractMinMaxData.h"
 
 enum {
 	kdummy0,
@@ -476,44 +477,17 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 #pragma mark - preset Buttons
 
 - (IBAction)tappedSegmentedPresetButton:(UISegmentedControl *)sender {
-    NSString *str = [sender titleForSegmentAtIndex:sender.selectedSegmentIndex];
-    NSArray *arr = [str componentsSeparatedByString:@"~"];
-	int min, max;
-    min = [[arr firstObject] intValue];
-    max = [[arr lastObject] intValue];
-/*	switch ([sender selectedSegmentIndex]+1) {
-		case kPresetButton1_2:
-			min = 1;
-			max = 2;
-			break;
-		case kPresetButton2_3:
-			min = 2;
-			max = 3;
-			break;
-		case kPresetButton3_4:
-			min = 3;
-			max = 4;
-			break;
-		case kPresetButton4_6:
-			min = 4;
-			max = 6;
-			break;
-		case kPresetButton5_7:
-			min = 5;
-			max = 7;
-			break;
-		case kdummy6:
-		case kdummy7:
-		case kPresetButton8_10:
-			min = 8;
-			max = 10;
-			break;
-		default:
-			return;
-			break;
-	}
-	*/
-	[self updateMin:@(min) max:@(max)];
+    //NSString *str = [sender titleForSegmentAtIndex:sender.selectedSegmentIndex];
+   // NSArray *arr = [str componentsSeparatedByString:@"~"];
+	//int min, max;
+    //min = [[arr firstObject] intValue];
+    //max = [[arr lastObject] intValue];
+	//[self updateMin:@(min) max:@(max)];
+    
+    NSNumber *min;
+    NSNumber *max;
+    [sender valuesOfTappedSegmentedControlMinValue:&min maxValue:&max];
+    [self updateMin:min max:max];
 }
 
 /**
