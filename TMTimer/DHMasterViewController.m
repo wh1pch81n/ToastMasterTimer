@@ -15,6 +15,7 @@
 #import "DHAppDelegate.h"
 #import "DHError.h"
 #import "DHColorForTime.h"
+#import "UISegmentedControl+extractMinMaxData.h"
 
 NSString *const kMasterViewControllerTitle = @"Speakers";
 NSString *const kMore = @"More";
@@ -374,31 +375,49 @@ NSString *const kTableTopics = @"Table Topics";
 
 #pragma mark quickStartPanel
 
-- (IBAction)quickTableTopics:(id)sender {
-    //[[NSUserDefaults standardUserDefaults] setObject:@(1) forKey:kUserDefaultMinTime];
-	//[[NSUserDefaults standardUserDefaults] setObject:@(2) forKey:kUserDefaultMaxTime];
-    
-    [self insertNewObject:sender];
+- (void)quickStartBegin:(id)sender {
+        [self insertNewObject:sender];
     NSIndexPath *tableViewIndexPath = [NSIndexPath indexPathForItem:0 inSection:1];
     [self.tableView selectRowAtIndexPath:tableViewIndexPath
                                 animated:YES
                           scrollPosition:UITableViewScrollPositionTop];
-    
-    NSIndexPath *frc_indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-    Event *obj = [self.fetchedResultsController objectAtIndexPath:frc_indexPath];
-    [obj setName:kTableTopics];
-    [obj setMinTime:@(kTableTopicsMin)];
-    [obj setMaxTime:@(kTableTopicsMax)];
-    
-    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
-	[appDelegate saveContext];
-    
+}
+
+- (void)quickStartEnds:(id)sender {
     [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kQuickStart];
     
     [self performSegueWithIdentifier:@"showDetail" sender:sender];
-    //add a quick start code
-    // set the defaults then in the detail view make som elogic to start right away if the default is on, then turn it off there
 }
 
+- (void)setupFirstObjectWithName:(NSString *)name minTime:(int)min maxTime:(int)max
+{
+    NSIndexPath *frc_indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+    Event *obj = [self.fetchedResultsController objectAtIndexPath:frc_indexPath];
+    [obj setName:name];
+    [obj setMinTime:@(min)];
+    [obj setMaxTime:@(max)];
+    
+    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
+	[appDelegate saveContext];
+}
+
+- (IBAction)tappedTableTopics:(id)sender {
+    [self quickStartBegin:sender];
+    
+    [self setupFirstObjectWithName:kTableTopics minTime:kTableTopicsMin maxTime:kTableTopicsMax];
+    
+    [self quickStartEnds:sender];
+}
+
+- (IBAction)tappedPresetSpeechTime:(UISegmentedControl *)sender {
+    [self quickStartBegin:sender];
+    NSNumber *min, *max;
+    NSString *title = [sender titleForSegmentAtIndex:sender.selectedSegmentIndex];
+    title = [NSString stringWithFormat:@"%@ minute speech", title];
+    
+    [sender valuesOfTappedSegmentedControlMinValue:&min maxValue:&max];
+    [self setupFirstObjectWithName:title minTime:min.intValue maxTime:max.intValue];
+    [self quickStartEnds:sender];
+}
 
 @end

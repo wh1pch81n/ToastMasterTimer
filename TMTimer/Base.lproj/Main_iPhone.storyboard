@@ -48,7 +48,7 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
-                                                <action selector="quickTableTopics:" destination="pGg-6v-bdr" eventType="touchUpInside" id="Js3-Ov-52D"/>
+                                                <action selector="tappedTableTopics:" destination="pGg-6v-bdr" eventType="touchUpInside" id="L8S-5a-met"/>
                                             </connections>
                                         </button>
                                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" momentary="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gnP-RL-tyH">
@@ -60,6 +60,9 @@
                                                 <segment title="4 ~ 6"/>
                                                 <segment title="5 ~ 7"/>
                                             </segments>
+                                            <connections>
+                                                <action selector="tappedPresetSpeechTime:" destination="pGg-6v-bdr" eventType="valueChanged" id="4Ss-Mu-tfo"/>
+                                            </connections>
                                         </segmentedControl>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EDV-Cm-cML">
                                             <rect key="frame" x="65" y="58" width="190" height="30"/>

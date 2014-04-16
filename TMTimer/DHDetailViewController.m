@@ -121,8 +121,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[super viewWillDisappear:animated];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
     NSNumber *shouldQuickStart = [[NSUserDefaults standardUserDefaults] objectForKey:kQuickStart];
     NSLog(@"should quick start %@", shouldQuickStart);
