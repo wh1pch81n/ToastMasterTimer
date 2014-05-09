@@ -90,7 +90,9 @@ NSString *const kTableTopics = @"Table Topics";
  launches a view that reveals extra options
  */
 - (void)moreView:(id)sender {
-	NSLog(@"Pressed more view button");
+#if DEBUG
+    NSLog(@"Pressed more view button");
+#endif
 	[self performSegueWithIdentifier:kMoreViewSegue sender:sender];
 }
 
@@ -344,7 +346,9 @@ NSString *const kTableTopics = @"Table Topics";
 #pragma mark - iAd's delegate methods
 
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner {
-	NSLog(@"tableview banner 1");
+#if DEBUG
+    NSLog(@"tableview banner 1");
+#endif
 	[banner setAlpha:YES];
 	[self.tableView setTableHeaderView:banner];
 }
@@ -357,7 +361,9 @@ NSString *const kTableTopics = @"Table Topics";
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
-	NSLog(@"TableView banner 0");
+#if DEBUG
+    NSLog(@"TableView banner 0");
+#endif
 	[banner setAlpha:NO];
 	[self.tableView setTableHeaderView:Nil];
 }

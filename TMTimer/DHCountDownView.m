@@ -103,7 +103,9 @@
        self.characterDisplayed.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.5, 1.5);
     } completion:Nil];
     
+#if DEBUG
     NSLog(@"%@", self.characterDisplayed.text);
+#endif
 }
 
 @end

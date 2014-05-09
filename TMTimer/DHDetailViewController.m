@@ -125,7 +125,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     [super viewWillAppear:animated];
     
     NSNumber *shouldQuickStart = [[NSUserDefaults standardUserDefaults] objectForKey:kQuickStart];
+#if DEBUG
     NSLog(@"should quick start %@", shouldQuickStart);
+#endif
     if (shouldQuickStart.boolValue == YES) {
         [self tappedStartStopButton:self];
         [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:kQuickStart];
@@ -494,7 +496,10 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
  Sets the picker view to the right places, then updates the context
  */
 - (void)updateMin:(NSNumber *)min max:(NSNumber *)max {
+#if DEBUG
 	NSLog(@"%@   %@", min, max);
+#endif
+    
 	[[self pickerView] selectRow:min.integerValue inComponent:kTimeGreen animated:YES];
 	[[self pickerView] selectRow:max.integerValue-kPickerViewRedReelOffset inComponent:kTimeRed animated:YES];
 	
@@ -537,7 +542,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 #pragma mark - iAd's delegate methods
 
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner {
-	NSLog(@"timmerview banner 1");
+#if DEBUG
+    NSLog(@"timmerview banner 1");
+#endif
 	[banner setAlpha:YES];
 }
 
@@ -553,7 +560,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
-	NSLog(@"timerview banner 0");
+#if DEBUG
+    NSLog(@"timerview banner 0");
+#endif
 	[banner setAlpha:NO];
 }
 
