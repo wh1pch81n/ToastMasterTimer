@@ -40,20 +40,16 @@
 }
 */
 
-- (void)runCountDown:(BOOL)run ThenDoThisWhenComplete:(void (^)())complete {
+- (void)runCountDown:(BOOL)run {
 	if (!self.delegate) {
 		return;
 	}
 	if (run == NO) {
-		if (complete) {
-			complete();
-		}
+        [self completeAnimation];
 		return;
 	}
     
-    [self setComplete:complete];
-    
-	NSString *charArr = [self.delegate stringOfCharactersToCountDown];
+    NSString *charArr = [self.delegate stringOfCharactersToCountDown];
     self.characterIndex = 0;
 	for(int delay = 0; delay <= charArr.length; ++delay) {
 
@@ -75,14 +71,14 @@
 }
 
 - (void)completeAnimation {
-    if (self.complete) {
-        self.complete();
+    if ([[self delegate] respondsToSelector:@selector(countDownHasCompleted)]) {
+        [[self delegate] countDownHasCompleted];
     }
 }
 
 - (void)changeCharacter
 {
-    if (self.characterIndex >= [self.delegate stringOfCharactersToCountDown].length) {
+    if (self.characterIndex >= [[self delegate] stringOfCharactersToCountDown].length) {
         [self completeAnimation];
         return;
     }

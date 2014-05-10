@@ -38,9 +38,15 @@
  */
 - (UIColor *)colorForSeconds:(NSTimeInterval)seconds min:(NSTimeInterval)min max:(NSTimeInterval)max
 {
+    if (seconds <= 0) {
+        return [UIColor whiteColor];
+    }
     const int k60Seconds = 60;
+#if DEBUG
+#else
     min *= k60Seconds;
     max *= k60Seconds;
+#endif
     UIColor *color;
     if (seconds >= max) {
         color = [UIColor redColor];
@@ -54,6 +60,9 @@
     else {
         color = [UIColor blackColor];
     }
+#if DEBUG
+    NSLog(@"%@", color);
+#endif
     return  color;
 }
 @end

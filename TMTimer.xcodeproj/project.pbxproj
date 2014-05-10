@@ -55,6 +55,7 @@
 		7F87644E18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F87644D18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.m */; };
 		7F8EF98618FB0F780077922C /* DHColorForTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F8EF98518FB0F780077922C /* DHColorForTime.m */; };
 		7F94EE1318CD0FC3005390C3 /* DHError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F94EE1218CD0FC3005390C3 /* DHError.m */; };
+		7FC92105191D9C620026660A /* DHManualFlagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC92104191D9C620026660A /* DHManualFlagViewController.m */; };
 		7FD4ABDF18E0F488004DA1DF /* DHNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */; };
 		7FD4ABE218E0FD99004DA1DF /* DHNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4ABE118E0FD99004DA1DF /* DHNavigationBar.m */; };
 		7FD4ABE518E1089D004DA1DF /* DHGradients.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4ABE418E1089D004DA1DF /* DHGradients.m */; };
@@ -139,6 +140,8 @@
 		7F8EF98518FB0F780077922C /* DHColorForTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHColorForTime.m; sourceTree = "<group>"; };
 		7F94EE1118CD0FC3005390C3 /* DHError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHError.h; sourceTree = "<group>"; };
 		7F94EE1218CD0FC3005390C3 /* DHError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHError.m; sourceTree = "<group>"; };
+		7FC92103191D9C620026660A /* DHManualFlagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHManualFlagViewController.h; sourceTree = "<group>"; };
+		7FC92104191D9C620026660A /* DHManualFlagViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHManualFlagViewController.m; sourceTree = "<group>"; };
 		7FD4ABDD18E0F488004DA1DF /* DHNavigationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHNavigationItem.h; sourceTree = "<group>"; };
 		7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHNavigationItem.m; sourceTree = "<group>"; };
 		7FD4ABE018E0FD99004DA1DF /* DHNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHNavigationBar.h; sourceTree = "<group>"; };
@@ -249,6 +252,8 @@
 				5095B4D318AE7C440023210E /* DHDetailViewController.m */,
 				7F86594F18D3C4C50045F9F2 /* DHUserPreferenceViewController.h */,
 				7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */,
+				7FC92103191D9C620026660A /* DHManualFlagViewController.h */,
+				7FC92104191D9C620026660A /* DHManualFlagViewController.m */,
 				7F86595218D3D0090045F9F2 /* DHCountDownView.h */,
 				7F86595318D3D0090045F9F2 /* DHCountDownView.m */,
 				7FD4ABDD18E0F488004DA1DF /* DHNavigationItem.h */,
@@ -431,6 +436,7 @@
 				7FD4ABDF18E0F488004DA1DF /* DHNavigationItem.m in Sources */,
 				5095B4D418AE7C440023210E /* DHDetailViewController.m in Sources */,
 				7F86595418D3D0090045F9F2 /* DHCountDownView.m in Sources */,
+				7FC92105191D9C620026660A /* DHManualFlagViewController.m in Sources */,
 				5095B4CE18AE7C440023210E /* TMTimer.xcdatamodeld in Sources */,
 				5095B4C518AE7C440023210E /* DHAppDelegate.m in Sources */,
 				7F94EE1318CD0FC3005390C3 /* DHError.m in Sources */,
