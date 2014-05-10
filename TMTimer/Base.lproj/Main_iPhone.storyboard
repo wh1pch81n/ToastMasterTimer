@@ -139,7 +139,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Master" id="tQt-TN-PWz"/>
                     <connections>
-                        <segue destination="2i9-yI-Ppu" kind="modal" identifier="MoreView" modalTransitionStyle="flipHorizontal" id="fwL-sw-MNW"/>
+                        <segue destination="2i9-yI-Ppu" kind="push" identifier="MoreView" id="fwL-sw-MNW"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Cn-md-YlS" sceneMemberID="firstResponder"/>
@@ -151,7 +151,7 @@
             <objects>
                 <tableViewController id="2i9-yI-Ppu" customClass="DHUserPreferenceViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="gZm-sO-vfT">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>

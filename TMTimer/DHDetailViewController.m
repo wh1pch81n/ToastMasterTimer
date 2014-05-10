@@ -101,8 +101,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	
 	//enable KVO
 	[[self detailItem] addObserver:self forKeyPath:kTotalTime options:NSKeyValueObservingOptionNew context:nil];
-	//[[self detailItem] addObserver:self forKeyPath:kbgColor options:NSKeyValueObservingOptionNew context:nil];
-	
+    
 	//enable adds
 	float version = [[UIDevice currentDevice] systemVersion].floatValue;
 	if (version >= 7) {
@@ -110,18 +109,15 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	}
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewDidDisappear:(BOOL)animated {
 	//disable KVO
 	[[self detailItem] removeObserver:self forKeyPath:kTotalTime context:nil];
-	//[[self detailItem] removeObserver:self forKeyPath:kbgColor context:nil];
-	
-  //[[self detailItem] setBgColorDataWithColor:[self realignBackgroundWithMinAndMax]];
 	
 	//Save context before leaving
 	DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
 	[appDelegate saveContext];
 	
-	[super viewWillDisappear:animated];
+	[super viewDidDisappear:animated];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
