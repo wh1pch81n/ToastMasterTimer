@@ -60,9 +60,6 @@
     else {
         color = [UIColor blackColor];
     }
-#if DEBUG
-    NSLog(@"%@", color);
-#endif
     return  color;
 }
 @end

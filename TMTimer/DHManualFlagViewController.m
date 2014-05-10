@@ -91,27 +91,28 @@ enum FSM_states {e_black, e_green, e_yellow, e_red, e_end, e_exit};
 - (void)FSM_controller {
     switch (self.st) {
         case e_black: [self FSM_black_flag];
-        self.st = e_green;
-        break;
+            self.st = e_green;
+            break;
         case e_green: [self FSM_green_flag];
-        self.st = e_yellow;
-        break;
+            self.st = e_yellow;
+            break;
         case e_yellow: [self FSM_yellow_flag];
-        self.st = e_red;
-        break;
+            self.st = e_red;
+            break;
         case e_red: [self FSM_red_flag];
-        self.st = e_end;
-        break;
+            self.st = e_end;
+            break;
         case e_end: [self FSM_end];
-        self.st = e_exit;
-        break;
+            self.st = e_exit;
+            break;
         case e_exit: [self FSM_exit];
-        break;
-        
+            break;
+            
         default:
 #if DEBUG
-        NSLog(@"Found myself in an impossible state...");
+            NSLog(@"Found myself in an impossible state...");
 #endif
+            break;
     }
 }
 

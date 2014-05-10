@@ -170,7 +170,7 @@
 	 @{
 		 kUserDefaultMinTime:@4,
 		 kUserDefaultMaxTime:@6,
-		 kUserDefault3SecondDelay:@YES,
+		 kUserDefault3SecondDelay:@NO,
 		 kUserDefaultShowRunningTimer:@YES,
          kQuickStart:@NO
 		 }];

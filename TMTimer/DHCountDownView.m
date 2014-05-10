@@ -100,7 +100,7 @@
     } completion:Nil];
     
 #if DEBUG
-    NSLog(@"%@", self.characterDisplayed.text);
+    NSLog(@"Count down text %@", self.characterDisplayed.text);
 #endif
 }
 

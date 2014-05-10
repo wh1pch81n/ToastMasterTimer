@@ -161,11 +161,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                                                                 min:event.minTime.integerValue
                                                                 max:event.maxTime.integerValue];
         [self.view setBackgroundColor:bgColor];
-#if DEBUG
-        NSLog(@"Setting new bg color: %@", bgColor);
-        NSLog(@"min %@, max %@", event.minTime, event.maxTime);
-        NSLog(@"curr background color: %@", self.view.backgroundColor);
-#endif
 	}
     //else if ([keyPath isEqualToString:kbgColor]) {
 	//	[self.view setBackgroundColor:event.bgColorFromData];
