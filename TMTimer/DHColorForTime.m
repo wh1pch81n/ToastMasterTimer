@@ -39,7 +39,7 @@
 - (UIColor *)colorForSeconds:(NSTimeInterval)seconds min:(NSTimeInterval)min max:(NSTimeInterval)max
 {
     if (seconds <= 0) {
-        return [UIColor whiteColor];
+        return [UIColor clearColor];
     }
     const int k60Seconds = 60;
 #if DEBUG

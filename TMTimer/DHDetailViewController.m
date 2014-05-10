@@ -305,7 +305,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
  A combination of two actions.  Stopping the timer and pressing back button of the navigationBar
  */
 - (void)quickStop:(id)sender {
-	[self FSM_idle];
+	[self tappedStartStopButton:sender];
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -353,6 +353,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     self.navigationItem.title = kDelayTitle;
     [self enableNavItemButtons:NO];
     [self FSM_runTimerWithAnimations:NO];
+    [[self swipeGesture] setEnabled:NO];
+    [[self tapGesture1f1t] setEnabled:NO];
+    [[self tapGesture2f2t] setEnabled:NO];
     
     BOOL delayIsEnabled = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
     
@@ -388,6 +391,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     [[self detailItem] setStartDate:[NSDate date]];
     [[self detailItem] setEndDate:nil];
     [self.timer fire];
+    [[self swipeGesture] setEnabled:YES];
+    [[self tapGesture1f1t] setEnabled:YES];
+    [[self tapGesture2f2t] setEnabled:YES];
 }
 
 - (void)FSM_runTimerWithAnimations:(BOOL)b {
