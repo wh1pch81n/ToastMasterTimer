@@ -9,7 +9,12 @@
 #import "DHCountDownView.h"
 
 @interface DHCountDownView ()
+
 @property (strong, nonatomic) UILabel *characterDisplayed;
+@property (nonatomic, assign) int characterIndex;
+@property (nonatomic, copy) void (^complete)();
+@property (strong, nonatomic) NSMutableArray *arrTimers;
+
 @end
 
 @implementation DHCountDownView
@@ -18,9 +23,10 @@
 {
 	self = [super initWithFrame:frame];
 	if (self) {
-		self.characterDisplayed = [[UILabel alloc] initWithFrame:frame];
+       	self.characterDisplayed = [[UILabel alloc] initWithFrame:frame];
 		[self addSubview:self.characterDisplayed];
-		self.backgroundColor = [UIColor clearColor];
+		//self.backgroundColor = [UIColor grayColor];
+        //self.characterDisplayed.backgroundColor = [UIColor grayColor];
 	}
 	return self;
 }
@@ -34,39 +40,68 @@
 }
 */
 
-- (void)runCountDown:(BOOL)run ThenDoThisWhenComplete:(void (^)())complete {
+- (void)runCountDown:(BOOL)run {
 	if (!self.delegate) {
 		return;
 	}
 	if (run == NO) {
-		if (complete) {
-			complete();
-		}
+        [self completeAnimation];
 		return;
 	}
-	NSString *charArr = [self.delegate stringOfCharactersToCountDown];
+    
+    NSString *charArr = [self.delegate stringOfCharactersToCountDown];
+    self.characterIndex = 0;
 	for(int delay = 0; delay <= charArr.length; ++delay) {
 
 		double delayInSeconds = [self.delegate characterDelay]* delay;
-		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-			if (delay == charArr.length) {
-				if (complete) {
-					complete();
-				}
-			} else {
-				NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:[charArr substringWithRange:NSMakeRange(delay, 1)] attributes:
-																			 @{NSFontAttributeName: [UIFont systemFontOfSize:200]
-																				 }];
-				[self.characterDisplayed setAttributedText:attrStr];
-				[self.characterDisplayed setTextAlignment:NSTextAlignmentCenter];
-//				[UIView animateWithDuration:delayInSeconds/2 animations:^{
-//					self.characterDisplayed.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.5, 0.5);
-//				} completion:Nil];
-				NSLog(@"%@", self.characterDisplayed.text);
-			}
-		});
-	}
+        [self performAfterDelay:delayInSeconds];
+ 	}
+}
+
+/**
+ Creates an nstimer that will fire once after a set amount of time has passed
+ */
+- (void)performAfterDelay:(double)delay
+{
+    [self.arrTimers addObject:[NSTimer scheduledTimerWithTimeInterval:delay
+                                     target:self
+                                   selector:@selector(changeCharacter)
+                                   userInfo:nil
+                                    repeats:NO]];
+}
+
+- (void)completeAnimation {
+    if ([[self delegate] respondsToSelector:@selector(countDownHasCompleted)]) {
+        [[self delegate] countDownHasCompleted];
+    }
+}
+
+- (void)changeCharacter
+{
+    if (self.characterIndex >= [[self delegate] stringOfCharactersToCountDown].length) {
+        [self completeAnimation];
+        return;
+    }
+
+    NSString *charArr = [self.delegate stringOfCharactersToCountDown];
+    NSString *str = [charArr substringWithRange:NSMakeRange(self.characterIndex++, 1)];
+    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:str
+                                                                  attributes:
+                                   @{
+                                     NSFontAttributeName: [UIFont systemFontOfSize:200],
+                                     
+                                     }];
+    [self.characterDisplayed setAttributedText:attrStr];
+    [self.characterDisplayed setTextAlignment:NSTextAlignmentCenter];
+    
+    self.characterDisplayed.transform = CGAffineTransformScale(CGAffineTransformIdentity, 3, 3);
+    [UIView animateWithDuration:[self.delegate characterDelay]/2 animations:^{
+       self.characterDisplayed.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.5, 1.5);
+    } completion:Nil];
+    
+#if DEBUG
+    NSLog(@"Count down text %@", self.characterDisplayed.text);
+#endif
 }
 
 @end

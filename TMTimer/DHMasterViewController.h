@@ -13,7 +13,7 @@
 
 #import <CoreData/CoreData.h>
 
-@interface DHMasterViewController : UITableViewController <NSFetchedResultsControllerDelegate, ADBannerViewDelegate>
+@interface DHMasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic) DHDetailViewController *detailViewController;
 

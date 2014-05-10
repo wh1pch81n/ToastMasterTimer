@@ -12,6 +12,8 @@
 #import "DHGlobalConstants.h"
 #import "DHAppDelegate.h"
 #import "DHNavigationItem.h"
+#import "DHColorForTime.h"
+#import "UISegmentedControl+extractMinMaxData.h"
 
 enum {
 	kdummy0,
@@ -36,16 +38,21 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 @interface DHDetailViewController ()
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture2f2t;
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture1f1t;
+@property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *swipeGesture;
+
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (strong, nonatomic) NSTimer *timer;
 @property (strong, nonatomic) NSTimer *timeout;
+@property (strong, nonatomic) NSTimer *timerForCountdownRemoval;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *presetTimesSegment;
 @property (weak, nonatomic) IBOutlet UIView *timeChooserParentView;
 
 @property (weak, nonatomic) IBOutlet ADBannerView *bannerView;
 @property (weak, nonatomic) IBOutlet DHNavigationItem *navItem;
+
+@property (strong, nonatomic) DHCountDownView *countDownView;
 @end
 
 @implementation DHDetailViewController
@@ -94,7 +101,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	
 	//enable KVO
 	[[self detailItem] addObserver:self forKeyPath:kTotalTime options:NSKeyValueObservingOptionNew context:nil];
-	[[self detailItem] addObserver:self forKeyPath:kbgColor options:NSKeyValueObservingOptionNew context:nil];
+	//[[self detailItem] addObserver:self forKeyPath:kbgColor options:NSKeyValueObservingOptionNew context:nil];
 	
 	//enable adds
 	float version = [[UIDevice currentDevice] systemVersion].floatValue;
@@ -106,15 +113,28 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 - (void)viewWillDisappear:(BOOL)animated {
 	//disable KVO
 	[[self detailItem] removeObserver:self forKeyPath:kTotalTime context:nil];
-	[[self detailItem] removeObserver:self forKeyPath:kbgColor context:nil];
+	//[[self detailItem] removeObserver:self forKeyPath:kbgColor context:nil];
 	
-  [[self detailItem] setBgColorDataWithColor:[self realignBackgroundWithMinAndMax]];
+  //[[self detailItem] setBgColorDataWithColor:[self realignBackgroundWithMinAndMax]];
 	
 	//Save context before leaving
 	DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
 	[appDelegate saveContext];
 	
 	[super viewWillDisappear:animated];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    NSNumber *shouldQuickStart = [[NSUserDefaults standardUserDefaults] objectForKey:kQuickStart];
+#if DEBUG
+    NSLog(@"should quick start %@", shouldQuickStart);
+#endif
+    if (shouldQuickStart.boolValue == YES) {
+        [self tappedStartStopButton:self];
+        [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:kQuickStart];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -136,9 +156,15 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 		} else {
 			[[self navItem] setTitle:@""];
 		}
-	} else if ([keyPath isEqualToString:kbgColor]) {
-		[self.view setBackgroundColor:event.bgColorFromData];
+        NSTimeInterval total = [[NSDate new] timeIntervalSinceDate:event.startDate];
+        UIColor *bgColor = [[DHColorForTime shared] colorForSeconds:total
+                                                                min:event.minTime.integerValue
+                                                                max:event.maxTime.integerValue];
+        [self.view setBackgroundColor:bgColor];
 	}
+    //else if ([keyPath isEqualToString:kbgColor]) {
+	//	[self.view setBackgroundColor:event.bgColorFromData];
+	//}
 }
 
 #pragma mark - Split view
@@ -240,26 +266,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 		self.detailItem.totalTime = [self stringFromTimeInterval:interval];
 		[self FSM_idle];
 	} else { //start timer
-		self.navigationItem.title = kDelayTitle;
-		[self enableNavItemButtons:NO];
-		[self FSM_runTimer];
-		BOOL delayIsEnabled = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
-		//TODO: move this to a method call.  Probably not worth it to make it a block
-		void (^startTimer)() = ^(void){
-			[self enableNavItemButtons:YES];
-			[self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
-			[[self detailItem] setStartDate:[NSDate date]];
-			[[self detailItem] setEndDate:nil];
-			[self.timer fire];
-		};
-		
-		DHCountDownView *countDownView = [[DHCountDownView alloc] initWithFrame:self.view.frame];
-		[self.view addSubview:countDownView];
-		countDownView.delegate = self;
-		[countDownView runCountDown:delayIsEnabled ThenDoThisWhenComplete:^{
-			startTimer();
-			[countDownView removeFromSuperview];
-		}];
+		[self FSM_startTimer];
 	}
 }
 
@@ -298,7 +305,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
  A combination of two actions.  Stopping the timer and pressing back button of the navigationBar
  */
 - (void)quickStop:(id)sender {
-	[self FSM_idle];
+	[self tappedStartStopButton:sender];
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -331,18 +338,54 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[UIView animateWithDuration:0.5 animations:^{
 		[self.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
 		[self.nameTextField setAlpha:1];
-			[self.timeChooserParentView setAlpha:1];
+        [self.timeChooserParentView setAlpha:1];
 	}];
 	[self.navigationItem setHidesBackButton:NO];
 	[[UIApplication sharedApplication] setIdleTimerDisabled:NO]; //toggle sleep
 	[self.tapGesture2f2t setEnabled:NO]; //toggle double 2 finger tap
 	[self.tapGesture1f1t setEnabled:NO];
+    [self.swipeGesture setEnabled:NO];
 	[self.navigationItem.rightBarButtonItem setTitle:kStart];
 	[self.navItem setTitle:self.detailItem.totalTime];
 }
 
-- (void)FSM_runTimer {
-	[UIView animateWithDuration:0.5 animations:^{
+- (void)FSM_startTimer {
+    self.navigationItem.title = kDelayTitle;
+    [self enableNavItemButtons:NO];
+    [self FSM_runTimerWithAnimations:NO];
+    [[self swipeGesture] setEnabled:NO];
+    [[self tapGesture1f1t] setEnabled:NO];
+    [[self tapGesture2f2t] setEnabled:NO];
+    
+    BOOL delayIsEnabled = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
+    
+    if (delayIsEnabled) {
+        CGRect rect = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
+        
+        self.countDownView = [[DHCountDownView alloc] initWithFrame:rect];
+        [[self view] addSubview:self.countDownView];
+        self.countDownView.delegate = self;
+        
+        [[self countDownView] runCountDown:delayIsEnabled];
+        
+    } else {
+        [self FSM_startTimerBegin];
+    }
+}
+
+- (void)FSM_startTimerBegin {
+    [self enableNavItemButtons:YES];
+    [self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
+    [[self detailItem] setStartDate:[NSDate date]];
+    [[self detailItem] setEndDate:nil];
+    [self.timer fire];
+    [[self swipeGesture] setEnabled:YES];
+    [[self tapGesture1f1t] setEnabled:YES];
+    [[self tapGesture2f2t] setEnabled:YES];
+}
+
+- (void)FSM_runTimerWithAnimations:(BOOL)b {
+	[UIView animateWithDuration:b?0.5:0 animations:^{
 		[self.nameTextField setAlpha:0];
 		[self.timeChooserParentView setAlpha:0];
 	} completion:^(BOOL finished) {
@@ -355,6 +398,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[[UIApplication sharedApplication] setIdleTimerDisabled:YES]; //toggle sleep
 	[self.tapGesture2f2t setEnabled:YES]; //toggle double 2 finger tap
 	[self.tapGesture1f1t setEnabled:YES];
+    [self.swipeGesture setEnabled:YES];
 	[self.navigationItem.rightBarButtonItem setTitle:kStop];
 }
 
@@ -392,7 +436,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 - (void)exceededTimeOut {
 	[self.timeout invalidate];
 	self.timeout = nil;
-	[self FSM_runTimer];
+	[self FSM_runTimerWithAnimations:YES];
 }
 
 /**
@@ -434,15 +478,15 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[navBar setUserInteractionEnabled:b];
 	if (!b) {
 		[UIView animateWithDuration:kSec0_5 animations:^{
-			[self.presetTimesSegment setAlpha:b];
-			[self.pickerView setAlpha:b];
+			//[self.presetTimesSegment setAlpha:b];
+			//[self.pickerView setAlpha:b];
 			[navBar setAlpha:kMiddleAlpha];
 		}];
 	} else {
 		[UIView animateWithDuration:kSec0_25 animations:^{
 			[navBar setAlpha:b];
-			[self.pickerView setAlpha:b];
-			[self.presetTimesSegment setAlpha:b];
+			//[self.pickerView setAlpha:b];
+			//[self.presetTimesSegment setAlpha:b];
 		}];
 	}
 }
@@ -450,47 +494,27 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 #pragma mark - preset Buttons
 
 - (IBAction)tappedSegmentedPresetButton:(UISegmentedControl *)sender {
-	int min, max;
-	switch ([sender selectedSegmentIndex]+1) {
-		case kPresetButton1_2:
-			min = 1;
-			max = 2;
-			break;
-		case kPresetButton2_3:
-			min = 2;
-			max = 3;
-			break;
-		case kPresetButton3_4:
-			min = 3;
-			max = 4;
-			break;
-		case kPresetButton4_6:
-			min = 4;
-			max = 6;
-			break;
-		case kPresetButton5_7:
-			min = 5;
-			max = 7;
-			break;
-		case kdummy6:
-		case kdummy7:
-		case kPresetButton8_10:
-			min = 8;
-			max = 10;
-			break;
-		default:
-			return;
-			break;
-	}
-	
-	[self updateMin:@(min) max:@(max)];
+    //NSString *str = [sender titleForSegmentAtIndex:sender.selectedSegmentIndex];
+   // NSArray *arr = [str componentsSeparatedByString:@"~"];
+	//int min, max;
+    //min = [[arr firstObject] intValue];
+    //max = [[arr lastObject] intValue];
+	//[self updateMin:@(min) max:@(max)];
+    
+    NSNumber *min;
+    NSNumber *max;
+    [sender valuesOfTappedSegmentedControlMinValue:&min maxValue:&max];
+    [self updateMin:min max:max];
 }
 
 /**
  Sets the picker view to the right places, then updates the context
  */
 - (void)updateMin:(NSNumber *)min max:(NSNumber *)max {
+#if DEBUG
 	NSLog(@"%@   %@", min, max);
+#endif
+    
 	[[self pickerView] selectRow:min.integerValue inComponent:kTimeGreen animated:YES];
 	[[self pickerView] selectRow:max.integerValue-kPickerViewRedReelOffset inComponent:kTimeRed animated:YES];
 	
@@ -521,30 +545,20 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	
 	NSInteger seconds = interval;
 	
-	static const int k60Seconds = 60;
-	NSInteger min = self.detailItem.minTime.integerValue *k60Seconds;
-	NSInteger max = self.detailItem.maxTime.integerValue *k60Seconds;
+	NSInteger min = self.detailItem.minTime.integerValue;
+	NSInteger max = self.detailItem.maxTime.integerValue;
 	
-	UIColor *color;
-	if (seconds >= max )
-		color = [UIColor redColor];
-	else if(seconds >= ((min + max) >> 1))
-		color = [UIColor yellowColor];
-	else if (seconds >= min)
-		color = [UIColor greenColor];
-	else if (seconds >= 0)
-		color = [UIColor blackColor];
-	else
-		return Nil;
-	
-	[self.detailItem setBgColorDataWithColor:color];
+	UIColor *color = [[DHColorForTime shared] colorForSeconds:seconds min:min max:max];
+		
 	return color;
 }
 
 #pragma mark - iAd's delegate methods
 
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner {
-	NSLog(@"timmerview banner 1");
+#if DEBUG
+    NSLog(@"timmerview banner 1");
+#endif
 	[banner setAlpha:YES];
 }
 
@@ -560,7 +574,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
-	NSLog(@"timerview banner 0");
+#if DEBUG
+    NSLog(@"timerview banner 0");
+#endif
 	[banner setAlpha:NO];
 }
 
@@ -572,6 +588,22 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (NSString *)stringOfCharactersToCountDown {
 	return @"321";
+}
+
+- (void)countDownHasCompleted {
+    [self FSM_startTimerBegin];
+    [self removeCountdownView];
+    //[self setTimerForCountdownRemoval:[NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(removeCountdownView) userInfo:nil repeats:NO]];
+}
+
+- (void)removeCountdownView {
+#if DEBUG
+    NSLog(@"will remove the countdownview");
+#endif
+    [[self countDownView] removeFromSuperview];
+#if DEBUG
+    NSLog(@"just removed the countdownview");
+#endif
 }
 
 @end

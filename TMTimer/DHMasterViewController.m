@@ -14,14 +14,16 @@
 #import "DHGlobalConstants.h"
 #import "DHAppDelegate.h"
 #import "DHError.h"
+#import "DHColorForTime.h"
+#import "UISegmentedControl+extractMinMaxData.h"
 
 NSString *const kMasterViewControllerTitle = @"Speakers";
 NSString *const kMore = @"More";
 NSString *const kMoreViewSegue = @"MoreView";
+NSString *const kTableTopics = @"Table Topics";
 
 @interface DHMasterViewController ()
 
-@property (strong, nonatomic) ADBannerView *bannerView;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
@@ -50,24 +52,6 @@ NSString *const kMoreViewSegue = @"MoreView";
 	self.detailViewController = (DHDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	
 	[self.navigationItem setTitle:kMasterViewControllerTitle];
-	
-	
-	//enable ads
-	float version = [[UIDevice currentDevice] systemVersion].floatValue;
-	if (version >= 7) {
-		[self canDisplayBannerAds];
-	}
-	
-	[self createAdForBanner];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-	[self.tableView setTableHeaderView:nil];
-	[super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,7 +66,9 @@ NSString *const kMoreViewSegue = @"MoreView";
  launches a view that reveals extra options
  */
 - (void)moreView:(id)sender {
-	NSLog(@"Pressed more view button");
+#if DEBUG
+    NSLog(@"Pressed more view button");
+#endif
 	[self performSegueWithIdentifier:kMoreViewSegue sender:sender];
 }
 
@@ -95,7 +81,7 @@ NSString *const kMoreViewSegue = @"MoreView";
 	// If appropriate, configure the new managed object.
 	// Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
 	[newManagedObject setTimeStamp:[NSDate date]];
-	[newManagedObject setBgColorDataWithColor:[UIColor clearColor]]; //Default bg color
+	//[newManagedObject setBgColorDataWithColor:[UIColor clearColor]]; //Default bg color
 	
 	//get default values
 	NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
@@ -111,25 +97,45 @@ NSString *const kMoreViewSegue = @"MoreView";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return [[self.fetchedResultsController sections] count];
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+	if (section == 0) { //panel section
+        return 1;
+    }
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections].lastObject;
 	return [sectionInfo numberOfObjects];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        return 110;
+    }
+    return 87;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-	[self configureCell:cell atIndexPath:indexPath];
-	return cell;
+	UITableViewCell *cell;
+    if (indexPath.section == 0) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"quickStartPanel" forIndexPath:indexPath];
+    }
+    else if (indexPath.section == 1) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    	[self configureCell:cell atIndexPath:indexPath];
+	}
+    return cell;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	// Return NO if you do not want the specified item to be editable.
+    if (indexPath.section == 0) {
+        return NO;
+    }
 	return YES;
 }
 
@@ -137,6 +143,7 @@ NSString *const kMoreViewSegue = @"MoreView";
 {
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
 		NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+        indexPath = [NSIndexPath indexPathForItem:indexPath.row inSection:0];
 		[context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
 		
 		NSError *error = nil;
@@ -153,7 +160,11 @@ NSString *const kMoreViewSegue = @"MoreView";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+	if (indexPath.section == 0) {
+        return;
+    }
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        indexPath = [NSIndexPath indexPathForItem:indexPath.row inSection:0];
 		Event *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
 		self.detailViewController.detailItem = object;
 	}
@@ -163,6 +174,7 @@ NSString *const kMoreViewSegue = @"MoreView";
 {
 	if ([[segue identifier] isEqualToString:@"showDetail"]) {
 		NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        indexPath = [NSIndexPath indexPathForItem:indexPath.row inSection:0];
 		Event *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
 		[[segue destinationViewController] setDetailItem:object];
 		NSManagedObjectContext *context = [self managedObjectContext];
@@ -233,19 +245,24 @@ NSString *const kMoreViewSegue = @"MoreView";
 	
 	switch(type) {
 		case NSFetchedResultsChangeInsert:
+            newIndexPath = [NSIndexPath indexPathForItem:newIndexPath.row inSection:1];
 			[tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
 			break;
 			
 		case NSFetchedResultsChangeDelete:
+            indexPath = [NSIndexPath indexPathForItem:indexPath.row inSection:1];
 			[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 			break;
 			
 		case NSFetchedResultsChangeUpdate:
+            indexPath = [NSIndexPath indexPathForItem:indexPath.row inSection:1];
 			[self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
 			break;
 			
 		case NSFetchedResultsChangeMove:
+            indexPath = [NSIndexPath indexPathForItem:indexPath.row inSection:1];
 			[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            newIndexPath = [NSIndexPath indexPathForItem:newIndexPath.row inSection:1];
 			[tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
 			break;
 	}
@@ -269,7 +286,8 @@ NSString *const kMoreViewSegue = @"MoreView";
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
 	DHTableViewCell *dhCell = (DHTableViewCell *)cell;
-	Event *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSIndexPath *ip = [NSIndexPath indexPathForItem:indexPath.row inSection:0];
+	Event *object = [self.fetchedResultsController objectAtIndexPath:ip];
 	
 	//handle J.D.
 	[[dhCell contestantName] setText:[object name]];
@@ -277,7 +295,14 @@ NSString *const kMoreViewSegue = @"MoreView";
 		[[dhCell contestantName] setText:kJohnDoe];
 	}
 	
-	[[dhCell flag] setBackgroundColor:[object bgColorFromData]];
+    NSTimeInterval total = [object.endDate timeIntervalSinceDate:object.startDate];
+    UIColor *bgColor = [[DHColorForTime shared] colorForSeconds:total
+                                                            min:object.minTime.integerValue
+                                                            max:object.maxTime.integerValue];
+    if ([bgColor isEqual:[UIColor blackColor]]) {
+        bgColor = [UIColor clearColor];
+    }
+    [[dhCell flag] setBackgroundColor:bgColor];
 	
 	NSDateFormatter *dateFormat = [NSDateFormatter new];
 	[dateFormat setDateFormat:@"MMM dd, yyyy"];
@@ -292,36 +317,49 @@ NSString *const kMoreViewSegue = @"MoreView";
 	[dhCell setEntity:object];
 }
 
-#pragma mark - iAd's delegate methods
+#pragma mark quickStartPanel
 
-- (void)bannerViewDidLoadAd:(ADBannerView *)banner {
-	NSLog(@"tableview banner 1");
-	[banner setAlpha:YES];
-	[self.tableView setTableHeaderView:banner];
+- (void)quickStartBegin:(id)sender {
+        [self insertNewObject:sender];
+    NSIndexPath *tableViewIndexPath = [NSIndexPath indexPathForItem:0 inSection:1];
+    [self.tableView selectRowAtIndexPath:tableViewIndexPath
+                                animated:YES
+                          scrollPosition:UITableViewScrollPositionTop];
 }
 
-- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
-	return YES;
+- (void)quickStartEnds:(id)sender {
+    [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kQuickStart];
+    
+    [self performSegueWithIdentifier:@"showDetail" sender:sender];
 }
 
-- (void)bannerViewActionDidFinish:(ADBannerView *)banner {
+- (void)setupFirstObjectWithName:(NSString *)name minTime:(int)min maxTime:(int)max
+{
+    NSIndexPath *frc_indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+    Event *obj = [self.fetchedResultsController objectAtIndexPath:frc_indexPath];
+    [obj setName:name];
+    [obj setMinTime:@(min)];
+    [obj setMaxTime:@(max)];
+    
+    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
+	[appDelegate saveContext];
 }
 
-- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
-	NSLog(@"TableView banner 0");
-	[banner setAlpha:NO];
-	[self.tableView setTableHeaderView:Nil];
+- (IBAction)tappedTableTopics:(id)sender {
+    [self quickStartBegin:sender];
+    
+    [self setupFirstObjectWithName:kTableTopics minTime:kTableTopicsMin maxTime:kTableTopicsMax];
+    
+    [self quickStartEnds:sender];
 }
 
-- (void)createAdForBanner {
-	self.bannerView = [[ADBannerView alloc] initWithFrame:CGRectZero];
-	[self.bannerView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-	[self.bannerView setDelegate:self];
-}
-
-- (void)removeAdForBanner {
-	[self.bannerView removeFromSuperview];
-	[self setBannerView:nil];
+- (IBAction)tappedPresetSpeechTime:(UISegmentedControl *)sender {
+    [self quickStartBegin:sender];
+    NSNumber *min, *max;
+    
+    [sender valuesOfTappedSegmentedControlMinValue:&min maxValue:&max];
+    [self setupFirstObjectWithName:nil minTime:min.intValue maxTime:max.intValue];
+    [self quickStartEnds:sender];
 }
 
 @end

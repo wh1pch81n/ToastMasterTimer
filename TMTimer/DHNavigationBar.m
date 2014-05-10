@@ -24,7 +24,8 @@ static const NSInteger kGodsMagicNumber = 77;
 
 - (void)drawRect:(CGRect)rect
 {
-	UIColor *topColor = [UIColor colorWithRed:49.0/255.0 green:249.0/255.0 blue:236.0/255.0 alpha:1]; //cyanish color
+//  [super drawRect:rect];
+   	UIColor *topColor = [UIColor colorWithRed:49.0/255.0 green:249.0/255.0 blue:236.0/255.0 alpha:1]; //cyanish color
 	UIColor *bottomColor = [UIColor colorWithRed:36.0/255.0 green:123.0/255.0 blue:128.0/255 alpha:1]; //cyanish bluish color
 	[DHGradients drawRectAtULPoint:rect.origin
 														size:rect.size
@@ -36,6 +37,27 @@ static const NSInteger kGodsMagicNumber = 77;
 	[DHGradients produceRandomDots:kGodsMagicNumber
 												 inFrame:rect
 											 withColor:sprinkleColor];
+    
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent
+//                                                animated:NO];
 }
+
+//- (void)layoutSubviews
+//{
+//    [super layoutSubviews];
+//    	UIColor *topColor = [UIColor colorWithRed:49.0/255.0 green:249.0/255.0 blue:236.0/255.0 alpha:1]; //cyanish color
+//    	UIColor *bottomColor = [UIColor colorWithRed:36.0/255.0 green:123.0/255.0 blue:128.0/255 alpha:1]; //cyanish bluish color
+//    CGRect rect = self.frame;
+//    [DHGradients drawRectAtULPoint:rect.origin
+//                              size:rect.size
+//                           ulColor:topColor
+//                           urColor:topColor
+//                           llColor:bottomColor
+//                           lrColor:bottomColor];
+//    UIColor *sprinkleColor = [UIColor colorWithRed:49/255.0 green:249/255.0 blue:236/255.0 alpha:0.5];
+//    [DHGradients produceRandomDots:kGodsMagicNumber
+//                           inFrame:rect
+//                         withColor:sprinkleColor];
+//}
 
 @end

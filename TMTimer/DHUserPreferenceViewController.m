@@ -32,11 +32,15 @@
 	NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
 	NSNumber *threeSecondDelay = [UD objectForKey:kUserDefault3SecondDelay];
 	[self.threeSecondDelay setOn:threeSecondDelay.boolValue animated:YES];
-	NSLog(@"ThreeSecondDelay is %d", threeSecondDelay.boolValue);
-	
+#if DEBUG
+    NSLog(@"ThreeSecondDelay is %d", threeSecondDelay.boolValue);
+#endif
+    
 	NSNumber *showRunningTimer = [UD objectForKey:kUserDefaultShowRunningTimer];
 	[self.showRunningTimer setOn:showRunningTimer.boolValue animated:YES];
-	NSLog(@"showRunningTimer is %d", showRunningTimer.boolValue);
+#if DEBUG
+    NSLog(@"showRunningTimer is %d", showRunningTimer.boolValue);
+#endif
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,11 +50,15 @@
 }
 
 - (IBAction)switchAction:(id)sender {
-	NSLog(@"ThreeSecondDelay became %d", self.threeSecondDelay.on);
+#if DEBUG
+    NSLog(@"ThreeSecondDelay became %d", self.threeSecondDelay.on);
+#endif
 	NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
 	[UD setObject:@(self.threeSecondDelay.on) forKey:kUserDefault3SecondDelay];
 	
-	NSLog(@"showRunningTimer became %d", self.showRunningTimer.on);
+#if DEBUG
+    NSLog(@"showRunningTimer became %d", self.showRunningTimer.on);
+#endif
 	[UD setObject:@(self.showRunningTimer.on) forKey:kUserDefaultShowRunningTimer];
 }
 @end
