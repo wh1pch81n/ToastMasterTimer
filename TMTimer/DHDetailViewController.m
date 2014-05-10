@@ -368,18 +368,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
         
         [[self countDownView] runCountDown:delayIsEnabled];
         
-        //    __weak typeof(self)weakSelf = self;
-        //    [countDownView runCountDown:delayIsEnabled ThenDoThisWhenComplete:^{
-        //        __strong typeof(weakSelf)strongSelf = weakSelf;
-        //        [strongSelf enableNavItemButtons:YES];
-        //        [strongSelf setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
-        //        [[strongSelf detailItem] setStartDate:[NSDate date]];
-        //        [[strongSelf detailItem] setEndDate:nil];
-        //        [strongSelf.timer fire];
-        //        //[countDownView setFrame:CGRectOffset(rect, 100, 100)];
-        //        //[countDownView removeFromSuperview];
-        //        //[strongCountDownView removeFromSuperview];
-        //    }];
     } else {
         [self FSM_startTimerBegin];
     }
@@ -557,9 +545,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	
 	NSInteger seconds = interval;
 	
-	static const int k60Seconds = 60;
-	NSInteger min = self.detailItem.minTime.integerValue;// *k60Seconds;
-	NSInteger max = self.detailItem.maxTime.integerValue;// *k60Seconds;
+	NSInteger min = self.detailItem.minTime.integerValue;
+	NSInteger max = self.detailItem.maxTime.integerValue;
 	
 	UIColor *color = [[DHColorForTime shared] colorForSeconds:seconds min:min max:max];
 		

@@ -24,7 +24,6 @@ NSString *const kTableTopics = @"Table Topics";
 
 @interface DHMasterViewController ()
 
-@property (strong, nonatomic) ADBannerView *bannerView;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
@@ -53,29 +52,6 @@ NSString *const kTableTopics = @"Table Topics";
 	self.detailViewController = (DHDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	
 	[self.navigationItem setTitle:kMasterViewControllerTitle];
-	
-	
-	//enable ads
-	float version = [[UIDevice currentDevice] systemVersion].floatValue;
-	if (version >= 7) {
-		[self canDisplayBannerAds];
-	}
-	
-	[self createAdForBanner];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-	//[self.tableView setTableHeaderView:nil];
-	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [self.tableView setTableHeaderView:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -121,7 +97,6 @@ NSString *const kTableTopics = @"Table Topics";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	//return [[self.fetchedResultsController sections] count];
     return 2;
 }
 
@@ -328,7 +303,6 @@ NSString *const kTableTopics = @"Table Topics";
         bgColor = [UIColor clearColor];
     }
     [[dhCell flag] setBackgroundColor:bgColor];
-	//[[dhCell flag] setBackgroundColor:[object bgColorFromData]];
 	
 	NSDateFormatter *dateFormat = [NSDateFormatter new];
 	[dateFormat setDateFormat:@"MMM dd, yyyy"];
@@ -341,42 +315,6 @@ NSString *const kTableTopics = @"Table Topics";
 	[[dhCell timeRange] setText:qualifyingTime];
 	
 	[dhCell setEntity:object];
-}
-
-#pragma mark - iAd's delegate methods
-
-- (void)bannerViewDidLoadAd:(ADBannerView *)banner {
-#if DEBUG
-    NSLog(@"tableview banner 1");
-#endif
-	[banner setAlpha:YES];
-	[self.tableView setTableHeaderView:banner];
-}
-
-- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
-	return YES;
-}
-
-- (void)bannerViewActionDidFinish:(ADBannerView *)banner {
-}
-
-- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
-#if DEBUG
-    NSLog(@"TableView banner 0");
-#endif
-	[banner setAlpha:NO];
-	[self.tableView setTableHeaderView:Nil];
-}
-
-- (void)createAdForBanner {
-	self.bannerView = [[ADBannerView alloc] initWithFrame:CGRectZero];
-	[self.bannerView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-	[self.bannerView setDelegate:self];
-}
-
-- (void)removeAdForBanner {
-	[self.bannerView removeFromSuperview];
-	[self setBannerView:nil];
 }
 
 #pragma mark quickStartPanel
@@ -418,11 +356,9 @@ NSString *const kTableTopics = @"Table Topics";
 - (IBAction)tappedPresetSpeechTime:(UISegmentedControl *)sender {
     [self quickStartBegin:sender];
     NSNumber *min, *max;
-    NSString *title = [sender titleForSegmentAtIndex:sender.selectedSegmentIndex];
-    title = [NSString stringWithFormat:@"%@ minute speech", title];
     
     [sender valuesOfTappedSegmentedControlMinValue:&min maxValue:&max];
-    [self setupFirstObjectWithName:title minTime:min.intValue maxTime:max.intValue];
+    [self setupFirstObjectWithName:nil minTime:min.intValue maxTime:max.intValue];
     [self quickStartEnds:sender];
 }
 
