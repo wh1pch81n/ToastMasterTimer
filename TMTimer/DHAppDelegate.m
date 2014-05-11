@@ -89,6 +89,20 @@
 	[self saveContext];
 }
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    // Since you have 3 different views, you must make the masterview become the current view if it isn't already the current view.
+    //Then you must call the public function of the master view that will allow you to do a quick start.
+    
+    //break up the url into three parts: title, the expected minvalue and the max value.
+    
+    //call the public method name of the table view so that it will launch the timer
+    
+    
+    
+    
+    return NO;
+}
+
 - (void)saveContext
 {
 	NSError *error = nil;
