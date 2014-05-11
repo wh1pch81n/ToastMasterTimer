@@ -103,10 +103,10 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[[self detailItem] addObserver:self forKeyPath:kTotalTime options:NSKeyValueObservingOptionNew context:nil];
     
 	//enable adds
-	float version = [[UIDevice currentDevice] systemVersion].floatValue;
-	if (version >= 7) {
-		[self canDisplayBannerAds];
-	}
+	//float version = [[UIDevice currentDevice] systemVersion].floatValue;
+	//if (version >= 7) {
+	//	[self canDisplayBannerAds];
+	//}
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

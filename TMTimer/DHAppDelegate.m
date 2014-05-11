@@ -93,6 +93,15 @@
     // Since you have 3 different views, you must make the masterview become the current view if it isn't already the current view.
     //Then you must call the public function of the master view that will allow you to do a quick start.
     
+    NSString *url_str = [url.absoluteString substringFromIndex:@"tmtimer328:".length];
+    url_str = [url_str stringByRemovingPercentEncoding];
+    NSData *json_data = [url_str dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *url_args = [NSJSONSerialization JSONObjectWithData:json_data options:0 error:nil];
+    
+#if DEBUG
+    NSLog(@"Root controller: %@", self.window.rootViewController);
+#endif
+        
     //break up the url into three parts: title, the expected minvalue and the max value.
     
     //call the public method name of the table view so that it will launch the timer
