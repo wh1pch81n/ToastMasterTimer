@@ -20,6 +20,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Override point for customization after application launch.
+    [self setArrOfAlerts:[NSMutableArray new]];
+    
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
 		UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
 		UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
@@ -101,7 +103,12 @@
 #if DEBUG
     NSLog(@"Root controller: %@", self.window.rootViewController);
 #endif
-        
+    for (UIAlertView *alert in self.arrOfAlerts) {
+        [alert dismissWithClickedButtonIndex:0 animated:NO]; //press cancle for all of them
+    }
+    
+    [[self topVC] performSegueWithIdentifier:@"unwind" sender:self];
+    
     //break up the url into three parts: title, the expected minvalue and the max value.
     
     //call the public method name of the table view so that it will launch the timer

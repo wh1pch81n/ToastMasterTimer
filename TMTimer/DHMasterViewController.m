@@ -42,7 +42,10 @@ NSString *const kTableTopics = @"Table Topics";
 {
 	[super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-	
+    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate setTopVC:nil];
+    
+    
 	UIBarButtonItem *moreButtonItem = [[UIBarButtonItem alloc] initWithTitle:kMore style:UIBarButtonItemStyleBordered target:self action:@selector(moreView:)];
 	
 	self.navigationItem.leftBarButtonItem = moreButtonItem;
@@ -360,6 +363,10 @@ NSString *const kTableTopics = @"Table Topics";
     [sender valuesOfTappedSegmentedControlMinValue:&min maxValue:&max];
     [self setupFirstObjectWithName:nil minTime:min.intValue maxTime:max.intValue];
     [self quickStartEnds:sender];
+}
+
+- (IBAction)unwindForURLScheme:(UIStoryboardSegue *)sender {
+    NSLog(@"just unwinded");
 }
 
 @end

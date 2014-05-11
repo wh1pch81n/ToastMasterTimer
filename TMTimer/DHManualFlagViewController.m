@@ -7,6 +7,7 @@
 //
 
 #import "DHManualFlagViewController.h"
+#import "DHAppDelegate.h"
 
 NSString *const kUIAlertDemoEndedTitle = @"End or Repeat";
 NSString *const kUIAlertDemoCancelButtonTitle = @"Finish";
@@ -33,7 +34,13 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate setTopVC:self];
     [self FSM_controller];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -73,11 +80,14 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
 
 - (void)FSM_end {
     //present a pop up that will ask if they want to exit or to repeat
-    [[[UIAlertView alloc] initWithTitle:kUIAlertDemoEndedTitle
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:kUIAlertDemoEndedTitle
                                 message:nil
                                delegate:self
                       cancelButtonTitle:kUIAlertDemoCancelButtonTitle
-                      otherButtonTitles:kUIAlertDemoRepeatButtonTitle, nil] show];
+                      otherButtonTitles:kUIAlertDemoRepeatButtonTitle, nil];
+    [alert show];
+    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [[appDelegate arrOfAlerts] addObject:alert];
 }
 
 - (void)FSM_exit {

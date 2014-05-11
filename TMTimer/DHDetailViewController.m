@@ -93,6 +93,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 {
 	[super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate setTopVC:self];
+    
 	[self configureView];
 	[self FSM_idle];
 	
@@ -600,6 +603,19 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 #if DEBUG
     NSLog(@"just removed the countdownview");
 #endif
+}
+
+#pragma mark - prepare for segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    //If it is running, you should stop it before it segues away
+    if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) { //end timer
+		[[self detailItem] setEndDate:[NSDate date]];
+		
+		NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
+		self.detailItem.totalTime = [self stringFromTimeInterval:interval];
+		[self FSM_idle];
+	}
 }
 
 @end
