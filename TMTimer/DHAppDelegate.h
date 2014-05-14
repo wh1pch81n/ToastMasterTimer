@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString *const kName;
+extern NSString *const kMinValue;
+extern NSString *const kMaxValue;
+
+extern NSString *const kHost;
+
 @interface DHAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (weak, nonatomic) UIViewController *topVC;

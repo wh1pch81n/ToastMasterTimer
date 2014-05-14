@@ -11,6 +11,12 @@
 #import "DHMasterViewController.h"
 #import "DHError.h"
 
+NSString *const kName = @"name";
+NSString *const kMinValue = @"min_value";
+NSString *const kMaxValue = @"max_value";
+
+NSString *const kHost = @"tmtimer328";
+
 @implementation DHAppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -94,7 +100,7 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     // Since you have 3 different views, you must make the masterview become the current view if it isn't already the current view.
     //Then you must call the public function of the master view that will allow you to do a quick start.
-    
+    //TODO: I suggest using the [url host] and [url path] methods instead of the str manip
     NSString *url_str = [url.absoluteString substringFromIndex:@"tmtimer328:".length];
     url_str = [url_str stringByRemovingPercentEncoding];
     NSData *json_data = [url_str dataUsingEncoding:NSUTF8StringEncoding];
@@ -106,17 +112,22 @@
     for (UIAlertView *alert in self.arrOfAlerts) {
         [alert dismissWithClickedButtonIndex:0 animated:NO]; //press cancle for all of them
     }
-    
     [[self topVC] performSegueWithIdentifier:@"unwind" sender:self];
     
-    //break up the url into three parts: title, the expected minvalue and the max value.
+    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    DHMasterViewController *controller = (DHMasterViewController *)navigationController.topViewController;
+    NSString *topic = url_args[kName];
+    int min = [(NSNumber *)url_args[kMinValue] intValue];
+    int max = [(NSNumber *)url_args[kMaxValue] intValue];
+    [controller customStartTopic:topic withMinTime:min withMaxTime:max];
+    
     
     //call the public method name of the table view so that it will launch the timer
+    //TODO: get it parameters based on the values found in the dictionary
     
     
-    
-    
-    return NO;
+    //TODO: make logic that will determine if this succeeded or not.
+    return YES;
 }
 
 - (void)saveContext

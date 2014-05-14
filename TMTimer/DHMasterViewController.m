@@ -24,6 +24,9 @@ NSString *const kTableTopics = @"Table Topics";
 
 @interface DHMasterViewController ()
 
+@property (strong, nonatomic) NSDictionary *customStartDict;
+@property (assign) BOOL didUnwind;
+
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
@@ -323,7 +326,7 @@ NSString *const kTableTopics = @"Table Topics";
 #pragma mark quickStartPanel
 
 - (void)quickStartBegin:(id)sender {
-        [self insertNewObject:sender];
+    [self insertNewObject:sender];
     NSIndexPath *tableViewIndexPath = [NSIndexPath indexPathForItem:0 inSection:1];
     [self.tableView selectRowAtIndexPath:tableViewIndexPath
                                 animated:YES
@@ -338,14 +341,37 @@ NSString *const kTableTopics = @"Table Topics";
 
 - (void)setupFirstObjectWithName:(NSString *)name minTime:(int)min maxTime:(int)max
 {
+    [self setupFirstObjectWithName:name minTimeNumber:@(min) maxTimeNumber:@(max)];
+}
+
+- (void)setupFirstObjectWithName:(NSString *)name minTimeNumber:(NSNumber *)min maxTimeNumber:(NSNumber *)max {
     NSIndexPath *frc_indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
     Event *obj = [self.fetchedResultsController objectAtIndexPath:frc_indexPath];
     [obj setName:name];
-    [obj setMinTime:@(min)];
-    [obj setMaxTime:@(max)];
+    [obj setMinTime:(min)];
+    [obj setMaxTime:(max)];
     
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
 	[appDelegate saveContext];
+}
+
+- (void)customStartTopic:(NSString *)topic withMinTime:(int)min withMaxTime:(int)max {
+    NSLog(@"custome startTopic");
+    [self setCustomStartDict:@{kName: topic, kMinValue:@(min), kMaxValue:@(max)}];
+    if (self.didUnwind) {
+        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(beginCustomStartTopic) userInfo:nil repeats:NO];
+    } else {
+        [self beginCustomStartTopic];
+    }
+    self.didUnwind = NO;
+}
+
+- (void)beginCustomStartTopic {
+    [self quickStartBegin:self];
+    [self setupFirstObjectWithName:self.customStartDict[kName]
+                     minTimeNumber:self.customStartDict[kMinValue]
+                     maxTimeNumber:self.customStartDict[kMaxValue]];
+    [self quickStartEnds:self];
 }
 
 - (IBAction)tappedTableTopics:(id)sender {
@@ -367,6 +393,7 @@ NSString *const kTableTopics = @"Table Topics";
 
 - (IBAction)unwindForURLScheme:(UIStoryboardSegue *)sender {
     NSLog(@"just unwinded");
+    self.didUnwind = YES;
 }
 
 @end
