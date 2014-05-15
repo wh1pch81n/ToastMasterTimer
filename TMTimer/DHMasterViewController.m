@@ -373,15 +373,8 @@ NSString *const kTableTopics = @"Table Topics";
 - (void)customStartTopic:(NSString *)topic withMinTime:(int)min withMaxTime:(int)max {
     NSLog(@"custome startTopic");
     [self setCustomStartDict:@{kName: topic, kMinValue:@(min), kMaxValue:@(max)}];
-    //TODO: Should change this so that it will call the function when the view appears after segueing.  If there was not unwind called then I should just launch it right away.  If there was a did unwind call then I should call it in the viewdidappear and it is there that I should set the didUnwind to no;
-    //if (self.didUnwind) {
-    
-        //[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(beginCustomStartTopic) userInfo:nil repeats:NO]; // seems to be the best over all.  There are three states that the url could come from, application beginning viewdidload, beginning without needed segue, and lastly beginning with a segue.  Is it possible to call beginCustomerStartTopic without doing it asyncronous?
-   // } else {
-    //    [self beginCustomStartTopic];
-    //}
-    //self.didUnwind = NO;
-    
+
+    //begin right away if app is already loaded and already in the default view; otherwise, wait until the view did appear method to begin
     if (self.didLoad && !self.didUnwind) {
         [self beginCustomStartTopic];
     }

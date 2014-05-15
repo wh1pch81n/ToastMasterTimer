@@ -101,14 +101,13 @@ NSString *const kHost = @"tmtimer328";
     // Since you have 3 different views, you must make the masterview become the current view if it isn't already the current view.
     //Then you must call the public function of the master view that will allow you to do a quick start.
     //TODO: I suggest using the [url host] and [url path] methods instead of the str manip
+   if ([@"com.dnthome.TMTopic" isEqualToString:sourceApplication] == NO) return NO;
+    
     NSString *url_str = [url.absoluteString substringFromIndex:@"tmtimer328:".length];
     url_str = [url_str stringByRemovingPercentEncoding];
     NSData *json_data = [url_str dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *url_args = [NSJSONSerialization JSONObjectWithData:json_data options:0 error:nil];
     
-#if DEBUG
-    NSLog(@"Root controller: %@", self.window.rootViewController);
-#endif
     for (UIAlertView *alert in self.arrOfAlerts) {
         [alert dismissWithClickedButtonIndex:0 animated:NO]; //press cancle for all of them
     }
@@ -122,12 +121,6 @@ NSString *const kHost = @"tmtimer328";
     int max = [(NSNumber *)url_args[kMaxValue] intValue];
     [controller customStartTopic:topic withMinTime:min withMaxTime:max];
     
-    
-    //call the public method name of the table view so that it will launch the timer
-    //TODO: get it parameters based on the values found in the dictionary
-    
-    
-    //TODO: make logic that will determine if this succeeded or not.
     return YES;
 }
 
