@@ -26,6 +26,7 @@ NSString *const kTableTopics = @"Table Topics";
 
 @property (strong, nonatomic) NSDictionary *customStartDict;
 @property (assign) BOOL didUnwind;
+@property (assign) BOOL didLoad;
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
@@ -48,6 +49,7 @@ NSString *const kTableTopics = @"Table Topics";
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:nil];
     
+    [self setDidLoad:YES];
     
 	UIBarButtonItem *moreButtonItem = [[UIBarButtonItem alloc] initWithTitle:kMore style:UIBarButtonItemStyleBordered target:self action:@selector(moreView:)];
 	
@@ -58,6 +60,19 @@ NSString *const kTableTopics = @"Table Topics";
 	self.detailViewController = (DHDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	
 	[self.navigationItem setTitle:kMasterViewControllerTitle];
+#if DEBUG
+    NSLog(@"TMTimer view did load");
+#endif
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (self.customStartDict) {
+        [self beginCustomStartTopic];
+    }
+#if DEBUG
+    NSLog(@"TMTimer view did appear");
+#endif
 }
 
 - (void)didReceiveMemoryWarning
@@ -358,12 +373,18 @@ NSString *const kTableTopics = @"Table Topics";
 - (void)customStartTopic:(NSString *)topic withMinTime:(int)min withMaxTime:(int)max {
     NSLog(@"custome startTopic");
     [self setCustomStartDict:@{kName: topic, kMinValue:@(min), kMaxValue:@(max)}];
-    if (self.didUnwind) {
-        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(beginCustomStartTopic) userInfo:nil repeats:NO];
-    } else {
+    //TODO: Should change this so that it will call the function when the view appears after segueing.  If there was not unwind called then I should just launch it right away.  If there was a did unwind call then I should call it in the viewdidappear and it is there that I should set the didUnwind to no;
+    //if (self.didUnwind) {
+    
+        //[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(beginCustomStartTopic) userInfo:nil repeats:NO]; // seems to be the best over all.  There are three states that the url could come from, application beginning viewdidload, beginning without needed segue, and lastly beginning with a segue.  Is it possible to call beginCustomerStartTopic without doing it asyncronous?
+   // } else {
+    //    [self beginCustomStartTopic];
+    //}
+    //self.didUnwind = NO;
+    
+    if (self.didLoad && !self.didUnwind) {
         [self beginCustomStartTopic];
     }
-    self.didUnwind = NO;
 }
 
 - (void)beginCustomStartTopic {
@@ -372,6 +393,7 @@ NSString *const kTableTopics = @"Table Topics";
                      minTimeNumber:self.customStartDict[kMinValue]
                      maxTimeNumber:self.customStartDict[kMaxValue]];
     [self quickStartEnds:self];
+    [self setCustomStartDict:nil];
 }
 
 - (IBAction)tappedTableTopics:(id)sender {

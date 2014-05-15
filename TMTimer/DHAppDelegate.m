@@ -112,6 +112,7 @@ NSString *const kHost = @"tmtimer328";
     for (UIAlertView *alert in self.arrOfAlerts) {
         [alert dismissWithClickedButtonIndex:0 animated:NO]; //press cancle for all of them
     }
+    
     [[self topVC] performSegueWithIdentifier:@"unwind" sender:self];
     
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
