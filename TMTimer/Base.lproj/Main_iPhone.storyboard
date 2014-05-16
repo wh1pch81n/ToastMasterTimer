@@ -28,7 +28,7 @@
         <!--Master View Controller - Master-->
         <scene sceneID="VgW-fR-Quf">
             <objects>
-                <tableViewController title="Master" id="pGg-6v-bdr" customClass="DHMasterViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="speakerListVC" title="Master" id="pGg-6v-bdr" customClass="DHMasterViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="89" sectionHeaderHeight="22" sectionFooterHeight="22" id="mLL-gJ-YKr">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -91,29 +91,30 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         </view>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6XQ-VF-K2R" userLabel="Label - name">
-                                            <rect key="frame" x="10" y="10" width="209" height="21"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.30000000000000004" preferredMaxLayoutWidth="209" translatesAutoresizingMaskIntoConstraints="NO" id="6XQ-VF-K2R" userLabel="Label - name">
+                                            <rect key="frame" x="10" y="0.0" width="209" height="57"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
+                                            <size key="shadowOffset" width="1" height="1"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIF-aU-Ff9" userLabel="Label - dateCreated">
-                                            <rect key="frame" x="10" y="33" width="209" height="21"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Created: May 15, 2014" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIF-aU-Ff9" userLabel="Label - dateCreated">
+                                            <rect key="frame" x="10" y="56" width="209" height="10"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="italicSystem" pointSize="10"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vyl-1N-CMp" userLabel="Label - elapsedTime">
-                                            <rect key="frame" x="10" y="56" width="103" height="21"/>
+                                            <rect key="frame" x="10" y="65" width="103" height="21"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OPp-pt-aW4" userLabel="Label - qualifyingTime">
-                                            <rect key="frame" x="116" y="56" width="103" height="21"/>
+                                            <rect key="frame" x="116" y="65" width="103" height="21"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="highlightedColor"/>
@@ -149,7 +150,7 @@
         <!--User Preference View Controller-->
         <scene sceneID="TUt-wJ-cBH">
             <objects>
-                <tableViewController id="2i9-yI-Ppu" customClass="DHUserPreferenceViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="preferencesVC" id="2i9-yI-Ppu" customClass="DHUserPreferenceViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="gZm-sO-vfT">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -255,16 +256,18 @@
                     <connections>
                         <outlet property="showRunningTimer" destination="Qph-Zz-9hb" id="Rpb-W8-06s"/>
                         <outlet property="threeSecondDelay" destination="A40-fO-KdK" id="GQA-jt-euB"/>
+                        <segue destination="ZWg-2H-5xZ" kind="unwind" identifier="unwind" unwindAction="unwindForURLScheme:" id="t8e-Sg-cdM"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zUJ-fR-iWs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="ZWg-2H-5xZ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="980" y="1198"/>
         </scene>
         <!--Manual Flag View Controller-->
         <scene sceneID="zNx-ch-0ie">
             <objects>
-                <viewController id="kj2-3m-HyC" customClass="DHManualFlagViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="manualFlagVC" id="kj2-3m-HyC" customClass="DHManualFlagViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="c6M-Yq-9z5"/>
                         <viewControllerLayoutGuide type="bottom" id="q5b-WU-UKM"/>
@@ -293,8 +296,12 @@
                             <outletCollection property="gestureRecognizers" destination="SV6-av-LNl" appends="YES" id="e20-ux-X27"/>
                         </connections>
                     </view>
+                    <connections>
+                        <segue destination="JCf-ts-uC0" kind="unwind" identifier="unwind" unwindAction="unwindForURLScheme:" id="dGm-fo-dLv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XnM-ae-Tpe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="JCf-ts-uC0" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer id="SV6-av-LNl">
                     <connections>
                         <action selector="tappedView:" destination="kj2-3m-HyC" id="GCg-Im-7et"/>
@@ -306,7 +313,7 @@
         <!--Detail View Controller - Detail-->
         <scene sceneID="Cn3-H9-jdl">
             <objects>
-                <viewController title="Detail" id="Ah7-4n-0Wa" customClass="DHDetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="timerVC" title="Detail" id="Ah7-4n-0Wa" customClass="DHDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CBg-3L-XNM"/>
                         <viewControllerLayoutGuide type="bottom" id="Ofn-99-DWh"/>
@@ -414,9 +421,11 @@
                         <outlet property="tapGesture1f1t" destination="Dzb-Hk-PoY" id="BUc-Lr-XGX"/>
                         <outlet property="tapGesture2f2t" destination="xtz-1B-MUR" id="JuW-AV-Wc1"/>
                         <outlet property="timeChooserParentView" destination="UgY-RK-qPL" id="hOW-4H-l17"/>
+                        <segue destination="Wgw-A9-iOc" kind="unwind" identifier="unwind" unwindAction="unwindForURLScheme:" id="Xht-UP-1dg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lrm-kH-fPn" sceneMemberID="firstResponder"/>
+                <exit id="Wgw-A9-iOc" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer numberOfTapsRequired="2" numberOfTouchesRequired="2" id="xtz-1B-MUR">
                     <connections>
                         <action selector="tappedTwiceWithTwoFingers:" destination="Ah7-4n-0Wa" id="NeT-ro-ay5"/>

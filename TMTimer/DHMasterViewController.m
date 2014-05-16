@@ -24,6 +24,10 @@ NSString *const kTableTopics = @"Table Topics";
 
 @interface DHMasterViewController ()
 
+@property (strong, nonatomic) NSDictionary *customStartDict;
+@property (assign) BOOL didUnwind;
+@property (assign) BOOL didLoad;
+
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
@@ -42,7 +46,11 @@ NSString *const kTableTopics = @"Table Topics";
 {
 	[super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-	
+    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate setTopVC:nil];
+    
+    [self setDidLoad:YES];
+    
 	UIBarButtonItem *moreButtonItem = [[UIBarButtonItem alloc] initWithTitle:kMore style:UIBarButtonItemStyleBordered target:self action:@selector(moreView:)];
 	
 	self.navigationItem.leftBarButtonItem = moreButtonItem;
@@ -52,6 +60,19 @@ NSString *const kTableTopics = @"Table Topics";
 	self.detailViewController = (DHDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	
 	[self.navigationItem setTitle:kMasterViewControllerTitle];
+#if DEBUG
+    NSLog(@"TMTimer view did load");
+#endif
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (self.customStartDict) {
+        [self beginCustomStartTopic];
+    }
+#if DEBUG
+    NSLog(@"TMTimer view did appear");
+#endif
 }
 
 - (void)didReceiveMemoryWarning
@@ -320,7 +341,7 @@ NSString *const kTableTopics = @"Table Topics";
 #pragma mark quickStartPanel
 
 - (void)quickStartBegin:(id)sender {
-        [self insertNewObject:sender];
+    [self insertNewObject:sender];
     NSIndexPath *tableViewIndexPath = [NSIndexPath indexPathForItem:0 inSection:1];
     [self.tableView selectRowAtIndexPath:tableViewIndexPath
                                 animated:YES
@@ -335,14 +356,37 @@ NSString *const kTableTopics = @"Table Topics";
 
 - (void)setupFirstObjectWithName:(NSString *)name minTime:(int)min maxTime:(int)max
 {
+    [self setupFirstObjectWithName:name minTimeNumber:@(min) maxTimeNumber:@(max)];
+}
+
+- (void)setupFirstObjectWithName:(NSString *)name minTimeNumber:(NSNumber *)min maxTimeNumber:(NSNumber *)max {
     NSIndexPath *frc_indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
     Event *obj = [self.fetchedResultsController objectAtIndexPath:frc_indexPath];
     [obj setName:name];
-    [obj setMinTime:@(min)];
-    [obj setMaxTime:@(max)];
+    [obj setMinTime:(min)];
+    [obj setMaxTime:(max)];
     
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
 	[appDelegate saveContext];
+}
+
+- (void)customStartTopic:(NSString *)topic withMinTime:(int)min withMaxTime:(int)max {
+    NSLog(@"custome startTopic");
+    [self setCustomStartDict:@{kName: topic, kMinValue:@(min), kMaxValue:@(max)}];
+
+    //begin right away if app is already loaded and already in the default view; otherwise, wait until the view did appear method to begin
+    if (self.didLoad && !self.didUnwind) {
+        [self beginCustomStartTopic];
+    }
+}
+
+- (void)beginCustomStartTopic {
+    [self quickStartBegin:self];
+    [self setupFirstObjectWithName:self.customStartDict[kName]
+                     minTimeNumber:self.customStartDict[kMinValue]
+                     maxTimeNumber:self.customStartDict[kMaxValue]];
+    [self quickStartEnds:self];
+    [self setCustomStartDict:nil];
 }
 
 - (IBAction)tappedTableTopics:(id)sender {
@@ -360,6 +404,11 @@ NSString *const kTableTopics = @"Table Topics";
     [sender valuesOfTappedSegmentedControlMinValue:&min maxValue:&max];
     [self setupFirstObjectWithName:nil minTime:min.intValue maxTime:max.intValue];
     [self quickStartEnds:sender];
+}
+
+- (IBAction)unwindForURLScheme:(UIStoryboardSegue *)sender {
+    NSLog(@"just unwinded");
+    self.didUnwind = YES;
 }
 
 @end

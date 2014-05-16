@@ -20,4 +20,6 @@
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
+- (void)customStartTopic:(NSString *)topic withMinTime:(int)min withMaxTime:(int)max;
+
 @end

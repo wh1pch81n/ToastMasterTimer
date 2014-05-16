@@ -8,6 +8,7 @@
 
 #import "DHUserPreferenceViewController.h"
 #import "DHGlobalConstants.h"
+#import "DHAppDelegate.h"
 
 @interface DHUserPreferenceViewController ()
 @property (weak, nonatomic) IBOutlet UISwitch *threeSecondDelay;
@@ -29,6 +30,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate setTopVC:self];
+    
 	NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
 	NSNumber *threeSecondDelay = [UD objectForKey:kUserDefault3SecondDelay];
 	[self.threeSecondDelay setOn:threeSecondDelay.boolValue animated:YES];
