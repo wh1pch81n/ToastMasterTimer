@@ -371,7 +371,9 @@ NSString *const kTableTopics = @"Table Topics";
 }
 
 - (void)customStartTopic:(NSString *)topic withMinTime:(int)min withMaxTime:(int)max {
+#if DEBUG
     NSLog(@"custome startTopic");
+#endif
     [self setCustomStartDict:@{kName: topic, kMinValue:@(min), kMaxValue:@(max)}];
 
     //begin right away if app is already loaded and already in the default view; otherwise, wait until the view did appear method to begin
@@ -407,7 +409,9 @@ NSString *const kTableTopics = @"Table Topics";
 }
 
 - (IBAction)unwindForURLScheme:(UIStoryboardSegue *)sender {
+#if DEBUG
     NSLog(@"just unwinded");
+#endif
     self.didUnwind = YES;
 }
 
