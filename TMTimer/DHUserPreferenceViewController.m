@@ -13,6 +13,7 @@
 @interface DHUserPreferenceViewController ()
 @property (weak, nonatomic) IBOutlet UISwitch *threeSecondDelay;
 @property (weak, nonatomic) IBOutlet UISwitch *showRunningTimer;
+@property (weak, nonatomic) IBOutlet UISwitch *showUserHints;
 @end
 
 @implementation DHUserPreferenceViewController
@@ -45,6 +46,12 @@
 #if DEBUG
     NSLog(@"showRunningTimer is %d", showRunningTimer.boolValue);
 #endif
+    
+    NSNumber *showUserHints = [UD objectForKey:kUserDefaultShowUserHints];
+    [self.showUserHints setOn:showUserHints.boolValue animated:YES];
+#if DEBUG
+    NSLog(@"show user hints is %@", showUserHints.boolValue ?@"enabled":@"disabled");
+#endif
 }
 
 - (void)didReceiveMemoryWarning
@@ -64,5 +71,11 @@
     NSLog(@"showRunningTimer became %d", self.showRunningTimer.on);
 #endif
 	[UD setObject:@(self.showRunningTimer.on) forKey:kUserDefaultShowRunningTimer];
+    
+#if DEBUG
+    NSLog(@"show user hints is %@", self.showUserHints.on?@"enabled":@"disabled");
+#endif
+    [UD setObject:@(self.showUserHints.on) forKey:kUserDefaultShowUserHints];
+    
 }
 @end
