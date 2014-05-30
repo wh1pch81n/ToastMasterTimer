@@ -45,9 +45,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
-@property (strong, nonatomic) NSTimer *timer;
-@property (strong, nonatomic) NSTimer *timeout;
-@property (strong, nonatomic) NSTimer *timerForCountdownRemoval;
+
 @property (weak, nonatomic) IBOutlet UISegmentedControl *presetTimesSegment;
 @property (weak, nonatomic) IBOutlet UIView *timeChooserParentView;
 
@@ -339,7 +337,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 #pragma mark - Finite State Machine
 
 - (IBAction)tappedOnceWithOneFinger:(id)sender {
-	[self invalidateTimeOutTimerThenSetItWithNewlyCreatedOne];
 	[self FSM_editingOnTheFly];
 }
 
@@ -352,12 +349,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)FSM_idle {
-	//[self.timer invalidate];
-	self.timer = nil;
-	
-	[self.timeout invalidate];
-	//self.timeout = nil;
-	
 	[self.bannerView setHidden:YES];
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
@@ -402,10 +393,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)FSM_startTimerBegin {
     [self enableNavItemButtons:YES];
-    //[self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates:) userInfo:nil repeats:YES]];
+    [[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates:) userInfo:nil repeats:YES] fire];
     [[self detailItem] setStartDate:[NSDate date]];
     [[self detailItem] setEndDate:nil];
-    [self.timer fire];
     [[self swipeGesture] setEnabled:YES];
     [[self tapGesture1f1t] setEnabled:YES];
     [[self tapGesture2f2t] setEnabled:YES];
@@ -430,6 +420,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)FSM_editingOnTheFly {
+    [self setIsOnTheFlyEditing:YES];
 	[self.bannerView setHidden:YES];
 	[self.timeChooserParentView setAlpha:1];
 	[self.timeChooserParentView setHidden:NO];
@@ -437,7 +428,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[self.nameTextField setAlpha:1];
 }
 
-#pragma mark - timers
+#pragma mark - On the fly edit
 
 /**
 Gets called on:
@@ -462,7 +453,8 @@ Gets called on:
     if (self.secondsUntilOnTheFlyEditingEnds) {
         _secondsUntilOnTheFlyEditingEnds--;
     } else {
-        
+        [self FSM_runTimerWithAnimations:NO];
+        [self setIsOnTheFlyEditing:NO];
     }
 }
 
@@ -513,13 +505,6 @@ Gets called on:
 #pragma mark - preset Buttons
 
 - (IBAction)tappedSegmentedPresetButton:(UISegmentedControl *)sender {
-    //NSString *str = [sender titleForSegmentAtIndex:sender.selectedSegmentIndex];
-   // NSArray *arr = [str componentsSeparatedByString:@"~"];
-	//int min, max;
-    //min = [[arr firstObject] intValue];
-    //max = [[arr lastObject] intValue];
-	//[self updateMin:@(min) max:@(max)];
-    
     NSNumber *min;
     NSNumber *max;
     [sender valuesOfTappedSegmentedControlMinValue:&min maxValue:&max];
@@ -543,8 +528,8 @@ Gets called on:
 	[[NSUserDefaults standardUserDefaults] setObject:min forKey:kUserDefaultMinTime];
 	[[NSUserDefaults standardUserDefaults] setObject:max forKey:kUserDefaultMaxTime];
 	
-	if (self.timeout != nil) {
-		[self invalidateTimeOutTimerThenSetItWithNewlyCreatedOne];
+	if (self.isOnTheFlyEditing) {
+		[self setSecondsUntilOnTheFlyEditingEnds:kOnTheFlyEditingTimeOUt];
 	}
 }
 
