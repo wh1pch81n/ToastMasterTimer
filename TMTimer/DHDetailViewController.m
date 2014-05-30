@@ -15,7 +15,7 @@
 #import "DHColorForTime.h"
 #import "UISegmentedControl+extractMinMaxData.h"
 
-const int kOnTheFlyEditingTimeOUt = 5;
+
 
 enum {
 	kdummy0,
@@ -35,6 +35,8 @@ enum {
 	kNumElementsInTimeEnum
 };
 
+const int kNumUpdatesPerSecond = 1;
+const int kOnTheFlyEditingTimeOUt = 5;
 NSString *const kDelayTitle = @"3-2-1 Delay";
 
 @interface DHDetailViewController ()
@@ -264,10 +266,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 #pragma mark - start and stop
 
 - (IBAction)tappedStartStopButton:(id)sender {
+    [self.navigationController.navigationBar setUserInteractionEnabled:NO];
 	if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) { //end timer
         self.canUpdate = NO;
 		[[self detailItem] setEndDate:[NSDate date]];
-		//TODO: Consider making this timer a background things since, everything else doesn't seam to be affecting this delay.
+		
 		NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
 		self.detailItem.totalTime = [self stringFromTimeInterval:interval];
 		[self FSM_idle];
@@ -284,6 +287,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
         [self disableOnTheFlyEditingOnTimesUp];
     } else {
         [aTimer invalidate];
+        [self.nameTextField setAlpha:1];
+        [self.timeChooserParentView setAlpha:1];
     }
 }
 
@@ -380,10 +385,15 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     if (delayIsEnabled) {
         CGRect rect = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
         
-        self.countDownView = [[DHCountDownView alloc] initWithFrame:rect];
+        self.countDownView = [[DHCountDownView alloc] initWithFrame:rect
+                                                           delegate:self
+                                                     characterDelay:1.0
+                                      stringOfCharactersToCountDown:@" 321"
+                                                 completedCountDown:^{
+                                                      [self FSM_startTimerBegin];
+                                                     [[self countDownView] removeFromSuperview];
+                                                 }];
         [[self view] addSubview:self.countDownView];
-        self.countDownView.delegate = self;
-        
         [[self countDownView] runCountDown:delayIsEnabled];
         
     } else {
@@ -393,9 +403,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)FSM_startTimerBegin {
     [self enableNavItemButtons:YES];
-    [[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates:) userInfo:nil repeats:YES] fire];
     [[self detailItem] setStartDate:[NSDate date]];
     [[self detailItem] setEndDate:nil];
+    [[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates:) userInfo:nil repeats:YES] fire];
     [[self swipeGesture] setEnabled:YES];
     [[self tapGesture1f1t] setEnabled:YES];
     [[self tapGesture2f2t] setEnabled:YES];
@@ -582,32 +592,6 @@ Gets called on:
     NSLog(@"timerview banner 0");
 #endif
 	[banner setAlpha:NO];
-}
-
-#pragma mark - Count down Delegate
-
-- (float)characterDelay {
-	return 1.0;
-}
-
-- (NSString *)stringOfCharactersToCountDown {
-	return @"321";
-}
-
-- (void)countDownHasCompleted {
-    [self FSM_startTimerBegin];
-    [self removeCountdownView];
-    //[self setTimerForCountdownRemoval:[NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(removeCountdownView) userInfo:nil repeats:NO]];
-}
-
-- (void)removeCountdownView {
-#if DEBUG
-    NSLog(@"will remove the countdownview");
-#endif
-    [[self countDownView] removeFromSuperview];
-#if DEBUG
-    NSLog(@"just removed the countdownview");
-#endif
 }
 
 #pragma mark - prepare for segue
