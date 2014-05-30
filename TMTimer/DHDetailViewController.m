@@ -171,34 +171,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
 	// Dispose of any resources that can be recreated.
-}
-
-#pragma mark - KVO delegate
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-	NSLog(@"KVO");
-	Event *event = (Event *)object;
-	
-	if ([keyPath isEqualToString:kTotalTime]) {
-		BOOL titleIsVisible = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowRunningTimer] boolValue];
-		if (titleIsVisible) {
-			[[self navItem] setTitle:event.totalTime];
-		} else {
-			[[self navItem] setTitle:@""];
-		}
-        NSTimeInterval total = [[NSDate new] timeIntervalSinceDate:event.startDate];
-        UIColor *bgColor = [[DHColorForTime shared] colorForSeconds:total
-                                                                min:event.minTime.integerValue
-                                                                max:event.maxTime.integerValue];
-        [self.view setBackgroundColor:bgColor];
-	}
-    //else if ([keyPath isEqualToString:kbgColor]) {
-	//	[self.view setBackgroundColor:event.bgColorFromData];
-	//}
 }
 
 #pragma mark - Split view
@@ -245,7 +220,21 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
 	NSString *text = [NSString stringWithFormat:@"%ld", (long)(row + component)];
-	UILabel *label = [[UILabel alloc] init];
+	UILabel *label;
+    if (view) {
+        label = (UILabel *)view;
+        
+        label.attributedText = [[NSAttributedString alloc]
+                                initWithString:text
+                                attributes:@{
+                                             NSForegroundColorAttributeName: kPickerViewTextColor,
+                                             NSFontAttributeName: [UIFont
+                                                                   systemFontOfSize:kNavBarFontSize]
+                                             }];
+        return label;
+    } else {
+        label = [[UILabel alloc] init];
+    }
 	UIColor *color;
 	if (component == kTimeGreen) {
 		color = kPickerViewMinColumnColor;
@@ -256,11 +245,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	}
 	
 	NSDictionary *attr = @{
-												 //NSStrokeWidthAttributeName: @(kPickerViewTextOutlineSize),
-												 //NSStrokeColorAttributeName: kPickerViewTextOutlineColor,
-												 NSForegroundColorAttributeName: kPickerViewTextColor,
-												 NSFontAttributeName: [UIFont systemFontOfSize:kNavBarFontSize]
-												 };
+                           NSForegroundColorAttributeName: kPickerViewTextColor,
+                           NSFontAttributeName: [UIFont systemFontOfSize:kNavBarFontSize]
+                           };
 	
 	label.attributedText = [[NSAttributedString alloc] initWithString:text attributes:attr];
 	[label setBackgroundColor:color];
@@ -478,7 +465,9 @@ Gets called on:
  8) detail segue to master    - (7.1/138x) - (6.1/2x)
  */
 - (UIResponder *)nextResponder {
-    //NSLog(@"next responder was called");
+#if DEBUG
+    NSLog(@"next responder was called");
+#endif
     if(self.isOnTheFlyEditing) {
         [self setSecondsUntilOnTheFlyEditingEnds:kOnTheFlyEditingTimeOUt];
     }
