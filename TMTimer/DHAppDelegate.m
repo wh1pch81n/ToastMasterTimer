@@ -43,8 +43,9 @@ NSString *const kHost = @"tmtimer328";
 	}
 	
 	[[UINavigationBar appearance] setTitleTextAttributes:
-	 @{
-		 UITextAttributeFont: [UIFont systemFontOfSize:kNavBarFontSize],
+  @{
+    NSFontAttributeName: [UIFont systemFontOfSize:kNavBarFontSize],
+//		 UITextAttributeFont: [UIFont systemFontOfSize:kNavBarFontSize], // deprecated
 		 NSForegroundColorAttributeName: [UIColor whiteColor]
 		 }];
 	

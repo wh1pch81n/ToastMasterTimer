@@ -15,6 +15,8 @@
 #import "DHColorForTime.h"
 #import "UISegmentedControl+extractMinMaxData.h"
 
+const int kOnTheFlyEditingTimeOUt = 5;
+
 enum {
 	kdummy0,
 	kPresetButton1_2,
@@ -53,6 +55,12 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 @property (weak, nonatomic) IBOutlet DHNavigationItem *navItem;
 
 @property (strong, nonatomic) DHCountDownView *countDownView;
+
+@property BOOL canUpdate;
+
+@property int secondsUntilOnTheFlyEditingEnds;
+@property BOOL isOnTheFlyEditing;
+
 @end
 
 @implementation DHDetailViewController
@@ -103,7 +111,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[self updateMin:@(self.detailItem.minTime.floatValue) max:@(self.detailItem.maxTime.floatValue)];
 	
 	//enable KVO
-	[[self detailItem] addObserver:self forKeyPath:kTotalTime options:NSKeyValueObservingOptionNew context:nil];
+	//[[self detailItem] addObserver:self forKeyPath:kTotalTime options:NSKeyValueObservingOptionNew context:nil];
     
 	//enable adds
 	//float version = [[UIDevice currentDevice] systemVersion].floatValue;
@@ -114,7 +122,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)viewDidDisappear:(BOOL)animated {
 	//disable KVO
-	[[self detailItem] removeObserver:self forKeyPath:kTotalTime context:nil];
+	//[[self detailItem] removeObserver:self forKeyPath:kTotalTime context:nil];
 	
 	//Save context before leaving
 	DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -145,7 +153,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 #pragma mark - KVO delegate
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-	
+	NSLog(@"KVO");
 	Event *event = (Event *)object;
 	
 	if ([keyPath isEqualToString:kTotalTime]) {
@@ -259,26 +267,38 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (IBAction)tappedStartStopButton:(id)sender {
 	if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) { //end timer
+        self.canUpdate = NO;
 		[[self detailItem] setEndDate:[NSDate date]];
-		
+		//TODO: Consider making this timer a background things since, everything else doesn't seam to be affecting this delay.
 		NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
 		self.detailItem.totalTime = [self stringFromTimeInterval:interval];
 		[self FSM_idle];
 	} else { //start timer
+        self.canUpdate = YES;
 		[self FSM_startTimer];
 	}
 }
 
-- (void)updates {
-	[self updateBackground];
-	[self updateTime];
+- (void)updates:(NSTimer *)aTimer {
+    if(self.canUpdate) {
+        [self updateBackground];
+        [self updateTime];
+        [self disableOnTheFlyEditingOnTimesUp];
+    } else {
+        [aTimer invalidate];
+    }
 }
 
 /**
  Updates the bdColor property of the Model
  */
 - (void)updateBackground {
-	[self realignBackgroundWithMinAndMax];
+	//[self realignBackgroundWithMinAndMax];
+    NSTimeInterval total = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
+    UIColor *bgColor = [[DHColorForTime shared] colorForSeconds:total
+                                                            min:self.detailItem.minTime.integerValue
+                                                            max:self.detailItem.maxTime.integerValue];
+    [self.view setBackgroundColor:bgColor];
 }
 
 /**
@@ -287,6 +307,14 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 - (void)updateTime {
 	NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
 	[self.detailItem setTotalTime:[self stringFromTimeInterval:interval]];
+    
+    BOOL titleIsVisible = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowRunningTimer] boolValue];
+    if (titleIsVisible) {
+        [[self navItem] setTitle:self.detailItem.totalTime];
+    } else {
+        [[self navItem] setTitle:@""];
+    }
+    
 }
 
 /**
@@ -324,17 +352,17 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)FSM_idle {
-	[self.timer invalidate];
+	//[self.timer invalidate];
 	self.timer = nil;
 	
 	[self.timeout invalidate];
-	self.timeout = nil;
+	//self.timeout = nil;
 	
 	[self.bannerView setHidden:YES];
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
 	[self.timeChooserParentView setHidden:NO];
-	[UIView animateWithDuration:0.5 animations:^{
+	[UIView animateWithDuration:0.5 animations:^{//TODO: consider removing the animations
 		[self.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
 		[self.nameTextField setAlpha:1];
         [self.timeChooserParentView setAlpha:1];
@@ -374,7 +402,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)FSM_startTimerBegin {
     [self enableNavItemButtons:YES];
-    [self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates) userInfo:nil repeats:YES]];
+    //[self setTimer:[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates:) userInfo:nil repeats:YES]];
     [[self detailItem] setStartDate:[NSDate date]];
     [[self detailItem] setEndDate:nil];
     [self.timer fire];
@@ -384,7 +412,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)FSM_runTimerWithAnimations:(BOOL)b {
-	[UIView animateWithDuration:b?0.5:0 animations:^{
+	[UIView animateWithDuration:b?0.5:0 animations:^{//TODO: consider removing animations
 		[self.nameTextField setAlpha:0];
 		[self.timeChooserParentView setAlpha:0];
 	} completion:^(BOOL finished) {
@@ -412,40 +440,32 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 #pragma mark - timers
 
 /**
- Called whenever interaction is detected.
- Not used when pickerview is being pressed.
- Not used when presettimesSegment Buttons are pressed
- Called for events that end up being recieved by the viewcontroller
+Gets called on:
+ 1) tap view                  - (7.1/2x)   - (6.1/2x)
+ 2) start edit text field     - (7.1/82x)  - (6.1/11x)
+ 3) typing keys in text field - (7.1/13 per letter) - (6.1/1 per letter)
+ 4) scrolling pin wheel       - (7.1/256x) - ()
+ 5) pressing preset buttons   - (7.1/2x)   - ()
+ 6) starting timer            - (7.1/2x)   - ()
+ 7) master segue to detail    - (7.1/17x)  - (6.1/6x)
+ 8) detail segue to master    - (7.1/138x) - (6.1/2x)
  */
 - (UIResponder *)nextResponder {
-	if (self.timeout != nil) {
-		[self invalidateTimeOutTimerThenSetItWithNewlyCreatedOne];
-	}
+    //NSLog(@"next responder was called");
+    if(self.isOnTheFlyEditing) {
+        [self setSecondsUntilOnTheFlyEditingEnds:kOnTheFlyEditingTimeOUt];
+    }
 	return [super nextResponder];
 }
 
-- (NSTimer *)createTimeOutTimer {
-	const NSTimeInterval kTimeOutInterval = 5.0;
-	return [NSTimer scheduledTimerWithTimeInterval:kTimeOutInterval target:self selector:@selector(exceededTimeOut) userInfo:nil repeats:NO];
+- (void)disableOnTheFlyEditingOnTimesUp {
+    if (self.secondsUntilOnTheFlyEditingEnds) {
+        _secondsUntilOnTheFlyEditingEnds--;
+    } else {
+        
+    }
 }
 
-/**
- invalidates the timeout then goes to the runTimer State
- */
-- (void)exceededTimeOut {
-	[self.timeout invalidate];
-	self.timeout = nil;
-	[self FSM_runTimerWithAnimations:YES];
-}
-
-/**
- invalidates the currect timeout timer.  Sets it to point to a new one.
- It will fire on its own after a certain time interval as passed.
- */
-- (void)invalidateTimeOutTimerThenSetItWithNewlyCreatedOne {
-	[[self timeout] invalidate];
-	[self setTimeout:[self createTimeOutTimer]];
-}
 
 #pragma mark - Textfield Delegate
 
@@ -468,7 +488,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
  @param b if yes, the left and right buttons are enabled.  otherwise they are disabled
  
  */
-- (void)enableNavItemButtons:(BOOL)b {
+- (void)enableNavItemButtons:(BOOL)b {//TODO: consider removing the uiview animations
 	static const float kSec0_5 = 0.5;
 	static const float kSec0_25 = 0.25;
 	static const float kMiddleAlpha = 0.5;
