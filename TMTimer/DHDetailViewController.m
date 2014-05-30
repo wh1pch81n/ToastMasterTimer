@@ -61,6 +61,12 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 @property int secondsUntilOnTheFlyEditingEnds;
 @property BOOL isOnTheFlyEditing;
 
+//---
+@property (strong, nonatomic) NSDate *endDate, *startDate;
+@property (strong, nonatomic) NSNumber *minTime, *maxTime;
+@property (strong, nonatomic) NSString *name, *totalTime;
+
+
 @end
 
 @implementation DHDetailViewController
@@ -85,16 +91,43 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 {
 	// Update the user interface for the detail item.
 	if (self.detailItem) {
-		self.nameTextField.text = self.detailItem.name;
+		self.nameTextField.text = _name;
 		
 		BOOL titleIsVisible = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowRunningTimer] boolValue];
 		if (titleIsVisible) {
-			[[self navItem] setTitle:self.detailItem.totalTime];
+			[[self navItem] setTitle:_totalTime];
 		} else {
 			[[self navItem] setTitle:@""];
 		}
 		
 	}
+}
+
+- (void)setLocalDetailPropertiesWithDetail:(Event *)detail {
+    _endDate = detail.endDate;
+    _startDate = detail.startDate;
+    _maxTime = detail.maxTime;
+    _minTime = detail.minTime;
+    _name = detail.name;
+    _totalTime = detail.totalTime;
+}
+
+- (void)setDetailItemWithEndDate:(NSDate *)endDate
+                       startDate:(NSDate *)startDate
+                         maxTime:(NSNumber *)maxTime
+                         minTime:(NSNumber *)minTime
+                            name:(NSString *)name
+                       totalTime:(NSString *)totalTime
+{
+    self.detailItem.endDate = endDate;
+    self.detailItem.startDate = startDate;
+    self.detailItem.maxTime = maxTime;
+    self.detailItem.minTime = minTime;
+    self.detailItem.name = name;
+    self.detailItem.totalTime = totalTime;
+    
+    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
+	[appDelegate saveContext];
 }
 
 - (void)viewDidLoad
@@ -104,29 +137,23 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:self];
     
+    
+    [self setLocalDetailPropertiesWithDetail:self.detailItem];
 	[self configureView];
 	[self FSM_idle];
 	
 	//Default values
-	[self updateMin:@(self.detailItem.minTime.floatValue) max:@(self.detailItem.maxTime.floatValue)];
-	
-	//enable KVO
-	//[[self detailItem] addObserver:self forKeyPath:kTotalTime options:NSKeyValueObservingOptionNew context:nil];
-    
-	//enable adds
-	//float version = [[UIDevice currentDevice] systemVersion].floatValue;
-	//if (version >= 7) {
-	//	[self canDisplayBannerAds];
-	//}
+	[self updateMin:_minTime max:_maxTime];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-	//disable KVO
-	//[[self detailItem] removeObserver:self forKeyPath:kTotalTime context:nil];
-	
 	//Save context before leaving
-	DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
-	[appDelegate saveContext];
+	[self setDetailItemWithEndDate:_endDate
+                         startDate:_startDate
+                           maxTime:_maxTime
+                           minTime:_minTime
+                              name:_name
+                         totalTime:_totalTime];
 	
 	[super viewDidDisappear:animated];
 }
@@ -249,12 +276,12 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	NSInteger redVal =0;
 	if (component == kTimeGreen) {
 		greenVal = label.text.integerValue;
-		redVal = self.detailItem.maxTime.integerValue;
+		redVal = _maxTime.integerValue;
 		if (greenVal >= redVal) {
 			redVal = greenVal + 1;
 		}
 	} else if (component == kTimeRed) {
-		greenVal = self.detailItem.minTime.integerValue;
+		greenVal = _minTime.integerValue;
 		redVal = label.text.integerValue;
 		if (greenVal >= redVal) {
 			greenVal = redVal - 1;
@@ -269,10 +296,10 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     [self.navigationController.navigationBar setUserInteractionEnabled:NO];
 	if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) { //end timer
         self.canUpdate = NO;
-		[[self detailItem] setEndDate:[NSDate date]];
+		[self setEndDate:[NSDate date]];
 		
-		NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
-		self.detailItem.totalTime = [self stringFromTimeInterval:interval];
+		NSTimeInterval interval = [_endDate timeIntervalSinceDate:_startDate];
+		_totalTime = [self stringFromTimeInterval:interval];
 		[self FSM_idle];
 	} else { //start timer
         self.canUpdate = YES;
@@ -296,11 +323,10 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
  Updates the bdColor property of the Model
  */
 - (void)updateBackground {
-	//[self realignBackgroundWithMinAndMax];
-    NSTimeInterval total = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
+    NSTimeInterval total = [[NSDate new] timeIntervalSinceDate:_startDate];
     UIColor *bgColor = [[DHColorForTime shared] colorForSeconds:total
-                                                            min:self.detailItem.minTime.integerValue
-                                                            max:self.detailItem.maxTime.integerValue];
+                                                            min:_minTime.integerValue
+                                                            max:_maxTime.integerValue];
     [self.view setBackgroundColor:bgColor];
 }
 
@@ -308,12 +334,12 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
  Updates the TotalTime property of the model
  */
 - (void)updateTime {
-	NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:self.detailItem.startDate];
-	[self.detailItem setTotalTime:[self stringFromTimeInterval:interval]];
+	NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:_startDate];
+	[self setTotalTime:[self stringFromTimeInterval:interval]];
     
     BOOL titleIsVisible = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowRunningTimer] boolValue];
     if (titleIsVisible) {
-        [[self navItem] setTitle:self.detailItem.totalTime];
+        [[self navItem] setTitle:_totalTime];
     } else {
         [[self navItem] setTitle:@""];
     }
@@ -369,7 +395,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[self.tapGesture1f1t setEnabled:NO];
     [self.swipeGesture setEnabled:NO];
 	[self.navigationItem.rightBarButtonItem setTitle:kStart];
-	[self.navItem setTitle:self.detailItem.totalTime];
+	[self.navItem setTitle:_totalTime];
 }
 
 - (void)FSM_startTimer {
@@ -403,8 +429,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)FSM_startTimerBegin {
     [self enableNavItemButtons:YES];
-    [[self detailItem] setStartDate:[NSDate date]];
-    [[self detailItem] setEndDate:nil];
+    [self setStartDate:[NSDate date]];
+    [self setEndDate:nil];
     [[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates:) userInfo:nil repeats:YES] fire];
     [[self swipeGesture] setEnabled:YES];
     [[self tapGesture1f1t] setEnabled:YES];
@@ -481,7 +507,7 @@ Gets called on:
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-	self.detailItem.name = self.nameTextField.text;
+	_name = self.nameTextField.text;
 	[self enableNavItemButtons:YES];
 }
 
@@ -532,8 +558,8 @@ Gets called on:
 	[[self pickerView] selectRow:min.integerValue inComponent:kTimeGreen animated:YES];
 	[[self pickerView] selectRow:max.integerValue-kPickerViewRedReelOffset inComponent:kTimeRed animated:YES];
 	
-	[[self detailItem] setMinTime:min];
-	[[self detailItem] setMaxTime:max];
+	[self setMinTime:min];
+	[self setMaxTime:max];
 	
 	[[NSUserDefaults standardUserDefaults] setObject:min forKey:kUserDefaultMinTime];
 	[[NSUserDefaults standardUserDefaults] setObject:max forKey:kUserDefaultMaxTime];
@@ -541,30 +567,6 @@ Gets called on:
 	if (self.isOnTheFlyEditing) {
 		[self setSecondsUntilOnTheFlyEditingEnds:kOnTheFlyEditingTimeOUt];
 	}
-}
-
-/**
- Updates the model to have the correct color given the min and max values.
- Can be inefficient if called many times, back to back.
- 
- @returns the color that was used to set the bg property
- */
-- (UIColor *)realignBackgroundWithMinAndMax {
-	Event *detail = self.detailItem;
-	NSTimeInterval interval;
-	if (detail.endDate != nil)
-		interval = [detail.endDate timeIntervalSinceDate:detail.startDate];
-	else
-		interval = [[NSDate new] timeIntervalSinceDate:detail.startDate];
-	
-	NSInteger seconds = interval;
-	
-	NSInteger min = self.detailItem.minTime.integerValue;
-	NSInteger max = self.detailItem.maxTime.integerValue;
-	
-	UIColor *color = [[DHColorForTime shared] colorForSeconds:seconds min:min max:max];
-		
-	return color;
 }
 
 #pragma mark - iAd's delegate methods
@@ -592,19 +594,6 @@ Gets called on:
     NSLog(@"timerview banner 0");
 #endif
 	[banner setAlpha:NO];
-}
-
-#pragma mark - prepare for segue
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    //If it is running, you should stop it before it segues away
-    if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) { //end timer
-		[[self detailItem] setEndDate:[NSDate date]];
-		
-		NSTimeInterval interval = [self.detailItem.endDate timeIntervalSinceDate:self.detailItem.startDate];
-		self.detailItem.totalTime = [self stringFromTimeInterval:interval];
-		[self FSM_idle];
-	}
 }
 
 @end
