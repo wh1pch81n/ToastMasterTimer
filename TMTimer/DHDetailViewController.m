@@ -36,6 +36,10 @@ enum {
 NSString *const kDelayTitle = @"3-2-1 Delay";
 
 @interface DHDetailViewController ()
+
+@property (weak, nonatomic) IBOutlet UILabel *labelTapToEdit;
+@property (weak, nonatomic) IBOutlet UILabel *labelSwipeRightToStop;
+
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture2f2t;
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture1f1t;
 @property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *swipeGesture;
@@ -134,6 +138,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
         [self tappedStartStopButton:self];
         [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:kQuickStart];
     }
+    
+    NSNumber *showUserHints =(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowUserHints];
+    
+    [[self labelSwipeRightToStop] setHidden:!showUserHints.boolValue];
+    [[self labelTapToEdit] setHidden:!showUserHints.boolValue];
 }
 
 - (void)didReceiveMemoryWarning

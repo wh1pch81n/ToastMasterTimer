@@ -13,6 +13,7 @@
 #define kUserDefault3SecondDelay @"UDDelay"
 #define kUserDefaultShowRunningTimer @"UDRunningTimer"
 #define kQuickStart @"UDQuickStart"
+#define kUserDefaultShowUserHints @"UDUserHints"
 
 #define kStart @"Start"
 #define kStop @"Stop"
