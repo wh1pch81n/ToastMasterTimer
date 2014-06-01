@@ -487,7 +487,7 @@ Gets called on:
     if (self.secondsUntilOnTheFlyEditingEnds) {
         _secondsUntilOnTheFlyEditingEnds--;
     } else {
-        [self FSM_runTimerWithAnimations:NO];
+        [self FSM_runTimerWithAnimations:YES];
         [self setIsOnTheFlyEditing:NO];
     }
 }

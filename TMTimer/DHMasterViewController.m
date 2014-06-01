@@ -116,6 +116,29 @@ NSString *const kTableTopics = @"Table Topics";
 
 #pragma mark - Table View
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UILabel *title = [[UILabel alloc] init];
+    [title setBackgroundColor:[UIColor grayColor]];
+    [title setMinimumScaleFactor:0.2];
+    NSString *text;
+    if (section == 0) {
+        text = @"Quick Start Panel";
+    } else {
+        text =@"List of Speakers";
+    }
+    NSMutableParagraphStyle *para = [NSMutableParagraphStyle new];
+    [para setAlignment:NSTextAlignmentCenter];
+    
+    [title setAttributedText:[[NSAttributedString alloc]
+                              initWithString:text
+                              attributes:@{
+                                           NSParagraphStyleAttributeName: para,
+                                           NSForegroundColorAttributeName: [UIColor lightTextColor],
+                                           NSFontAttributeName: [UIFont systemFontOfSize:12]
+                                           }]];
+    return title;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 2;
@@ -380,9 +403,26 @@ NSString *const kTableTopics = @"Table Topics";
     if (self.didLoad && !self.didUnwind) {
         [self beginCustomStartTopic];
     }
+    
+    /**
+     Sometimes if we are already in the default view, the above condition will fail In that event, this scheduled timer will call it to start.
+     */
+    [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(beginCustomStartTopic:) userInfo:nil repeats:NO];
+}
+
+- (void)beginCustomStartTopic:(NSTimer *)aTimer {
+    if (self.customStartDict) {
+#if DEBUG
+        NSLog(@"NSTimer Triggered CustomStartTopic");
+#endif
+        [self beginCustomStartTopic];
+    }
 }
 
 - (void)beginCustomStartTopic {
+    if (self.customStartDict == nil) {
+        return;
+    }
     [self quickStartBegin:self];
     [self setupFirstObjectWithName:self.customStartDict[kName]
                      minTimeNumber:self.customStartDict[kMinValue]
