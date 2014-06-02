@@ -9,6 +9,7 @@
 #import "DHUserPreferenceViewController.h"
 #import "DHGlobalConstants.h"
 #import "DHAppDelegate.h"
+#import "DHError.h"
 
 @interface DHUserPreferenceViewController ()
 @property (weak, nonatomic) IBOutlet UISwitch *threeSecondDelay;
@@ -78,4 +79,60 @@
     [UD setObject:@(self.showUserHints.on) forKey:kUserDefaultShowUserHints];
     
 }
+
+- (IBAction)tappedClearSpeakerList:(id)sender {
+    //launch alert and if select yes, then call clearListOfSpeakers
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Delete Data?"
+                                                    message:@"Selecting YES will clear the entire list of speakers."
+                                                   delegate:self
+                                          cancelButtonTitle:@"NO"
+                                          otherButtonTitles:@"YES", nil];
+    [alert show];
+}
+
+
+#pragma mark - Core Data
+
+- (void)clearListOfSpeakers {
+#if DEBUG
+    NSLog(@"begin clearing list of speakers");
+#endif
+
+    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSFetchRequest *allSpeakers = [[NSFetchRequest alloc] init];
+    [allSpeakers setEntity:[NSEntityDescription entityForName:@"Event" inManagedObjectContext:appDelegate.managedObjectContext]];
+    [allSpeakers setIncludesPropertyValues:NO];//Only fetch the managedObjectID
+    NSError *err;
+    NSArray *speakers = [appDelegate.managedObjectContext executeFetchRequest:allSpeakers error:&err];
+    
+    if (!err) {
+        [DHError displayValidationError:err];
+    }
+    
+    for (NSManagedObject *speaker in speakers) {
+        [appDelegate.managedObjectContext deleteObject:speaker];
+    }
+    
+    NSError *saveError;
+    if(![appDelegate.managedObjectContext save:&saveError]) {
+        [DHError displayValidationError:saveError];
+    }
+    
+    
+#if DEBUG
+    NSLog(@"finished clearing list of speakers");
+#endif
+    
+}
+
+#pragma mark - uialertviewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [[appDelegate arrOfAlerts] removeObject:alertView];
+    if (buttonIndex == 1) {
+        [self clearListOfSpeakers];
+    }
+}
+
 @end
