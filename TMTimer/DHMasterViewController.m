@@ -17,7 +17,7 @@
 #import "DHColorForTime.h"
 #import "UISegmentedControl+extractMinMaxData.h"
 
-NSString *const kMasterViewControllerTitle = @"Speakers";
+NSString *const kMasterViewControllerTitle = @"";
 NSString *const kMore = @"More";
 NSString *const kMoreViewSegue = @"MoreView";
 NSString *const kTableTopics = @"Table Topics";
