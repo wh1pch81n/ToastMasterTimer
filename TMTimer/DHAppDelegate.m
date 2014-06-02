@@ -105,7 +105,7 @@ NSString *const kHost = @"tmtimer328";
    if ([@"com.dnthome.TMTopic" isEqualToString:sourceApplication] == NO) return NO;
     
     NSString *url_str = [url.absoluteString substringFromIndex:@"tmtimer328:".length];
-    url_str = [url_str stringByRemovingPercentEncoding];
+    url_str = [url_str stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSData *json_data = [url_str dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *url_args = [NSJSONSerialization JSONObjectWithData:json_data options:0 error:nil];
     

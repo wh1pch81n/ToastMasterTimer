@@ -487,7 +487,7 @@ Gets called on:
     if (self.secondsUntilOnTheFlyEditingEnds) {
         _secondsUntilOnTheFlyEditingEnds--;
     } else {
-        [self FSM_runTimerWithAnimations:NO];
+        [self FSM_runTimerWithAnimations:YES];
         [self setIsOnTheFlyEditing:NO];
     }
 }
@@ -592,6 +592,13 @@ Gets called on:
     NSLog(@"timerview banner 0");
 #endif
 	[banner setAlpha:NO];
+}
+
+
+#pragma mark - prepareforseque
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    self.canUpdate = NO;
 }
 
 @end

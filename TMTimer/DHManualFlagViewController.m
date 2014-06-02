@@ -130,6 +130,9 @@ enum FSM_states {e_black, e_green, e_yellow, e_red, e_end, e_exit};
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [[appDelegate arrOfAlerts] removeObject:alertView];
+    
     if (buttonIndex == 1) { //repeat
         self.st = e_black;
     } else {
