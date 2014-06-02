@@ -400,14 +400,14 @@ NSString *const kTableTopics = @"Table Topics";
     [self setCustomStartDict:@{kName: topic, kMinValue:@(min), kMaxValue:@(max)}];
 
     //begin right away if app is already loaded and already in the default view; otherwise, wait until the view did appear method to begin
-    if (self.didLoad && !self.didUnwind) {
-        [self beginCustomStartTopic];
-    }
+//    if (self.didLoad && !self.didUnwind) {
+//        [self beginCustomStartTopic];
+//    }
     
     /**
      Sometimes if we are already in the default view, the above condition will fail In that event, this scheduled timer will call it to start.
      */
-    [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(beginCustomStartTopic:) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(beginCustomStartTopic:) userInfo:nil repeats:NO];
 }
 
 - (void)beginCustomStartTopic:(NSTimer *)aTimer {

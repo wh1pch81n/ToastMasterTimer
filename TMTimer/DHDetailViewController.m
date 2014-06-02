@@ -594,4 +594,11 @@ Gets called on:
 	[banner setAlpha:NO];
 }
 
+
+#pragma mark - prepareforseque
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    self.canUpdate = NO;
+}
+
 @end
