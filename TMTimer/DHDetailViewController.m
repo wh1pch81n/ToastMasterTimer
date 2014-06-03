@@ -36,7 +36,7 @@ enum {
 };
 
 const int kNumUpdatesPerSecond = 1;
-const int kOnTheFlyEditingTimeOUt = 5;
+const int kOnTheFlyEditingTimeOUt = 3;
 NSString *const kDelayTitle = @"3-2-1 Delay";
 
 @interface DHDetailViewController ()
