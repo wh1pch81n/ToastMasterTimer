@@ -223,6 +223,7 @@ NSString *const kTableTopics = @"Table Topics";
 		[[segue destinationViewController] setDetailItem:object];
 		NSManagedObjectContext *context = [self managedObjectContext];
 		[[segue destinationViewController] setContext:context];
+        [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
 	}
 }
 
