@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="rS3-R9-Ivy">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
+        <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
@@ -319,8 +319,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F3R-VR-gPo">
-                                                    <rect key="frame" x="20" y="0.0" width="280" height="43"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F3R-VR-gPo">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" title="Clear Speaker List">
                                                         <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -332,12 +332,10 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="F3R-VR-gPo" secondAttribute="centerY" id="1E7-x7-801"/>
-                                                <constraint firstItem="F3R-VR-gPo" firstAttribute="top" secondItem="UDk-yQ-6vn" secondAttribute="top" id="1wf-CA-eyS"/>
-                                                <constraint firstAttribute="trailing" secondItem="F3R-VR-gPo" secondAttribute="trailing" constant="20" id="A4d-nF-F4b"/>
-                                                <constraint firstAttribute="bottom" secondItem="F3R-VR-gPo" secondAttribute="bottom" id="HPW-xo-WrU"/>
-                                                <constraint firstItem="F3R-VR-gPo" firstAttribute="leading" secondItem="UDk-yQ-6vn" secondAttribute="leading" constant="20" id="cwK-C6-mXK"/>
-                                                <constraint firstAttribute="centerX" secondItem="F3R-VR-gPo" secondAttribute="centerX" id="mBh-NO-fPk"/>
+                                                <constraint firstAttribute="bottom" secondItem="F3R-VR-gPo" secondAttribute="bottom" id="5j9-z9-bzM"/>
+                                                <constraint firstAttribute="trailing" secondItem="F3R-VR-gPo" secondAttribute="trailing" id="Hyl-UG-TUd"/>
+                                                <constraint firstItem="F3R-VR-gPo" firstAttribute="leading" secondItem="UDk-yQ-6vn" secondAttribute="leading" id="LSo-Z8-xYw"/>
+                                                <constraint firstItem="F3R-VR-gPo" firstAttribute="top" secondItem="UDk-yQ-6vn" secondAttribute="top" id="SMz-GV-4WO"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>

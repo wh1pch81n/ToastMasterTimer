@@ -577,10 +577,11 @@ Gets called on:
 }
 
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
-	//Stop timer
+    if ([[[UIDevice currentDevice] systemVersion] intValue] < 7) { return NO;}
+    
+    //Stop timer
 	_canUpdate = NO;
     return YES;
-	//return NO;
 }
 
 - (void)bannerViewActionDidFinish:(ADBannerView *)banner {
