@@ -28,19 +28,19 @@ NSString *const kHost = @"tmtimer328";
 	// Override point for customization after application launch.
     [self setArrOfAlerts:[NSMutableArray new]];
     
-	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-		UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
-		UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
-		splitViewController.delegate = (id)navigationController.topViewController;
-		
-		UINavigationController *masterNavigationController = splitViewController.viewControllers[0];
-		DHMasterViewController *controller = (DHMasterViewController *)masterNavigationController.topViewController;
-		controller.managedObjectContext = self.managedObjectContext;
-	} else {
+//	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+//		UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
+//		UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
+//		splitViewController.delegate = (id)navigationController.topViewController;
+//		
+//		UINavigationController *masterNavigationController = splitViewController.viewControllers[0];
+//		DHMasterViewController *controller = (DHMasterViewController *)masterNavigationController.topViewController;
+//		controller.managedObjectContext = self.managedObjectContext;
+//	} else {
 		UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
 		DHMasterViewController *controller = (DHMasterViewController *)navigationController.topViewController;
 		controller.managedObjectContext = self.managedObjectContext;
-	}
+//	}
 	
 	[[UINavigationBar appearance] setTitleTextAttributes:
   @{

@@ -2,17 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLName</key>
-			<string>com.dnthome.tmtimer328</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>tmtimer328</string>
-			</array>
-		</dict>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -31,6 +20,17 @@
 	<string>1.1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.dnthome.tmtimer328</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>tmtimer328</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1.1.0</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -39,14 +39,12 @@
 	<string>Main_iPhone</string>
 	<key>UIMainStoryboardFile~ipad</key>
 	<string>Main_iPhone</string>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
-	<key>UIStatusBarHidden</key>
-	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>UIStatusBarTintParameters</key>
 	<dict>
 		<key>UINavigationBar</key>
@@ -64,9 +62,8 @@
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>

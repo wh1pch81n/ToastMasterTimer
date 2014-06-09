@@ -578,13 +578,15 @@ Gets called on:
 
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
 	//Stop timer
-	//return YES;
-	return NO;
+	_canUpdate = NO;
+    return YES;
+	//return NO;
 }
 
 - (void)bannerViewActionDidFinish:(ADBannerView *)banner {
 	//resume timer
-	
+    _canUpdate = YES;
+    [[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates:) userInfo:nil repeats:YES] fire];
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
