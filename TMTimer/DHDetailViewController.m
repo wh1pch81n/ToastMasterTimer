@@ -577,14 +577,17 @@ Gets called on:
 }
 
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
-	//Stop timer
-	//return YES;
-	return NO;
+    if ([[[UIDevice currentDevice] systemVersion] intValue] < 7) { return NO;}
+    
+    //Stop timer
+	_canUpdate = NO;
+    return YES;
 }
 
 - (void)bannerViewActionDidFinish:(ADBannerView *)banner {
 	//resume timer
-	
+    _canUpdate = YES;
+    [[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates:) userInfo:nil repeats:YES] fire];
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {

@@ -86,40 +86,71 @@
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="86"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OIp-ES-2d4" userLabel="View - flag">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OIp-ES-2d4" userLabel="View - flag">
                                             <rect key="frame" x="221" y="10" width="56" height="67"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="56" id="4kX-nk-lHm"/>
+                                            </constraints>
                                         </view>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.30000000000000004" preferredMaxLayoutWidth="209" translatesAutoresizingMaskIntoConstraints="NO" id="6XQ-VF-K2R" userLabel="Label - name">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.30000000000000004" preferredMaxLayoutWidth="209" translatesAutoresizingMaskIntoConstraints="NO" id="6XQ-VF-K2R" userLabel="Label - name">
                                             <rect key="frame" x="10" y="0.0" width="209" height="57"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="57" id="jbS-uj-gAI"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                             <size key="shadowOffset" width="1" height="1"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Created: May 15, 2014" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIF-aU-Ff9" userLabel="Label - dateCreated">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Created: May 15, 2014" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIF-aU-Ff9" userLabel="Label - dateCreated">
                                             <rect key="frame" x="10" y="56" width="209" height="10"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="209" id="O1q-ar-A1y"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="italicSystem" pointSize="10"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vyl-1N-CMp" userLabel="Label - elapsedTime">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vyl-1N-CMp" userLabel="Label - elapsedTime">
                                             <rect key="frame" x="10" y="65" width="103" height="21"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="103" id="GWZ-xD-Ffb"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OPp-pt-aW4" userLabel="Label - qualifyingTime">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OPp-pt-aW4" userLabel="Label - qualifyingTime">
                                             <rect key="frame" x="116" y="65" width="103" height="21"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="103" id="YF8-X8-OLF"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="OIp-ES-2d4" secondAttribute="trailing" constant="10" id="84P-Xh-SOH"/>
+                                        <constraint firstAttribute="trailing" secondItem="6XQ-VF-K2R" secondAttribute="trailing" constant="68" id="Eds-yI-de8"/>
+                                        <constraint firstItem="OPp-pt-aW4" firstAttribute="top" secondItem="DIF-aU-Ff9" secondAttribute="bottom" constant="-1" id="Eqe-wL-6Bg"/>
+                                        <constraint firstItem="DIF-aU-Ff9" firstAttribute="top" secondItem="6XQ-VF-K2R" secondAttribute="bottom" constant="-1" id="FNw-cL-46D"/>
+                                        <constraint firstItem="Vyl-1N-CMp" firstAttribute="top" secondItem="DIF-aU-Ff9" secondAttribute="bottom" constant="-1" id="Qbf-9c-QRb"/>
+                                        <constraint firstItem="OIp-ES-2d4" firstAttribute="top" secondItem="KWc-iA-nD5" secondAttribute="top" constant="10" id="SdU-lt-KlE"/>
+                                        <constraint firstItem="6XQ-VF-K2R" firstAttribute="leading" secondItem="KWc-iA-nD5" secondAttribute="leading" constant="10" id="Wyv-wz-IGW"/>
+                                        <constraint firstItem="6XQ-VF-K2R" firstAttribute="top" secondItem="KWc-iA-nD5" secondAttribute="top" id="eNl-7g-05Z"/>
+                                        <constraint firstItem="DIF-aU-Ff9" firstAttribute="leading" secondItem="KWc-iA-nD5" secondAttribute="leading" constant="10" id="ep5-iD-ssg"/>
+                                        <constraint firstAttribute="bottom" secondItem="OPp-pt-aW4" secondAttribute="bottom" id="hXv-nc-sxe"/>
+                                        <constraint firstItem="Vyl-1N-CMp" firstAttribute="leading" secondItem="KWc-iA-nD5" secondAttribute="leading" constant="10" id="hko-13-5oa"/>
+                                        <constraint firstItem="OPp-pt-aW4" firstAttribute="leading" secondItem="Vyl-1N-CMp" secondAttribute="trailing" constant="3" id="mYq-h5-Qi6"/>
+                                        <constraint firstAttribute="bottom" secondItem="OIp-ES-2d4" secondAttribute="bottom" constant="9" id="uQN-X1-et9"/>
+                                        <constraint firstAttribute="bottom" secondItem="Vyl-1N-CMp" secondAttribute="bottom" id="xaY-9O-XKG"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -288,8 +319,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F3R-VR-gPo">
-                                                    <rect key="frame" x="20" y="0.0" width="280" height="43"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F3R-VR-gPo">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" title="Clear Speaker List">
                                                         <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -301,12 +332,10 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="F3R-VR-gPo" secondAttribute="centerY" id="1E7-x7-801"/>
-                                                <constraint firstItem="F3R-VR-gPo" firstAttribute="top" secondItem="UDk-yQ-6vn" secondAttribute="top" id="1wf-CA-eyS"/>
-                                                <constraint firstAttribute="trailing" secondItem="F3R-VR-gPo" secondAttribute="trailing" constant="20" id="A4d-nF-F4b"/>
-                                                <constraint firstAttribute="bottom" secondItem="F3R-VR-gPo" secondAttribute="bottom" id="HPW-xo-WrU"/>
-                                                <constraint firstItem="F3R-VR-gPo" firstAttribute="leading" secondItem="UDk-yQ-6vn" secondAttribute="leading" constant="20" id="cwK-C6-mXK"/>
-                                                <constraint firstAttribute="centerX" secondItem="F3R-VR-gPo" secondAttribute="centerX" id="mBh-NO-fPk"/>
+                                                <constraint firstAttribute="bottom" secondItem="F3R-VR-gPo" secondAttribute="bottom" id="5j9-z9-bzM"/>
+                                                <constraint firstAttribute="trailing" secondItem="F3R-VR-gPo" secondAttribute="trailing" id="Hyl-UG-TUd"/>
+                                                <constraint firstItem="F3R-VR-gPo" firstAttribute="leading" secondItem="UDk-yQ-6vn" secondAttribute="leading" id="LSo-Z8-xYw"/>
+                                                <constraint firstItem="F3R-VR-gPo" firstAttribute="top" secondItem="UDk-yQ-6vn" secondAttribute="top" id="SMz-GV-4WO"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -408,6 +437,8 @@
                             <adBannerView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="EJw-e2-M4e">
                                 <rect key="frame" x="0.0" y="454" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="H4z-2H-Tst"/>
                                 </constraints>

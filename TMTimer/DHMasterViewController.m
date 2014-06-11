@@ -17,7 +17,7 @@
 #import "DHColorForTime.h"
 #import "UISegmentedControl+extractMinMaxData.h"
 
-NSString *const kMasterViewControllerTitle = @"";
+NSString *const kMasterViewControllerTitle = @" ";
 NSString *const kMore = @"More";
 NSString *const kMoreViewSegue = @"MoreView";
 NSString *const kTableTopics = @"Table Topics";
@@ -35,10 +35,10 @@ NSString *const kTableTopics = @"Table Topics";
 
 - (void)awakeFromNib
 {
-	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-		self.clearsSelectionOnViewWillAppear = NO;
-		self.preferredContentSize = CGSizeMake(320.0, 600.0);
-	}
+//	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+//		self.clearsSelectionOnViewWillAppear = NO;
+//		self.preferredContentSize = CGSizeMake(320.0, 600.0);
+//	}
 	[super awakeFromNib];
 }
 

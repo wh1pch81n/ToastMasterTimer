@@ -8,6 +8,12 @@
 
 #import "DHCountDownView.h"
 
+
+#define kBigScale CGAffineTransformScale(CGAffineTransformIdentity, 3, 3)
+#define kSmallScale CGAffineTransformScale(CGAffineTransformIdentity, 1.5, 1.5)
+#define kiPadFontSize 400
+#define kiPhoneFontSize 200
+
 @interface DHCountDownView ()
 
 @property (strong, nonatomic) UILabel *characterDisplayed;
@@ -84,17 +90,17 @@ stringOfCharactersToCountDown:(NSString *)stringOfCharactersToCountDown
 
     NSString *charArr = self.stringOfCharactersToCountDown;
     NSString *str = [charArr substringWithRange:NSMakeRange(self.characterIndex++, 1)];
+    int fontSize = ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)?kiPadFontSize:kiPhoneFontSize;
     NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:str
-                                                                  attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:200]}];
+                                                                  attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:fontSize]}];
     [self.characterDisplayed setAttributedText:attrStr];
     [self.characterDisplayed setTextAlignment:NSTextAlignmentCenter];
     
-    CGAffineTransform bigScale = CGAffineTransformScale(CGAffineTransformIdentity, 3, 3);
-    CGAffineTransform smallScale = CGAffineTransformScale(CGAffineTransformIdentity, 1.5, 1.5);
+
     self.characterDisplayed.alpha = 1;
-    self.characterDisplayed.transform = bigScale;
+    self.characterDisplayed.transform = kBigScale;
     [UIView animateWithDuration:self.characterDelay/2 animations:^{
-        self.characterDisplayed.transform = smallScale;
+        self.characterDisplayed.transform = kSmallScale;
     }];
     
 #if DEBUG
