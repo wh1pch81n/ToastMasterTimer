@@ -15,8 +15,6 @@
 #import "DHColorForTime.h"
 #import "UISegmentedControl+extractMinMaxData.h"
 
-
-
 enum {
 	kdummy0,
 	kPresetButton1_2,
@@ -49,7 +47,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 @property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *swipeGesture;
 
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
-- (void)configureView;
+
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *presetTimesSegment;
@@ -70,6 +68,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 @property (strong, nonatomic) NSNumber *minTime, *maxTime;
 @property (strong, nonatomic) NSString *name, *totalTime;
 
+- (void)configureView;
 
 @end
 
@@ -148,6 +147,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	
 	//Default values
 	[self updateMin:_minTime max:_maxTime];
+    [self.bannerView setHidden:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -376,7 +376,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)FSM_idle {
-	[self.bannerView setHidden:YES];
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
 	[self.timeChooserParentView setHidden:NO];
@@ -441,7 +440,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 		[self.nameTextField setHidden:YES];
 		[self.nameTextField resignFirstResponder];
 		[self.timeChooserParentView setHidden:YES];
-		[self.bannerView setHidden:NO];
 	}];
 	[self.navigationItem setHidesBackButton:YES];
 	[[UIApplication sharedApplication] setIdleTimerDisabled:YES]; //toggle sleep
@@ -453,7 +451,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)FSM_editingOnTheFly {
     [self setIsOnTheFlyEditing:YES];
-	[self.bannerView setHidden:YES];
 	[self.timeChooserParentView setAlpha:1];
 	[self.timeChooserParentView setHidden:NO];
 	[self.nameTextField setHidden:NO];
@@ -573,7 +570,7 @@ Gets called on:
 #if DEBUG
     NSLog(@"timmerview banner 1");
 #endif
-	[banner setAlpha:YES];
+	[banner setHidden:NO];
 }
 
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
@@ -594,7 +591,7 @@ Gets called on:
 #if DEBUG
     NSLog(@"timerview banner 0");
 #endif
-	[banner setAlpha:NO];
+	[banner setHidden:YES];
 }
 
 
