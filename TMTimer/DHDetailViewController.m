@@ -73,6 +73,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 @implementation DHDetailViewController {
     ADBannerView *_bannerView;
+    CGRect _initialFrame;
 }
 
 #pragma mark - Managing the detail item
@@ -137,6 +138,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+    _initialFrame = self.view.frame;
 	// Do any additional setup after loading the view, typically from a nib.
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:self];
@@ -156,29 +158,32 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
         _bannerView = [[ADBannerView alloc] init];
     }
     _bannerView.delegate = self;
+    _bannerView.frame = CGRectOffset(_bannerView.frame, 0, _initialFrame.size.height);
+    [self.view addSubview:_bannerView];
+    [self.view sendSubviewToBack:_bannerView];
     [_bannerView setHidden:YES];
 }
 
-- (void)layoutAnimated:(BOOL)animated {
+- (void)layoutAnimated:(BOOL)animated bannerLoaded:(BOOL)bannerLoaded{
     //as of iOS 6.0, the banner will automatically resize itself based on its width.
-    CGRect contentFrame = self.view.bounds;
+    CGRect timePickerFrame = self.timeChooserParentView.frame;
     CGRect bannerFrame = _bannerView.frame;
-    if (_bannerView.bannerLoaded) {
-        contentFrame.size.height -= CGRectGetHeight(_bannerView.frame);
-        bannerFrame.origin.y = CGRectGetHeight(contentFrame);
-    } else {
-        bannerFrame.origin.y = CGRectGetHeight(contentFrame);
+    
+    float navAndStatusBarHeights = self.navigationController.navigationBar.frame.size.height + 20;
+    timePickerFrame.origin.y = _initialFrame.size.height - timePickerFrame.size.height - navAndStatusBarHeights;
+    bannerFrame.origin.y = _initialFrame.size.height - navAndStatusBarHeights;
+    
+    if (bannerLoaded) {
+        timePickerFrame.origin.y += -bannerFrame.size.height;
+        bannerFrame.origin.y += -bannerFrame.size.height;
     }
     
-    [UIView animateWithDuration:animated ? 0.25: 0.0 animations:^{
-        self.view.frame = contentFrame;
-        [self.view layoutIfNeeded];
+    [UIView animateWithDuration:animated ? 0.25:0 animations:^{
+        //self.timeChooserParentView.frame = timePickerFrame;
         _bannerView.frame = bannerFrame;
     }];
-}
-
-- (void)viewDidLayoutSubviews {
-    [self layoutAnimated:[UIView areAnimationsEnabled]];
+    
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -601,8 +606,9 @@ Gets called on:
 #if DEBUG
     NSLog(@"timmerview banner 1");
 #endif
+    
 	[banner setHidden:NO];
-    [self layoutAnimated:YES];
+    [self layoutAnimated:YES bannerLoaded:YES];
 }
 
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
@@ -624,7 +630,7 @@ Gets called on:
     NSLog(@"timerview banner 0");
 #endif
 	[banner setHidden:YES];
-    [self layoutAnimated:YES];
+    [self layoutAnimated:YES bannerLoaded:NO];
 }
 
 
