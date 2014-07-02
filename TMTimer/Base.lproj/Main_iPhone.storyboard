@@ -434,18 +434,6 @@
                                     <outlet property="delegate" destination="Ah7-4n-0Wa" id="wdo-4W-Dkd"/>
                                 </connections>
                             </textField>
-                            <adBannerView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="EJw-e2-M4e">
-                                <rect key="frame" x="0.0" y="454" width="320" height="50"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="H4z-2H-Tst"/>
-                                </constraints>
-                                <connections>
-                                    <outlet property="delegate" destination="Ah7-4n-0Wa" id="3IQ-fH-Lq5"/>
-                                </connections>
-                            </adBannerView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe Right To Stop" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vFi-nh-Tfc">
                                 <rect key="frame" x="29" y="420" width="263" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -506,18 +494,15 @@
                             <constraint firstAttribute="trailing" secondItem="UgY-RK-qPL" secondAttribute="trailing" id="Ogt-0u-DUg"/>
                             <constraint firstItem="xEj-gW-i4N" firstAttribute="centerY" secondItem="xKm-t7-08K" secondAttribute="centerY" constant="-0.5" id="PiE-LI-5Xj"/>
                             <constraint firstItem="xEj-gW-i4N" firstAttribute="leading" secondItem="xKm-t7-08K" secondAttribute="leading" constant="9" id="a2o-yo-Frg"/>
-                            <constraint firstItem="EJw-e2-M4e" firstAttribute="leading" secondItem="MMQ-IT-qOo" secondAttribute="leading" id="aqS-0t-Am9"/>
                             <constraint firstItem="xEj-gW-i4N" firstAttribute="centerX" secondItem="xKm-t7-08K" secondAttribute="centerX" constant="0.5" id="fFu-Jd-scd"/>
                             <constraint firstItem="UgY-RK-qPL" firstAttribute="trailing" secondItem="vFi-nh-Tfc" secondAttribute="trailing" constant="28" id="gIg-0T-JGW"/>
                             <constraint firstAttribute="trailing" secondItem="xKm-t7-08K" secondAttribute="trailing" constant="20" id="hHJ-eQ-KWK"/>
-                            <constraint firstItem="Ofn-99-DWh" firstAttribute="top" secondItem="EJw-e2-M4e" secondAttribute="bottom" id="jgN-5S-qfv"/>
                             <constraint firstItem="UgY-RK-qPL" firstAttribute="bottom" secondItem="vFi-nh-Tfc" secondAttribute="bottom" constant="63" id="nMb-mY-Cjl"/>
                             <constraint firstItem="UgY-RK-qPL" firstAttribute="leading" secondItem="vFi-nh-Tfc" secondAttribute="leading" constant="-29" id="sso-wh-Jid"/>
                             <constraint firstItem="xKm-t7-08K" firstAttribute="top" secondItem="CBg-3L-XNM" secondAttribute="bottom" constant="25" id="u2h-OB-KZ6"/>
                             <constraint firstItem="UgY-RK-qPL" firstAttribute="leading" secondItem="MMQ-IT-qOo" secondAttribute="leading" id="uJW-cO-4ah"/>
                             <constraint firstItem="xEj-gW-i4N" firstAttribute="trailing" secondItem="xKm-t7-08K" secondAttribute="trailing" constant="-8" id="wV5-8z-kaM"/>
                             <constraint firstItem="UgY-RK-qPL" firstAttribute="centerX" secondItem="vFi-nh-Tfc" secondAttribute="centerX" constant="-0.5" id="wyJ-XV-OmM"/>
-                            <constraint firstAttribute="trailing" secondItem="EJw-e2-M4e" secondAttribute="trailing" id="yHN-JX-rKU"/>
                             <constraint firstItem="xKm-t7-08K" firstAttribute="leading" secondItem="MMQ-IT-qOo" secondAttribute="leading" constant="20" id="yzh-iE-kIr"/>
                         </constraints>
                         <connections>
@@ -535,7 +520,6 @@
                     </navigationItem>
                     <size key="freeformSize" width="320" height="507"/>
                     <connections>
-                        <outlet property="bannerView" destination="EJw-e2-M4e" id="MxQ-Jk-3U6"/>
                         <outlet property="labelSwipeRightToStop" destination="vFi-nh-Tfc" id="KV7-NE-tgQ"/>
                         <outlet property="labelTapToEdit" destination="xEj-gW-i4N" id="GNm-8d-ThT"/>
                         <outlet property="nameTextField" destination="xKm-t7-08K" id="YqJ-J2-8Sq"/>

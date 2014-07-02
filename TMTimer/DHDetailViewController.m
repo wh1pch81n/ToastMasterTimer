@@ -53,7 +53,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 @property (weak, nonatomic) IBOutlet UISegmentedControl *presetTimesSegment;
 @property (weak, nonatomic) IBOutlet UIView *timeChooserParentView;
 
-@property (weak, nonatomic) IBOutlet ADBannerView *bannerView;
 @property (weak, nonatomic) IBOutlet DHNavigationItem *navItem;
 
 @property (strong, nonatomic) DHCountDownView *countDownView;
@@ -72,7 +71,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 @end
 
-@implementation DHDetailViewController
+@implementation DHDetailViewController {
+    ADBannerView *_bannerView;
+}
 
 #pragma mark - Managing the detail item
 
@@ -147,7 +148,37 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	
 	//Default values
 	[self updateMin:_minTime max:_maxTime];
-    [self.bannerView setHidden:YES];
+    
+    //On iOS 6 ADBannerView introduces a new initializer, use it when available
+    if([ADBannerView instancesRespondToSelector:@selector(initWithAdType:)]) {
+        _bannerView = [[ADBannerView alloc] initWithAdType:ADAdTypeBanner];
+    } else {
+        _bannerView = [[ADBannerView alloc] init];
+    }
+    _bannerView.delegate = self;
+    [_bannerView setHidden:YES];
+}
+
+- (void)layoutAnimated:(BOOL)animated {
+    //as of iOS 6.0, the banner will automatically resize itself based on its width.
+    CGRect contentFrame = self.view.bounds;
+    CGRect bannerFrame = _bannerView.frame;
+    if (_bannerView.bannerLoaded) {
+        contentFrame.size.height -= CGRectGetHeight(_bannerView.frame);
+        bannerFrame.origin.y = CGRectGetHeight(contentFrame);
+    } else {
+        bannerFrame.origin.y = CGRectGetHeight(contentFrame);
+    }
+    
+    [UIView animateWithDuration:animated ? 0.25: 0.0 animations:^{
+        self.view.frame = contentFrame;
+        [self.view layoutIfNeeded];
+        _bannerView.frame = bannerFrame;
+    }];
+}
+
+- (void)viewDidLayoutSubviews {
+    [self layoutAnimated:[UIView areAnimationsEnabled]];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -571,10 +602,11 @@ Gets called on:
     NSLog(@"timmerview banner 1");
 #endif
 	[banner setHidden:NO];
+    [self layoutAnimated:YES];
 }
 
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
-    if ([[[UIDevice currentDevice] systemVersion] intValue] < 7) { return NO;}
+    //if ([[[UIDevice currentDevice] systemVersion] intValue] < 7) { return NO;}
     
     //Stop timer
 	_canUpdate = NO;
@@ -592,6 +624,7 @@ Gets called on:
     NSLog(@"timerview banner 0");
 #endif
 	[banner setHidden:YES];
+    [self layoutAnimated:YES];
 }
 
 
