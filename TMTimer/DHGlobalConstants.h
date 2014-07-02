@@ -14,6 +14,7 @@
 #define kUserDefaultShowRunningTimer @"UDRunningTimer"
 #define kQuickStart @"UDQuickStart"
 #define kUserDefaultShowUserHints @"UDUserHints"
+#define kUserDefaultsVibrateOnFlagChange @"UDFlagChangeVibrate"
 
 #define kStart @"Start"
 #define kStop @"Stop"

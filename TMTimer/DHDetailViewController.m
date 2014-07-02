@@ -14,6 +14,7 @@
 #import "DHNavigationItem.h"
 #import "DHColorForTime.h"
 #import "UISegmentedControl+extractMinMaxData.h"
+#import <AudioToolbox/AudioServices.h>
 
 enum {
 	kdummy0,
@@ -341,8 +342,10 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)updates:(NSTimer *)aTimer {
     if(self.canUpdate) {
-        [self updateBackground];
-        [self updateTime];
+        NSTimeInterval timeInterval = [[NSDate new] timeIntervalSinceDate:_startDate];
+        [self updateBackground:timeInterval];
+        [self updateTime:timeInterval];
+        [self updateVibrate:timeInterval];
         [self disableOnTheFlyEditingOnTimesUp];
     } else {
         [aTimer invalidate];
@@ -352,10 +355,34 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 /**
+ Vibrates when appropriate
+ */
+- (void)updateVibrate:(NSTimeInterval)timeInterval {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    BOOL canVibrate = [(NSNumber *)[ud objectForKey:kUserDefaultsVibrateOnFlagChange] boolValue];
+    if (!canVibrate) {
+        return;
+    }
+    int min = _minTime.intValue;
+    int max = _maxTime.intValue;
+    const int k60Seconds = 60;
+#if DEBUG
+#else
+    min *= k60Seconds;
+    max *= k60Seconds;
+#endif
+    if ((int)timeInterval == min ||
+        (int)timeInterval == max ||
+        (int)timeInterval == (int)((min+max)/2)){
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    }
+}
+
+/**
  Updates the bdColor property of the Model
  */
-- (void)updateBackground {
-    NSTimeInterval total = [[NSDate new] timeIntervalSinceDate:_startDate];
+- (void)updateBackground:(NSTimeInterval)timeInterval {
+    NSTimeInterval total = timeInterval;
     UIColor *bgColor = [[DHColorForTime shared] colorForSeconds:total
                                                             min:_minTime.integerValue
                                                             max:_maxTime.integerValue];
@@ -365,8 +392,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 /**
  Updates the TotalTime property of the model
  */
-- (void)updateTime {
-	NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:_startDate];
+- (void)updateTime:(NSTimeInterval)timeInterval {
+	NSTimeInterval interval = timeInterval;
 	[self setTotalTime:[self stringFromTimeInterval:interval]];
     
     BOOL titleIsVisible = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowRunningTimer] boolValue];
