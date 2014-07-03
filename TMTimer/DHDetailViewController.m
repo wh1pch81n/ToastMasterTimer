@@ -170,21 +170,15 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     CGRect timePickerFrame = self.timeChooserParentView.frame;
     CGRect bannerFrame = _bannerView.frame;
     
-    float navAndStatusBarHeights = self.navigationController.navigationBar.frame.size.height + 20;
-    timePickerFrame.origin.y = _initialFrame.size.height - timePickerFrame.size.height - navAndStatusBarHeights;
-    bannerFrame.origin.y = _initialFrame.size.height - navAndStatusBarHeights;
+    bannerFrame.origin.y = timePickerFrame.origin.y + timePickerFrame.size.height;
     
     if (bannerLoaded) {
-        timePickerFrame.origin.y += -bannerFrame.size.height;
         bannerFrame.origin.y += -bannerFrame.size.height;
     }
     
     [UIView animateWithDuration:animated ? 0.25:0 animations:^{
-        //self.timeChooserParentView.frame = timePickerFrame;
         _bannerView.frame = bannerFrame;
     }];
-    
-    
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -195,7 +189,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                            minTime:_minTime
                               name:_name
                          totalTime:_totalTime];
-	
+	[_bannerView removeFromSuperview];
 	[super viewDidDisappear:animated];
 }
 
