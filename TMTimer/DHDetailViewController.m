@@ -14,8 +14,7 @@
 #import "DHNavigationItem.h"
 #import "DHColorForTime.h"
 #import "UISegmentedControl+extractMinMaxData.h"
-
-
+#import <AudioToolbox/AudioServices.h>
 
 enum {
 	kdummy0,
@@ -49,13 +48,12 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 @property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *swipeGesture;
 
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
-- (void)configureView;
+
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *presetTimesSegment;
 @property (weak, nonatomic) IBOutlet UIView *timeChooserParentView;
 
-@property (weak, nonatomic) IBOutlet ADBannerView *bannerView;
 @property (weak, nonatomic) IBOutlet DHNavigationItem *navItem;
 
 @property (strong, nonatomic) DHCountDownView *countDownView;
@@ -70,10 +68,14 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 @property (strong, nonatomic) NSNumber *minTime, *maxTime;
 @property (strong, nonatomic) NSString *name, *totalTime;
 
+- (void)configureView;
 
 @end
 
-@implementation DHDetailViewController
+@implementation DHDetailViewController {
+    ADBannerView *_bannerView;
+    CGRect _initialFrame;
+}
 
 #pragma mark - Managing the detail item
 
@@ -137,6 +139,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+    _initialFrame = self.view.frame;
 	// Do any additional setup after loading the view, typically from a nib.
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:self];
@@ -148,6 +151,34 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	
 	//Default values
 	[self updateMin:_minTime max:_maxTime];
+    
+    //On iOS 6 ADBannerView introduces a new initializer, use it when available
+    if([ADBannerView instancesRespondToSelector:@selector(initWithAdType:)]) {
+        _bannerView = [[ADBannerView alloc] initWithAdType:ADAdTypeBanner];
+    } else {
+        _bannerView = [[ADBannerView alloc] init];
+    }
+    _bannerView.delegate = self;
+    _bannerView.frame = CGRectOffset(_bannerView.frame, 0, _initialFrame.size.height);
+    [self.view addSubview:_bannerView];
+    [self.view sendSubviewToBack:_bannerView];
+    [_bannerView setHidden:YES];
+}
+
+- (void)layoutAnimated:(BOOL)animated bannerLoaded:(BOOL)bannerLoaded{
+    //as of iOS 6.0, the banner will automatically resize itself based on its width.
+    CGRect timePickerFrame = self.timeChooserParentView.frame;
+    CGRect bannerFrame = _bannerView.frame;
+    
+    bannerFrame.origin.y = timePickerFrame.origin.y + timePickerFrame.size.height;
+    
+    if (bannerLoaded) {
+        bannerFrame.origin.y += -bannerFrame.size.height;
+    }
+    
+    [UIView animateWithDuration:animated ? 0.25:0 animations:^{
+        _bannerView.frame = bannerFrame;
+    }];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -158,7 +189,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                            minTime:_minTime
                               name:_name
                          totalTime:_totalTime];
-	
+	[_bannerView removeFromSuperview];
 	[super viewDidDisappear:animated];
 }
 
@@ -305,8 +336,10 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)updates:(NSTimer *)aTimer {
     if(self.canUpdate) {
-        [self updateBackground];
-        [self updateTime];
+        NSTimeInterval timeInterval = [[NSDate new] timeIntervalSinceDate:_startDate];
+        [self updateBackground:timeInterval];
+        [self updateTime:timeInterval];
+        [self updateVibrate:timeInterval];
         [self disableOnTheFlyEditingOnTimesUp];
     } else {
         [aTimer invalidate];
@@ -316,10 +349,34 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 /**
+ Vibrates when appropriate
+ */
+- (void)updateVibrate:(NSTimeInterval)timeInterval {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    BOOL canVibrate = [(NSNumber *)[ud objectForKey:kUserDefaultsVibrateOnFlagChange] boolValue];
+    if (!canVibrate) {
+        return;
+    }
+    int min = _minTime.intValue;
+    int max = _maxTime.intValue;
+    const int k60Seconds = 60;
+#if DEBUG
+#else
+    min *= k60Seconds;
+    max *= k60Seconds;
+#endif
+    if ((int)timeInterval == min ||
+        (int)timeInterval == max ||
+        (int)timeInterval == (int)((min+max)/2)){
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    }
+}
+
+/**
  Updates the bdColor property of the Model
  */
-- (void)updateBackground {
-    NSTimeInterval total = [[NSDate new] timeIntervalSinceDate:_startDate];
+- (void)updateBackground:(NSTimeInterval)timeInterval {
+    NSTimeInterval total = timeInterval;
     UIColor *bgColor = [[DHColorForTime shared] colorForSeconds:total
                                                             min:_minTime.integerValue
                                                             max:_maxTime.integerValue];
@@ -329,8 +386,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 /**
  Updates the TotalTime property of the model
  */
-- (void)updateTime {
-	NSTimeInterval interval = [[NSDate new] timeIntervalSinceDate:_startDate];
+- (void)updateTime:(NSTimeInterval)timeInterval {
+	NSTimeInterval interval = timeInterval;
 	[self setTotalTime:[self stringFromTimeInterval:interval]];
     
     BOOL titleIsVisible = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowRunningTimer] boolValue];
@@ -376,7 +433,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)FSM_idle {
-	[self.bannerView setHidden:YES];
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
 	[self.timeChooserParentView setHidden:NO];
@@ -441,7 +497,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 		[self.nameTextField setHidden:YES];
 		[self.nameTextField resignFirstResponder];
 		[self.timeChooserParentView setHidden:YES];
-		[self.bannerView setHidden:NO];
 	}];
 	[self.navigationItem setHidesBackButton:YES];
 	[[UIApplication sharedApplication] setIdleTimerDisabled:YES]; //toggle sleep
@@ -453,7 +508,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)FSM_editingOnTheFly {
     [self setIsOnTheFlyEditing:YES];
-	[self.bannerView setHidden:YES];
 	[self.timeChooserParentView setAlpha:1];
 	[self.timeChooserParentView setHidden:NO];
 	[self.nameTextField setHidden:NO];
@@ -573,11 +627,13 @@ Gets called on:
 #if DEBUG
     NSLog(@"timmerview banner 1");
 #endif
-	[banner setAlpha:YES];
+    
+	[banner setHidden:NO];
+    [self layoutAnimated:YES bannerLoaded:YES];
 }
 
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
-    if ([[[UIDevice currentDevice] systemVersion] intValue] < 7) { return NO;}
+    //if ([[[UIDevice currentDevice] systemVersion] intValue] < 7) { return NO;}
     
     //Stop timer
 	_canUpdate = NO;
@@ -594,7 +650,8 @@ Gets called on:
 #if DEBUG
     NSLog(@"timerview banner 0");
 #endif
-	[banner setAlpha:NO];
+	[banner setHidden:YES];
+    [self layoutAnimated:YES bannerLoaded:NO];
 }
 
 

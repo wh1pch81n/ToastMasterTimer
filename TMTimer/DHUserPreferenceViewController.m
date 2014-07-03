@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *threeSecondDelay;
 @property (weak, nonatomic) IBOutlet UISwitch *showRunningTimer;
 @property (weak, nonatomic) IBOutlet UISwitch *showUserHints;
+@property (weak, nonatomic) IBOutlet UISwitch *vibrateSwitch;
 @end
 
 @implementation DHUserPreferenceViewController
@@ -53,6 +54,13 @@
 #if DEBUG
     NSLog(@"show user hints is %@", showUserHints.boolValue ?@"enabled":@"disabled");
 #endif
+    
+    NSNumber *vibrate = [UD objectForKey:kUserDefaultsVibrateOnFlagChange];
+    [self.vibrateSwitch setOn:vibrate.boolValue animated:YES];
+#if DEBUG
+    NSLog(@"show user hints is %@", vibrate.boolValue ?@"enabled":@"disabled");
+#endif
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -77,6 +85,12 @@
     NSLog(@"show user hints is %@", self.showUserHints.on?@"enabled":@"disabled");
 #endif
     [UD setObject:@(self.showUserHints.on) forKey:kUserDefaultShowUserHints];
+    
+#if DEBUG
+    NSLog(@"vibrations is %@", self.vibrateSwitch.on?@"enabled":@"disabled");
+#endif
+    [UD setObject:@(self.vibrateSwitch.on) forKey:kUserDefaultsVibrateOnFlagChange];
+
     
 }
 

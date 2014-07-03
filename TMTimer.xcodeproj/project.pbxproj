@@ -58,6 +58,7 @@
 		7F8EEA7A194629ED006B4C53 /* Icon50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F8EEA78194629ED006B4C53 /* Icon50x50.png */; };
 		7F8EEA7B194629ED006B4C53 /* Icon50x50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F8EEA79194629ED006B4C53 /* Icon50x50@2x.png */; };
 		7F8EF98618FB0F780077922C /* DHColorForTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F8EF98518FB0F780077922C /* DHColorForTime.m */; };
+		7F91B7471964C491002FC63E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F91B7461964C491002FC63E /* AudioToolbox.framework */; };
 		7F94EE1318CD0FC3005390C3 /* DHError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F94EE1218CD0FC3005390C3 /* DHError.m */; };
 		7FC92105191D9C620026660A /* DHManualFlagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC92104191D9C620026660A /* DHManualFlagViewController.m */; };
 		7FD4ABDF18E0F488004DA1DF /* DHNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */; };
@@ -146,6 +147,7 @@
 		7F8EEA79194629ED006B4C53 /* Icon50x50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon50x50@2x.png"; sourceTree = "<group>"; };
 		7F8EF98418FB0F780077922C /* DHColorForTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHColorForTime.h; sourceTree = "<group>"; };
 		7F8EF98518FB0F780077922C /* DHColorForTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHColorForTime.m; sourceTree = "<group>"; };
+		7F91B7461964C491002FC63E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		7F94EE1118CD0FC3005390C3 /* DHError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHError.h; sourceTree = "<group>"; };
 		7F94EE1218CD0FC3005390C3 /* DHError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHError.m; sourceTree = "<group>"; };
 		7FC92103191D9C620026660A /* DHManualFlagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHManualFlagViewController.h; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F91B7471964C491002FC63E /* AudioToolbox.framework in Frameworks */,
 				7F75F66D18C9142F0040986B /* iAd.framework in Frameworks */,
 				5095B4B518AE7C440023210E /* CoreGraphics.framework in Frameworks */,
 				5095B4B918AE7C440023210E /* CoreData.framework in Frameworks */,
@@ -241,6 +244,7 @@
 		5095B4B118AE7C440023210E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7F91B7461964C491002FC63E /* AudioToolbox.framework */,
 				7F75F66C18C9142F0040986B /* iAd.framework */,
 				5095B4B218AE7C440023210E /* Foundation.framework */,
 				5095B4B418AE7C440023210E /* CoreGraphics.framework */,
