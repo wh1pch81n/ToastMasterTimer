@@ -10,25 +10,6 @@
 
 @protocol DHCountDownViewDelegate <NSObject>
 
-//@required
-///**
-// The amount of time that should be taken displaying each character
-// */
-//- (float)characterDelay;
-///**
-// A string of characters that will be displayed one at a time
-// after each characterDelay
-// */
-//- (NSString *)stringOfCharactersToCountDown;
-//
-//@optional
-///**
-// This method is called when the timer has completed its countdown
-// 
-// if you want to dismiss the countdownview, you should do it in here
-// */
-//- (void)countDownHasCompleted;
-
 @end
 
 @interface DHCountDownView : UIView

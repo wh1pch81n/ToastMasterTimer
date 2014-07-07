@@ -415,10 +415,12 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
 	[self.timeChooserParentView setHidden:NO];
-	[UIView animateWithDuration:0.5 animations:^{//TODO: consider removing the animations
-		[self.originalContentView setBackgroundColor:[UIColor whiteColor]]; //reset to default color
-		[self.nameTextField setAlpha:1];
-        [self.timeChooserParentView setAlpha:1];
+    __weak typeof(self)wSelf = self;
+	[UIView animateWithDuration:0.5 animations:^{
+        __strong typeof(wSelf)sSelf = wSelf;
+		[sSelf.originalContentView setBackgroundColor:[UIColor whiteColor]]; //reset to default color
+		[sSelf.nameTextField setAlpha:1];
+        [sSelf.timeChooserParentView setAlpha:1];
 	}];
 	[self.navigationItem setHidesBackButton:NO];
 	[[UIApplication sharedApplication] setIdleTimerDisabled:NO]; //toggle sleep
@@ -475,13 +477,16 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)FSM_runTimerWithAnimations:(BOOL)b {
-	[UIView animateWithDuration:b?0.5:0 animations:^{//TODO: consider removing animations
-		[self.nameTextField setAlpha:0];
-		[self.timeChooserParentView setAlpha:0];
+    __weak typeof(self)wSelf = self;
+	[UIView animateWithDuration:b?0.5:0 animations:^{
+        __strong typeof(wSelf)sSelf = wSelf;
+		[sSelf.nameTextField setAlpha:0];
+		[sSelf.timeChooserParentView setAlpha:0];
 	} completion:^(BOOL finished) {
-		[self.nameTextField setHidden:YES];
-		[self.nameTextField resignFirstResponder];
-		[self.timeChooserParentView setHidden:YES];
+        __strong typeof(wSelf)sSelf = wSelf;
+		[sSelf.nameTextField setHidden:YES];
+		[sSelf.nameTextField resignFirstResponder];
+		[sSelf.timeChooserParentView setHidden:YES];
 	}];
 	[self.navigationItem setHidesBackButton:YES];
 	[[UIApplication sharedApplication] setIdleTimerDisabled:YES]; //toggle sleep
@@ -562,15 +567,11 @@ Gets called on:
 	[navBar setUserInteractionEnabled:b];
 	if (!b) {
 		[UIView animateWithDuration:kSec0_5 animations:^{
-			//[self.presetTimesSegment setAlpha:b];
-			//[self.pickerView setAlpha:b];
 			[navBar setAlpha:kMiddleAlpha];
 		}];
 	} else {
 		[UIView animateWithDuration:kSec0_25 animations:^{
 			[navBar setAlpha:b];
-			//[self.pickerView setAlpha:b];
-			//[self.presetTimesSegment setAlpha:b];
 		}];
 	}
 }
