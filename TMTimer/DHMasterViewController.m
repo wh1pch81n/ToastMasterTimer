@@ -46,6 +46,8 @@ NSString *const kTableTopics = @"Table Topics";
 {
 	[super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    self.canDisplayBannerAds = YES;
+    
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:nil];
     

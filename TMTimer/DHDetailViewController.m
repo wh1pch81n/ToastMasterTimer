@@ -14,7 +14,6 @@
 #import "DHNavigationItem.h"
 #import "DHColorForTime.h"
 #import "UISegmentedControl+extractMinMaxData.h"
-#import <AudioToolbox/AudioServices.h>
 
 enum {
 	kdummy0,
@@ -72,10 +71,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 @end
 
-@implementation DHDetailViewController {
-    ADBannerView *_bannerView;
-    CGRect _initialFrame;
-}
+@implementation DHDetailViewController
 
 #pragma mark - Managing the detail item
 
@@ -139,7 +135,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-    _initialFrame = self.view.frame;
+    
+    self.canDisplayBannerAds = YES;
+   
 	// Do any additional setup after loading the view, typically from a nib.
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:self];
@@ -152,33 +150,14 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	//Default values
 	[self updateMin:_minTime max:_maxTime];
     
-    //On iOS 6 ADBannerView introduces a new initializer, use it when available
-    if([ADBannerView instancesRespondToSelector:@selector(initWithAdType:)]) {
-        _bannerView = [[ADBannerView alloc] initWithAdType:ADAdTypeBanner];
-    } else {
-        _bannerView = [[ADBannerView alloc] init];
-    }
-    _bannerView.delegate = self;
-    _bannerView.frame = CGRectOffset(_bannerView.frame, 0, _initialFrame.size.height);
-    [self.view addSubview:_bannerView];
-    [self.view sendSubviewToBack:_bannerView];
-    [_bannerView setHidden:YES];
 }
 
-- (void)layoutAnimated:(BOOL)animated bannerLoaded:(BOOL)bannerLoaded{
-    //as of iOS 6.0, the banner will automatically resize itself based on its width.
-    CGRect timePickerFrame = self.timeChooserParentView.frame;
-    CGRect bannerFrame = _bannerView.frame;
-    
-    bannerFrame.origin.y = timePickerFrame.origin.y + timePickerFrame.size.height;
-    
-    if (bannerLoaded) {
-        bannerFrame.origin.y += -bannerFrame.size.height;
+- (void)viewWillDisappear:(BOOL)animated {
+    if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) {//should stop the timer before leaving this view.
+        [self tappedStartStopButton:self];
     }
     
-    [UIView animateWithDuration:animated ? 0.25:0 animations:^{
-        _bannerView.frame = bannerFrame;
-    }];
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -189,7 +168,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                            minTime:_minTime
                               name:_name
                          totalTime:_totalTime];
-	[_bannerView removeFromSuperview];
+
 	[super viewDidDisappear:animated];
 }
 
@@ -620,40 +599,6 @@ Gets called on:
 		[self setSecondsUntilOnTheFlyEditingEnds:kOnTheFlyEditingTimeOUt];
 	}
 }
-
-#pragma mark - iAd's delegate methods
-
-- (void)bannerViewDidLoadAd:(ADBannerView *)banner {
-#if DEBUG
-    NSLog(@"timmerview banner 1");
-#endif
-    
-	[banner setHidden:NO];
-    [self layoutAnimated:YES bannerLoaded:YES];
-}
-
-- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
-    if ([[[UIDevice currentDevice] systemVersion] intValue] < 7) { return NO;}
-    
-    //Stop timer
-	_canUpdate = NO;
-    return YES;
-}
-
-- (void)bannerViewActionDidFinish:(ADBannerView *)banner {
-	//resume timer
-    _canUpdate = YES;
-    [[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates:) userInfo:nil repeats:YES] fire];
-}
-
-- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
-#if DEBUG
-    NSLog(@"timerview banner 0");
-#endif
-	[banner setHidden:YES];
-    [self layoutAnimated:YES bannerLoaded:NO];
-}
-
 
 #pragma mark - prepareforseque
 
