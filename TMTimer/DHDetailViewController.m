@@ -359,7 +359,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     UIColor *bgColor = [[DHColorForTime shared] colorForSeconds:total
                                                             min:_minTime.integerValue
                                                             max:_maxTime.integerValue];
-    [self.view setBackgroundColor:bgColor];
+    [self.originalContentView setBackgroundColor:bgColor];
 }
 
 /**
@@ -416,7 +416,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[self.nameTextField setHidden:NO];
 	[self.timeChooserParentView setHidden:NO];
 	[UIView animateWithDuration:0.5 animations:^{//TODO: consider removing the animations
-		[self.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
+		[self.originalContentView setBackgroundColor:[UIColor whiteColor]]; //reset to default color
 		[self.nameTextField setAlpha:1];
         [self.timeChooserParentView setAlpha:1];
 	}];
@@ -440,15 +440,21 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     BOOL delayIsEnabled = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
     
     if (delayIsEnabled) {
-        CGRect rect = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
+        self.canDisplayBannerAds = NO;
+        CGRect rect = CGRectMake(0, 0,
+                                 CGRectGetWidth(self.originalContentView.frame),
+                                 CGRectGetHeight(self.originalContentView.frame));
         
+        __weak typeof(self)wSelf = self;
         self.countDownView = [[DHCountDownView alloc] initWithFrame:rect
                                                            delegate:self
                                                      characterDelay:1.0
                                       stringOfCharactersToCountDown:@" 321"
                                                  completedCountDown:^{
-                                                      [self FSM_startTimerBegin];
-                                                     [[self countDownView] removeFromSuperview];
+                                                     __strong typeof(wSelf)sSelf = wSelf;
+                                                     sSelf.canDisplayBannerAds = YES;
+                                                     [sSelf FSM_startTimerBegin];
+                                                     [[sSelf countDownView] removeFromSuperview];
                                                  }];
         [[self view] addSubview:self.countDownView];
         [[self countDownView] runCountDown:delayIsEnabled];
