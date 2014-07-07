@@ -99,8 +99,10 @@ stringOfCharactersToCountDown:(NSString *)stringOfCharactersToCountDown
 
     self.characterDisplayed.alpha = 1;
     self.characterDisplayed.transform = kBigScale;
+    __weak typeof(self)wSelf = self;
     [UIView animateWithDuration:self.characterDelay/2 animations:^{
-        self.characterDisplayed.transform = kSmallScale;
+        __strong typeof(wSelf)sSelf = wSelf;
+        sSelf.characterDisplayed.transform = kSmallScale;
     }];
     
 #if DEBUG

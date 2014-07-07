@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <iAd/iAd.h>
+#import <AudioToolbox/AudioServices.h>
 #import "DHCountDownView.h"
 
 @class Event;

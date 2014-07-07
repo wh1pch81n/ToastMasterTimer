@@ -10,6 +10,7 @@
 #import "DHGlobalConstants.h"
 #import "DHMasterViewController.h"
 #import "DHError.h"
+#import "iRate.h"
 
 NSString *const kName = @"name";
 NSString *const kMinValue = @"min_value";
@@ -22,6 +23,12 @@ NSString *const kHost = @"tmtimer328";
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+
++ (void)initialize {
+#if DEBUG
+    [[iRate sharedInstance] setPreviewMode:YES];
+#endif
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

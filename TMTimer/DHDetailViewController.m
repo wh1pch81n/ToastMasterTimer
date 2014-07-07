@@ -14,7 +14,6 @@
 #import "DHNavigationItem.h"
 #import "DHColorForTime.h"
 #import "UISegmentedControl+extractMinMaxData.h"
-#import <AudioToolbox/AudioServices.h>
 
 enum {
 	kdummy0,
@@ -72,10 +71,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 @end
 
-@implementation DHDetailViewController {
-    ADBannerView *_bannerView;
-    CGRect _initialFrame;
-}
+@implementation DHDetailViewController
 
 #pragma mark - Managing the detail item
 
@@ -139,7 +135,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-    _initialFrame = self.view.frame;
+    
+    self.canDisplayBannerAds = YES;
+   
 	// Do any additional setup after loading the view, typically from a nib.
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:self];
@@ -152,33 +150,14 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	//Default values
 	[self updateMin:_minTime max:_maxTime];
     
-    //On iOS 6 ADBannerView introduces a new initializer, use it when available
-    if([ADBannerView instancesRespondToSelector:@selector(initWithAdType:)]) {
-        _bannerView = [[ADBannerView alloc] initWithAdType:ADAdTypeBanner];
-    } else {
-        _bannerView = [[ADBannerView alloc] init];
-    }
-    _bannerView.delegate = self;
-    _bannerView.frame = CGRectOffset(_bannerView.frame, 0, _initialFrame.size.height);
-    [self.view addSubview:_bannerView];
-    [self.view sendSubviewToBack:_bannerView];
-    [_bannerView setHidden:YES];
 }
 
-- (void)layoutAnimated:(BOOL)animated bannerLoaded:(BOOL)bannerLoaded{
-    //as of iOS 6.0, the banner will automatically resize itself based on its width.
-    CGRect timePickerFrame = self.timeChooserParentView.frame;
-    CGRect bannerFrame = _bannerView.frame;
-    
-    bannerFrame.origin.y = timePickerFrame.origin.y + timePickerFrame.size.height;
-    
-    if (bannerLoaded) {
-        bannerFrame.origin.y += -bannerFrame.size.height;
+- (void)viewWillDisappear:(BOOL)animated {
+    if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) {//should stop the timer before leaving this view.
+        [self tappedStartStopButton:self];
     }
     
-    [UIView animateWithDuration:animated ? 0.25:0 animations:^{
-        _bannerView.frame = bannerFrame;
-    }];
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -189,7 +168,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                            minTime:_minTime
                               name:_name
                          totalTime:_totalTime];
-	[_bannerView removeFromSuperview];
+
 	[super viewDidDisappear:animated];
 }
 
@@ -380,7 +359,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     UIColor *bgColor = [[DHColorForTime shared] colorForSeconds:total
                                                             min:_minTime.integerValue
                                                             max:_maxTime.integerValue];
-    [self.view setBackgroundColor:bgColor];
+    [self.originalContentView setBackgroundColor:bgColor];
 }
 
 /**
@@ -436,10 +415,12 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
 	[self.timeChooserParentView setHidden:NO];
-	[UIView animateWithDuration:0.5 animations:^{//TODO: consider removing the animations
-		[self.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
-		[self.nameTextField setAlpha:1];
-        [self.timeChooserParentView setAlpha:1];
+    __weak typeof(self)wSelf = self;
+	[UIView animateWithDuration:0.5 animations:^{
+        __strong typeof(wSelf)sSelf = wSelf;
+		[sSelf.originalContentView setBackgroundColor:[UIColor whiteColor]]; //reset to default color
+		[sSelf.nameTextField setAlpha:1];
+        [sSelf.timeChooserParentView setAlpha:1];
 	}];
 	[self.navigationItem setHidesBackButton:NO];
 	[[UIApplication sharedApplication] setIdleTimerDisabled:NO]; //toggle sleep
@@ -461,15 +442,21 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     BOOL delayIsEnabled = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
     
     if (delayIsEnabled) {
-        CGRect rect = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
+        self.canDisplayBannerAds = NO;
+        CGRect rect = CGRectMake(0, 0,
+                                 CGRectGetWidth(self.originalContentView.frame),
+                                 CGRectGetHeight(self.originalContentView.frame));
         
+        __weak typeof(self)wSelf = self;
         self.countDownView = [[DHCountDownView alloc] initWithFrame:rect
                                                            delegate:self
                                                      characterDelay:1.0
                                       stringOfCharactersToCountDown:@" 321"
                                                  completedCountDown:^{
-                                                      [self FSM_startTimerBegin];
-                                                     [[self countDownView] removeFromSuperview];
+                                                     __strong typeof(wSelf)sSelf = wSelf;
+                                                     sSelf.canDisplayBannerAds = YES;
+                                                     [sSelf FSM_startTimerBegin];
+                                                     [[sSelf countDownView] removeFromSuperview];
                                                  }];
         [[self view] addSubview:self.countDownView];
         [[self countDownView] runCountDown:delayIsEnabled];
@@ -490,13 +477,16 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)FSM_runTimerWithAnimations:(BOOL)b {
-	[UIView animateWithDuration:b?0.5:0 animations:^{//TODO: consider removing animations
-		[self.nameTextField setAlpha:0];
-		[self.timeChooserParentView setAlpha:0];
+    __weak typeof(self)wSelf = self;
+	[UIView animateWithDuration:b?0.5:0 animations:^{
+        __strong typeof(wSelf)sSelf = wSelf;
+		[sSelf.nameTextField setAlpha:0];
+		[sSelf.timeChooserParentView setAlpha:0];
 	} completion:^(BOOL finished) {
-		[self.nameTextField setHidden:YES];
-		[self.nameTextField resignFirstResponder];
-		[self.timeChooserParentView setHidden:YES];
+        __strong typeof(wSelf)sSelf = wSelf;
+		[sSelf.nameTextField setHidden:YES];
+		[sSelf.nameTextField resignFirstResponder];
+		[sSelf.timeChooserParentView setHidden:YES];
 	}];
 	[self.navigationItem setHidesBackButton:YES];
 	[[UIApplication sharedApplication] setIdleTimerDisabled:YES]; //toggle sleep
@@ -577,15 +567,11 @@ Gets called on:
 	[navBar setUserInteractionEnabled:b];
 	if (!b) {
 		[UIView animateWithDuration:kSec0_5 animations:^{
-			//[self.presetTimesSegment setAlpha:b];
-			//[self.pickerView setAlpha:b];
 			[navBar setAlpha:kMiddleAlpha];
 		}];
 	} else {
 		[UIView animateWithDuration:kSec0_25 animations:^{
 			[navBar setAlpha:b];
-			//[self.pickerView setAlpha:b];
-			//[self.presetTimesSegment setAlpha:b];
 		}];
 	}
 }
@@ -620,40 +606,6 @@ Gets called on:
 		[self setSecondsUntilOnTheFlyEditingEnds:kOnTheFlyEditingTimeOUt];
 	}
 }
-
-#pragma mark - iAd's delegate methods
-
-- (void)bannerViewDidLoadAd:(ADBannerView *)banner {
-#if DEBUG
-    NSLog(@"timmerview banner 1");
-#endif
-    
-	[banner setHidden:NO];
-    [self layoutAnimated:YES bannerLoaded:YES];
-}
-
-- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
-    //if ([[[UIDevice currentDevice] systemVersion] intValue] < 7) { return NO;}
-    
-    //Stop timer
-	_canUpdate = NO;
-    return YES;
-}
-
-- (void)bannerViewActionDidFinish:(ADBannerView *)banner {
-	//resume timer
-    _canUpdate = YES;
-    [[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates:) userInfo:nil repeats:YES] fire];
-}
-
-- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
-#if DEBUG
-    NSLog(@"timerview banner 0");
-#endif
-	[banner setHidden:YES];
-    [self layoutAnimated:YES bannerLoaded:NO];
-}
-
 
 #pragma mark - prepareforseque
 
