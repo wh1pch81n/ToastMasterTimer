@@ -212,12 +212,15 @@ enum FSM_states {e_black, e_green, e_yellow, e_red, e_end, e_exit};
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    switch (event.allTouches.count) {
-        case 2:
+    switch (event.allTouches.count - touches.count) {
+        case 1:
             [self FSM_green_flag];
             break;
-        case 3:
+        case 2:
             [self FSM_yellow_flag];
+            break;
+        case 3:
+            [self FSM_red_flag];
             break;
        
         default:
