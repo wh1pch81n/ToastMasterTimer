@@ -455,6 +455,7 @@ NSString *const kTableTopics = @"Table Topics";
     NSLog(@"just unwinded");
 #endif
     self.didUnwind = YES;
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
 }
 
 @end

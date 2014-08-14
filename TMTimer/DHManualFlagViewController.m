@@ -16,6 +16,10 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
 @interface DHManualFlagViewController ()
 
 @property unsigned int st;
+@property (weak, nonatomic) IBOutlet UIView *greenView;
+@property (weak, nonatomic) IBOutlet UIView *yellowView;
+@property (weak, nonatomic) IBOutlet UIView *redView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
 
 @end
 
@@ -36,6 +40,8 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
     // Do any additional setup after loading the view.
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:self];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    [self initializeTouchEvents];
     [self FSM_controller];
 }
 
@@ -59,6 +65,27 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
     // Pass the selected object to the new view controller.
 }
 */
+
+/**
+ sets up the view and subviews so that it will respond to touch events
+ */
+- (void)initializeTouchEvents {
+//    [(UIControl *)self.greenView addTarget:self
+//                                    action:@selector(tappedGreenView:)
+//                          forControlEvents:UIControlEventTouchUpInside];
+//    [(UIControl *)self.yellowView addTarget:self
+//                                    action:@selector(tappedYellowView:)
+//                          forControlEvents:UIControlEventTouchUpInside];
+//    [(UIControl *)self.redView addTarget:self
+//                                    action:@selector(tappedRedView:)
+//                          forControlEvents:UIControlEventTouchUpInside];
+    [self.greenView setUserInteractionEnabled:NO];
+    [self.yellowView setUserInteractionEnabled:NO];
+    [self.redView setUserInteractionEnabled:NO];
+    [self.view becomeFirstResponder];
+    [self.view setMultipleTouchEnabled:YES];
+    
+}
 
 #pragma mark - Finite State Machine
 
@@ -145,6 +172,58 @@ enum FSM_states {e_black, e_green, e_yellow, e_red, e_end, e_exit};
 
 - (IBAction)tappedView:(id)sender {
     [self FSM_controller];
+}
+
+- (IBAction)tappedGreenView:(id)sender {
+    [self FSM_green_flag];
+}
+
+- (IBAction)tappedYellowView:(id)sender {
+    [self FSM_yellow_flag];
+}
+
+- (IBAction)tappedRedView:(id)sender {
+    [self FSM_red_flag];
+}
+
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    CGPoint lastTouchPosition = [(UITouch *)event.allTouches.allObjects.lastObject locationInView:self.view];
+    switch (event.allTouches.count) {
+        case 1:
+            if (CGRectContainsPoint(self.redView.frame, lastTouchPosition)) {
+                [self FSM_red_flag];
+            } else if (CGRectContainsPoint(self.yellowView.frame, lastTouchPosition)) {
+                [self FSM_yellow_flag];
+            }else {
+                [self FSM_green_flag];
+            }
+            break;
+        case 2:
+            [self FSM_yellow_flag];
+            break;
+        case 3:
+            [self FSM_red_flag];
+            break;
+        default:
+            [self FSM_black_flag];
+            break;
+    }
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    switch (event.allTouches.count) {
+        case 2:
+            [self FSM_green_flag];
+            break;
+        case 3:
+            [self FSM_yellow_flag];
+            break;
+       
+        default:
+            [self FSM_black_flag];
+            break;
+    }
 }
 
 @end

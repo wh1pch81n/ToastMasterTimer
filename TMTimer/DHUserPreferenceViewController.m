@@ -149,4 +149,8 @@
     }
 }
 
+- (IBAction)unwindBackToUserPreferences:(UIStoryboardSegue *)sender {
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+}
+
 @end
