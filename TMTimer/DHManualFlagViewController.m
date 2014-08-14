@@ -42,7 +42,6 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
     [appDelegate setTopVC:self];
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     [self initializeTouchEvents];
-    [self FSM_controller];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -70,15 +69,6 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
  sets up the view and subviews so that it will respond to touch events
  */
 - (void)initializeTouchEvents {
-//    [(UIControl *)self.greenView addTarget:self
-//                                    action:@selector(tappedGreenView:)
-//                          forControlEvents:UIControlEventTouchUpInside];
-//    [(UIControl *)self.yellowView addTarget:self
-//                                    action:@selector(tappedYellowView:)
-//                          forControlEvents:UIControlEventTouchUpInside];
-//    [(UIControl *)self.redView addTarget:self
-//                                    action:@selector(tappedRedView:)
-//                          forControlEvents:UIControlEventTouchUpInside];
     [self.greenView setUserInteractionEnabled:NO];
     [self.yellowView setUserInteractionEnabled:NO];
     [self.redView setUserInteractionEnabled:NO];
@@ -121,71 +111,13 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - FSM controller
+#pragma mark - info
 
-enum FSM_states {e_black, e_green, e_yellow, e_red, e_end, e_exit};
-
-- (void)FSM_controller {
-    switch (self.st) {
-        case e_black: [self FSM_black_flag];
-            self.st = e_green;
-            break;
-        case e_green: [self FSM_green_flag];
-            self.st = e_yellow;
-            break;
-        case e_yellow: [self FSM_yellow_flag];
-            self.st = e_red;
-            break;
-        case e_red: [self FSM_red_flag];
-            self.st = e_end;
-            break;
-        case e_end: [self FSM_end];
-            self.st = e_exit;
-            break;
-        case e_exit: [self FSM_exit];
-            break;
-            
-        default:
-#if DEBUG
-            NSLog(@"Found myself in an impossible state...");
-#endif
-            break;
-    }
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
-    [[appDelegate arrOfAlerts] removeObject:alertView];
-    
-    if (buttonIndex == 1) { //repeat
-        self.st = e_black;
-    } else {
-        self.st = e_exit;
-    }
-    [self FSM_controller];
+- (IBAction)tappedInfoButton:(id)sender {
+#warning needs implementing.  Create an animated graphic that will tell the user how to use the flags.
 }
 
 #pragma mark - tap
-
-- (IBAction)tappedView:(id)sender {
-    [self FSM_controller];
-}
-
-- (IBAction)tappedGreenView:(id)sender {
-    [self FSM_green_flag];
-}
-
-- (IBAction)tappedYellowView:(id)sender {
-    [self FSM_yellow_flag];
-}
-
-- (IBAction)tappedRedView:(id)sender {
-    [self FSM_red_flag];
-}
-
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     CGPoint lastTouchPosition = [(UITouch *)event.allTouches.allObjects.lastObject locationInView:self.view];

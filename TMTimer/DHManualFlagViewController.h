@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DHManualFlagViewController : UIViewController <UIAlertViewDelegate>
+@interface DHManualFlagViewController : UIViewController
 
 @end
