@@ -412,18 +412,18 @@
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
                                     <navigationItem id="A6x-Hf-0jP">
-                                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="done" id="8wt-Rz-MMY">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="8wt-Rz-MMY">
                                             <connections>
                                                 <segue destination="JCf-ts-uC0" kind="unwind" unwindAction="unwindBackToUserPreferences:" id="ElW-ai-DwZ"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" style="plain" id="N3s-i8-Fua">
+                                        <barButtonItem key="rightBarButtonItem" id="N3s-i8-Fua">
                                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="nLQ-Yo-x7N">
                                                 <rect key="frame" x="282" y="11" width="22" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
+                                                <connections>
+                                                    <action selector="tappedInfoButton:" destination="kj2-3m-HyC" eventType="touchUpInside" id="cg0-gp-EEa"/>
+                                                </connections>
                                             </button>
                                         </barButtonItem>
                                     </navigationItem>
@@ -475,6 +475,7 @@
                     <connections>
                         <outlet property="doneButton" destination="8wt-Rz-MMY" id="hWg-LI-rQt"/>
                         <outlet property="greenView" destination="vpg-Fh-vIs" id="BFa-K3-b6g"/>
+                        <outlet property="navBar" destination="rAZ-yO-lGV" id="SHw-EW-Gv6"/>
                         <outlet property="redView" destination="EGf-tn-ghO" id="moh-4K-zF6"/>
                         <outlet property="yellowView" destination="WQm-9S-tQf" id="yLi-y2-Eav"/>
                         <segue destination="JCf-ts-uC0" kind="unwind" identifier="unwind" unwindAction="unwindForURLScheme:" id="dGm-fo-dLv"/>

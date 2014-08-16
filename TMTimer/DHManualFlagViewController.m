@@ -7,6 +7,7 @@
 //
 
 #import "DHManualFlagViewController.h"
+#import "DHGlobalConstants.h"
 #import "DHAppDelegate.h"
 
 NSString *const kUIAlertDemoEndedTitle = @"End or Repeat";
@@ -21,9 +22,16 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
 @property (weak, nonatomic) IBOutlet UIView *redView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
 
+@property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
+
+@property (strong, nonatomic) UIImageView *infoImageView; //contains the animations
+@property (assign, nonatomic) BOOL hasRequestedInfoImages;
+
 @end
 
-@implementation DHManualFlagViewController
+@implementation DHManualFlagViewController {
+    dispatch_queue_t infoQueue;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -42,10 +50,12 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
     [appDelegate setTopVC:self];
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     [self initializeTouchEvents];
+    infoQueue = dispatch_queue_create("info_queue", nil);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [self loadAnimationImagesInBackground];
 }
 
 - (void)didReceiveMemoryWarning
@@ -75,6 +85,60 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
     [self.view becomeFirstResponder];
     [self.view setMultipleTouchEnabled:YES];
     
+}
+
+#pragma mark - InfoAnimation
+
+- (void)loadAnimationImagesInBackground {
+    if (self.infoImageView) {
+        return;
+    }
+    dispatch_queue_t loadAnimationQueue = dispatch_queue_create("load_animation_queue", NULL);
+    dispatch_async(loadAnimationQueue, ^{
+        CGRect imageFrame = CGRectMake(self.view.center.x -150, self.view.center.y -150, 300, 300);
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:imageFrame];
+        NSURL *pathToInfoImages = [[NSBundle mainBundle] URLForResource:@"ManualFlagInfoAnimationImageNames"
+                                                          withExtension:@"plist"];
+        NSDictionary *InfoDict = [NSDictionary dictionaryWithContentsOfURL:pathToInfoImages];
+        NSString *ext = InfoDict[@"file_extention_name"];
+        NSMutableArray *mut = [NSMutableArray new];
+        for (NSString *name in InfoDict[@"images"]) {
+            [mut addObject:[UIImage imageNamed:[name stringByAppendingPathExtension:ext]]];
+        }
+        
+        [imageView setAnimationImages:mut];
+        [imageView setAnimationDuration:mut.count];
+        [imageView setAnimationRepeatCount:1];
+        [self setInfoImageView:imageView];
+        
+        NSNumber *autoLaunch = [[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultsHasShownManualFlagInfoBefore];
+        
+        if ([autoLaunch boolValue] == NO) {
+            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kUserDefaultsHasShownManualFlagInfoBefore];
+            [self presentInfoAnimation];
+        } else if (self.hasRequestedInfoImages == YES) {
+            self.hasRequestedInfoImages = NO;
+            [self presentInfoAnimation];
+        }
+        
+    });
+}
+
+- (void)presentInfoAnimation {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([self.infoImageView isAnimating]) {
+            return;
+        }
+        [self.view addSubview:self.infoImageView];
+        NSInteger numSecondsOfAnimation = self.infoImageView.animationImages.count;
+        [self.infoImageView startAnimating];
+        [self performSelector:@selector(stopInfoAnimation) withObject:nil afterDelay:numSecondsOfAnimation];
+    });
+}
+
+- (void)stopInfoAnimation {
+    [self.infoImageView stopAnimating];
+    [self.infoImageView removeFromSuperview];
 }
 
 #pragma mark - Finite State Machine
@@ -114,7 +178,12 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
 #pragma mark - info
 
 - (IBAction)tappedInfoButton:(id)sender {
-#warning needs implementing.  Create an animated graphic that will tell the user how to use the flags.
+    if (self.infoImageView) {
+        [self presentInfoAnimation];
+    } else {
+        [self setHasRequestedInfoImages:YES];
+    }
+
 }
 
 #pragma mark - tap

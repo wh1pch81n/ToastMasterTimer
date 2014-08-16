@@ -209,7 +209,8 @@ NSString *const kHost = @"tmtimer328";
 		 kUserDefaultShowRunningTimer:@YES,
          kQuickStart:@NO,
          kUserDefaultShowUserHints:@YES,
-         kUserDefaultsVibrateOnFlagChange:@NO
+         kUserDefaultsVibrateOnFlagChange:@NO,
+         kUserDefaultsHasShownManualFlagInfoBefore:@NO
 		 }];
 }
 
