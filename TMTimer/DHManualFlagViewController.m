@@ -7,6 +7,7 @@
 //
 
 #import "DHManualFlagViewController.h"
+#import "DHGlobalConstants.h"
 #import "DHAppDelegate.h"
 
 NSString *const kUIAlertDemoEndedTitle = @"End or Repeat";
@@ -16,10 +17,21 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
 @interface DHManualFlagViewController ()
 
 @property unsigned int st;
+@property (weak, nonatomic) IBOutlet UIView *greenView;
+@property (weak, nonatomic) IBOutlet UIView *yellowView;
+@property (weak, nonatomic) IBOutlet UIView *redView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
+
+@property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
+
+@property (strong, nonatomic) UIImageView *infoImageView; //contains the animations
+@property (assign, nonatomic) BOOL hasRequestedInfoImages;
 
 @end
 
-@implementation DHManualFlagViewController
+@implementation DHManualFlagViewController {
+    dispatch_queue_t infoQueue;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,11 +48,29 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
     // Do any additional setup after loading the view.
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:self];
-    [self FSM_controller];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    [self initializeTouchEvents];
+    infoQueue = dispatch_queue_create("info_queue", nil);
+    
+    [self stylizeToLookLikeButton:self.greenView];
+    [self stylizeToLookLikeButton:self.yellowView];
+    [self stylizeToLookLikeButton:self.redView];
+}
+
+- (void)stylizeToLookLikeButton:(UIView *)view {
+    [view.layer setCornerRadius:self.greenView.frame.size.width/2];
+    
+    [view.layer setShadowOffset:CGSizeMake(1, 1)];
+    [view.layer setShadowColor:[UIColor blueColor].CGColor];
+    [view.layer setMasksToBounds:NO];
+    [view.layer setShadowOpacity:1.0];
+    //[view.layer setBorderWidth:2];
+    //[view.layer setBorderColor:[UIColor grayColor].CGColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [self loadAnimationImagesInBackground];
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,22 +90,94 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
 }
 */
 
+/**
+ sets up the view and subviews so that it will respond to touch events
+ */
+- (void)initializeTouchEvents {
+    [self.greenView setUserInteractionEnabled:NO];
+    [self.yellowView setUserInteractionEnabled:NO];
+    [self.redView setUserInteractionEnabled:NO];
+    [self.view becomeFirstResponder];
+    [self.view setMultipleTouchEnabled:YES];
+    
+}
+
+#pragma mark - InfoAnimation
+
+- (void)loadAnimationImagesInBackground {
+    if (self.infoImageView) {
+        return;
+    }
+    dispatch_queue_t loadAnimationQueue = infoQueue;
+    dispatch_async(loadAnimationQueue, ^{
+        CGRect imageFrame = CGRectMake(self.view.center.x -150, self.view.center.y -150, 300, 300);
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:imageFrame];
+        NSURL *pathToInfoImages = [[NSBundle mainBundle] URLForResource:@"ManualFlagInfoAnimationImageNames"
+                                                          withExtension:@"plist"];
+        NSDictionary *InfoDict = [NSDictionary dictionaryWithContentsOfURL:pathToInfoImages];
+        NSString *ext = InfoDict[@"file_extention_name"];
+        NSMutableArray *mut = [NSMutableArray new];
+        for (NSString *name in InfoDict[@"images"]) {
+            [mut addObject:[UIImage imageNamed:[name stringByAppendingPathExtension:ext]]];
+        }
+        
+        [imageView setAnimationImages:mut];
+        [imageView setAnimationDuration:mut.count];
+        [imageView setAnimationRepeatCount:1];
+        [self setInfoImageView:imageView];
+        
+        NSNumber *autoLaunch = [[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultsHasShownManualFlagInfoBefore];
+        
+        if ([autoLaunch boolValue] == NO) {
+            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kUserDefaultsHasShownManualFlagInfoBefore];
+            [self presentInfoAnimation];
+        } else if (self.hasRequestedInfoImages == YES) {
+            self.hasRequestedInfoImages = NO;
+            [self presentInfoAnimation];
+        }
+        
+    });
+}
+
+- (void)presentInfoAnimation {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([self.infoImageView isAnimating]) {
+            return;
+        }
+        [self.view addSubview:self.infoImageView];
+        NSInteger numSecondsOfAnimation = self.infoImageView.animationImages.count;
+        [self.infoImageView startAnimating];
+        [self performSelector:@selector(stopInfoAnimation) withObject:nil afterDelay:numSecondsOfAnimation];
+    });
+}
+
+- (void)stopInfoAnimation {
+    [self.infoImageView stopAnimating];
+    [self.infoImageView removeFromSuperview];
+}
+
 #pragma mark - Finite State Machine
 
 - (void)FSM_black_flag {
     [[self view] setBackgroundColor:[UIColor blackColor]];
+     [[self greenView] setBackgroundColor:[UIColor greenColor]];
+     [[self yellowView] setBackgroundColor:[UIColor yellowColor]];
+     [[self redView] setBackgroundColor:[UIColor redColor]];
 }
 
 - (void)FSM_green_flag {
     [[self view] setBackgroundColor:[UIColor greenColor]];
+    [[self greenView] setBackgroundColor:[UIColor colorWithRed:0 green:0.75 blue:0 alpha:0.75]];
 }
 
 - (void)FSM_yellow_flag {
     [[self view] setBackgroundColor:[UIColor yellowColor]];
+     [[self yellowView] setBackgroundColor:[UIColor colorWithRed:0.75 green:0.75 blue:0 alpha:0.75]];
 }
 
 - (void)FSM_red_flag {
     [[self view] setBackgroundColor:[UIColor redColor]];
+    [[self redView] setBackgroundColor:[UIColor colorWithRed:0.75 green:0 blue:0 alpha:0.75]];
 }
 
 - (void)FSM_end {
@@ -94,57 +196,65 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - FSM controller
+#pragma mark - info
 
-enum FSM_states {e_black, e_green, e_yellow, e_red, e_end, e_exit};
-
-- (void)FSM_controller {
-    switch (self.st) {
-        case e_black: [self FSM_black_flag];
-            self.st = e_green;
-            break;
-        case e_green: [self FSM_green_flag];
-            self.st = e_yellow;
-            break;
-        case e_yellow: [self FSM_yellow_flag];
-            self.st = e_red;
-            break;
-        case e_red: [self FSM_red_flag];
-            self.st = e_end;
-            break;
-        case e_end: [self FSM_end];
-            self.st = e_exit;
-            break;
-        case e_exit: [self FSM_exit];
-            break;
-            
-        default:
-#if DEBUG
-            NSLog(@"Found myself in an impossible state...");
-#endif
-            break;
-    }
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
-    [[appDelegate arrOfAlerts] removeObject:alertView];
-    
-    if (buttonIndex == 1) { //repeat
-        self.st = e_black;
+- (IBAction)tappedInfoButton:(id)sender {
+    if (self.infoImageView) {
+        [self presentInfoAnimation];
     } else {
-        self.st = e_exit;
+        [self setHasRequestedInfoImages:YES];
     }
-    [self FSM_controller];
+
 }
 
 #pragma mark - tap
 
-- (IBAction)tappedView:(id)sender {
-    [self FSM_controller];
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    CGPoint lastTouchPosition = [(UITouch *)event.allTouches.allObjects.lastObject locationInView:self.view];
+    switch (event.allTouches.count) {
+        case 1:
+            if (CGRectContainsPoint(self.redView.frame, lastTouchPosition)) {
+                [self FSM_red_flag];
+            } else if (CGRectContainsPoint(self.yellowView.frame, lastTouchPosition)) {
+                [self FSM_yellow_flag];
+            }else if (CGRectContainsPoint(self.yellowView.frame, lastTouchPosition)){
+                [self FSM_green_flag];
+            } else {
+                [self FSM_green_flag];
+            }
+            break;
+        case 2:
+            [self FSM_yellow_flag];
+            break;
+        case 3:
+            [self FSM_red_flag];
+            break;
+        default:
+            [self FSM_black_flag];
+            break;
+    }
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    if ([self.infoImageView isAnimating]) {
+        [self stopInfoAnimation];
+    }
+    
+    switch (event.allTouches.count - touches.count) {
+        case 1:
+            [self FSM_green_flag];
+            break;
+        case 2:
+            [self FSM_yellow_flag];
+            break;
+        case 3:
+            [self FSM_red_flag];
+            break;
+       
+        default:
+            [self FSM_black_flag];
+            break;
+    }
 }
 
 @end

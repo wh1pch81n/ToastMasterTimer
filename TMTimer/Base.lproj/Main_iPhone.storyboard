@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="rS3-R9-Ivy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="rS3-R9-Ivy">
     <dependencies>
-        <deployment defaultVersion="1552" identifier="iOS"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
@@ -406,37 +406,83 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FYB-ko-j4o">
-                                <rect key="frame" x="20" y="20" width="280" height="528"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rAZ-yO-lGV">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <items>
+                                    <navigationItem id="A6x-Hf-0jP">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="8wt-Rz-MMY">
+                                            <connections>
+                                                <segue destination="JCf-ts-uC0" kind="unwind" unwindAction="unwindBackToUserPreferences:" id="ElW-ai-DwZ"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" id="N3s-i8-Fua">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="nLQ-Yo-x7N">
+                                                <rect key="frame" x="282" y="11" width="22" height="22"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <connections>
+                                                    <action selector="tappedInfoButton:" destination="kj2-3m-HyC" eventType="touchUpInside" id="cg0-gp-EEa"/>
+                                                </connections>
+                                            </button>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vpg-Fh-vIs" customClass="UIControl">
+                                <rect key="frame" x="20" y="498" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="CjE-gr-P6g"/>
+                                    <constraint firstAttribute="width" constant="50" id="wGX-6O-D3U"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EGf-tn-ghO" customClass="UIControl">
+                                <rect key="frame" x="250" y="498" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="255-8P-Odz"/>
+                                    <constraint firstAttribute="height" constant="50" id="TJW-ME-oQi"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WQm-9S-tQf" customClass="UIControl">
+                                <rect key="frame" x="135" y="498" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="mKP-QJ-0WJ"/>
+                                    <constraint firstAttribute="width" constant="50" id="may-zl-PMt"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="q5b-WU-UKM" firstAttribute="top" secondItem="FYB-ko-j4o" secondAttribute="bottom" constant="20" id="BQo-sE-VZk"/>
-                            <constraint firstItem="FYB-ko-j4o" firstAttribute="top" secondItem="c6M-Yq-9z5" secondAttribute="bottom" id="UcB-xh-ktF"/>
-                            <constraint firstItem="FYB-ko-j4o" firstAttribute="leading" secondItem="J5b-1z-T4w" secondAttribute="leading" constant="20" id="asR-0m-qix"/>
-                            <constraint firstAttribute="trailing" secondItem="FYB-ko-j4o" secondAttribute="trailing" constant="20" id="g0N-jF-H7x"/>
+                            <constraint firstItem="vpg-Fh-vIs" firstAttribute="leading" secondItem="J5b-1z-T4w" secondAttribute="leading" constant="20" id="90S-TC-Yfg"/>
+                            <constraint firstItem="rAZ-yO-lGV" firstAttribute="top" secondItem="c6M-Yq-9z5" secondAttribute="bottom" id="AB6-nI-CiW"/>
+                            <constraint firstAttribute="trailing" secondItem="rAZ-yO-lGV" secondAttribute="trailing" id="YHL-Hu-vfO"/>
+                            <constraint firstItem="q5b-WU-UKM" firstAttribute="top" secondItem="EGf-tn-ghO" secondAttribute="bottom" constant="20" id="bSf-KR-C0I"/>
+                            <constraint firstItem="EGf-tn-ghO" firstAttribute="leading" secondItem="WQm-9S-tQf" secondAttribute="trailing" constant="65" id="bx1-g9-Ywh"/>
+                            <constraint firstItem="rAZ-yO-lGV" firstAttribute="leading" secondItem="J5b-1z-T4w" secondAttribute="leading" id="kfS-UY-91E"/>
+                            <constraint firstItem="q5b-WU-UKM" firstAttribute="top" secondItem="vpg-Fh-vIs" secondAttribute="bottom" constant="20" id="nDQ-Ma-mCe"/>
+                            <constraint firstAttribute="trailing" secondItem="EGf-tn-ghO" secondAttribute="trailing" constant="20" id="p1z-SW-FAe"/>
+                            <constraint firstItem="WQm-9S-tQf" firstAttribute="leading" secondItem="vpg-Fh-vIs" secondAttribute="trailing" constant="65" id="t4D-k4-5un"/>
+                            <constraint firstItem="q5b-WU-UKM" firstAttribute="top" secondItem="WQm-9S-tQf" secondAttribute="bottom" constant="20" id="yXI-rN-5i3"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="SV6-av-LNl" appends="YES" id="e20-ux-X27"/>
-                        </connections>
                     </view>
                     <connections>
+                        <outlet property="doneButton" destination="8wt-Rz-MMY" id="hWg-LI-rQt"/>
+                        <outlet property="greenView" destination="vpg-Fh-vIs" id="BFa-K3-b6g"/>
+                        <outlet property="navBar" destination="rAZ-yO-lGV" id="SHw-EW-Gv6"/>
+                        <outlet property="redView" destination="EGf-tn-ghO" id="moh-4K-zF6"/>
+                        <outlet property="yellowView" destination="WQm-9S-tQf" id="yLi-y2-Eav"/>
                         <segue destination="JCf-ts-uC0" kind="unwind" identifier="unwind" unwindAction="unwindForURLScheme:" id="dGm-fo-dLv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XnM-ae-Tpe" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="JCf-ts-uC0" userLabel="Exit" sceneMemberID="exit"/>
-                <tapGestureRecognizer id="SV6-av-LNl">
-                    <connections>
-                        <action selector="tappedView:" destination="kj2-3m-HyC" id="GCg-Im-7et"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1374" y="1193"/>
         </scene>

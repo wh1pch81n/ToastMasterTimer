@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>file_extention_name</key>
+	<string>png</string>
+	<key>images</key>
+	<array>
+		<string>finger1_not_touch</string>
+		<string>finger1_touch</string>
+		<string>fingers2_no_touch</string>
+		<string>fingers2_touch</string>
+		<string>fingers3_no_touch</string>
+		<string>fingers3_touch</string>
+	</array>
+</dict>
+</plist>

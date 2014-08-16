@@ -24,11 +24,13 @@ NSString *const kHost = @"tmtimer328";
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
-+ (void)initialize {
 #if DEBUG
++ (void)initialize {
+
     [[iRate sharedInstance] setPreviewMode:YES];
-#endif
+
 }
+#endif
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -207,7 +209,8 @@ NSString *const kHost = @"tmtimer328";
 		 kUserDefaultShowRunningTimer:@YES,
          kQuickStart:@NO,
          kUserDefaultShowUserHints:@YES,
-         kUserDefaultsVibrateOnFlagChange:@NO
+         kUserDefaultsVibrateOnFlagChange:@NO,
+         kUserDefaultsHasShownManualFlagInfoBefore:@NO
 		 }];
 }
 
