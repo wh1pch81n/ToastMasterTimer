@@ -51,6 +51,21 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     [self initializeTouchEvents];
     infoQueue = dispatch_queue_create("info_queue", nil);
+    
+    [self stylizeToLookLikeButton:self.greenView];
+    [self stylizeToLookLikeButton:self.yellowView];
+    [self stylizeToLookLikeButton:self.redView];
+}
+
+- (void)stylizeToLookLikeButton:(UIView *)view {
+    [view.layer setCornerRadius:self.greenView.frame.size.width/2];
+    
+    [view.layer setShadowOffset:CGSizeMake(1, 1)];
+    [view.layer setShadowColor:[UIColor blueColor].CGColor];
+    [view.layer setMasksToBounds:NO];
+    [view.layer setShadowOpacity:1.0];
+    //[view.layer setBorderWidth:2];
+    //[view.layer setBorderColor:[UIColor grayColor].CGColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -93,7 +108,7 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
     if (self.infoImageView) {
         return;
     }
-    dispatch_queue_t loadAnimationQueue = dispatch_queue_create("load_animation_queue", NULL);
+    dispatch_queue_t loadAnimationQueue = infoQueue;
     dispatch_async(loadAnimationQueue, ^{
         CGRect imageFrame = CGRectMake(self.view.center.x -150, self.view.center.y -150, 300, 300);
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:imageFrame];
@@ -145,18 +160,24 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
 
 - (void)FSM_black_flag {
     [[self view] setBackgroundColor:[UIColor blackColor]];
+     [[self greenView] setBackgroundColor:[UIColor greenColor]];
+     [[self yellowView] setBackgroundColor:[UIColor yellowColor]];
+     [[self redView] setBackgroundColor:[UIColor redColor]];
 }
 
 - (void)FSM_green_flag {
     [[self view] setBackgroundColor:[UIColor greenColor]];
+    [[self greenView] setBackgroundColor:[UIColor colorWithRed:0 green:0.75 blue:0 alpha:0.75]];
 }
 
 - (void)FSM_yellow_flag {
     [[self view] setBackgroundColor:[UIColor yellowColor]];
+     [[self yellowView] setBackgroundColor:[UIColor colorWithRed:0.75 green:0.75 blue:0 alpha:0.75]];
 }
 
 - (void)FSM_red_flag {
     [[self view] setBackgroundColor:[UIColor redColor]];
+    [[self redView] setBackgroundColor:[UIColor colorWithRed:0.75 green:0 blue:0 alpha:0.75]];
 }
 
 - (void)FSM_end {
@@ -196,7 +217,9 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
                 [self FSM_red_flag];
             } else if (CGRectContainsPoint(self.yellowView.frame, lastTouchPosition)) {
                 [self FSM_yellow_flag];
-            }else {
+            }else if (CGRectContainsPoint(self.yellowView.frame, lastTouchPosition)){
+                [self FSM_green_flag];
+            } else {
                 [self FSM_green_flag];
             }
             break;
@@ -213,6 +236,10 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    if ([self.infoImageView isAnimating]) {
+        [self stopInfoAnimation];
+    }
+    
     switch (event.allTouches.count - touches.count) {
         case 1:
             [self FSM_green_flag];
