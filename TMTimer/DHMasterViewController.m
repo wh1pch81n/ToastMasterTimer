@@ -219,14 +219,22 @@ NSString *const kTableTopics = @"Table Topics";
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 	if ([[segue identifier] isEqualToString:@"showDetail"]) {
-		NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        indexPath = [NSIndexPath indexPathForItem:indexPath.row inSection:0];
-		Event *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        Event *object;
+        if ([sender isKindOfClass:[NSManagedObjectID class]]) {
+            object = (Event *)[_managedObjectContext objectWithID:(NSManagedObjectID *)sender];
+        } else {
+            NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+            indexPath = [NSIndexPath indexPathForItem:indexPath.row inSection:0];
+            object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        }
+		
 		[[segue destinationViewController] setDetailItem:object];
 		NSManagedObjectContext *context = [self managedObjectContext];
 		[[segue destinationViewController] setContext:context];
 	}
 }
+
+
 
 #pragma mark - Fetched results controller
 
@@ -434,11 +442,39 @@ NSString *const kTableTopics = @"Table Topics";
 }
 
 - (IBAction)tappedTableTopics:(id)sender {
-    [self quickStartBegin:sender];
+//    [self quickStartBegin:sender];
+//    
+//    [self setupFirstObjectWithName:kTableTopics minTime:kTableTopicsMin maxTime:kTableTopicsMax];
     
-    [self setupFirstObjectWithName:kTableTopics minTime:kTableTopicsMin maxTime:kTableTopicsMax];
     
-    [self quickStartEnds:sender];
+    NSManagedObjectContext *tempContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    tempContext.parentContext = _managedObjectContext;
+    [tempContext performBlock:^{
+        Event *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:tempContext];
+        newManagedObject.timeStamp = [NSDate new];
+        newManagedObject.name = kTableTopics;
+        newManagedObject.minTime = @kTableTopicsMin;
+        newManagedObject.maxTime = @kTableTopicsMax;
+        
+        NSError *error;
+        if (![tempContext save:&error]) {
+            NSLog(@"Problem saving temp context");
+            abort();
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kQuickStart];
+            [self performSegueWithIdentifier:@"showDetail" sender:newManagedObject.objectID];
+        });
+        
+        [tempContext.parentContext performBlock:^{
+            NSError *error;
+            if (![tempContext.parentContext save:&error]) {
+                NSLog(@"Problem saving to parent context");
+                abort();
+            }
+        }];
+    }];
 }
 
 - (IBAction)tappedPresetSpeechTime:(UISegmentedControl *)sender {
