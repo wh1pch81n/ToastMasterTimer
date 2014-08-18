@@ -218,8 +218,8 @@ NSString *const kTableTopics = @"Table Topics";
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-	if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        Event *object;
+	Event *object;
+    if ([[segue identifier] isEqualToString:@"showDetail"]) {
         if ([sender isKindOfClass:[NSManagedObjectID class]]) {
             object = (Event *)[_managedObjectContext objectWithID:(NSManagedObjectID *)sender];
         } else {
@@ -231,7 +231,9 @@ NSString *const kTableTopics = @"Table Topics";
 		[[segue destinationViewController] setDetailItem:object];
 		NSManagedObjectContext *context = [self managedObjectContext];
 		[[segue destinationViewController] setContext:context];
-	}
+	} else if ([[segue identifier] isEqualToString:@"MoreView"]) {
+        [[segue destinationViewController] setManagedObjectContext:_managedObjectContext];
+    }
 }
 
 

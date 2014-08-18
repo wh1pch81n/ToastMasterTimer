@@ -153,4 +153,12 @@
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
 }
 
+#pragma mark - SEGUE
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"UserProfileSegue"]) {
+        [[segue destinationViewController] setManagedObjectContext:_managedObjectContext];
+    }
+}
+
 @end

@@ -51,6 +51,11 @@
 		7F185BBE196A867900055446 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F185BBD196A867900055446 /* iRate.m */; };
 		7F407F3819A0849800E37E1B /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F407F3719A0849800E37E1B /* Event.m */; };
 		7F407F3B19A0849900E37E1B /* User_Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F407F3A19A0849900E37E1B /* User_Profile.m */; };
+		7F407F5719A1F4E200E37E1B /* DHUserProfileCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F407F5619A1F4E200E37E1B /* DHUserProfileCollectionViewCell.m */; };
+		7F407F5A19A1F85C00E37E1B /* DHUserProfileCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F407F5919A1F85C00E37E1B /* DHUserProfileCollectionViewController.m */; };
+		7F407F5E19A29C5800E37E1B /* DHEditUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F407F5C19A29C5800E37E1B /* DHEditUserProfileViewController.m */; };
+		7F407F5F19A29C5800E37E1B /* DHEditUserProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F407F5D19A29C5800E37E1B /* DHEditUserProfileViewController.xib */; };
+		7F407F6219A2AD4D00E37E1B /* User_Profile+helperMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F407F6119A2AD4D00E37E1B /* User_Profile+helperMethods.m */; };
 		7F75F66D18C9142F0040986B /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F75F66C18C9142F0040986B /* iAd.framework */; };
 		7F86595118D3C4C50045F9F2 /* DHUserPreferenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */; };
 		7F86595418D3D0090045F9F2 /* DHCountDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F86595318D3D0090045F9F2 /* DHCountDownView.m */; };
@@ -149,6 +154,15 @@
 		7F407F3719A0849800E37E1B /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		7F407F3919A0849900E37E1B /* User_Profile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User_Profile.h; sourceTree = "<group>"; };
 		7F407F3A19A0849900E37E1B /* User_Profile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User_Profile.m; sourceTree = "<group>"; };
+		7F407F5519A1F4E200E37E1B /* DHUserProfileCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHUserProfileCollectionViewCell.h; sourceTree = "<group>"; };
+		7F407F5619A1F4E200E37E1B /* DHUserProfileCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHUserProfileCollectionViewCell.m; sourceTree = "<group>"; };
+		7F407F5819A1F85C00E37E1B /* DHUserProfileCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHUserProfileCollectionViewController.h; sourceTree = "<group>"; };
+		7F407F5919A1F85C00E37E1B /* DHUserProfileCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHUserProfileCollectionViewController.m; sourceTree = "<group>"; };
+		7F407F5B19A29C5800E37E1B /* DHEditUserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHEditUserProfileViewController.h; sourceTree = "<group>"; };
+		7F407F5C19A29C5800E37E1B /* DHEditUserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHEditUserProfileViewController.m; sourceTree = "<group>"; };
+		7F407F5D19A29C5800E37E1B /* DHEditUserProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DHEditUserProfileViewController.xib; sourceTree = "<group>"; };
+		7F407F6019A2AD4D00E37E1B /* User_Profile+helperMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User_Profile+helperMethods.h"; sourceTree = "<group>"; };
+		7F407F6119A2AD4D00E37E1B /* User_Profile+helperMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User_Profile+helperMethods.m"; sourceTree = "<group>"; };
 		7F75F66C18C9142F0040986B /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		7F86594F18D3C4C50045F9F2 /* DHUserPreferenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHUserPreferenceViewController.h; sourceTree = "<group>"; };
 		7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHUserPreferenceViewController.m; sourceTree = "<group>"; };
@@ -281,10 +295,19 @@
 				7F8EF98418FB0F780077922C /* DHColorForTime.h */,
 				7F8EF98518FB0F780077922C /* DHColorForTime.m */,
 				5095B4D518AE7C440023210E /* Images.xcassets */,
+				7F407F5519A1F4E200E37E1B /* DHUserProfileCollectionViewCell.h */,
+				7F407F5619A1F4E200E37E1B /* DHUserProfileCollectionViewCell.m */,
+				7F407F5819A1F85C00E37E1B /* DHUserProfileCollectionViewController.h */,
+				7F407F5919A1F85C00E37E1B /* DHUserProfileCollectionViewController.m */,
+				7F407F5B19A29C5800E37E1B /* DHEditUserProfileViewController.h */,
+				7F407F5C19A29C5800E37E1B /* DHEditUserProfileViewController.m */,
+				7F407F5D19A29C5800E37E1B /* DHEditUserProfileViewController.xib */,
 				7F407F3619A0849800E37E1B /* Event.h */,
 				7F407F3719A0849800E37E1B /* Event.m */,
 				7F407F3919A0849900E37E1B /* User_Profile.h */,
 				7F407F3A19A0849900E37E1B /* User_Profile.m */,
+				7F407F6019A2AD4D00E37E1B /* User_Profile+helperMethods.h */,
+				7F407F6119A2AD4D00E37E1B /* User_Profile+helperMethods.m */,
 				5095B4CC18AE7C440023210E /* TMTimer.xcdatamodeld */,
 				501518E618B1979200CC286D /* Event+helperMethods.h */,
 				501518E718B1979200CC286D /* Event+helperMethods.m */,
@@ -492,6 +515,7 @@
 				7F8CD813199FAAAE00FC177F /* fingers3_touch.png in Resources */,
 				7F8CD819199FFEBB00FC177F /* fingers.pxm in Resources */,
 				5071129F18C51B3C000790E1 /* Icon-40.png in Resources */,
+				7F407F5F19A29C5800E37E1B /* DHEditUserProfileViewController.xib in Resources */,
 				507112A618C51B3C000790E1 /* Icon-Small.png in Resources */,
 				7F8EEA7B194629ED006B4C53 /* Icon50x50@2x.png in Resources */,
 				507112A418C51B3C000790E1 /* Icon-Small-50.png in Resources */,
@@ -521,12 +545,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FD4ABDF18E0F488004DA1DF /* DHNavigationItem.m in Sources */,
+				7F407F6219A2AD4D00E37E1B /* User_Profile+helperMethods.m in Sources */,
 				5095B4D418AE7C440023210E /* DHDetailViewController.m in Sources */,
 				7F86595418D3D0090045F9F2 /* DHCountDownView.m in Sources */,
 				7FC92105191D9C620026660A /* DHManualFlagViewController.m in Sources */,
 				5095B4CE18AE7C440023210E /* TMTimer.xcdatamodeld in Sources */,
 				5095B4C518AE7C440023210E /* DHAppDelegate.m in Sources */,
 				7F94EE1318CD0FC3005390C3 /* DHError.m in Sources */,
+				7F407F5A19A1F85C00E37E1B /* DHUserProfileCollectionViewController.m in Sources */,
 				7F87644E18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.m in Sources */,
 				7F86595118D3C4C50045F9F2 /* DHUserPreferenceViewController.m in Sources */,
 				7F185BBE196A867900055446 /* iRate.m in Sources */,
@@ -534,9 +560,11 @@
 				502B46B818B4063000A61D24 /* DHTableViewCell.m in Sources */,
 				7F407F3819A0849800E37E1B /* Event.m in Sources */,
 				501518E818B1979200CC286D /* Event+helperMethods.m in Sources */,
+				7F407F5E19A29C5800E37E1B /* DHEditUserProfileViewController.m in Sources */,
 				7F8EF98618FB0F780077922C /* DHColorForTime.m in Sources */,
 				5095B4D118AE7C440023210E /* DHMasterViewController.m in Sources */,
 				7F407F3B19A0849900E37E1B /* User_Profile.m in Sources */,
+				7F407F5719A1F4E200E37E1B /* DHUserProfileCollectionViewCell.m in Sources */,
 				7FD4ABE218E0FD99004DA1DF /* DHNavigationBar.m in Sources */,
 				5095B4C118AE7C440023210E /* main.m in Sources */,
 			);

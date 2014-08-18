@@ -10,4 +10,6 @@
 
 @interface DHUserPreferenceViewController : UITableViewController <UIAlertViewDelegate>
 
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 @end
