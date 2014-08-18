@@ -47,9 +47,10 @@
 		5095B4E018AE7C440023210E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5095B4B818AE7C440023210E /* CoreData.framework */; };
 		5095B4E818AE7C440023210E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5095B4E618AE7C440023210E /* InfoPlist.strings */; };
 		5095B4EA18AE7C440023210E /* TMTimerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5095B4E918AE7C440023210E /* TMTimerTests.m */; };
-		50B0FC6218B3002A007694F3 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B0FC6118B3002A007694F3 /* Event.m */; };
 		7F0C3FCB18CBCD3D0068B26C /* Release Notes in Resources */ = {isa = PBXBuildFile; fileRef = 7F0C3FCA18CBCD3D0068B26C /* Release Notes */; };
 		7F185BBE196A867900055446 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F185BBD196A867900055446 /* iRate.m */; };
+		7F407F3819A0849800E37E1B /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F407F3719A0849800E37E1B /* Event.m */; };
+		7F407F3B19A0849900E37E1B /* User_Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F407F3A19A0849900E37E1B /* User_Profile.m */; };
 		7F75F66D18C9142F0040986B /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F75F66C18C9142F0040986B /* iAd.framework */; };
 		7F86595118D3C4C50045F9F2 /* DHUserPreferenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */; };
 		7F86595418D3D0090045F9F2 /* DHCountDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F86595318D3D0090045F9F2 /* DHCountDownView.m */; };
@@ -140,11 +141,14 @@
 		5095B4F318AE7DC80023210E /* TMTimer 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TMTimer 2.xcdatamodel"; sourceTree = "<group>"; };
 		50A3ECE718BF10FF00DB3981 /* DHGlobalConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHGlobalConstants.h; sourceTree = "<group>"; };
 		50B0FC5F18B2FFC0007694F3 /* TMTimer 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TMTimer 5.xcdatamodel"; sourceTree = "<group>"; };
-		50B0FC6018B3002A007694F3 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
-		50B0FC6118B3002A007694F3 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		7F0C3FCA18CBCD3D0068B26C /* Release Notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Release Notes"; path = "TMTimer/Release Notes"; sourceTree = "<group>"; };
 		7F185BBC196A867900055446 /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
 		7F185BBD196A867900055446 /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
+		7F407F3519A07CF400E37E1B /* TMTimer 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TMTimer 6.xcdatamodel"; sourceTree = "<group>"; };
+		7F407F3619A0849800E37E1B /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		7F407F3719A0849800E37E1B /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
+		7F407F3919A0849900E37E1B /* User_Profile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User_Profile.h; sourceTree = "<group>"; };
+		7F407F3A19A0849900E37E1B /* User_Profile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User_Profile.m; sourceTree = "<group>"; };
 		7F75F66C18C9142F0040986B /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		7F86594F18D3C4C50045F9F2 /* DHUserPreferenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHUserPreferenceViewController.h; sourceTree = "<group>"; };
 		7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHUserPreferenceViewController.m; sourceTree = "<group>"; };
@@ -277,9 +281,11 @@
 				7F8EF98418FB0F780077922C /* DHColorForTime.h */,
 				7F8EF98518FB0F780077922C /* DHColorForTime.m */,
 				5095B4D518AE7C440023210E /* Images.xcassets */,
+				7F407F3619A0849800E37E1B /* Event.h */,
+				7F407F3719A0849800E37E1B /* Event.m */,
+				7F407F3919A0849900E37E1B /* User_Profile.h */,
+				7F407F3A19A0849900E37E1B /* User_Profile.m */,
 				5095B4CC18AE7C440023210E /* TMTimer.xcdatamodeld */,
-				50B0FC6018B3002A007694F3 /* Event.h */,
-				50B0FC6118B3002A007694F3 /* Event.m */,
 				501518E618B1979200CC286D /* Event+helperMethods.h */,
 				501518E718B1979200CC286D /* Event+helperMethods.m */,
 				7F87644C18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.h */,
@@ -526,12 +532,13 @@
 				7F185BBE196A867900055446 /* iRate.m in Sources */,
 				7FD4ABE518E1089D004DA1DF /* DHGradients.m in Sources */,
 				502B46B818B4063000A61D24 /* DHTableViewCell.m in Sources */,
+				7F407F3819A0849800E37E1B /* Event.m in Sources */,
 				501518E818B1979200CC286D /* Event+helperMethods.m in Sources */,
 				7F8EF98618FB0F780077922C /* DHColorForTime.m in Sources */,
 				5095B4D118AE7C440023210E /* DHMasterViewController.m in Sources */,
+				7F407F3B19A0849900E37E1B /* User_Profile.m in Sources */,
 				7FD4ABE218E0FD99004DA1DF /* DHNavigationBar.m in Sources */,
 				5095B4C118AE7C440023210E /* main.m in Sources */,
-				50B0FC6218B3002A007694F3 /* Event.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -770,8 +777,9 @@
 				5095B4F318AE7DC80023210E /* TMTimer 2.xcdatamodel */,
 				5095B4CD18AE7C440023210E /* TMTimer.xcdatamodel */,
 				50B0FC5F18B2FFC0007694F3 /* TMTimer 5.xcdatamodel */,
+				7F407F3519A07CF400E37E1B /* TMTimer 6.xcdatamodel */,
 			);
-			currentVersion = 50B0FC5F18B2FFC0007694F3 /* TMTimer 5.xcdatamodel */;
+			currentVersion = 7F407F3519A07CF400E37E1B /* TMTimer 6.xcdatamodel */;
 			path = TMTimer.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

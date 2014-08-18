@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13E28" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Event" representedClassName="Event">
+        <attribute name="bgColor" optional="YES" attributeType="Integer 32" defaultValueString="255" syncable="YES"/>
+        <attribute name="endDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="maxTime" optional="YES" attributeType="Float" defaultValueString="6" syncable="YES"/>
+        <attribute name="minTime" optional="YES" attributeType="Float" defaultValueString="4" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="timeStamp" optional="YES" attributeType="Date">
+            <userInfo/>
+        </attribute>
+        <attribute name="totalTime" optional="YES" attributeType="String" defaultValueString="hh:mm.ss" syncable="YES"/>
+        <relationship name="speeches_speaker" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User_Profile" inverseName="users_speeches" inverseEntity="User_Profile" syncable="YES"/>
+        <userInfo/>
+    </entity>
+    <entity name="User_Profile" representedClassName="User_Profile" syncable="YES">
+        <attribute name="profile_pic_path" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="total_speeches" optional="YES" transient="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="user_name" attributeType="String" syncable="YES"/>
+        <relationship name="users_speeches" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="speeches_speaker" inverseEntity="Event" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Event" positionX="252" positionY="135" width="128" height="178"/>
+        <element name="User_Profile" positionX="36" positionY="110" width="117" height="103"/>
+    </elements>
+</model>
