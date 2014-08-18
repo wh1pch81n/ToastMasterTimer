@@ -72,11 +72,11 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-#warning needs implementing.  This is where you show the editing view. launch the editing view and give it a temporary context
-    NSLog(@"You have touched cell at %@", indexPath);
+User_Profile *up = [_fetchedResultsController objectAtIndexPath:indexPath];
+    [self editProfileWithObject:up];
 }
 
-#pragma mark - NSFetchedResultsController 
+#pragma mark - NSFetchedResultsController
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
@@ -90,7 +90,7 @@
 	[fetchRequest setFetchBatchSize:20];
 	
 	// Edit the sort key as appropriate.
-	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"user_name" ascending:NO];
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"user_name" ascending:YES];
 	NSArray *sortDescriptors = @[sortDescriptor];
 	
 	[fetchRequest setSortDescriptors:sortDescriptors];
@@ -204,12 +204,19 @@
                                                      inManagedObjectContext:tempMoc];
     vc.objectID = up.objectID;
     vc.managedObjectContext = tempMoc;
-    
+    vc.EditingMode = UserProfileMode_NEW_PROFILE;
     [self presentViewController:vc animated:YES completion:nil];
 }
 
-
-
-
+- (void)editProfileWithObject:(User_Profile *)up {
+    NSManagedObjectContext *tempMoc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    tempMoc.parentContext = _managedObjectContext;
+    
+    DHEditUserProfileViewController *vc = [[DHEditUserProfileViewController alloc]
+                                           initWithContext:tempMoc
+                                           objectID:up.objectID
+                                           editingMode:UserProfileMode_MODIFY_PROFILE];
+    [self presentViewController:vc animated:YES completion:nil];
+}
 
 @end

@@ -36,36 +36,41 @@
     return self;
 }
 
+- (id)initWithContext:(NSManagedObjectContext *)context objectID:(NSManagedObjectID *)objectID editingMode:(enum Mode)mode {
+    if (self = [super init]) {
+        _managedObjectContext = context;
+        _objectID = objectID;
+        _EditingMode = mode;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    //use the context and the object id to generate the view
-    [self setUpViewWithMode];
-    
-//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelEdits)];
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveEdits)];
     
     self.textFieldName.delegate = self;
     self.searchBar.delegate = self;
 }
 
-
+- (void)viewWillAppear:(BOOL)animated {
+    [self setUpViewWithMode];
+}
 
 - (void)setUpViewWithMode {
-    if (self.EditingMode == MODIFY_PROFILE) {
+    if (self.EditingMode == UserProfileMode_MODIFY_PROFILE) {
         
-    } else if (self.EditingMode == NEW_PROFILE) {// actually "new" profile might not be in my best interests
-        
+    } else if (self.EditingMode == UserProfileMode_NEW_PROFILE) {
+        self.tableView.hidden = YES;
+        self.searchBar.hidden = YES;
+        self.labelTotalNumberOfSpeeches.hidden = YES;
     }
     
     User_Profile *up = (User_Profile *)[self.managedObjectContext objectWithID:self.objectID];
     self.textFieldName.text = up.user_name;
     self.labelTotalNumberOfSpeeches.text = up.total_speeches.stringValue;
     self.imageViewProfilePic.image = [UIImage imageWithContentsOfFile:up.profile_pic_path];
-    
-    
-    
 }
 
 - (void)didReceiveMemoryWarning

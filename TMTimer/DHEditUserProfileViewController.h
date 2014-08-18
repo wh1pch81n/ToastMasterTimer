@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-enum Mode {NEW_PROFILE, MODIFY_PROFILE};
+enum Mode {UserProfileMode_NEW_PROFILE, UserProfileMode_MODIFY_PROFILE};
 
 @interface DHEditUserProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UISearchBarDelegate, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) NSManagedObjectID *objectID;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, assign) enum Mode EditingMode;
+
+- (id)initWithContext:(NSManagedObjectContext *)context objectID:(NSManagedObjectID *)objectID editingMode:(enum Mode)mode;
 
 @end
