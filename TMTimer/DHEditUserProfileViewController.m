@@ -17,13 +17,10 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *textFieldName;
 @property (weak, nonatomic) IBOutlet UILabel *labelTotalNumberOfSpeeches;
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewProfilePic;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-
-@property (strong, nonatomic) NSArray *speeches;
 
 @end
 
@@ -51,21 +48,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-//    self.textFieldName.delegate = self;
-//    self.searchBar.delegate = self;
-//    self.tableView.delegate = self;
-//    self.tableView.dataSource = self;
-//    NSError *error;
-//    if(![self.fetchedResultsController performFetch:&error]) {
-//        NSLog(@"Error in initial fetch retrieval %@, %@", error, [error userInfo]);
-//        abort();
-//    }
-
-    self.speeches = [[(User_Profile *)[self.managedObjectContext objectWithID:self.objectID] users_speeches] allObjects];
-//    self.speeches = [self.speeches sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-//        <#code#>
-//    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -77,7 +59,6 @@
         
     } else if (self.EditingMode == UserProfileMode_NEW_PROFILE) {
         self.tableView.hidden = YES;
-        self.searchBar.hidden = YES;
         self.labelTotalNumberOfSpeeches.hidden = YES;
     }
     
@@ -96,14 +77,13 @@
 #pragma mark - TableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    //NSInteger total = [[self.fetchedResultsController sections] count];
-    return 1;
+    NSInteger total = [[self.fetchedResultsController sections] count];
+    return total;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    NSInteger total = [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
-    // return total;
-return self.speeches.count;
+    NSInteger total = [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
+    return total;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -117,9 +97,7 @@ return self.speeches.count;
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    NSArray *arr = self.speeches;
-    Event *obj = arr[indexPath.row];
-//    Event *obj = [_fetchedResultsController objectAtIndexPath:indexPath];
+    Event *obj = [_fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = obj.name;
     
     NSString *timeConstraints = [NSString stringWithFormat:@"%@ ~ %@", obj.minTime, obj.maxTime];
@@ -142,50 +120,31 @@ return self.speeches.count;
     return NO;
 }
 
-#pragma mark - searchbar
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    NSError *error;
-    if (![[self fetchedResultsController] performFetch:&error]) {
-        NSLog(@"Error in search %@, %@", error, [error userInfo]);
-    } else {
-        [self.tableView reloadData];
-        if ([[searchText stringByTrimmingCharactersInSet:
-              [NSCharacterSet whitespaceAndNewlineCharacterSet]]
-             isEqualToString:@""]) {
-            self.labelTotalNumberOfSpeeches.text = [[(User_Profile *)[self.managedObjectContext objectWithID:self.objectID] total_speeches] stringValue];
-        } else {
-            self.labelTotalNumberOfSpeeches.text = @(_fetchedResultsController.fetchedObjects.count).stringValue;
-        }
-    }
-}
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [self.searchBar resignFirstResponder];
-}
-
 #pragma mark - fetched results controller
 
 - (NSFetchedResultsController *)fetchedResultsController {
+    if (_fetchedResultsController) {
+        return _fetchedResultsController;
+    }
+    
     NSFetchRequest *fetchRequest = [NSFetchRequest new];
     fetchRequest.entity = [NSEntityDescription entityForName:@"Event"
                                       inManagedObjectContext:_managedObjectContext];
-    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"timeStamp" ascending:YES]];
     fetchRequest.fetchBatchSize = 20;
     
     User_Profile *up = (User_Profile *)[self.managedObjectContext objectWithID:self.objectID];
-//    if ([[_searchBar.text stringByTrimmingCharactersInSet:
-//          [NSCharacterSet whitespaceAndNewlineCharacterSet]]
-//         isEqualToString:@""] == NO) {
-//        
-//        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@ AND ALL speeches_speaker == %@", _searchBar.text, up.user_name];
-//    } else {
-//        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"ALL speeches_speaker == %@", up.user_name];
-//    }
+
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"ANY speeches_speaker.user_name == %@", up.user_name];
     
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:_managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     
     _fetchedResultsController.delegate = self;
+    
+    NSError *error = nil;
+	if (![_fetchedResultsController performFetch:&error]) {
+		[DHError displayValidationError:error];
+	}
     
     return _fetchedResultsController;
 }

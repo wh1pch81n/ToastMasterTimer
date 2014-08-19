@@ -9,7 +9,6 @@
                 <outlet property="imageViewProfilePic" destination="YcC-Pe-VNx" id="sWa-ar-cpc"/>
                 <outlet property="labelTotalNumberOfSpeeches" destination="rWz-Ko-Hv0" id="LrJ-i7-ojY"/>
                 <outlet property="navigationBar" destination="vzE-jj-QAV" id="2DQ-WR-0vg"/>
-                <outlet property="searchBar" destination="AsK-a9-EsF" id="skN-av-4J5"/>
                 <outlet property="tableView" destination="iD0-9Y-iEC" id="nFC-rr-fp6"/>
                 <outlet property="textFieldName" destination="ZKa-g0-NAg" id="hQa-tw-TCS"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -38,9 +37,14 @@
                         </navigationItem>
                     </items>
                 </navigationBar>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fetch.php.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="YCm-fZ-3Bn" userLabel="Image View - place holder">
+                    <rect key="frame" x="200" y="79" width="100" height="100"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YcC-Pe-VNx">
                     <rect key="frame" x="200" y="79" width="100" height="100"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="100" id="AK6-YA-u15"/>
                         <constraint firstAttribute="width" constant="100" id="D0y-Cr-faV"/>
@@ -59,7 +63,7 @@
                     </connections>
                 </textField>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rWz-Ko-Hv0" userLabel="Label - total number of speeches">
-                    <rect key="frame" x="20" y="158" width="100" height="21"/>
+                    <rect key="frame" x="20" y="158" width="118" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="qjd-I7-ZYt"/>
@@ -68,7 +72,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="iD0-9Y-iEC">
-                    <rect key="frame" x="0.0" y="241" width="320" height="327"/>
+                    <rect key="frame" x="0.0" y="187" width="320" height="381"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
@@ -76,39 +80,40 @@
                         <outlet property="delegate" destination="-1" id="o3l-MS-ha1"/>
                     </connections>
                 </tableView>
-                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="AsK-a9-EsF">
-                    <rect key="frame" x="0.0" y="197" width="320" height="44"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    <textInputTraits key="textInputTraits"/>
-                    <connections>
-                        <outlet property="delegate" destination="-1" id="ePB-Dd-Vfc"/>
-                    </connections>
-                </searchBar>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Speeches" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bq3-Vp-u1q">
+                    <rect key="frame" x="20" y="134" width="118" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="vzE-jj-QAV" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="1Wd-7g-KgM"/>
                 <constraint firstAttribute="trailing" secondItem="YcC-Pe-VNx" secondAttribute="trailing" constant="20" id="2w2-LP-htk"/>
                 <constraint firstItem="YcC-Pe-VNx" firstAttribute="leading" secondItem="ZKa-g0-NAg" secondAttribute="trailing" constant="8" id="5n6-IN-xov"/>
-                <constraint firstItem="iD0-9Y-iEC" firstAttribute="top" secondItem="AsK-a9-EsF" secondAttribute="bottom" id="BNA-Aq-p3D"/>
                 <constraint firstItem="rWz-Ko-Hv0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="EZ0-3o-Qxf"/>
-                <constraint firstAttribute="trailing" secondItem="AsK-a9-EsF" secondAttribute="trailing" id="Hf7-Ty-9sn"/>
                 <constraint firstItem="YcC-Pe-VNx" firstAttribute="top" secondItem="vzE-jj-QAV" secondAttribute="bottom" constant="15" id="Kbd-O3-dkF"/>
-                <constraint firstItem="YcC-Pe-VNx" firstAttribute="leading" secondItem="rWz-Ko-Hv0" secondAttribute="trailing" constant="80" id="Ojj-8q-Wdd"/>
+                <constraint firstItem="YcC-Pe-VNx" firstAttribute="leading" secondItem="rWz-Ko-Hv0" secondAttribute="trailing" constant="62" id="Ojj-8q-Wdd"/>
                 <constraint firstItem="YcC-Pe-VNx" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="79" id="Y4v-eS-Qz6"/>
                 <constraint firstItem="vzE-jj-QAV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Yc4-qc-zc3"/>
                 <constraint firstAttribute="trailing" secondItem="iD0-9Y-iEC" secondAttribute="trailing" id="ZYb-MG-Iud"/>
-                <constraint firstItem="AsK-a9-EsF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Ziz-j0-ipp"/>
-                <constraint firstItem="iD0-9Y-iEC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="241" id="aAz-W4-NbS"/>
+                <constraint firstItem="iD0-9Y-iEC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="187" id="aAz-W4-NbS"/>
                 <constraint firstAttribute="bottom" secondItem="iD0-9Y-iEC" secondAttribute="bottom" id="aui-FO-yM9"/>
                 <constraint firstItem="rWz-Ko-Hv0" firstAttribute="top" secondItem="ZKa-g0-NAg" secondAttribute="bottom" constant="49" id="avn-QU-4Ud"/>
                 <constraint firstItem="ZKa-g0-NAg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="awX-5R-dXx"/>
+                <constraint firstItem="rWz-Ko-Hv0" firstAttribute="top" secondItem="bq3-Vp-u1q" secondAttribute="bottom" constant="3" id="cbi-98-wwu"/>
                 <constraint firstAttribute="trailing" secondItem="vzE-jj-QAV" secondAttribute="trailing" id="nip-E8-Nus"/>
                 <constraint firstItem="iD0-9Y-iEC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="nrK-1o-EwB"/>
+                <constraint firstItem="rWz-Ko-Hv0" firstAttribute="centerX" secondItem="bq3-Vp-u1q" secondAttribute="centerX" id="xK3-f0-2Yq"/>
                 <constraint firstItem="ZKa-g0-NAg" firstAttribute="top" secondItem="vzE-jj-QAV" secondAttribute="bottom" constant="15" id="z3N-ts-KVc"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
     </objects>
+    <resources>
+        <image name="fetch.php.jpeg" width="300" height="284"/>
+    </resources>
 </document>
