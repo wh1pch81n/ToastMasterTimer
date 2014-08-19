@@ -12,7 +12,7 @@
 #import "DHCountDownView.h"
 
 @class Event;
-@interface DHDetailViewController : UIViewController <UISplitViewControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, ADBannerViewDelegate, DHCountDownViewDelegate>
+@interface DHDetailViewController : UIViewController <UISplitViewControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, ADBannerViewDelegate, DHCountDownViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (strong, nonatomic) Event *detailItem;
 @property (weak, nonatomic) NSManagedObjectContext *context;

@@ -72,8 +72,12 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-User_Profile *up = [_fetchedResultsController objectAtIndexPath:indexPath];
-    [self editProfileWithObject:up];
+    User_Profile *up = [_fetchedResultsController objectAtIndexPath:indexPath];
+    if (self.customCellTapResponse) {
+        self.customCellTapResponse(up,self);
+    } else {
+        [self editProfileWithObject:up];
+    }
 }
 
 #pragma mark - NSFetchedResultsController

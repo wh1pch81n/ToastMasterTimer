@@ -9,11 +9,15 @@
 #import "DHDetailViewController.h"
 #import "Event.h"
 #import "Event+helperMethods.h"
+#import "User_Profile.h"
+#import "User_Profile+helperMethods.h"
 #import "DHGlobalConstants.h"
 #import "DHAppDelegate.h"
 #import "DHNavigationItem.h"
 #import "DHColorForTime.h"
 #import "UISegmentedControl+extractMinMaxData.h"
+#import "DHUserProfileCollectionViewCell.h"
+#import "DHUserProfileCollectionViewController.h"
 
 enum {
 	kdummy0,
@@ -38,6 +42,8 @@ const int kOnTheFlyEditingTimeOUt = 3;
 NSString *const kDelayTitle = @"3-2-1 Delay";
 
 @interface DHDetailViewController ()
+
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (weak, nonatomic) IBOutlet UILabel *labelTapToEdit;
 @property (weak, nonatomic) IBOutlet UILabel *labelSwipeRightToStop;
@@ -144,6 +150,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     
     
     [self setLocalDetailPropertiesWithDetail:self.detailItem];
+
 	[self configureView];
 	[self FSM_idle];
 	
@@ -611,6 +618,42 @@ Gets called on:
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     self.canUpdate = NO;
+    
+    if ([segue.identifier isEqualToString:@"selectAndCreateUP"]) {
+        DHAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        NSManagedObjectContext *moc = appDelegate.managedObjectContext;
+        DHUserProfileCollectionViewController *cvc = [segue destinationViewController];
+        [cvc setManagedObjectContext:moc];
+        [cvc setCustomCellTapResponse:^(User_Profile *up, DHUserProfileCollectionViewController *upcvc) {
+            [upcvc.navigationController popViewControllerAnimated:YES];
+            self.detailItem.speeches_speaker = up;
+            [self.collectionView reloadData];
+            
+        }];
+#warning you need to specify another method that will determin what happens when the cell is selected.
+        
+#warning Also it seems that leaving the detail view will cause the timer to stop.  You should not segue, but insead put the view inside a sub view and present it above type able area
+    }
+}
+
+#pragma mark - uicollectionview delegate
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.detailItem.speeches_speaker != nil;//since a speech may only have one speeker, hard code it to one for now
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    DHUserProfileCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    
+    User_Profile *up = (User_Profile *)self.detailItem.speeches_speaker;
+    cell.labelProfileName.text = up.user_name;
+    cell.ImageProfilePic.image = [UIImage imageWithContentsOfFile:up.profile_pic_path];
+    
+    return cell;
 }
 
 @end
