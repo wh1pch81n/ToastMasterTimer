@@ -23,6 +23,8 @@
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
+@property (strong, nonatomic) NSArray *speeches;
+
 @end
 
 @implementation DHEditUserProfileViewController
@@ -50,8 +52,20 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.textFieldName.delegate = self;
-    self.searchBar.delegate = self;
+//    self.textFieldName.delegate = self;
+//    self.searchBar.delegate = self;
+//    self.tableView.delegate = self;
+//    self.tableView.dataSource = self;
+//    NSError *error;
+//    if(![self.fetchedResultsController performFetch:&error]) {
+//        NSLog(@"Error in initial fetch retrieval %@, %@", error, [error userInfo]);
+//        abort();
+//    }
+
+    self.speeches = [[(User_Profile *)[self.managedObjectContext objectWithID:self.objectID] users_speeches] allObjects];
+//    self.speeches = [self.speeches sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+//        <#code#>
+//    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -81,9 +95,15 @@
 
 #pragma mark - TableViewDelegate
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView { return 1;}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    //NSInteger total = [[self.fetchedResultsController sections] count];
+    return 1;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[[_fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
+//    NSInteger total = [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
+    // return total;
+return self.speeches.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -97,7 +117,9 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    Event *obj = [_fetchedResultsController objectAtIndexPath:indexPath];
+    NSArray *arr = self.speeches;
+    Event *obj = arr[indexPath.row];
+//    Event *obj = [_fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = obj.name;
     
     NSString *timeConstraints = [NSString stringWithFormat:@"%@ ~ %@", obj.minTime, obj.maxTime];
@@ -151,7 +173,15 @@
     fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
     fetchRequest.fetchBatchSize = 20;
     
-    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", _searchBar.text];
+    User_Profile *up = (User_Profile *)[self.managedObjectContext objectWithID:self.objectID];
+//    if ([[_searchBar.text stringByTrimmingCharactersInSet:
+//          [NSCharacterSet whitespaceAndNewlineCharacterSet]]
+//         isEqualToString:@""] == NO) {
+//        
+//        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@ AND ALL speeches_speaker == %@", _searchBar.text, up.user_name];
+//    } else {
+//        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"ALL speeches_speaker == %@", up.user_name];
+//    }
     
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:_managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     
