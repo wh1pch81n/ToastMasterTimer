@@ -61,6 +61,8 @@
 		7F86595118D3C4C50045F9F2 /* DHUserPreferenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */; };
 		7F86595418D3D0090045F9F2 /* DHCountDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F86595318D3D0090045F9F2 /* DHCountDownView.m */; };
 		7F87644E18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F87644D18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.m */; };
+		7F896E6919A40FB30081A2A1 /* DHEditUserProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F896E6819A40FB30081A2A1 /* DHEditUserProfileTableViewCell.xib */; };
+		7F896E6C19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F896E6B19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.m */; };
 		7F8CD80E199FAAAE00FC177F /* finger1_not_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F8CD808199FAAAE00FC177F /* finger1_not_touch.png */; };
 		7F8CD80F199FAAAE00FC177F /* finger1_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F8CD809199FAAAE00FC177F /* finger1_touch.png */; };
 		7F8CD810199FAAAE00FC177F /* fingers2_no_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F8CD80A199FAAAE00FC177F /* fingers2_no_touch.png */; };
@@ -172,6 +174,9 @@
 		7F86595318D3D0090045F9F2 /* DHCountDownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHCountDownView.m; sourceTree = "<group>"; };
 		7F87644C18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UISegmentedControl+extractMinMaxData.h"; sourceTree = "<group>"; };
 		7F87644D18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISegmentedControl+extractMinMaxData.m"; sourceTree = "<group>"; };
+		7F896E6819A40FB30081A2A1 /* DHEditUserProfileTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DHEditUserProfileTableViewCell.xib; sourceTree = "<group>"; };
+		7F896E6A19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHEditUserProfileTableViewCell.h; sourceTree = "<group>"; };
+		7F896E6B19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHEditUserProfileTableViewCell.m; sourceTree = "<group>"; };
 		7F8CD808199FAAAE00FC177F /* finger1_not_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = finger1_not_touch.png; sourceTree = "<group>"; };
 		7F8CD809199FAAAE00FC177F /* finger1_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = finger1_touch.png; sourceTree = "<group>"; };
 		7F8CD80A199FAAAE00FC177F /* fingers2_no_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingers2_no_touch.png; sourceTree = "<group>"; };
@@ -305,6 +310,9 @@
 				7F407F5B19A29C5800E37E1B /* DHEditUserProfileViewController.h */,
 				7F407F5C19A29C5800E37E1B /* DHEditUserProfileViewController.m */,
 				7F407F5D19A29C5800E37E1B /* DHEditUserProfileViewController.xib */,
+				7F896E6819A40FB30081A2A1 /* DHEditUserProfileTableViewCell.xib */,
+				7F896E6A19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.h */,
+				7F896E6B19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.m */,
 				7F407F3619A0849800E37E1B /* Event.h */,
 				7F407F3719A0849800E37E1B /* Event.m */,
 				7F407F3919A0849900E37E1B /* User_Profile.h */,
@@ -493,6 +501,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F8CD80F199FAAAE00FC177F /* finger1_touch.png in Resources */,
+				7F896E6919A40FB30081A2A1 /* DHEditUserProfileTableViewCell.xib in Resources */,
 				507112A218C51B3C000790E1 /* Icon-120.png in Resources */,
 				507112AE18C51DBA000790E1 /* Icon-57@2x.png in Resources */,
 				507112A118C51B3C000790E1 /* Icon-80.png in Resources */,
@@ -564,6 +573,7 @@
 				502B46B818B4063000A61D24 /* DHTableViewCell.m in Sources */,
 				7F407F3819A0849800E37E1B /* Event.m in Sources */,
 				501518E818B1979200CC286D /* Event+helperMethods.m in Sources */,
+				7F896E6C19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.m in Sources */,
 				7F407F5E19A29C5800E37E1B /* DHEditUserProfileViewController.m in Sources */,
 				7F8EF98618FB0F780077922C /* DHColorForTime.m in Sources */,
 				5095B4D118AE7C440023210E /* DHMasterViewController.m in Sources */,

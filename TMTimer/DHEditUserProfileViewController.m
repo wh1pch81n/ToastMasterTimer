@@ -11,8 +11,12 @@
 #import "Event.h"
 #import "Event+helperMethods.h"
 #import "User_Profile+helperMethods.h"
+#import "DHEditUserProfileTableViewCell.h"
+#import "DHColorForTime.h"
 
 @interface DHEditUserProfileViewController ()
+
+@property (strong, nonatomic) DHEditUserProfileTableViewCell *prototypeCell;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *textFieldName;
@@ -48,6 +52,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self registerCustomTableViewCell];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -76,6 +81,26 @@
 
 #pragma mark - TableViewDelegate
 
+- (void)registerCustomTableViewCell {
+    UINib *dhCustomNib = [UINib nibWithNibName:@"DHEditUserProfileTableViewCell" bundle:nil];
+    [self.tableView registerNib:dhCustomNib forCellReuseIdentifier:@"speechCell"];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (!self.prototypeCell) {
+        self.prototypeCell = [self.tableView dequeueReusableCellWithIdentifier:@"speechCell"];
+    }
+    [self configureCell:self.prototypeCell atIndexPath:indexPath];
+    
+    //[self.prototypeCell layoutIfNeeded];
+    CGSize size = [self.prototypeCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    return size.height +1; //plus 1 for the cell separator
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger total = [[self.fetchedResultsController sections] count];
     return total;
@@ -87,25 +112,37 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-   static NSString *cellIdentifier = @"speechCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-    }
+    DHEditUserProfileTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"speechCell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
+
     return cell;
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self configureCell:(DHEditUserProfileTableViewCell *)cell atIndexPath:indexPath];
+}
+
+- (void)configureCell:(DHEditUserProfileTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     Event *obj = [_fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = obj.name;
+    cell.blurb.text = obj.name;
     
     NSString *timeConstraints = [NSString stringWithFormat:@"%@ ~ %@", obj.minTime, obj.maxTime];
 #warning needs implementing
     NSString *timeOffset = @"";// if before green should show negative minute and seconds  if beyond it should be plus
     
     NSString *timeString = [NSString stringWithFormat:@"%@ [%@]", timeConstraints, timeOffset];
-    cell.detailTextLabel.text = timeString;
+    cell.range.text = timeString;
+    
+    cell.flag.layer.cornerRadius = cell.flag.frame.size.width/2;
+    //temp
+    NSTimeInterval total = [obj.endDate timeIntervalSinceDate:obj.startDate];
+    UIColor *bgColor = [[DHColorForTime shared] colorForSeconds:total
+                                                            min:obj.minTime.integerValue
+                                                            max:obj.maxTime.integerValue];
+    if ([bgColor isEqual:[UIColor blackColor]]) {
+        bgColor = [UIColor grayColor];
+    }
+    [[cell flag] setBackgroundColor:bgColor];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
