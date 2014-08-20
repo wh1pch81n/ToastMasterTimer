@@ -681,7 +681,7 @@ Gets called on:
     
     User_Profile *up = (User_Profile *)self.detailItem.speeches_speaker;
     cell.labelProfileName.text = up.user_name;
-    cell.ImageProfilePic.image = [UIImage imageWithContentsOfFile:up.profile_pic_path];
+    cell.ImageProfilePic.image = [UIImage imageWithContentsOfFile:[up.profile_pic_path stringByAppendingPathExtension:@"thumbnail"]];
     
     return cell;
 }

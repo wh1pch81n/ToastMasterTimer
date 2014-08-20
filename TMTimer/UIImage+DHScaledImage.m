@@ -17,9 +17,10 @@
     } else { //scale until height is equal to size.width
         scale = size.width / self.size.width;
     }
-
-    UIGraphicsBeginImageContext(size);
-    [self drawInRect:CGRectMake(0, 0, self.size.width * scale, self.size.height * scale)];
+    
+    CGRect newRect = CGRectMake(0, 0, self.size.width * scale, self.size.height * scale);
+    UIGraphicsBeginImageContext(newRect.size);
+    [self drawInRect:newRect];
     UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     

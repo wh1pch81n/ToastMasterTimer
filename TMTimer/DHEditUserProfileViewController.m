@@ -30,7 +30,9 @@
 @property (nonatomic) BOOL didSetImage;
 @end
 
-@implementation DHEditUserProfileViewController
+@implementation DHEditUserProfileViewController {
+    UIImage *_profilePic;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -59,9 +61,6 @@
      [[UITapGestureRecognizer alloc] initWithTarget:self
                                              action:@selector(tappedImage:)]];
     [[self imageViewProfilePic] setUserInteractionEnabled:YES];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
     [self setUpViewWithMode];
 }
 
@@ -76,7 +75,8 @@
     User_Profile *up = (User_Profile *)[self.managedObjectContext objectWithID:self.objectID];
     self.textFieldName.text = up.user_name;
     self.labelTotalNumberOfSpeeches.text = up.total_speeches.stringValue;
-    self.imageViewProfilePic.image = [UIImage imageWithContentsOfFile:up.profile_pic_path];
+    self.imageViewProfilePic.image = [UIImage imageWithContentsOfFile:[up.profile_pic_path stringByAppendingPathExtension:@"thumbnail"]];
+    NSLog(@"%@", up);
 }
 
 - (void)didReceiveMemoryWarning
@@ -250,8 +250,11 @@
     up.profile_pic_path = imagePath;
         
     //get the image from the uiimageview
-    UIImage *image = self.imageViewProfilePic.image;
-    UIImage *imageThumb = [image imageScaledToFitInSize:self.imageViewProfilePic.frame.size];
+    UIImage *image = _profilePic;
+    CGSize newSize = self.imageViewProfilePic.frame.size;
+    newSize.width *= 2;
+    newSize.height *= 2;
+    UIImage *imageThumb = [image imageScaledToFitInSize:newSize];
     //    UIImage *imageFull = [image imageScaledToFitInSize:kFullImageSize]; //does not currently save full size images
     
     up.profile_pic_orientation = @(image.imageOrientation);//saving the image orientation
@@ -327,7 +330,9 @@
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    self.imageViewProfilePic.image = info[UIImagePickerControllerEditedImage];
+    _profilePic = info[UIImagePickerControllerEditedImage];
+    self.imageViewProfilePic.image = _profilePic;
+    
     self.didSetImage = YES;
     [picker dismissViewControllerAnimated:YES completion:nil];
 }

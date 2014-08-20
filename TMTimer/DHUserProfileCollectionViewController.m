@@ -189,14 +189,8 @@
 	
     dhCell.labelProfileName.text = object.user_name;
     dhCell.labelProfileSpeechNumber.text = [object.total_speeches stringValue];
-    if (object.profile_pic_path != nil && [object.profile_pic_path isEqualToString:@""] == NO) {
-        dhCell.ImageProfilePic.image = [UIImage imageWithContentsOfFile:object.profile_pic_path];
-    } else {
-        dhCell.ImageProfilePic.image = nil;
-    }
+    dhCell.ImageProfilePic.image = [UIImage imageWithContentsOfFile:[object.profile_pic_path stringByAppendingPathExtension:@"thumbnail"]];
 }
-
-
 
 #pragma mark - creation/ editing
 
