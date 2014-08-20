@@ -74,6 +74,18 @@ NSString *const kHost = @"tmtimer328";
 #if DEBUG
     NSLog(@"did enter background");
 #endif
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSString *cacheLib = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+    NSError *error = nil;
+    for (NSString *file in [fm contentsOfDirectoryAtPath:cacheLib error:&error]) {
+        NSString *fileToDelete = [NSString stringWithFormat:@"%@/%@", cacheLib, file];
+        NSLog(@"try Delete: ~/%@", file);
+        BOOL success = [fm removeItemAtPath:fileToDelete error:&error];
+        if (!success || error) {
+            NSLog(@"Could not delete: ~/%@", file);
+        }
+    }
+
 	[self saveContext];
 }
 

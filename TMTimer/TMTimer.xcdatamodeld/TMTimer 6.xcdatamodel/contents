@@ -15,6 +15,7 @@
         <userInfo/>
     </entity>
     <entity name="User_Profile" representedClassName="User_Profile" syncable="YES">
+        <attribute name="profile_pic_orientation" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="profile_pic_path" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="total_speeches" optional="YES" transient="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="user_name" attributeType="String" syncable="YES"/>
@@ -22,6 +23,6 @@
     </entity>
     <elements>
         <element name="Event" positionX="252" positionY="135" width="128" height="178"/>
-        <element name="User_Profile" positionX="36" positionY="110" width="117" height="103"/>
+        <element name="User_Profile" positionX="36" positionY="110" width="117" height="118"/>
     </elements>
 </model>

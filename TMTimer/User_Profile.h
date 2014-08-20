@@ -2,7 +2,7 @@
 //  User_Profile.h
 //  TMTimer
 //
-//  Created by Derrick Ho on 8/16/14.
+//  Created by Derrick Ho on 8/20/14.
 //  Copyright (c) 2014 ryukkusakku. All rights reserved.
 //
 
@@ -13,9 +13,10 @@
 
 @interface User_Profile : NSManagedObject
 
-@property (nonatomic, retain) NSString * user_name;
 @property (nonatomic, retain) NSString * profile_pic_path;
 @property (nonatomic, retain) NSNumber * total_speeches;
+@property (nonatomic, retain) NSString * user_name;
+@property (nonatomic, retain) NSNumber * profile_pic_orientation;
 @property (nonatomic, retain) NSSet *users_speeches;
 @end
 
