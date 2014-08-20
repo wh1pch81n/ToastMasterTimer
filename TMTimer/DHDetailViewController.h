@@ -16,6 +16,6 @@
 
 @property (strong, nonatomic) Event *detailItem;
 @property (weak, nonatomic) NSManagedObjectContext *context;
-@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *nameTextField; //TODO:Rename this to blurbTextField
 
 @end

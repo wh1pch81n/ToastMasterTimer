@@ -10,11 +10,13 @@
 @class Event;
 @interface DHTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *contestantName;
+@property (weak, nonatomic) IBOutlet UILabel *contestantName; //ths is actually the blurb.  change later
 @property (weak, nonatomic) IBOutlet UILabel *creationDate;
 @property (weak, nonatomic) IBOutlet UILabel *elapsedTime;
 @property (weak, nonatomic) IBOutlet UILabel *timeRange;
 @property (weak, nonatomic) IBOutlet UIView *flag;
+@property (weak, nonatomic) IBOutlet UILabel *userName;
+
 @property (strong, nonatomic) Event *entity;
 
 @end

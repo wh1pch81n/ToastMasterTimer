@@ -202,6 +202,12 @@
     User_Profile *up = (User_Profile *)[_managedObjectContext objectWithID:_objectID];
     up.user_name = [self.textFieldName.text stringByTrimmingCharactersInSet:
                     [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if ([up.user_name isEqualToString:@""]) {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Name Required" message:@"Speaker's name can not be blank" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+        //[[(DHAppDelegate *)[[UIApplication sharedApplication] delegate] arrOfAlerts] addObject:alert];
+        return;// don't let them save
+    }
 #warning todo.  you need to implement what happens with the image.
     
     [_managedObjectContext performBlock:^{

@@ -16,6 +16,7 @@
 #import "DHError.h"
 #import "DHColorForTime.h"
 #import "UISegmentedControl+extractMinMaxData.h"
+#import "User_Profile.h"
 
 NSString *const kMasterViewControllerTitle = @" ";
 NSString *const kMore = @"More";
@@ -160,7 +161,7 @@ NSString *const kTableTopics = @"Table Topics";
     if (indexPath.section == 0) {
         return 110;
     }
-    return 87;
+    return 106;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -345,11 +346,7 @@ NSString *const kTableTopics = @"Table Topics";
     NSIndexPath *ip = [NSIndexPath indexPathForItem:indexPath.row inSection:0];
 	Event *object = [self.fetchedResultsController objectAtIndexPath:ip];
 	
-	//handle J.D.
-	[[dhCell contestantName] setText:[object name]];
-	if (object.name == Nil || [object.name isEqualToString:@""]) {
-		[[dhCell contestantName] setText:kJohnDoe];
-	}
+	[[dhCell contestantName] setText:[object name]]; //TODO: contestand name should be changed to blurb.  object name should be changed to blurb.
 	
     NSTimeInterval total = [object.endDate timeIntervalSinceDate:object.startDate];
     UIColor *bgColor = [[DHColorForTime shared] colorForSeconds:total
@@ -359,6 +356,9 @@ NSString *const kTableTopics = @"Table Topics";
         bgColor = [UIColor clearColor];
     }
     [[dhCell flag] setBackgroundColor:bgColor];
+    [[[dhCell flag] layer] setCornerRadius:dhCell.flag.frame.size.width/2];
+    
+    [[dhCell userName] setText:((User_Profile *)object.speeches_speaker).user_name];
 	
 	NSDateFormatter *dateFormat = [NSDateFormatter new];
 	[dateFormat setDateFormat:@"MMM dd, yyyy"];

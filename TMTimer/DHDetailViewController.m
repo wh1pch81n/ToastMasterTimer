@@ -43,7 +43,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 @interface DHDetailViewController ()
 
+@property (strong, nonatomic) DHUserProfileCollectionViewController *userProfileCollectionViewController;
+
+@property (weak, nonatomic) IBOutlet UIView *containerUP;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIButton *buttonChooseName;
 
 @property (weak, nonatomic) IBOutlet UILabel *labelTapToEdit;
 @property (weak, nonatomic) IBOutlet UILabel *labelSwipeRightToStop;
@@ -163,7 +167,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) {//should stop the timer before leaving this view.
         [self tappedStartStopButton:self];
     }
-    
+    if ([self.nameTextField isFirstResponder]) {[self.nameTextField resignFirstResponder];}
     [super viewWillDisappear:animated];
 }
 
@@ -422,12 +426,16 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
 	[self.timeChooserParentView setHidden:NO];
+    [self.collectionView setHidden:NO];
+    [self.buttonChooseName setHidden:NO];
     __weak typeof(self)wSelf = self;
 	[UIView animateWithDuration:0.5 animations:^{
         __strong typeof(wSelf)sSelf = wSelf;
 		[sSelf.originalContentView setBackgroundColor:[UIColor whiteColor]]; //reset to default color
 		[sSelf.nameTextField setAlpha:1];
         [sSelf.timeChooserParentView setAlpha:1];
+        [sSelf.collectionView setAlpha:1];
+        [sSelf.buttonChooseName setAlpha:1];
 	}];
 	[self.navigationItem setHidesBackButton:NO];
 	[[UIApplication sharedApplication] setIdleTimerDisabled:NO]; //toggle sleep
@@ -441,6 +449,10 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 - (void)FSM_startTimer {
     self.navigationItem.title = kDelayTitle;
     [self enableNavItemButtons:NO];
+    [self.collectionView setAlpha:0];
+    [self.collectionView setHidden:YES];
+    [self.buttonChooseName setAlpha:0];
+    [self.buttonChooseName setHidden:YES];
     [self FSM_runTimerWithAnimations:NO];
     [[self swipeGesture] setEnabled:NO];
     [[self tapGesture1f1t] setEnabled:NO];
@@ -489,13 +501,15 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
         __strong typeof(wSelf)sSelf = wSelf;
 		[sSelf.nameTextField setAlpha:0];
 		[sSelf.timeChooserParentView setAlpha:0];
+        [sSelf.collectionView setAlpha:0];
 	} completion:^(BOOL finished) {
         __strong typeof(wSelf)sSelf = wSelf;
 		[sSelf.nameTextField setHidden:YES];
 		[sSelf.nameTextField resignFirstResponder];
 		[sSelf.timeChooserParentView setHidden:YES];
+        [sSelf.collectionView setHidden:YES];
 	}];
-	[self.navigationItem setHidesBackButton:YES];
+	//[self.navigationItem setHidesBackButton:YES];
 	[[UIApplication sharedApplication] setIdleTimerDisabled:YES]; //toggle sleep
 	[self.tapGesture2f2t setEnabled:YES]; //toggle double 2 finger tap
 	[self.tapGesture1f1t setEnabled:YES];
@@ -509,6 +523,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[self.timeChooserParentView setHidden:NO];
 	[self.nameTextField setHidden:NO];
 	[self.nameTextField setAlpha:1];
+    //    [self.collectionView setHidden:NO]; //not sure why this remains unclickable
+//    [self.collectionView setAlpha:1];
+    
+//    [self.containerUP setHidden:NO];
+//    [self.containerUP setAlpha:1];
 }
 
 #pragma mark - On the fly edit
@@ -552,7 +571,7 @@ Gets called on:
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-	[self enableNavItemButtons:NO];
+	[self enableNavItemButtons:YES];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
@@ -630,9 +649,20 @@ Gets called on:
             [self.collectionView reloadData];
             
         }];
-#warning you need to specify another method that will determin what happens when the cell is selected.
         
 #warning Also it seems that leaving the detail view will cause the timer to stop.  You should not segue, but insead put the view inside a sub view and present it above type able area
+    } else if ([segue.identifier isEqualToString:@"containerUP"]) {
+        DHAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        NSManagedObjectContext *moc = appDelegate.managedObjectContext;
+        DHUserProfileCollectionViewController *cvc = [segue destinationViewController];
+        [cvc setManagedObjectContext:moc];
+        [cvc setCustomCellTapResponse:^(User_Profile *up, DHUserProfileCollectionViewController *upcvc) {
+            self.containerUP.hidden = YES;
+            self.containerUP.alpha = 0;
+            self.detailItem.speeches_speaker = up;
+            [self.collectionView reloadData];
+            
+        }];
     }
 }
 
@@ -655,5 +685,11 @@ Gets called on:
     
     return cell;
 }
+
+//doesn't seem to work when the timer is running.
+//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+//    [self.containerUP setHidden:NO];
+//    [self.containerUP setAlpha:1];
+//}
 
 @end
