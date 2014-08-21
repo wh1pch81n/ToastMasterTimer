@@ -75,7 +75,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 //---
 @property (strong, nonatomic) NSDate *endDate, *startDate;
 @property (strong, nonatomic) NSNumber *minTime, *maxTime;
-@property (strong, nonatomic) NSString *name, *totalTime;
+@property (strong, nonatomic) NSString *blurb, *totalTime;
 
 - (void)configureView;
 
@@ -103,7 +103,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 {
 	// Update the user interface for the detail item.
 	if (self.detailItem) {
-		self.nameTextField.text = _name;
+		self.nameTextField.text = _blurb;
 		
 		BOOL titleIsVisible = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowRunningTimer] boolValue];
 		if (titleIsVisible) {
@@ -120,7 +120,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     _startDate = detail.startDate;
     _maxTime = detail.maxTime;
     _minTime = detail.minTime;
-    _name = detail.name;
+    _blurb = detail.blurb;
     _totalTime = detail.totalTime;
 }
 
@@ -128,14 +128,14 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                        startDate:(NSDate *)startDate
                          maxTime:(NSNumber *)maxTime
                          minTime:(NSNumber *)minTime
-                            name:(NSString *)name
+                           blurb:(NSString *)blurb
                        totalTime:(NSString *)totalTime
 {
     self.detailItem.endDate = endDate;
     self.detailItem.startDate = startDate;
     self.detailItem.maxTime = maxTime;
     self.detailItem.minTime = minTime;
-    self.detailItem.name = name;
+    self.detailItem.blurb = _blurb;
     self.detailItem.totalTime = totalTime;
     
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -177,7 +177,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                          startDate:_startDate
                            maxTime:_maxTime
                            minTime:_minTime
-                              name:_name
+                              blurb:_blurb
                          totalTime:_totalTime];
 
 	[super viewDidDisappear:animated];
@@ -571,11 +571,13 @@ Gets called on:
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
+    self.canDisplayBannerAds = NO;
 	[self enableNavItemButtons:YES];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-	_name = self.nameTextField.text;
+    self.canDisplayBannerAds = YES;
+	_blurb = self.nameTextField.text;
 	[self enableNavItemButtons:YES];
 }
 

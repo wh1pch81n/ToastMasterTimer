@@ -29,6 +29,8 @@ NSString *const kTableTopics = @"Table Topics";
 @property (assign) BOOL didUnwind;
 @property (assign) BOOL didLoad;
 
+@property (strong, nonatomic) NSCache *imageCache;
+
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
@@ -159,7 +161,7 @@ NSString *const kTableTopics = @"Table Topics";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        return 110;
+        return 80;
     }
     return 106;
 }
@@ -346,8 +348,7 @@ NSString *const kTableTopics = @"Table Topics";
     NSIndexPath *ip = [NSIndexPath indexPathForItem:indexPath.row inSection:0];
 	Event *object = [self.fetchedResultsController objectAtIndexPath:ip];
 	
-	[[dhCell contestantName] setText:[object name]]; //TODO: contestand name should be changed to blurb.  object name should be changed to blurb.
-	
+	[[dhCell blurb] setText:[object blurb]];
     NSTimeInterval total = [object.endDate timeIntervalSinceDate:object.startDate];
     UIColor *bgColor = [[DHColorForTime shared] colorForSeconds:total
                                                             min:object.minTime.integerValue
@@ -371,6 +372,20 @@ NSString *const kTableTopics = @"Table Topics";
 	[[dhCell timeRange] setText:qualifyingTime];
 	
 	[dhCell setEntity:object];
+    
+    if ((dhCell.userImageIcon.image = [self.imageCache objectForKey:indexPath]) == nil) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            User_Profile *up = object.speeches_speaker;
+            UIImage *pic = [UIImage imageWithContentsOfFile:[up.profile_pic_path stringByAppendingPathExtension:@"thumbnail"]];
+            [self.imageCache setObject:pic forKey:indexPath];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                DHTableViewCell *cell = (DHTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+                if(cell) {
+                    cell.userImageIcon.image = pic;
+                }
+            });
+        });
+    }
 }
 
 #pragma mark quickStartPanel
@@ -391,13 +406,13 @@ NSString *const kTableTopics = @"Table Topics";
 
 - (void)setupFirstObjectWithName:(NSString *)name minTime:(int)min maxTime:(int)max
 {
-    [self setupFirstObjectWithName:name minTimeNumber:@(min) maxTimeNumber:@(max)];
+    [self setupFirstObjectWithBlurb:name minTimeNumber:@(min) maxTimeNumber:@(max)];
 }
 
-- (void)setupFirstObjectWithName:(NSString *)name minTimeNumber:(NSNumber *)min maxTimeNumber:(NSNumber *)max {
+- (void)setupFirstObjectWithBlurb:(NSString *)blurb minTimeNumber:(NSNumber *)min maxTimeNumber:(NSNumber *)max {
     NSIndexPath *frc_indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
     Event *obj = [self.fetchedResultsController objectAtIndexPath:frc_indexPath];
-    [obj setName:name];
+    [obj setBlurb:blurb];
     [obj setMinTime:(min)];
     [obj setMaxTime:(max)];
     
@@ -436,7 +451,7 @@ NSString *const kTableTopics = @"Table Topics";
         return;
     }
     [self quickStartBegin:self];
-    [self setupFirstObjectWithName:self.customStartDict[kName]
+    [self setupFirstObjectWithBlurb:self.customStartDict[kName]
                      minTimeNumber:self.customStartDict[kMinValue]
                      maxTimeNumber:self.customStartDict[kMaxValue]];
     [self quickStartEnds:self];
@@ -454,14 +469,13 @@ NSString *const kTableTopics = @"Table Topics";
     [tempContext performBlock:^{
         Event *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:tempContext];
         newManagedObject.timeStamp = [NSDate new];
-        newManagedObject.name = kTableTopics;
+        newManagedObject.blurb = kTableTopics;
         newManagedObject.minTime = @kTableTopicsMin;
         newManagedObject.maxTime = @kTableTopicsMax;
         
         NSError *error;
         if (![tempContext save:&error]) {
-            NSLog(@"Problem saving temp context");
-            abort();
+            [DHError displayValidationError:error];
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -472,8 +486,7 @@ NSString *const kTableTopics = @"Table Topics";
         [tempContext.parentContext performBlock:^{
             NSError *error;
             if (![tempContext.parentContext save:&error]) {
-                NSLog(@"Problem saving to parent context");
-                abort();
+                 [DHError displayValidationError:error];
             }
         }];
     }];

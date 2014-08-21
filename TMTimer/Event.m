@@ -2,11 +2,12 @@
 //  Event.m
 //  TMTimer
 //
-//  Created by Derrick Ho on 8/16/14.
+//  Created by Derrick Ho on 8/20/14.
 //  Copyright (c) 2014 ryukkusakku. All rights reserved.
 //
 
 #import "Event.h"
+#import "User_Profile.h"
 
 
 @implementation Event
@@ -15,7 +16,7 @@
 @dynamic endDate;
 @dynamic maxTime;
 @dynamic minTime;
-@dynamic name;
+@dynamic blurb;
 @dynamic startDate;
 @dynamic timeStamp;
 @dynamic totalTime;

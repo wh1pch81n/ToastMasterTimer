@@ -79,10 +79,14 @@ NSString *const kHost = @"tmtimer328";
     NSError *error = nil;
     for (NSString *file in [fm contentsOfDirectoryAtPath:cacheLib error:&error]) {
         NSString *fileToDelete = [NSString stringWithFormat:@"%@/%@", cacheLib, file];
+#if DEBUG
         NSLog(@"try Delete: ~/%@", file);
+#endif
         BOOL success = [fm removeItemAtPath:fileToDelete error:&error];
         if (!success || error) {
+#if DEBUG
             NSLog(@"Could not delete: ~/%@", file);
+#endif
         }
     }
 

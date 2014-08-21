@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="imageViewProfilePic" destination="YcC-Pe-VNx" id="sWa-ar-cpc"/>
                 <outlet property="labelTotalNumberOfSpeeches" destination="rWz-Ko-Hv0" id="LrJ-i7-ojY"/>
+                <outlet property="labelTotalSpeechesLabel" destination="bq3-Vp-u1q" id="dRv-WL-Ebm"/>
                 <outlet property="navigationBar" destination="vzE-jj-QAV" id="2DQ-WR-0vg"/>
                 <outlet property="tableView" destination="iD0-9Y-iEC" id="nFC-rr-fp6"/>
                 <outlet property="textFieldName" destination="ZKa-g0-NAg" id="hQa-tw-TCS"/>
@@ -62,7 +63,7 @@
                     </connections>
                 </textField>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="rWz-Ko-Hv0" userLabel="Label - total number of speeches">
-                    <rect key="frame" x="146" y="134" width="46" height="21"/>
+                    <rect key="frame" x="151" y="134" width="41" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="highlightedColor"/>
@@ -76,8 +77,8 @@
                         <outlet property="delegate" destination="-1" id="o3l-MS-ha1"/>
                     </connections>
                 </tableView>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total Speeches" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bq3-Vp-u1q">
-                    <rect key="frame" x="20" y="134" width="118" height="21"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Total Speeches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bq3-Vp-u1q">
+                    <rect key="frame" x="20" y="134" width="123" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

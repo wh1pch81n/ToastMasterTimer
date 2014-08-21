@@ -21,7 +21,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *textFieldName;
-@property (weak, nonatomic) IBOutlet UILabel *labelTotalNumberOfSpeeches;
+@property (weak, nonatomic) IBOutlet UILabel *labelTotalNumberOfSpeeches, *labelTotalSpeechesLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewProfilePic;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
@@ -70,13 +70,16 @@
     } else if (self.EditingMode == UserProfileMode_NEW_PROFILE) {
         self.tableView.hidden = YES;
         self.labelTotalNumberOfSpeeches.hidden = YES;
+        self.labelTotalSpeechesLabel.hidden = YES;
     }
     
     User_Profile *up = (User_Profile *)[self.managedObjectContext objectWithID:self.objectID];
     self.textFieldName.text = up.user_name;
     self.labelTotalNumberOfSpeeches.text = up.total_speeches.stringValue;
     self.imageViewProfilePic.image = [UIImage imageWithContentsOfFile:[up.profile_pic_path stringByAppendingPathExtension:@"thumbnail"]];
+#if DEBUG
     NSLog(@"%@", up);
+#endif
 }
 
 - (void)didReceiveMemoryWarning
@@ -130,13 +133,28 @@
 
 - (void)configureCell:(DHEditUserProfileTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     Event *obj = [_fetchedResultsController objectAtIndexPath:indexPath];
-    cell.blurb.text = obj.name;
+    cell.blurb.text = obj.blurb;
     
     NSString *timeConstraints = [NSString stringWithFormat:@"%@ ~ %@", obj.minTime, obj.maxTime];
-#warning needs implementing
-    NSString *timeOffset = @"";// if before green should show negative minute and seconds  if beyond it should be plus
     
-    NSString *timeString = [NSString stringWithFormat:@"%@ [%@]", timeConstraints, timeOffset];
+    NSInteger timeOffset = 0;// if before green should show negative minute and seconds  if beyond it should be plus
+    NSInteger span = [obj.endDate timeIntervalSinceDate:obj.startDate];
+    
+    if (span == 0) {
+        timeOffset = 0;
+    } else if (span > obj.maxTime.integerValue * kSecondsInAMinute) {
+        timeOffset = span - obj.maxTime.integerValue * kSecondsInAMinute;
+    } else if (span < obj.minTime.integerValue * kSecondsInAMinute) {
+        timeOffset = span - obj.minTime.integerValue * kSecondsInAMinute;
+    } else {
+        timeOffset = 0;
+    }
+    
+    NSString *timeString = [NSString stringWithFormat:@"%@ [%@]",
+                            timeConstraints,
+                            (span == 0)?@"--":
+                            (timeOffset!=0)?[NSString stringWithFormat:@"%@%@",(timeOffset <0)?@"-":@"+",@(timeOffset)]:
+                            @"OK"];
     cell.range.text = timeString;
     
     cell.flag.layer.cornerRadius = cell.flag.frame.size.width/2;
@@ -214,7 +232,6 @@
         //[[(DHAppDelegate *)[[UIApplication sharedApplication] delegate] arrOfAlerts] addObject:alert];
         return;// don't let them save
     }
-#warning todo.  you need to implement what happens with the image.
     
     [_managedObjectContext performBlock:^{
         if (self.didSetImage) {
@@ -274,9 +291,13 @@
     
     NSString *imageThumbPath = [imagePath stringByAppendingPathExtension:@"thumbnail"];
     if(![imageThumbAsData writeToFile:imageThumbPath atomically:YES]){
+#if DEBUG
         NSLog(@"Could not save thumbnail image \n%@", imageThumbPath);
+#endif
     } else {
+#if DEBUG
         NSLog(@"done saving Thumbnail image\n%@", imageThumbPath);
+#endif
     }
 }
 
@@ -292,19 +313,27 @@
         NSString *newPath = [libCacheDir stringByAppendingPathComponent:uniqueFileName];
         NSError *err;
         [[NSFileManager defaultManager] moveItemAtPath:path toPath:newPath error:&err];
-        if(err) {NSLog(@"Error: %@", [err localizedDescription]);}
+        if(err) {
+#if DEBUG
+            NSLog(@"Error: %@", [err localizedDescription]);
+#endif
+        }
     }
 }
 
 #pragma mark - Image
 
 - (IBAction)tappedImage:(id)sender {
+#if DEBUG
     NSLog(@"Just Tapped Image");
+#endif
     if ([self.textFieldName isFirstResponder]) {
         [self.textFieldName resignFirstResponder];
     }
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+#if DEBUG
         NSLog(@"This device has a camera.  Asking the user what they want to use.");
+#endif
         UIActionSheet *photoSourceSheet = [[UIActionSheet alloc]
                                            initWithTitle:@"Select Photo"
                                            delegate:self
@@ -343,22 +372,28 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == actionSheet.cancelButtonIndex) {
+#if DEBUG
         NSLog(@"Cancled Action Sheet");
+#endif
         return;
     }
     
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     [picker setDelegate:self];
-    [picker setAllowsEditing:NO];
+    [picker setAllowsEditing:YES];
     
     switch (buttonIndex) {
         case 0:
+#if DEBUG
             NSLog(@"user wants to take a new picture");
+#endif
             picker.sourceType = UIImagePickerControllerSourceTypeCamera;
             break;
             
         default:
+#if DEBUG
             NSLog(@"user want to get photo from library");
+#endif
             picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
             break;
     }
