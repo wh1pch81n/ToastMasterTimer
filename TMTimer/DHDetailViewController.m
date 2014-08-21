@@ -318,6 +318,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 #pragma mark - start and stop
 
 - (IBAction)tappedStartStopButton:(id)sender {
+    if ([self.nameTextField isFirstResponder]) {
+        [self.nameTextField resignFirstResponder];
+    }
     [self enableNavItemButtons:NO];
 	if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) { //end timer
         self.canUpdate = NO;
@@ -591,6 +594,7 @@ Gets called on:
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     self.canDisplayBannerAds = NO;
+    [self tappedCancelButton:textField];
 	[self enableNavItemButtons:YES];
 }
 
@@ -658,6 +662,11 @@ Gets called on:
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     self.canUpdate = NO;
+    [self FSM_idle];
+    [self moveOutExtraButtonsView:NO];
+    if (self.nameTextField.isFirstResponder){
+        [self.nameTextField resignFirstResponder];
+    }
     
     if ([segue.identifier isEqualToString:@"selectAndCreateUP"]) {
         DHAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
