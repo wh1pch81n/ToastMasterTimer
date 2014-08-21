@@ -74,6 +74,7 @@
 				
 				messages = [messages stringByAppendingFormat:@"%@%@%@\n", (entityName?:@""),(entityName?@": ":@""),msg];
 			}
+            NSLog(@"error: %@\n\n%@",messages, anError.description);
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Validation Error"
 																											message:messages
 																										 delegate:nil

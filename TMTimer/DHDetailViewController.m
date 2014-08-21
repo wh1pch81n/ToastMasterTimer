@@ -135,7 +135,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     self.detailItem.startDate = startDate;
     self.detailItem.maxTime = maxTime;
     self.detailItem.minTime = minTime;
-    self.detailItem.blurb = _blurb;
+    self.detailItem.blurb = blurb;
     self.detailItem.totalTime = totalTime;
     
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -318,8 +318,27 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 		NSTimeInterval interval = [_endDate timeIntervalSinceDate:_startDate];
 		_totalTime = [self stringFromTimeInterval:interval];
 		[self FSM_idle];
+        [self setDetailItemWithEndDate:_endDate
+                             startDate:_startDate
+                               maxTime:_maxTime
+                               minTime:_minTime
+                                 blurb:_blurb
+                             totalTime:_totalTime];//set the MO then save to disk
 	} else { //start timer
         self.canUpdate = YES;
+        if (self.detailItem.startDate) {
+            NSManagedObjectContext *moc = [(DHAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+            Event *ev = [NSEntityDescription insertNewObjectForEntityForName:@"Event"
+                                                      inManagedObjectContext:moc];
+            ev.timeStamp = [NSDate new];
+            ev.minTime = self.detailItem.minTime;
+            ev.maxTime = self.detailItem.maxTime;
+            ev.speeches_speaker = self.detailItem.speeches_speaker;
+            
+            self.detailItem = ev;
+            [self setLocalDetailPropertiesWithDetail:self.detailItem];
+            [self configureView];
+        }
 		[self FSM_startTimer];
 	}
 }
