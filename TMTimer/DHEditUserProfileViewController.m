@@ -71,6 +71,7 @@
         self.tableView.hidden = YES;
         self.labelTotalNumberOfSpeeches.hidden = YES;
         self.labelTotalSpeechesLabel.hidden = YES;
+        [self.textFieldName becomeFirstResponder];
     }
     
     User_Profile *up = (User_Profile *)[self.managedObjectContext objectWithID:self.objectID];

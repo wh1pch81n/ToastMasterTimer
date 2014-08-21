@@ -170,7 +170,12 @@ NSString *const kHost = @"tmtimer328";
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_managedObjectModel];
     
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error])
+    NSDictionary *options = @{
+                              NSMigratePersistentStoresAutomaticallyOption: @(YES),
+                              NSInferMappingModelAutomaticallyOption: @(YES)
+                              };
+    
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error])
       {
         [DHError displayValidationError:error];
       }
