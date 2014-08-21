@@ -43,6 +43,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 @interface DHDetailViewController ()
 
+@property (weak, nonatomic) IBOutlet UIView *extraButtonsView;
+
 @property (strong, nonatomic) DHUserProfileCollectionViewController *userProfileCollectionViewController;
 
 @property (weak, nonatomic) IBOutlet UIView *containerUP;
@@ -183,8 +185,14 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[super viewDidDisappear:animated];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self moveOutExtraButtonsView:NO];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     
     NSNumber *shouldQuickStart = [[NSUserDefaults standardUserDefaults] objectForKey:kQuickStart];
 #if DEBUG
@@ -310,7 +318,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 #pragma mark - start and stop
 
 - (IBAction)tappedStartStopButton:(id)sender {
-    [self.navigationController.navigationBar setUserInteractionEnabled:NO];
+    [self enableNavItemButtons:NO];
 	if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) { //end timer
         self.canUpdate = NO;
 		[self setEndDate:[NSDate date]];
@@ -327,19 +335,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	} else { //start timer
         self.canUpdate = YES;
         if (self.detailItem.startDate) {
-            NSManagedObjectContext *moc = [(DHAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
-            Event *ev = [NSEntityDescription insertNewObjectForEntityForName:@"Event"
-                                                      inManagedObjectContext:moc];
-            ev.timeStamp = [NSDate new];
-            ev.minTime = self.detailItem.minTime;
-            ev.maxTime = self.detailItem.maxTime;
-            ev.speeches_speaker = self.detailItem.speeches_speaker;
-            
-            self.detailItem = ev;
-            [self setLocalDetailPropertiesWithDetail:self.detailItem];
-            [self configureView];
+            [self.navigationItem.rightBarButtonItem setTitle:@""];
+            [self moveInExtraButtonsView:YES];
+        } else {
+            [self FSM_startTimer];
         }
-		[self FSM_startTimer];
 	}
 }
 
@@ -712,5 +712,110 @@ Gets called on:
 //    [self.containerUP setHidden:NO];
 //    [self.containerUP setAlpha:1];
 //}
+
+#pragma mark - Extra panel
+
+/**
+ called when Event duplication has been pressed.
+ duplicates the Old event saving things like the user, the min max time, description, and giving a new nsdate of creation.
+ the designated Event will be set as the newly created event
+ */
+- (IBAction)tappedDuplicateButton:(id)sender {
+    [self FSM_idle];
+    [self moveOutExtraButtonsView:YES];
+    NSManagedObjectContext *moc = [(DHAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    Event *ev = [NSEntityDescription insertNewObjectForEntityForName:@"Event"
+                                              inManagedObjectContext:moc];
+    ev.timeStamp = [NSDate new];
+    ev.minTime = self.detailItem.minTime;
+    ev.maxTime = self.detailItem.maxTime;
+    ev.blurb = self.detailItem.blurb;
+    ev.speeches_speaker = self.detailItem.speeches_speaker;
+    
+    self.detailItem = ev;
+    [self setLocalDetailPropertiesWithDetail:self.detailItem];
+    
+    [self configureView];
+    [self FSM_startTimer];
+}
+
+/**
+ called when the new button is pressed.
+ It will create a brand new Event.
+ designated Event will be set with the newly created event
+ */
+- (IBAction)tappedNewButton:(id)sender {
+    [self FSM_idle];
+    [self moveOutExtraButtonsView:YES];
+    NSManagedObjectContext *moc = [(DHAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    Event *ev = [NSEntityDescription insertNewObjectForEntityForName:@"Event"
+                                              inManagedObjectContext:moc];
+    ev.timeStamp = [NSDate new];
+    self.detailItem = ev;
+    [self setLocalDetailPropertiesWithDetail:ev];
+    
+    DHUserProfileCollectionViewController *upcvc = [[DHUserProfileCollectionViewController alloc] init];
+    [upcvc setCustomCellTapResponse:^(User_Profile *up, DHUserProfileCollectionViewController *vc) {
+        self.detailItem.speeches_speaker = up;
+        [self.collectionView reloadData];
+        [self configureView];
+        
+        //[self FSM_startTimer];
+       [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kQuickStart];
+        
+    }];
+    [self performSegueWithIdentifier:@"selectAndCreateUP" sender:self];
+}
+
+/**
+ Called when the overwrite button has been pressed.
+ Does not change the designated Event.
+ */
+- (IBAction)tappedOverwriteButton:(id)sender {
+    [self FSM_idle];
+    [self moveOutExtraButtonsView:YES];
+    [self FSM_startTimer];
+}
+
+/**
+ Hides the extra buttons
+ */
+- (IBAction)tappedCancelButton:(id)sender {
+    [self FSM_idle];
+    [self moveOutExtraButtonsView:YES];
+}
+
+/**
+ moves the extrabuttonsview to the visible part of the view
+ */
+- (void)moveInExtraButtonsView:(BOOL)animated {
+    CGRect destinationFrame0 = CGRectMake(250, 0, 50, 200);
+    CGRect destinationFrame1 = CGRectMake(270, 0, 50, 200);
+    if (animated) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.extraButtonsView.frame = destinationFrame0;
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.3 animations:^{
+                self.extraButtonsView.frame = destinationFrame1;
+            }];
+        }];
+    } else {
+        self.extraButtonsView.frame = destinationFrame1;
+    }
+}
+
+/**
+ moves the extrabuttonsview off screen.
+ */
+- (void)moveOutExtraButtonsView:(BOOL)animated {
+    CGRect destinationFrame = CGRectMake(320, 0, 50, 200);
+    if (animated) {
+        [UIView animateWithDuration:0.5 animations:^{
+            self.extraButtonsView.frame = destinationFrame;
+        }];
+    } else {
+        self.extraButtonsView.frame = destinationFrame;
+    }
+}
 
 @end
