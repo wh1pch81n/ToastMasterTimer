@@ -28,6 +28,8 @@
 
 #define kThreeSeconds 3
 
+#define kSecondsInAMinute 60
+
 #define kNavBarFontSize 25
 
 #define kTableTopicsMin 1

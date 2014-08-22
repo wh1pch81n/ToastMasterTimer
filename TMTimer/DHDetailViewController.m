@@ -9,11 +9,15 @@
 #import "DHDetailViewController.h"
 #import "Event.h"
 #import "Event+helperMethods.h"
+#import "User_Profile.h"
+#import "User_Profile+helperMethods.h"
 #import "DHGlobalConstants.h"
 #import "DHAppDelegate.h"
 #import "DHNavigationItem.h"
 #import "DHColorForTime.h"
 #import "UISegmentedControl+extractMinMaxData.h"
+#import "DHUserProfileCollectionViewCell.h"
+#import "DHUserProfileCollectionViewController.h"
 
 enum {
 	kdummy0,
@@ -38,6 +42,14 @@ const int kOnTheFlyEditingTimeOUt = 3;
 NSString *const kDelayTitle = @"3-2-1 Delay";
 
 @interface DHDetailViewController ()
+
+@property (weak, nonatomic) IBOutlet UIView *extraButtonsView;
+
+@property (strong, nonatomic) DHUserProfileCollectionViewController *userProfileCollectionViewController;
+
+@property (weak, nonatomic) IBOutlet UIView *containerUP;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIButton *buttonChooseName;
 
 @property (weak, nonatomic) IBOutlet UILabel *labelTapToEdit;
 @property (weak, nonatomic) IBOutlet UILabel *labelSwipeRightToStop;
@@ -65,7 +77,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 //---
 @property (strong, nonatomic) NSDate *endDate, *startDate;
 @property (strong, nonatomic) NSNumber *minTime, *maxTime;
-@property (strong, nonatomic) NSString *name, *totalTime;
+@property (strong, nonatomic) NSString *blurb, *totalTime;
 
 - (void)configureView;
 
@@ -93,7 +105,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 {
 	// Update the user interface for the detail item.
 	if (self.detailItem) {
-		self.nameTextField.text = _name;
+		self.nameTextField.text = _blurb;
 		
 		BOOL titleIsVisible = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowRunningTimer] boolValue];
 		if (titleIsVisible) {
@@ -110,7 +122,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     _startDate = detail.startDate;
     _maxTime = detail.maxTime;
     _minTime = detail.minTime;
-    _name = detail.name;
+    _blurb = detail.blurb;
     _totalTime = detail.totalTime;
 }
 
@@ -118,14 +130,14 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                        startDate:(NSDate *)startDate
                          maxTime:(NSNumber *)maxTime
                          minTime:(NSNumber *)minTime
-                            name:(NSString *)name
+                           blurb:(NSString *)blurb
                        totalTime:(NSString *)totalTime
 {
     self.detailItem.endDate = endDate;
     self.detailItem.startDate = startDate;
     self.detailItem.maxTime = maxTime;
     self.detailItem.minTime = minTime;
-    self.detailItem.name = name;
+    self.detailItem.blurb = blurb;
     self.detailItem.totalTime = totalTime;
     
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -135,15 +147,14 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-    
-    self.canDisplayBannerAds = YES;
-   
+
 	// Do any additional setup after loading the view, typically from a nib.
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:self];
     
     
     [self setLocalDetailPropertiesWithDetail:self.detailItem];
+
 	[self configureView];
 	[self FSM_idle];
 	
@@ -152,11 +163,16 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self moveOutExtraButtonsView:NO];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) {//should stop the timer before leaving this view.
         [self tappedStartStopButton:self];
     }
-    
+    if ([self.nameTextField isFirstResponder]) {[self.nameTextField resignFirstResponder];}
     [super viewWillDisappear:animated];
 }
 
@@ -166,14 +182,20 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                          startDate:_startDate
                            maxTime:_maxTime
                            minTime:_minTime
-                              name:_name
+                              blurb:_blurb
                          totalTime:_totalTime];
 
 	[super viewDidDisappear:animated];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     
     NSNumber *shouldQuickStart = [[NSUserDefaults standardUserDefaults] objectForKey:kQuickStart];
 #if DEBUG
@@ -299,7 +321,10 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 #pragma mark - start and stop
 
 - (IBAction)tappedStartStopButton:(id)sender {
-    [self.navigationController.navigationBar setUserInteractionEnabled:NO];
+    if ([self.nameTextField isFirstResponder]) {
+        [self.nameTextField resignFirstResponder];
+    }
+    [self enableNavItemButtons:NO];
 	if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) { //end timer
         self.canUpdate = NO;
 		[self setEndDate:[NSDate date]];
@@ -307,9 +332,20 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 		NSTimeInterval interval = [_endDate timeIntervalSinceDate:_startDate];
 		_totalTime = [self stringFromTimeInterval:interval];
 		[self FSM_idle];
+        [self setDetailItemWithEndDate:_endDate
+                             startDate:_startDate
+                               maxTime:_maxTime
+                               minTime:_minTime
+                                 blurb:_blurb
+                             totalTime:_totalTime];//set the MO then save to disk
 	} else { //start timer
         self.canUpdate = YES;
-		[self FSM_startTimer];
+        if (self.detailItem.startDate) {
+            [self.navigationItem.rightBarButtonItem setTitle:@""];
+            [self moveInExtraButtonsView:YES];
+        } else {
+            [self FSM_startTimer];
+        }
 	}
 }
 
@@ -412,15 +448,20 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)FSM_idle {
+    self.canDisplayBannerAds = NO;
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
 	[self.timeChooserParentView setHidden:NO];
+    [self.collectionView setHidden:NO];
+    [self.buttonChooseName setHidden:NO];
     __weak typeof(self)wSelf = self;
 	[UIView animateWithDuration:0.5 animations:^{
         __strong typeof(wSelf)sSelf = wSelf;
 		[sSelf.originalContentView setBackgroundColor:[UIColor whiteColor]]; //reset to default color
 		[sSelf.nameTextField setAlpha:1];
         [sSelf.timeChooserParentView setAlpha:1];
+        [sSelf.collectionView setAlpha:1];
+        [sSelf.buttonChooseName setAlpha:1];
 	}];
 	[self.navigationItem setHidesBackButton:NO];
 	[[UIApplication sharedApplication] setIdleTimerDisabled:NO]; //toggle sleep
@@ -434,6 +475,10 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 - (void)FSM_startTimer {
     self.navigationItem.title = kDelayTitle;
     [self enableNavItemButtons:NO];
+    [self.collectionView setAlpha:0];
+    [self.collectionView setHidden:YES];
+    [self.buttonChooseName setAlpha:0];
+    [self.buttonChooseName setHidden:YES];
     [self FSM_runTimerWithAnimations:NO];
     [[self swipeGesture] setEnabled:NO];
     [[self tapGesture1f1t] setEnabled:NO];
@@ -482,13 +527,15 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
         __strong typeof(wSelf)sSelf = wSelf;
 		[sSelf.nameTextField setAlpha:0];
 		[sSelf.timeChooserParentView setAlpha:0];
+        [sSelf.collectionView setAlpha:0];
 	} completion:^(BOOL finished) {
         __strong typeof(wSelf)sSelf = wSelf;
 		[sSelf.nameTextField setHidden:YES];
 		[sSelf.nameTextField resignFirstResponder];
 		[sSelf.timeChooserParentView setHidden:YES];
+        [sSelf.collectionView setHidden:YES];
 	}];
-	[self.navigationItem setHidesBackButton:YES];
+	//[self.navigationItem setHidesBackButton:YES];
 	[[UIApplication sharedApplication] setIdleTimerDisabled:YES]; //toggle sleep
 	[self.tapGesture2f2t setEnabled:YES]; //toggle double 2 finger tap
 	[self.tapGesture1f1t setEnabled:YES];
@@ -502,6 +549,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[self.timeChooserParentView setHidden:NO];
 	[self.nameTextField setHidden:NO];
 	[self.nameTextField setAlpha:1];
+    //    [self.collectionView setHidden:NO]; //not sure why this remains unclickable
+//    [self.collectionView setAlpha:1];
+    
+//    [self.containerUP setHidden:NO];
+//    [self.containerUP setAlpha:1];
 }
 
 #pragma mark - On the fly edit
@@ -545,11 +597,16 @@ Gets called on:
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-	[self enableNavItemButtons:NO];
+    self.canDisplayBannerAds = NO;
+    [self tappedCancelButton:textField];
+	[self enableNavItemButtons:YES];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-	_name = self.nameTextField.text;
+    if ([self.navItem.rightBarButtonItem.title isEqualToString:kStop]) {
+        self.canDisplayBannerAds = YES;
+    }
+	_blurb = self.nameTextField.text;
 	[self enableNavItemButtons:YES];
 }
 
@@ -611,6 +668,192 @@ Gets called on:
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     self.canUpdate = NO;
+    [self FSM_idle];
+    [self moveOutExtraButtonsView:NO];
+    if (self.nameTextField.isFirstResponder){
+        [self.nameTextField resignFirstResponder];
+    }
+    
+#warning Also it seems that leaving the detail view will cause the timer to stop.  You should not segue, but insead put the view inside a sub view and present it above type able area
+    if ([segue.identifier isEqualToString:@"selectAndCreateUP"]) {
+        DHAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        NSManagedObjectContext *moc = appDelegate.managedObjectContext;
+        DHUserProfileCollectionViewController *cvc = [segue destinationViewController];
+        cvc.speechEvent = self.detailItem;
+        [cvc setManagedObjectContext:moc];
+        [cvc setCustomCellTapResponse:^(User_Profile *up, DHUserProfileCollectionViewController *upcvc) {
+            [upcvc.navigationController popViewControllerAnimated:YES];
+            self.detailItem.speeches_speaker = up;
+            [self.collectionView reloadData];
+        }];
+    } else if ([segue.identifier isEqualToString:@"selectOrCreateNewSpeechesUP"]) {
+        DHAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        NSManagedObjectContext *moc = appDelegate.managedObjectContext;
+        DHUserProfileCollectionViewController *cvc = [segue destinationViewController];
+        cvc.speechEvent = self.detailItem;
+        [cvc setManagedObjectContext:moc];
+        [cvc setCustomCellTapResponse:^(User_Profile *up, DHUserProfileCollectionViewController *vc) {
+            [vc.navigationController popViewControllerAnimated:YES];
+            self.detailItem.speeches_speaker = up;
+            [self.collectionView reloadData];
+            [self configureView];
+
+            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kQuickStart];
+        }];
+    } else if ([segue.identifier isEqualToString:@"containerUP"]) {
+        DHAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        NSManagedObjectContext *moc = appDelegate.managedObjectContext;
+        DHUserProfileCollectionViewController *cvc = [segue destinationViewController];
+        cvc.speechEvent = self.detailItem;
+        [cvc setManagedObjectContext:moc];
+        [cvc setCustomCellTapResponse:^(User_Profile *up, DHUserProfileCollectionViewController *upcvc) {
+            self.containerUP.hidden = YES;
+            self.containerUP.alpha = 0;
+            self.detailItem.speeches_speaker = up;
+            [self.collectionView reloadData];
+            
+        }];
+    }
+}
+
+#pragma mark - uicollectionview delegate
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.detailItem.speeches_speaker != nil;//since a speech may only have one speeker, hard code it to one for now
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    DHUserProfileCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    
+    User_Profile *up = (User_Profile *)self.detailItem.speeches_speaker;
+    cell.labelProfileName.text = up.user_name;
+    cell.ImageProfilePic.image = [UIImage imageWithContentsOfFile:[up.profile_pic_path stringByAppendingPathExtension:@"thumbnail"]];
+    
+    return cell;
+}
+
+//doesn't seem to work when the timer is running.
+//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+//    [self.containerUP setHidden:NO];
+//    [self.containerUP setAlpha:1];
+//}
+
+#pragma mark - Extra panel
+
+/**
+ called when Event duplication has been pressed.
+ duplicates the Old event saving things like the user, the min max time, description, and giving a new nsdate of creation.
+ the designated Event will be set as the newly created event
+ */
+- (IBAction)tappedDuplicateButton:(id)sender {
+    [self setDetailItemWithEndDate:_endDate
+                         startDate:_startDate
+                           maxTime:_maxTime
+                           minTime:_minTime
+                             blurb:_blurb
+                         totalTime:_totalTime];//set the MO then save to disk
+    [self FSM_idle];
+    [self moveOutExtraButtonsView:YES];
+    NSManagedObjectContext *moc = [(DHAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    Event *ev = [NSEntityDescription insertNewObjectForEntityForName:@"Event"
+                                              inManagedObjectContext:moc];
+    ev.timeStamp = [NSDate new];
+    ev.minTime = _minTime;
+    ev.maxTime = _maxTime;
+    ev.blurb = _blurb;
+    ev.speeches_speaker = self.detailItem.speeches_speaker;
+    
+    self.detailItem = ev;
+    [self setLocalDetailPropertiesWithDetail:self.detailItem];
+    
+    [self configureView];
+    [self FSM_startTimer];
+}
+
+/**
+ called when the new button is pressed.
+ It will create a brand new Event.
+ designated Event will be set with the newly created event
+ */
+- (IBAction)tappedNewButton:(id)sender {
+    [self setDetailItemWithEndDate:_endDate
+                         startDate:_startDate
+                           maxTime:_maxTime
+                           minTime:_minTime
+                             blurb:_blurb
+                         totalTime:_totalTime];//set the MO then save to disk
+    [self FSM_idle];
+    [self moveOutExtraButtonsView:YES];
+    NSManagedObjectContext *moc = [(DHAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    Event *ev = [NSEntityDescription insertNewObjectForEntityForName:@"Event"
+                                              inManagedObjectContext:moc];
+    ev.timeStamp = [NSDate new];
+    NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
+	[ev setMinTime:[UD objectForKey:kUserDefaultMinTime]];
+	[ev setMaxTime:[UD objectForKey:kUserDefaultMaxTime]];
+    
+    self.detailItem = ev;
+    [self setLocalDetailPropertiesWithDetail:ev];
+    
+    [self performSegueWithIdentifier:@"selectOrCreateNewSpeechesUP" sender:self];
+}
+
+/**
+ Called when the overwrite button has been pressed.
+ Does not change the designated Event.
+ */
+- (IBAction)tappedOverwriteButton:(id)sender {
+    [self FSM_idle];
+    [self moveOutExtraButtonsView:YES];
+    [self FSM_startTimer];
+}
+
+/**
+ Hides the extra buttons
+ */
+- (IBAction)tappedCancelButton:(id)sender {
+    [self FSM_idle];
+    [self moveOutExtraButtonsView:YES];
+}
+
+/**
+ moves the extrabuttonsview to the visible part of the view
+ */
+- (void)moveInExtraButtonsView:(BOOL)animated {
+    CGRect destinationFrame0 = CGRectMake(CGRectGetWidth(self.view.frame) - CGRectGetWidth(self.extraButtonsView.frame) - 20, 0, CGRectGetWidth(self.extraButtonsView.frame), CGRectGetHeight(self.extraButtonsView.frame));
+    CGRect destinationFrame1 = CGRectOffset(destinationFrame0, 20, 0);
+    
+    if (animated) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.extraButtonsView.frame = destinationFrame0;
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.3 animations:^{
+                self.extraButtonsView.frame = destinationFrame1;
+            }];
+        }];
+    } else {
+        self.extraButtonsView.frame = destinationFrame1;
+    }
+}
+
+/**
+ moves the extrabuttonsview off screen.
+ */
+- (void)moveOutExtraButtonsView:(BOOL)animated {
+    CGRect destinationFrame = CGRectMake(CGRectGetWidth(self.view.frame), 0,
+                                         CGRectGetWidth(self.extraButtonsView.frame),
+                                         CGRectGetHeight(self.extraButtonsView.frame));
+    if (animated) {
+        [UIView animateWithDuration:0.5 animations:^{
+            self.extraButtonsView.frame = destinationFrame;
+        }];
+    } else {
+        self.extraButtonsView.frame = destinationFrame;
+    }
 }
 
 @end

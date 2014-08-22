@@ -16,6 +16,7 @@
 #import "DHError.h"
 #import "DHColorForTime.h"
 #import "UISegmentedControl+extractMinMaxData.h"
+#import "User_Profile.h"
 
 NSString *const kMasterViewControllerTitle = @" ";
 NSString *const kMore = @"More";
@@ -27,6 +28,8 @@ NSString *const kTableTopics = @"Table Topics";
 @property (strong, nonatomic) NSDictionary *customStartDict;
 @property (assign) BOOL didUnwind;
 @property (assign) BOOL didLoad;
+
+@property (strong, nonatomic) NSCache *imageCache;
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
@@ -158,9 +161,9 @@ NSString *const kTableTopics = @"Table Topics";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        return 110;
+        return 80;
     }
-    return 87;
+    return 106;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -218,15 +221,25 @@ NSString *const kTableTopics = @"Table Topics";
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-	if ([[segue identifier] isEqualToString:@"showDetail"]) {
-		NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        indexPath = [NSIndexPath indexPathForItem:indexPath.row inSection:0];
-		Event *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+	Event *object;
+    if ([[segue identifier] isEqualToString:@"showDetail"]) {
+        if ([sender isKindOfClass:[NSManagedObjectID class]]) {
+            object = (Event *)[_managedObjectContext objectWithID:(NSManagedObjectID *)sender];
+        } else {
+            NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+            indexPath = [NSIndexPath indexPathForItem:indexPath.row inSection:0];
+            object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        }
+		
 		[[segue destinationViewController] setDetailItem:object];
 		NSManagedObjectContext *context = [self managedObjectContext];
 		[[segue destinationViewController] setContext:context];
-	}
+	} else if ([[segue identifier] isEqualToString:@"MoreView"]) {
+        [[segue destinationViewController] setManagedObjectContext:_managedObjectContext];
+    }
 }
+
+
 
 #pragma mark - Fetched results controller
 
@@ -335,12 +348,7 @@ NSString *const kTableTopics = @"Table Topics";
     NSIndexPath *ip = [NSIndexPath indexPathForItem:indexPath.row inSection:0];
 	Event *object = [self.fetchedResultsController objectAtIndexPath:ip];
 	
-	//handle J.D.
-	[[dhCell contestantName] setText:[object name]];
-	if (object.name == Nil || [object.name isEqualToString:@""]) {
-		[[dhCell contestantName] setText:kJohnDoe];
-	}
-	
+	[[dhCell blurb] setText:[object blurb]];
     NSTimeInterval total = [object.endDate timeIntervalSinceDate:object.startDate];
     UIColor *bgColor = [[DHColorForTime shared] colorForSeconds:total
                                                             min:object.minTime.integerValue
@@ -349,6 +357,9 @@ NSString *const kTableTopics = @"Table Topics";
         bgColor = [UIColor clearColor];
     }
     [[dhCell flag] setBackgroundColor:bgColor];
+    [[[dhCell flag] layer] setCornerRadius:dhCell.flag.frame.size.width/2];
+    
+    [[dhCell userName] setText:((User_Profile *)object.speeches_speaker).user_name];
 	
 	NSDateFormatter *dateFormat = [NSDateFormatter new];
 	[dateFormat setDateFormat:@"MMM dd, yyyy"];
@@ -361,6 +372,20 @@ NSString *const kTableTopics = @"Table Topics";
 	[[dhCell timeRange] setText:qualifyingTime];
 	
 	[dhCell setEntity:object];
+    
+    if ((dhCell.userImageIcon.image = [self.imageCache objectForKey:indexPath]) == nil) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            User_Profile *up = object.speeches_speaker;
+            UIImage *pic = [UIImage imageWithContentsOfFile:[up.profile_pic_path stringByAppendingPathExtension:@"thumbnail"]];
+            [self.imageCache setObject:pic forKey:indexPath];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                DHTableViewCell *cell = (DHTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+                if(cell) {
+                    cell.userImageIcon.image = pic;
+                }
+            });
+        });
+    }
 }
 
 #pragma mark quickStartPanel
@@ -381,13 +406,13 @@ NSString *const kTableTopics = @"Table Topics";
 
 - (void)setupFirstObjectWithName:(NSString *)name minTime:(int)min maxTime:(int)max
 {
-    [self setupFirstObjectWithName:name minTimeNumber:@(min) maxTimeNumber:@(max)];
+    [self setupFirstObjectWithBlurb:name minTimeNumber:@(min) maxTimeNumber:@(max)];
 }
 
-- (void)setupFirstObjectWithName:(NSString *)name minTimeNumber:(NSNumber *)min maxTimeNumber:(NSNumber *)max {
+- (void)setupFirstObjectWithBlurb:(NSString *)blurb minTimeNumber:(NSNumber *)min maxTimeNumber:(NSNumber *)max {
     NSIndexPath *frc_indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
     Event *obj = [self.fetchedResultsController objectAtIndexPath:frc_indexPath];
-    [obj setName:name];
+    [obj setBlurb:blurb];
     [obj setMinTime:(min)];
     [obj setMaxTime:(max)];
     
@@ -426,7 +451,7 @@ NSString *const kTableTopics = @"Table Topics";
         return;
     }
     [self quickStartBegin:self];
-    [self setupFirstObjectWithName:self.customStartDict[kName]
+    [self setupFirstObjectWithBlurb:self.customStartDict[kName]
                      minTimeNumber:self.customStartDict[kMinValue]
                      maxTimeNumber:self.customStartDict[kMaxValue]];
     [self quickStartEnds:self];
@@ -434,11 +459,37 @@ NSString *const kTableTopics = @"Table Topics";
 }
 
 - (IBAction)tappedTableTopics:(id)sender {
-    [self quickStartBegin:sender];
+//    [self quickStartBegin:sender];
+//    
+//    [self setupFirstObjectWithName:kTableTopics minTime:kTableTopicsMin maxTime:kTableTopicsMax];
     
-    [self setupFirstObjectWithName:kTableTopics minTime:kTableTopicsMin maxTime:kTableTopicsMax];
     
-    [self quickStartEnds:sender];
+    NSManagedObjectContext *tempContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    tempContext.parentContext = _managedObjectContext;
+    [tempContext performBlock:^{
+        Event *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:tempContext];
+        newManagedObject.timeStamp = [NSDate new];
+        newManagedObject.blurb = kTableTopics;
+        newManagedObject.minTime = @kTableTopicsMin;
+        newManagedObject.maxTime = @kTableTopicsMax;
+        
+        NSError *error;
+        if (![tempContext save:&error]) {
+            [DHError displayValidationError:error];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kQuickStart];
+            [self performSegueWithIdentifier:@"showDetail" sender:newManagedObject.objectID];
+        });
+        
+        [tempContext.parentContext performBlock:^{
+            NSError *error;
+            if (![tempContext.parentContext save:&error]) {
+                 [DHError displayValidationError:error];
+            }
+        }];
+    }];
 }
 
 - (IBAction)tappedPresetSpeechTime:(UISegmentedControl *)sender {
