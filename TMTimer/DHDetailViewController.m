@@ -163,6 +163,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self moveOutExtraButtonsView:NO];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) {//should stop the timer before leaving this view.
         [self tappedStartStopButton:self];
@@ -185,7 +190,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self moveOutExtraButtonsView:NO];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -598,7 +603,9 @@ Gets called on:
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    self.canDisplayBannerAds = YES;
+    if ([self.navItem.rightBarButtonItem.title isEqualToString:kStop]) {
+        self.canDisplayBannerAds = YES;
+    }
 	_blurb = self.nameTextField.text;
 	[self enableNavItemButtons:YES];
 }
@@ -802,8 +809,9 @@ Gets called on:
  moves the extrabuttonsview to the visible part of the view
  */
 - (void)moveInExtraButtonsView:(BOOL)animated {
-    CGRect destinationFrame0 = CGRectMake(250, 0, 50, 200);
-    CGRect destinationFrame1 = CGRectMake(270, 0, 50, 200);
+    CGRect destinationFrame0 = CGRectMake(CGRectGetWidth(self.view.frame) - CGRectGetWidth(self.extraButtonsView.frame) - 20, 0, CGRectGetWidth(self.extraButtonsView.frame), CGRectGetHeight(self.extraButtonsView.frame));
+    CGRect destinationFrame1 = CGRectOffset(destinationFrame0, 20, 0);
+    
     if (animated) {
         [UIView animateWithDuration:0.2 animations:^{
             self.extraButtonsView.frame = destinationFrame0;
@@ -821,7 +829,9 @@ Gets called on:
  moves the extrabuttonsview off screen.
  */
 - (void)moveOutExtraButtonsView:(BOOL)animated {
-    CGRect destinationFrame = CGRectMake(320, 0, 50, 200);
+    CGRect destinationFrame = CGRectMake(CGRectGetWidth(self.view.frame), 0,
+                                         CGRectGetWidth(self.extraButtonsView.frame),
+                                         CGRectGetHeight(self.extraButtonsView.frame));
     if (animated) {
         [UIView animateWithDuration:0.5 animations:^{
             self.extraButtonsView.frame = destinationFrame;

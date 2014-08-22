@@ -154,7 +154,7 @@
     NSString *timeString = [NSString stringWithFormat:@"%@ [%@]",
                             timeConstraints,
                             (span == 0)?@"--":
-                            (timeOffset!=0)?[NSString stringWithFormat:@"%@%@",(timeOffset <0)?@"-":@"+",@(timeOffset)]:
+                            (timeOffset!=0)?[NSString stringWithFormat:@"%@%@",(timeOffset <0)?@"":@"+",@(timeOffset)]:
                             @"OK"];
     cell.range.text = timeString;
     
