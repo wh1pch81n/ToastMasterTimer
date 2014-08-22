@@ -750,15 +750,21 @@ Gets called on:
  the designated Event will be set as the newly created event
  */
 - (IBAction)tappedDuplicateButton:(id)sender {
+    [self setDetailItemWithEndDate:_endDate
+                         startDate:_startDate
+                           maxTime:_maxTime
+                           minTime:_minTime
+                             blurb:_blurb
+                         totalTime:_totalTime];//set the MO then save to disk
     [self FSM_idle];
     [self moveOutExtraButtonsView:YES];
     NSManagedObjectContext *moc = [(DHAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
     Event *ev = [NSEntityDescription insertNewObjectForEntityForName:@"Event"
                                               inManagedObjectContext:moc];
     ev.timeStamp = [NSDate new];
-    ev.minTime = self.detailItem.minTime;
-    ev.maxTime = self.detailItem.maxTime;
-    ev.blurb = self.detailItem.blurb;
+    ev.minTime = _minTime;
+    ev.maxTime = _maxTime;
+    ev.blurb = _blurb;
     ev.speeches_speaker = self.detailItem.speeches_speaker;
     
     self.detailItem = ev;
@@ -774,6 +780,12 @@ Gets called on:
  designated Event will be set with the newly created event
  */
 - (IBAction)tappedNewButton:(id)sender {
+    [self setDetailItemWithEndDate:_endDate
+                         startDate:_startDate
+                           maxTime:_maxTime
+                           minTime:_minTime
+                             blurb:_blurb
+                         totalTime:_totalTime];//set the MO then save to disk
     [self FSM_idle];
     [self moveOutExtraButtonsView:YES];
     NSManagedObjectContext *moc = [(DHAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
