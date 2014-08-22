@@ -398,7 +398,7 @@
             <objects>
                 <collectionViewController autoresizesArchivedViewToFullSize="NO" id="Pm9-VN-LeJ" customClass="DHUserProfileCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="CoD-0b-tmq">
-                        <rect key="frame" x="0.0" y="0.0" width="220" height="417"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="5" id="Gn1-dE-xGF">
                             <size key="itemSize" width="100" height="142"/>
@@ -824,6 +824,7 @@
                         <outlet property="tapGesture2f2t" destination="xtz-1B-MUR" id="JuW-AV-Wc1"/>
                         <outlet property="timeChooserParentView" destination="UgY-RK-qPL" id="hOW-4H-l17"/>
                         <segue destination="Wgw-A9-iOc" kind="unwind" identifier="unwind" unwindAction="unwindForURLScheme:" id="Xht-UP-1dg"/>
+                        <segue destination="Pm9-VN-LeJ" kind="push" identifier="selectOrCreateNewSpeechesUP" id="6mr-qv-wOM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lrm-kH-fPn" sceneMemberID="firstResponder"/>
@@ -859,6 +860,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="fin-jJ-3dC"/>
+        <segue reference="6mr-qv-wOM"/>
     </inferredMetricsTieBreakers>
 </document>

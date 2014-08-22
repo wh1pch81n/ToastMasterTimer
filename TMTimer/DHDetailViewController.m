@@ -667,6 +667,7 @@ Gets called on:
         [self.nameTextField resignFirstResponder];
     }
     
+#warning Also it seems that leaving the detail view will cause the timer to stop.  You should not segue, but insead put the view inside a sub view and present it above type able area
     if ([segue.identifier isEqualToString:@"selectAndCreateUP"]) {
         DHAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
         NSManagedObjectContext *moc = appDelegate.managedObjectContext;
@@ -676,10 +677,20 @@ Gets called on:
             [upcvc.navigationController popViewControllerAnimated:YES];
             self.detailItem.speeches_speaker = up;
             [self.collectionView reloadData];
-            
         }];
-        
-#warning Also it seems that leaving the detail view will cause the timer to stop.  You should not segue, but insead put the view inside a sub view and present it above type able area
+    } else if ([segue.identifier isEqualToString:@"selectOrCreateNewSpeechesUP"]) {
+        DHAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        NSManagedObjectContext *moc = appDelegate.managedObjectContext;
+        DHUserProfileCollectionViewController *cvc = [segue destinationViewController];
+        [cvc setManagedObjectContext:moc];
+        [cvc setCustomCellTapResponse:^(User_Profile *up, DHUserProfileCollectionViewController *vc) {
+            [vc.navigationController popViewControllerAnimated:YES];
+            self.detailItem.speeches_speaker = up;
+            [self.collectionView reloadData];
+            [self configureView];
+
+            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kQuickStart];
+        }];
     } else if ([segue.identifier isEqualToString:@"containerUP"]) {
         DHAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
         NSManagedObjectContext *moc = appDelegate.managedObjectContext;
@@ -759,20 +770,14 @@ Gets called on:
     Event *ev = [NSEntityDescription insertNewObjectForEntityForName:@"Event"
                                               inManagedObjectContext:moc];
     ev.timeStamp = [NSDate new];
+    NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
+	[ev setMinTime:[UD objectForKey:kUserDefaultMinTime]];
+	[ev setMaxTime:[UD objectForKey:kUserDefaultMaxTime]];
+    
     self.detailItem = ev;
     [self setLocalDetailPropertiesWithDetail:ev];
     
-    DHUserProfileCollectionViewController *upcvc = [[DHUserProfileCollectionViewController alloc] init];
-    [upcvc setCustomCellTapResponse:^(User_Profile *up, DHUserProfileCollectionViewController *vc) {
-        self.detailItem.speeches_speaker = up;
-        [self.collectionView reloadData];
-        [self configureView];
-        
-        //[self FSM_startTimer];
-       [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kQuickStart];
-        
-    }];
-    [self performSegueWithIdentifier:@"selectAndCreateUP" sender:self];
+    [self performSegueWithIdentifier:@"selectOrCreateNewSpeechesUP" sender:self];
 }
 
 /**
