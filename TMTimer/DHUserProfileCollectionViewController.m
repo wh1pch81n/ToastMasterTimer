@@ -9,6 +9,7 @@
 #import "DHUserProfileCollectionViewController.h"
 #import "DHUserProfileCollectionViewCell.h"
 #import "User_Profile.h"
+#import "Event.h"
 #import "DHEditUserProfileViewController.h"
 
 @interface DHUserProfileCollectionViewController ()
@@ -94,22 +95,13 @@
 	[fetchRequest setFetchBatchSize:20];
 	
 	// Edit the sort key as appropriate.
-	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"user_name" ascending:YES];
-	NSArray *sortDescriptors = @[sortDescriptor];
-	
-	[fetchRequest setSortDescriptors:sortDescriptors];
-	
-//    NSPredicate *pred = [NSPredicate predicateWithFormat:
-//                         @"city contains[cd] $A or"
-//                         " state contains[cd] $A or"
-//                         " name contains[cd] $A"];
-//    pred = [pred predicateWithSubstitutionVariables:@{@"A":self.searchBar.text,
-//                                                      @"C":@"contains[c]"}];
-//    fetchRequest.predicate = pred;
     
-	// Edit the section name key path and cache name if appropriate.
-	// nil for section name key path means "no sections".
-	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"user_name" ascending:YES];
+	NSArray *sortDescriptors = @[sortDescriptor];
+	[fetchRequest setSortDescriptors:sortDescriptors];
+	fetchRequest.predicate = [NSPredicate predicateWithFormat:@"SELF != %@", self.speechEvent.speeches_speaker.objectID];
+    
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
 	aFetchedResultsController.delegate = self;
 	_fetchedResultsController = aFetchedResultsController;
 	

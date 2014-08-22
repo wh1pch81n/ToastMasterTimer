@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class Event;
 @class User_Profile;
 @interface DHUserProfileCollectionViewController : UICollectionViewController <NSFetchedResultsControllerDelegate>
 
@@ -20,5 +21,10 @@
  Implement this with a block to perform other things with the User_Profile.
  */
 @property (strong, nonatomic) void(^customCellTapResponse)(User_Profile *userProfile, DHUserProfileCollectionViewController *collectionVC);
+
+/**
+ Setting this property will inform the collection view that this "speech" event is the designated speech.  The if there is a relationship between the speech and the speaker the cell will recieve a special marking and it will be listed first.
+ */
+@property (strong, nonatomic) Event *speechEvent;
 
 @end

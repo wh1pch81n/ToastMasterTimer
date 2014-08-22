@@ -679,6 +679,7 @@ Gets called on:
         DHAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
         NSManagedObjectContext *moc = appDelegate.managedObjectContext;
         DHUserProfileCollectionViewController *cvc = [segue destinationViewController];
+        cvc.speechEvent = self.detailItem;
         [cvc setManagedObjectContext:moc];
         [cvc setCustomCellTapResponse:^(User_Profile *up, DHUserProfileCollectionViewController *upcvc) {
             [upcvc.navigationController popViewControllerAnimated:YES];
@@ -689,6 +690,7 @@ Gets called on:
         DHAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
         NSManagedObjectContext *moc = appDelegate.managedObjectContext;
         DHUserProfileCollectionViewController *cvc = [segue destinationViewController];
+        cvc.speechEvent = self.detailItem;
         [cvc setManagedObjectContext:moc];
         [cvc setCustomCellTapResponse:^(User_Profile *up, DHUserProfileCollectionViewController *vc) {
             [vc.navigationController popViewControllerAnimated:YES];
@@ -702,6 +704,7 @@ Gets called on:
         DHAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
         NSManagedObjectContext *moc = appDelegate.managedObjectContext;
         DHUserProfileCollectionViewController *cvc = [segue destinationViewController];
+        cvc.speechEvent = self.detailItem;
         [cvc setManagedObjectContext:moc];
         [cvc setCustomCellTapResponse:^(User_Profile *up, DHUserProfileCollectionViewController *upcvc) {
             self.containerUP.hidden = YES;
