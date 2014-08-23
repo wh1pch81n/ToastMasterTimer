@@ -49,6 +49,7 @@
 		5095B4EA18AE7C440023210E /* TMTimerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5095B4E918AE7C440023210E /* TMTimerTests.m */; };
 		7F0C3FCB18CBCD3D0068B26C /* Release Notes in Resources */ = {isa = PBXBuildFile; fileRef = 7F0C3FCA18CBCD3D0068B26C /* Release Notes */; };
 		7F185BBE196A867900055446 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F185BBD196A867900055446 /* iRate.m */; };
+		7F2AC6BC19A8149E00C9DAE7 /* User_Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2AC6BB19A8149E00C9DAE7 /* User_Profile.m */; };
 		7F407F5719A1F4E200E37E1B /* DHUserProfileCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F407F5619A1F4E200E37E1B /* DHUserProfileCollectionViewCell.m */; };
 		7F407F5A19A1F85C00E37E1B /* DHUserProfileCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F407F5919A1F85C00E37E1B /* DHUserProfileCollectionViewController.m */; };
 		7F407F5E19A29C5800E37E1B /* DHEditUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F407F5C19A29C5800E37E1B /* DHEditUserProfileViewController.m */; };
@@ -62,7 +63,6 @@
 		7F896E6919A40FB30081A2A1 /* DHEditUserProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F896E6819A40FB30081A2A1 /* DHEditUserProfileTableViewCell.xib */; };
 		7F896E6C19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F896E6B19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.m */; };
 		7F896E7019A50C600081A2A1 /* UIImage+DHScaledImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F896E6F19A50C600081A2A1 /* UIImage+DHScaledImage.m */; };
-		7F896E7319A50D400081A2A1 /* User_Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F896E7219A50D400081A2A1 /* User_Profile.m */; };
 		7F8CD80E199FAAAE00FC177F /* finger1_not_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F8CD808199FAAAE00FC177F /* finger1_not_touch.png */; };
 		7F8CD80F199FAAAE00FC177F /* finger1_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F8CD809199FAAAE00FC177F /* finger1_touch.png */; };
 		7F8CD810199FAAAE00FC177F /* fingers2_no_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F8CD80A199FAAAE00FC177F /* fingers2_no_touch.png */; };
@@ -153,6 +153,9 @@
 		7F0C3FCA18CBCD3D0068B26C /* Release Notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Release Notes"; path = "TMTimer/Release Notes"; sourceTree = "<group>"; };
 		7F185BBC196A867900055446 /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
 		7F185BBD196A867900055446 /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
+		7F2AC6B919A813CA00C9DAE7 /* TMTimer 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TMTimer 7.xcdatamodel"; sourceTree = "<group>"; };
+		7F2AC6BA19A8149E00C9DAE7 /* User_Profile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User_Profile.h; sourceTree = "<group>"; };
+		7F2AC6BB19A8149E00C9DAE7 /* User_Profile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User_Profile.m; sourceTree = "<group>"; };
 		7F407F3519A07CF400E37E1B /* TMTimer 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TMTimer 6.xcdatamodel"; sourceTree = "<group>"; };
 		7F407F5519A1F4E200E37E1B /* DHUserProfileCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHUserProfileCollectionViewCell.h; sourceTree = "<group>"; };
 		7F407F5619A1F4E200E37E1B /* DHUserProfileCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHUserProfileCollectionViewCell.m; sourceTree = "<group>"; };
@@ -176,8 +179,6 @@
 		7F896E6B19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHEditUserProfileTableViewCell.m; sourceTree = "<group>"; };
 		7F896E6E19A50C600081A2A1 /* UIImage+DHScaledImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+DHScaledImage.h"; sourceTree = "<group>"; };
 		7F896E6F19A50C600081A2A1 /* UIImage+DHScaledImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+DHScaledImage.m"; sourceTree = "<group>"; };
-		7F896E7119A50D400081A2A1 /* User_Profile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User_Profile.h; sourceTree = "<group>"; };
-		7F896E7219A50D400081A2A1 /* User_Profile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User_Profile.m; sourceTree = "<group>"; };
 		7F8CD808199FAAAE00FC177F /* finger1_not_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = finger1_not_touch.png; sourceTree = "<group>"; };
 		7F8CD809199FAAAE00FC177F /* finger1_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = finger1_touch.png; sourceTree = "<group>"; };
 		7F8CD80A199FAAAE00FC177F /* fingers2_no_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingers2_no_touch.png; sourceTree = "<group>"; };
@@ -321,10 +322,10 @@
 				7F407F6019A2AD4D00E37E1B /* User_Profile+helperMethods.h */,
 				7F407F6119A2AD4D00E37E1B /* User_Profile+helperMethods.m */,
 				5095B4CC18AE7C440023210E /* TMTimer.xcdatamodeld */,
+				7F2AC6BA19A8149E00C9DAE7 /* User_Profile.h */,
+				7F2AC6BB19A8149E00C9DAE7 /* User_Profile.m */,
 				7FC84B4B19A566FC007F8BEB /* Event.h */,
 				7FC84B4C19A566FC007F8BEB /* Event.m */,
-				7F896E7119A50D400081A2A1 /* User_Profile.h */,
-				7F896E7219A50D400081A2A1 /* User_Profile.m */,
 				501518E618B1979200CC286D /* Event+helperMethods.h */,
 				501518E718B1979200CC286D /* Event+helperMethods.m */,
 				7F87644C18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.h */,
@@ -565,7 +566,7 @@
 				7FD4ABDF18E0F488004DA1DF /* DHNavigationItem.m in Sources */,
 				7F896E7019A50C600081A2A1 /* UIImage+DHScaledImage.m in Sources */,
 				7F407F6219A2AD4D00E37E1B /* User_Profile+helperMethods.m in Sources */,
-				7F896E7319A50D400081A2A1 /* User_Profile.m in Sources */,
+				7F2AC6BC19A8149E00C9DAE7 /* User_Profile.m in Sources */,
 				5095B4D418AE7C440023210E /* DHDetailViewController.m in Sources */,
 				7F86595418D3D0090045F9F2 /* DHCountDownView.m in Sources */,
 				7FC92105191D9C620026660A /* DHManualFlagViewController.m in Sources */,
@@ -826,8 +827,9 @@
 				5095B4CD18AE7C440023210E /* TMTimer.xcdatamodel */,
 				50B0FC5F18B2FFC0007694F3 /* TMTimer 5.xcdatamodel */,
 				7F407F3519A07CF400E37E1B /* TMTimer 6.xcdatamodel */,
+				7F2AC6B919A813CA00C9DAE7 /* TMTimer 7.xcdatamodel */,
 			);
-			currentVersion = 7F407F3519A07CF400E37E1B /* TMTimer 6.xcdatamodel */;
+			currentVersion = 7F2AC6B919A813CA00C9DAE7 /* TMTimer 7.xcdatamodel */;
 			path = TMTimer.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -10,4 +10,6 @@
 
 @interface User_Profile (helperMethods)
 
+- (NSString *)profile_pic_path;
+
 @end
