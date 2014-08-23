@@ -17,6 +17,7 @@
 #import "DHColorForTime.h"
 #import "UISegmentedControl+extractMinMaxData.h"
 #import "User_Profile.h"
+#import "User_Profile+helperMethods.h"
 
 NSString *const kMasterViewControllerTitle = @" ";
 NSString *const kMore = @"More";
@@ -376,7 +377,7 @@ NSString *const kTableTopics = @"Table Topics";
     if ((dhCell.userImageIcon.image = [self.imageCache objectForKey:indexPath]) == nil) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             User_Profile *up = object.speeches_speaker;
-            UIImage *pic = [UIImage imageWithContentsOfFile:[up.profile_pic_path stringByAppendingPathExtension:@"thumbnail"]];
+            UIImage *pic = [UIImage imageWithContentsOfFile:up.profile_pic_path];
             [self.imageCache setObject:pic forKey:indexPath];
             dispatch_async(dispatch_get_main_queue(), ^{
                 DHTableViewCell *cell = (DHTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];

@@ -9,12 +9,15 @@
 #import "DHUserProfileCollectionViewController.h"
 #import "DHUserProfileCollectionViewCell.h"
 #import "User_Profile.h"
+#import "User_Profile+helperMethods.h"
 #import "Event.h"
 #import "DHEditUserProfileViewController.h"
 
 @interface DHUserProfileCollectionViewController ()
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+
+@property (strong, nonatomic) NSCache *imageCache;
 
 @end
 
@@ -99,7 +102,8 @@
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"user_name" ascending:YES];
 	NSArray *sortDescriptors = @[sortDescriptor];
 	[fetchRequest setSortDescriptors:sortDescriptors];
-	fetchRequest.predicate = [NSPredicate predicateWithFormat:@"SELF != %@", self.speechEvent.speeches_speaker.objectID];
+	
+    //fetchRequest.predicate = [NSPredicate predicateWithFormat:@"SELF != %@", self.speechEvent.speeches_speaker.objectID]; //causing core data crash for some reason
     
     NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
 	aFetchedResultsController.delegate = self;
@@ -181,7 +185,19 @@
 	
     dhCell.labelProfileName.text = object.user_name;
     dhCell.labelProfileSpeechNumber.text = [object.total_speeches stringValue];
-    dhCell.ImageProfilePic.image = [UIImage imageWithContentsOfFile:[object.profile_pic_path stringByAppendingPathExtension:@"thumbnail"]];
+    dhCell.ImageProfilePic.image = [UIImage imageWithContentsOfFile:object.profile_pic_path];
+    
+    if ((dhCell.ImageProfilePic.image = [self.imageCache objectForKey:indexPath]) == nil) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            UIImage * img= [UIImage imageWithContentsOfFile:object.profile_pic_path];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                DHUserProfileCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
+                if (cell) {
+                    cell.ImageProfilePic.image = img;
+                }
+            });
+        });
+    }
 }
 
 #pragma mark - creation/ editing

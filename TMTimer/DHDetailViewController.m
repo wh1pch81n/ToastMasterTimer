@@ -731,8 +731,16 @@ Gets called on:
     
     User_Profile *up = (User_Profile *)self.detailItem.speeches_speaker;
     cell.labelProfileName.text = up.user_name;
-    cell.ImageProfilePic.image = [UIImage imageWithContentsOfFile:[up.profile_pic_path stringByAppendingPathExtension:@"thumbnail"]];
     
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UIImage * img= [UIImage imageWithContentsOfFile:up.profile_pic_path];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            DHUserProfileCollectionViewCell *cell = (id)[collectionView cellForItemAtIndexPath:indexPath];
+            if (cell) {
+                cell.ImageProfilePic.image = img;
+            }
+        });
+    });
     return cell;
 }
 

@@ -14,4 +14,17 @@
     return @(self.users_speeches.count);
 }
 
+/**
+ prepends the file name with the directory.
+ Appends it with the "thumbnail" extension
+ */
+- (NSString *)profile_pic_path {
+    NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *extension = @"thumbnail";
+    return [NSString stringWithFormat:@"%@/%@.%@",
+            directory,
+            self.profile_pic_filename,
+            extension];
+}
+
 @end

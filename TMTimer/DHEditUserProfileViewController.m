@@ -77,7 +77,7 @@
     User_Profile *up = (User_Profile *)[self.managedObjectContext objectWithID:self.objectID];
     self.textFieldName.text = up.user_name;
     self.labelTotalNumberOfSpeeches.text = up.total_speeches.stringValue;
-    self.imageViewProfilePic.image = [UIImage imageWithContentsOfFile:[up.profile_pic_path stringByAppendingPathExtension:@"thumbnail"]];
+    self.imageViewProfilePic.image = [UIImage imageWithContentsOfFile:up.profile_pic_path];
 #if DEBUG
     NSLog(@"%@", up);
 #endif
@@ -265,7 +265,7 @@
     //remove old path if any
     [self removeOldImageIfAny:up];
     //Save path
-    up.profile_pic_path = imagePath;
+    up.profile_pic_filename = uniqueFileName;
         
     //get the image from the uiimageview
     UIImage *image = _profilePic;
@@ -290,23 +290,20 @@
     //saving thumbnail of image to disk.
     NSData *imageThumbAsData = UIImagePNGRepresentation(imageThumb);
     
-    NSString *imageThumbPath = [imagePath stringByAppendingPathExtension:@"thumbnail"];
-    if(![imageThumbAsData writeToFile:imageThumbPath atomically:YES]){
+    if(![imageThumbAsData writeToFile:up.profile_pic_path atomically:YES]){
 #if DEBUG
-        NSLog(@"Could not save thumbnail image \n%@", imageThumbPath);
+        NSLog(@"Could not save thumbnail image \n%@", up.profile_pic_path);
 #endif
     } else {
 #if DEBUG
-        NSLog(@"done saving Thumbnail image\n%@", imageThumbPath);
+        NSLog(@"done saving Thumbnail image\n%@", up.profile_pic_path);
 #endif
     }
 }
 
 - (void)removeOldImageIfAny:(User_Profile *)userProfile {
-    NSString *path = [userProfile.profile_pic_path stringByAppendingPathExtension:@"thumbnail"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:path] == NO) {
-        return;
-    }
+    NSString *path = userProfile.profile_pic_path;
+
     if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
         //move old image files to volitile space.
         NSString *libCacheDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
