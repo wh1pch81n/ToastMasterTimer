@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SKTimerGaugeView.h"
 
 @interface DHEditUserProfileTableViewCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UILabel *blurb;
 @property (strong, nonatomic) IBOutlet UILabel *range;
 @property (strong, nonatomic) IBOutlet UIView *flag;
+@property (weak, nonatomic) IBOutlet SKTimerGaugeView *gauge;
 
 @end

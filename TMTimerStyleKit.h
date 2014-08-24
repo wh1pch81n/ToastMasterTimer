@@ -17,5 +17,6 @@
 // Drawing Methods
 + (void)drawTimerGaugeMediumWithFrame: (CGRect)frame minSeconds: (CGFloat)minSeconds maxSeconds: (CGFloat)maxSeconds elapsedSeconds: (CGFloat)elapsedSeconds;
 + (void)drawTimerGaugeSmallWithMinSeconds: (CGFloat)minSeconds maxSeconds: (CGFloat)maxSeconds elapsedSeconds: (CGFloat)elapsedSeconds;
++ (void)drawGauge50WithMinSeconds: (CGFloat)minSeconds maxSeconds: (CGFloat)maxSeconds elapsedSeconds: (CGFloat)elapsedSeconds;
 
 @end

@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SKTimerGaugeView.h"
+
 @class Event;
 @interface DHTableViewCell : UITableViewCell
 
@@ -14,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *creationDate;
 @property (weak, nonatomic) IBOutlet UILabel *elapsedTime;
 @property (weak, nonatomic) IBOutlet UILabel *timeRange;
-@property (weak, nonatomic) IBOutlet UIView *flag;
+@property (weak, nonatomic) IBOutlet SKTimerGaugeView *flag;
 @property (weak, nonatomic) IBOutlet UILabel *userName;
 @property (weak, nonatomic) IBOutlet UIImageView *userImageIcon;
 
