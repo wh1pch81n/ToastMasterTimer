@@ -18,6 +18,7 @@
 #import "UISegmentedControl+extractMinMaxData.h"
 #import "User_Profile.h"
 #import "User_Profile+helperMethods.h"
+#import "TMTimerStyleKit.h"
 
 NSString *const kMasterViewControllerTitle = @" ";
 NSString *const kMore = @"More";
@@ -30,7 +31,7 @@ NSString *const kTableTopics = @"Table Topics";
 @property (assign) BOOL didUnwind;
 @property (assign) BOOL didLoad;
 
-@property (strong, nonatomic) NSCache *imageCache;
+@property (strong, nonatomic) NSCache *imageCache, *gaugeImageCache;
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
@@ -51,6 +52,7 @@ NSString *const kTableTopics = @"Table Topics";
 	[super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     self.imageCache = [[NSCache alloc] init];
+    self.gaugeImageCache = [NSCache new];
     self.canDisplayBannerAds = YES;
     
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -70,6 +72,11 @@ NSString *const kTableTopics = @"Table Topics";
 #if DEBUG
     NSLog(@"TMTimer view did load");
 #endif
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(clearCacheNotification:)
+                                                 name:NSManagedObjectContextDidSaveNotification
+                                               object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -80,6 +87,12 @@ NSString *const kTableTopics = @"Table Topics";
 #if DEBUG
     NSLog(@"TMTimer view did appear");
 #endif
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:NSManagedObjectContextDidSaveNotification
+                                                  object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -316,7 +329,6 @@ NSString *const kTableTopics = @"Table Topics";
 			break;
 			
 		case NSFetchedResultsChangeUpdate:
-            self.imageCache = [NSCache new];
             indexPath = [NSIndexPath indexPathForItem:indexPath.row inSection:1];
 			[self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
 			break;
@@ -332,7 +344,7 @@ NSString *const kTableTopics = @"Table Topics";
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-	[self.tableView endUpdates];
+    [self.tableView endUpdates];
 }
 
 /*
@@ -353,11 +365,6 @@ NSString *const kTableTopics = @"Table Topics";
 	
 	[[dhCell blurb] setText:[object blurb]];
     
-    dhCell.flag.minSeconds = object.minTime.integerValue * kSecondsInAMinute;
-    dhCell.flag.maxSeconds = object.maxTime.integerValue * kSecondsInAMinute;
-    dhCell.flag.elapsedSeconds = [object.endDate timeIntervalSinceDate:object.startDate];
-    [dhCell.flag setNeedsDisplay];
-    
     [[dhCell userName] setText:((User_Profile *)object.speeches_speaker).user_name];
 	
 	NSDateFormatter *dateFormat = [NSDateFormatter new];
@@ -371,12 +378,14 @@ NSString *const kTableTopics = @"Table Topics";
 	[[dhCell timeRange] setText:qualifyingTime];
 	
 	[dhCell setEntity:object];
-    
-    if ((dhCell.userImageIcon.image = [self.imageCache objectForKey:indexPath]) == nil) {
+
+    NSString *key = [NSString stringWithFormat:@"%ld-%ld", indexPath.section, indexPath.row];
+    if ((dhCell.userImageIcon.image = [self.imageCache objectForKey:key]) == nil) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             User_Profile *up = object.speeches_speaker;
             UIImage *pic = [UIImage imageWithContentsOfFile:up.profile_pic_path];
-            [self.imageCache setObject:pic forKey:indexPath];
+            if (pic == nil) {return;}
+            [self.imageCache setObject:pic forKey:key];
             dispatch_async(dispatch_get_main_queue(), ^{
                 DHTableViewCell *cell = (DHTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
                 if(cell) {
@@ -385,6 +394,21 @@ NSString *const kTableTopics = @"Table Topics";
             });
         });
     }
+    if ((dhCell.flag.image = [self.gaugeImageCache objectForKey:key]) == nil) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            UIImage *pic =
+            [TMTimerStyleKit imageOfGauge50WithG_minSeconds:object.minTime.integerValue *kSecondsInAMinute g_maxSeconds:object.maxTime.integerValue *kSecondsInAMinute g_elapsedSeconds:[object.endDate timeIntervalSinceDate:object.startDate]];
+            if (pic == nil) return;
+            [self.gaugeImageCache setObject:pic forKey:key];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                DHTableViewCell *cell = (DHTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+                if(cell) {
+                    cell.flag.image = pic;
+                }
+            });
+        });
+    }
+
 }
 
 #pragma mark quickStartPanel
@@ -506,6 +530,11 @@ NSString *const kTableTopics = @"Table Topics";
 #endif
     self.didUnwind = YES;
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
+}
+
+- (void)clearCacheNotification:(NSNotification *)notification{
+    [self.imageCache removeAllObjects];
+    [self.gaugeImageCache removeAllObjects];
 }
 
 @end

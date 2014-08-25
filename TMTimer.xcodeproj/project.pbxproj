@@ -57,7 +57,6 @@
 		7F407F6219A2AD4D00E37E1B /* User_Profile+helperMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F407F6119A2AD4D00E37E1B /* User_Profile+helperMethods.m */; };
 		7F407FA619A407C600E37E1B /* fetch.php.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 7F407FA519A407C600E37E1B /* fetch.php.jpeg */; };
 		7F7145FE19AA9A4400DAEBF8 /* TMTimerStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7145FD19AA9A4400DAEBF8 /* TMTimerStyleKit.m */; };
-		7F71460119AA9B9100DAEBF8 /* SKTimerGaugeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F71460019AA9B9100DAEBF8 /* SKTimerGaugeView.m */; };
 		7F75F66D18C9142F0040986B /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F75F66C18C9142F0040986B /* iAd.framework */; };
 		7F86595118D3C4C50045F9F2 /* DHUserPreferenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */; };
 		7F86595418D3D0090045F9F2 /* DHCountDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F86595318D3D0090045F9F2 /* DHCountDownView.m */; };
@@ -171,8 +170,6 @@
 		7F407FA519A407C600E37E1B /* fetch.php.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = fetch.php.jpeg; path = ../../fetch.php.jpeg; sourceTree = "<group>"; };
 		7F7145FC19AA9A4400DAEBF8 /* TMTimerStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMTimerStyleKit.h; sourceTree = "<group>"; };
 		7F7145FD19AA9A4400DAEBF8 /* TMTimerStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMTimerStyleKit.m; sourceTree = "<group>"; };
-		7F7145FF19AA9B9100DAEBF8 /* SKTimerGaugeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTimerGaugeView.h; sourceTree = "<group>"; };
-		7F71460019AA9B9100DAEBF8 /* SKTimerGaugeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTimerGaugeView.m; sourceTree = "<group>"; };
 		7F75F66C18C9142F0040986B /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		7F86594F18D3C4C50045F9F2 /* DHUserPreferenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHUserPreferenceViewController.h; sourceTree = "<group>"; };
 		7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHUserPreferenceViewController.m; sourceTree = "<group>"; };
@@ -337,8 +334,6 @@
 				501518E718B1979200CC286D /* Event+helperMethods.m */,
 				7F87644C18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.h */,
 				7F87644D18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.m */,
-				7F7145FF19AA9B9100DAEBF8 /* SKTimerGaugeView.h */,
-				7F71460019AA9B9100DAEBF8 /* SKTimerGaugeView.m */,
 				5095B4BB18AE7C440023210E /* Supporting Files */,
 				502B46B618B4063000A61D24 /* DHTableViewCell.h */,
 				502B46B718B4063000A61D24 /* DHTableViewCell.m */,
@@ -594,7 +589,6 @@
 				7F94EE1318CD0FC3005390C3 /* DHError.m in Sources */,
 				7F407F5A19A1F85C00E37E1B /* DHUserProfileCollectionViewController.m in Sources */,
 				7F87644E18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.m in Sources */,
-				7F71460119AA9B9100DAEBF8 /* SKTimerGaugeView.m in Sources */,
 				7F86595118D3C4C50045F9F2 /* DHUserPreferenceViewController.m in Sources */,
 				7F185BBE196A867900055446 /* iRate.m in Sources */,
 				7FD4ABE518E1089D004DA1DF /* DHGradients.m in Sources */,

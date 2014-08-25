@@ -14,6 +14,7 @@
 #import "DHEditUserProfileTableViewCell.h"
 #import "DHColorForTime.h"
 #import "UIImage+DHScaledImage.h"
+#import "TMTimerStyleKit.h"
 
 @interface DHEditUserProfileViewController ()
 
@@ -26,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+
+@property (strong, nonatomic) NSCache *gaugeImageCache;
 
 @property (nonatomic) BOOL didSetImage;
 @end
@@ -56,6 +59,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.gaugeImageCache = [NSCache new];
     [self registerCustomTableViewCell];
     [[self imageViewProfilePic] addGestureRecognizer:
      [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -169,10 +173,21 @@
     }
     [[cell flag] setBackgroundColor:bgColor];
     
-    cell.gauge.minSeconds = obj.minTime.integerValue * kSecondsInAMinute;
-    cell.gauge.maxSeconds = obj.maxTime.integerValue * kSecondsInAMinute;
-    cell.gauge.elapsedSeconds = [obj.endDate timeIntervalSinceDate:obj.startDate];
-    [cell.gauge setNeedsDisplay];
+    if ((cell.gauge.image = [self.gaugeImageCache objectForKey:indexPath]) == nil) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            UIImage *img = [TMTimerStyleKit imageOfGauge50WithG_minSeconds:obj.minTime.integerValue * kSecondsInAMinute g_maxSeconds:obj.maxTime.integerValue * kSecondsInAMinute g_elapsedSeconds:[obj.endDate timeIntervalSinceDate:obj.startDate]];
+            if(img == nil) {return;}
+            [self.gaugeImageCache setObject:img forKey:indexPath];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                DHEditUserProfileTableViewCell *cell = (id)[self.tableView cellForRowAtIndexPath:indexPath];
+                if(cell) {
+                    cell.gauge.image = img;
+                }
+            });
+        });
+        
+        
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
