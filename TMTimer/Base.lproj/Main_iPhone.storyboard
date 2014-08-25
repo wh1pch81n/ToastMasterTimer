@@ -697,14 +697,6 @@
                                     <segue destination="Pm9-VN-LeJ" kind="push" identifier="selectAndCreateUP" id="T95-hk-7yO"/>
                                 </connections>
                             </button>
-                            <containerView hidden="YES" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DHc-pH-A9b" userLabel="Container View - add Profile">
-                                <rect key="frame" x="50" y="600" width="220" height="417"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <connections>
-                                    <segue destination="Pm9-VN-LeJ" kind="embed" identifier="containerUP" id="fin-jJ-3dC"/>
-                                </connections>
-                            </containerView>
                             <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gEF-7t-IIr" userLabel="View - extra buttons">
                                 <rect key="frame" x="320" y="0.0" width="50" height="200"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -828,7 +820,6 @@
                     <connections>
                         <outlet property="buttonChooseName" destination="UyO-wA-wPV" id="2Sb-5a-MZJ"/>
                         <outlet property="collectionView" destination="Eqd-kD-NXC" id="VQ2-Fe-eDt"/>
-                        <outlet property="containerUP" destination="DHc-pH-A9b" id="vIW-R7-4vx"/>
                         <outlet property="extraButtonsView" destination="gEF-7t-IIr" id="vjE-LY-cPB"/>
                         <outlet property="labelSwipeRightToStop" destination="vFi-nh-Tfc" id="KV7-NE-tgQ"/>
                         <outlet property="labelTapToEdit" destination="xEj-gW-i4N" id="GNm-8d-ThT"/>
