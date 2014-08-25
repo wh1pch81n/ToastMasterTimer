@@ -196,15 +196,15 @@
     
     NSFetchRequest *fetchRequest = [NSFetchRequest new];
     fetchRequest.entity = [NSEntityDescription entityForName:@"Event"
-                                      inManagedObjectContext:_managedObjectContext];
+                                      inManagedObjectContext:_managedObjectContext.parentContext];
     fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"timeStamp" ascending:NO]];
     fetchRequest.fetchBatchSize = 20;
     
-    User_Profile *up = (User_Profile *)[self.managedObjectContext objectWithID:self.objectID];
+    User_Profile *up = (User_Profile *)[self.managedObjectContext.parentContext objectWithID:self.objectID];
 
     fetchRequest.predicate = [NSPredicate predicateWithFormat:@"speeches_speaker == %@", up];
     
-    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:_managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:_managedObjectContext.parentContext sectionNameKeyPath:nil cacheName:nil];
     
     _fetchedResultsController.delegate = self;
     
@@ -230,9 +230,7 @@
 
 - (void)saveEdits {
     User_Profile *up = (User_Profile *)[_managedObjectContext objectWithID:_objectID];
-    up.user_name = [self.textFieldName.text stringByTrimmingCharactersInSet:
-                    [NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if ([up.user_name isEqualToString:@""]) {
+    if ([self.textFieldName.text isEqualToString:@""]) {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Name Required" message:@"Speaker's name can not be blank" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [alert show];
         //[[(DHAppDelegate *)[[UIApplication sharedApplication] delegate] arrOfAlerts] addObject:alert];
@@ -240,6 +238,9 @@
     }
     
     [_managedObjectContext performBlock:^{
+        up.user_name = [self.textFieldName.text stringByTrimmingCharactersInSet:
+                        [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
         if (self.didSetImage) {
             [self saveImageFileToDisk];
         }
