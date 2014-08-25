@@ -21,33 +21,35 @@
 
 #pragma mark Drawing Methods
 
-+ (void)drawTimerGaugeMediumWithFrame: (CGRect)frame minSeconds: (CGFloat)minSeconds maxSeconds: (CGFloat)maxSeconds elapsedSeconds: (CGFloat)elapsedSeconds;
++ (void)drawTimerGaugeMediumWithFrame: (CGRect)frame g_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
 {
     //// General Declarations
     CGContextRef context = UIGraphicsGetCurrentContext();
 
     //// Color Declarations
-    UIColor* gaugeOutline = [UIColor colorWithRed: 0.569 green: 0.517 blue: 0.517 alpha: 1];
-    UIColor* gaugeOutlineOverTime = [UIColor colorWithRed: 0.946 green: 0.068 blue: 0.068 alpha: 1];
-    UIColor* lowPressureColor = [UIColor colorWithRed: 0.389 green: 0.8 blue: 0.32 alpha: 1];
-    UIColor* mediumPressureColor = [UIColor colorWithRed: 0.972 green: 0.924 blue: 0 alpha: 1];
-    UIColor* highPressureColor = [UIColor colorWithRed: 1 green: 0.106 blue: 0 alpha: 1];
-    UIColor* gaugeNormal = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1];
-    UIColor* white = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 1];
+    UIColor* g_GaugeOutline = [UIColor colorWithRed: 0.569 green: 0.517 blue: 0.517 alpha: 1];
+    UIColor* g_GaugeOutlineOverTime = [UIColor colorWithRed: 0.946 green: 0.068 blue: 0.068 alpha: 1];
+    UIColor* g_LowPressureColor = [UIColor colorWithRed: 0.389 green: 0.8 blue: 0.32 alpha: 1];
+    UIColor* g_MediumPressureColor = [UIColor colorWithRed: 0.972 green: 0.924 blue: 0 alpha: 1];
+    UIColor* g_HighPressureColor = [UIColor colorWithRed: 1 green: 0.106 blue: 0 alpha: 1];
+    UIColor* g_GaugeNormal = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1];
+    UIColor* g_white = [UIColor colorWithRed: 1 green: 0.998 blue: 0.998 alpha: 1];
+    UIColor* g_clear = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 0];
 
     //// Variable Declarations
-    CGFloat midSeconds = (minSeconds + maxSeconds) / 2.0;
-    CGFloat pressure = elapsedSeconds / (maxSeconds + 30);
-    CGFloat ppressure = pressure < 0 ? 0 : (pressure > 1 ? 1 : pressure);
-    CGFloat angle = -270 * ppressure + 135;
-    UIColor* limitingColor = elapsedSeconds <= 0 ? white : (elapsedSeconds < minSeconds ? gaugeNormal : (elapsedSeconds < midSeconds ? lowPressureColor : (elapsedSeconds < maxSeconds ? mediumPressureColor : highPressureColor)));
-    UIColor* overTimeColor = elapsedSeconds <= 0 ? white : (elapsedSeconds < maxSeconds + 30 ? gaugeOutline : gaugeOutlineOverTime);
+    CGFloat g_midSeconds = (g_minSeconds + g_maxSeconds) / 2.0;
+    CGFloat g_pressure = g_elapsedSeconds / (g_maxSeconds + 30);
+    CGFloat g_ppressure = g_pressure < 0 ? 0 : (g_pressure > 1 ? 1 : g_pressure);
+    CGFloat g_angle = -270 * g_ppressure + 135;
+    UIColor* g_limitingColor = g_elapsedSeconds <= 0 ? g_clear : (g_elapsedSeconds < g_minSeconds ? g_GaugeNormal : (g_elapsedSeconds < g_midSeconds ? g_LowPressureColor : (g_elapsedSeconds < g_maxSeconds ? g_MediumPressureColor : g_HighPressureColor)));
+    UIColor* g_overTimeColor = g_elapsedSeconds <= 0 ? g_clear : (g_elapsedSeconds < g_maxSeconds + 30 ? g_GaugeOutline : g_GaugeOutlineOverTime);
+    UIColor* g_limitingFill = g_elapsedSeconds <= 0 ? g_clear : g_white;
 
     //// Perimeter Drawing
     UIBezierPath* perimeterPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(CGRectGetMinX(frame) + 10, CGRectGetMinY(frame) + 10, CGRectGetWidth(frame) - 20, CGRectGetHeight(frame) - 20)];
-    [UIColor.whiteColor setFill];
+    [g_limitingFill setFill];
     [perimeterPath fill];
-    [limitingColor setStroke];
+    [g_limitingColor setStroke];
     perimeterPath.lineWidth = 6;
     [perimeterPath stroke];
 
@@ -60,7 +62,7 @@
     [markPath addCurveToPoint: CGPointMake(CGRectGetMinX(frame) + 252.61, CGRectGetMinY(frame) + 84.39) controlPoint1: CGPointMake(CGRectGetMinX(frame) + 250.46, CGRectGetMinY(frame) + 78.76) controlPoint2: CGPointMake(CGRectGetMinX(frame) + 250.46, CGRectGetMinY(frame) + 82.24)];
     [markPath addCurveToPoint: CGPointMake(CGRectGetMinX(frame) + 260.39, CGRectGetMinY(frame) + 84.39) controlPoint1: CGPointMake(CGRectGetMinX(frame) + 254.76, CGRectGetMinY(frame) + 86.54) controlPoint2: CGPointMake(CGRectGetMinX(frame) + 258.24, CGRectGetMinY(frame) + 86.54)];
     [markPath closePath];
-    [overTimeColor setStroke];
+    [g_overTimeColor setStroke];
     markPath.lineWidth = 6;
     [markPath stroke];
 
@@ -79,9 +81,9 @@
     [bezier5Path addLineToPoint: CGPointMake(CGRectGetMinX(frame) + 0.69813 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.78683 * CGRectGetHeight(frame))];
     [bezier5Path addLineToPoint: CGPointMake(CGRectGetMinX(frame) + 0.71886 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.81799 * CGRectGetHeight(frame))];
     [bezier5Path closePath];
-    [overTimeColor setFill];
+    [g_overTimeColor setFill];
     [bezier5Path fill];
-    [limitingColor setStroke];
+    [g_limitingColor setStroke];
     bezier5Path.lineWidth = 6;
     [bezier5Path stroke];
 
@@ -92,7 +94,7 @@
     [ticksPath addCurveToPoint: CGPointMake(CGRectGetMinX(frame) + 224.75, CGRectGetMinY(frame) + 74.25) controlPoint1: CGPointMake(CGRectGetMinX(frame) + 264.63, CGRectGetMinY(frame) + 160.43) controlPoint2: CGPointMake(CGRectGetMinX(frame) + 258.96, CGRectGetMinY(frame) + 108.47)];
     [ticksPath addCurveToPoint: CGPointMake(CGRectGetMinX(frame) + 76.25, CGRectGetMinY(frame) + 74.25) controlPoint1: CGPointMake(CGRectGetMinX(frame) + 183.74, CGRectGetMinY(frame) + 33.25) controlPoint2: CGPointMake(CGRectGetMinX(frame) + 117.26, CGRectGetMinY(frame) + 33.25)];
     [ticksPath addCurveToPoint: CGPointMake(CGRectGetMinX(frame) + 59.03, CGRectGetMinY(frame) + 200.12) controlPoint1: CGPointMake(CGRectGetMinX(frame) + 42.15, CGRectGetMinY(frame) + 108.36) controlPoint2: CGPointMake(CGRectGetMinX(frame) + 36.41, CGRectGetMinY(frame) + 160.08)];
-    [overTimeColor setStroke];
+    [g_overTimeColor setStroke];
     ticksPath.lineWidth = 16;
     CGFloat ticksPattern[] = {6, 46};
     [ticksPath setLineDash: ticksPattern count: 2 phase: -8];
@@ -120,7 +122,7 @@
     [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(frame) + 0.70619 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.66895 * CGRectGetHeight(frame)) controlPoint1: CGPointMake(CGRectGetMinX(frame) + 0.78674 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.40982 * CGRectGetHeight(frame)) controlPoint2: CGPointMake(CGRectGetMinX(frame) + 0.79277 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.56509 * CGRectGetHeight(frame))];
     [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(frame) + 0.69000 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.68667 * CGRectGetHeight(frame)) controlPoint1: CGPointMake(CGRectGetMinX(frame) + 0.70111 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.67504 * CGRectGetHeight(frame)) controlPoint2: CGPointMake(CGRectGetMinX(frame) + 0.69000 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.68667 * CGRectGetHeight(frame))];
     [bezierPath closePath];
-    [limitingColor setStroke];
+    [g_limitingColor setStroke];
     bezierPath.lineWidth = 6;
     [bezierPath stroke];
 
@@ -128,7 +130,7 @@
     //// gaugeArm Drawing
     CGContextSaveGState(context);
     CGContextTranslateCTM(context, CGRectGetMinX(frame) + 0.50017 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.49704 * CGRectGetHeight(frame));
-    CGContextRotateCTM(context, -angle * M_PI / 180);
+    CGContextRotateCTM(context, -g_angle * M_PI / 180);
 
     UIBezierPath* gaugeArmPath = UIBezierPath.bezierPath;
     [gaugeArmPath moveToPoint: CGPointMake(-10.05, 33.89)];
@@ -138,9 +140,9 @@
     [gaugeArmPath addLineToPoint: CGPointMake(-10.05, -85.11)];
     [gaugeArmPath addLineToPoint: CGPointMake(-10.05, 33.89)];
     [gaugeArmPath closePath];
-    [limitingColor setFill];
+    [g_limitingColor setFill];
     [gaugeArmPath fill];
-    [limitingColor setStroke];
+    [g_limitingColor setStroke];
     gaugeArmPath.lineWidth = 6;
     [gaugeArmPath stroke];
 
@@ -149,43 +151,45 @@
 
     //// turnGear Drawing
     UIBezierPath* turnGearPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(CGRectGetMinX(frame) + 134, CGRectGetMinY(frame) + 134, CGRectGetWidth(frame) - 267, CGRectGetHeight(frame) - 267)];
-    [UIColor.whiteColor setFill];
+    [g_limitingFill setFill];
     [turnGearPath fill];
-    [overTimeColor setStroke];
+    [g_overTimeColor setStroke];
     turnGearPath.lineWidth = 6;
     [turnGearPath stroke];
 }
 
-+ (void)drawTimerGaugeSmallWithMinSeconds: (CGFloat)minSeconds maxSeconds: (CGFloat)maxSeconds elapsedSeconds: (CGFloat)elapsedSeconds;
++ (void)drawTimerGaugeSmallWithG_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
 {
     //// General Declarations
     CGContextRef context = UIGraphicsGetCurrentContext();
 
     //// Color Declarations
-    UIColor* gaugeOutline = [UIColor colorWithRed: 0.569 green: 0.517 blue: 0.517 alpha: 1];
-    UIColor* gaugeOutlineOverTime = [UIColor colorWithRed: 0.946 green: 0.068 blue: 0.068 alpha: 1];
-    UIColor* lowPressureColor = [UIColor colorWithRed: 0.389 green: 0.8 blue: 0.32 alpha: 1];
-    UIColor* mediumPressureColor = [UIColor colorWithRed: 0.972 green: 0.924 blue: 0 alpha: 1];
-    UIColor* highPressureColor = [UIColor colorWithRed: 1 green: 0.106 blue: 0 alpha: 1];
-    UIColor* gaugeNormal = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1];
-    UIColor* white = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 1];
+    UIColor* g_GaugeOutline = [UIColor colorWithRed: 0.569 green: 0.517 blue: 0.517 alpha: 1];
+    UIColor* g_GaugeOutlineOverTime = [UIColor colorWithRed: 0.946 green: 0.068 blue: 0.068 alpha: 1];
+    UIColor* g_LowPressureColor = [UIColor colorWithRed: 0.389 green: 0.8 blue: 0.32 alpha: 1];
+    UIColor* g_MediumPressureColor = [UIColor colorWithRed: 0.972 green: 0.924 blue: 0 alpha: 1];
+    UIColor* g_HighPressureColor = [UIColor colorWithRed: 1 green: 0.106 blue: 0 alpha: 1];
+    UIColor* g_GaugeNormal = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1];
+    UIColor* g_white = [UIColor colorWithRed: 1 green: 0.998 blue: 0.998 alpha: 1];
+    UIColor* g_clear = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 0];
 
     //// Variable Declarations
-    CGFloat midSeconds = (minSeconds + maxSeconds) / 2.0;
-    CGFloat pressure = elapsedSeconds / (maxSeconds + 30);
-    CGFloat ppressure = pressure < 0 ? 0 : (pressure > 1 ? 1 : pressure);
-    CGFloat angle = -270 * ppressure + 135;
-    UIColor* limitingColor = elapsedSeconds <= 0 ? white : (elapsedSeconds < minSeconds ? gaugeNormal : (elapsedSeconds < midSeconds ? lowPressureColor : (elapsedSeconds < maxSeconds ? mediumPressureColor : highPressureColor)));
-    UIColor* overTimeColor = elapsedSeconds <= 0 ? white : (elapsedSeconds < maxSeconds + 30 ? gaugeOutline : gaugeOutlineOverTime);
+    CGFloat g_midSeconds = (g_minSeconds + g_maxSeconds) / 2.0;
+    CGFloat g_pressure = g_elapsedSeconds / (g_maxSeconds + 30);
+    CGFloat g_ppressure = g_pressure < 0 ? 0 : (g_pressure > 1 ? 1 : g_pressure);
+    CGFloat g_angle = -270 * g_ppressure + 135;
+    UIColor* g_limitingColor = g_elapsedSeconds <= 0 ? g_clear : (g_elapsedSeconds < g_minSeconds ? g_GaugeNormal : (g_elapsedSeconds < g_midSeconds ? g_LowPressureColor : (g_elapsedSeconds < g_maxSeconds ? g_MediumPressureColor : g_HighPressureColor)));
+    UIColor* g_overTimeColor = g_elapsedSeconds <= 0 ? g_clear : (g_elapsedSeconds < g_maxSeconds + 30 ? g_GaugeOutline : g_GaugeOutlineOverTime);
+    UIColor* g_limitingFill = g_elapsedSeconds <= 0 ? g_clear : g_white;
 
     //// Perimeter Drawing
     CGContextSaveGState(context);
     CGContextTranslateCTM(context, 50, 50);
 
     UIBezierPath* perimeterPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(-47, -47, 94, 94)];
-    [white setFill];
+    [g_limitingFill setFill];
     [perimeterPath fill];
-    [limitingColor setStroke];
+    [g_limitingColor setStroke];
     perimeterPath.lineWidth = 2;
     [perimeterPath stroke];
 
@@ -206,9 +210,9 @@
     [bezier5Path addLineToPoint: CGPointMake(69.46, 81.74)];
     [bezier5Path addLineToPoint: CGPointMake(71.5, 84.73)];
     [bezier5Path closePath];
-    [overTimeColor setFill];
+    [g_overTimeColor setFill];
     [bezier5Path fill];
-    [limitingColor setStroke];
+    [g_limitingColor setStroke];
     bezier5Path.lineWidth = 2;
     [bezier5Path stroke];
 
@@ -222,9 +226,7 @@
     [ticksPath addCurveToPoint: CGPointMake(25.1, -25.73) controlPoint1: CGPointMake(38.59, 4.46) controlPoint2: CGPointMake(36.67, -13.74)];
     [ticksPath addCurveToPoint: CGPointMake(-25.1, -25.73) controlPoint1: CGPointMake(11.24, -40.09) controlPoint2: CGPointMake(-11.24, -40.09)];
     [ticksPath addCurveToPoint: CGPointMake(-30.92, 18.36) controlPoint1: CGPointMake(-36.63, -13.78) controlPoint2: CGPointMake(-38.57, 4.34)];
-    [white setFill];
-    [ticksPath fill];
-    [overTimeColor setStroke];
+    [g_overTimeColor setStroke];
     ticksPath.lineWidth = 7;
     CGFloat ticksPattern[] = {3, 8};
     [ticksPath setLineDash: ticksPattern count: 2 phase: -8];
@@ -254,7 +256,7 @@
     [bezierPath addCurveToPoint: CGPointMake(71.21, 68.46) controlPoint1: CGPointMake(79.53, 41.42) controlPoint2: CGPointMake(80.15, 57.62)];
     [bezierPath addCurveToPoint: CGPointMake(69.53, 70.3) controlPoint1: CGPointMake(70.68, 69.09) controlPoint2: CGPointMake(69.53, 70.3)];
     [bezierPath closePath];
-    [limitingColor setStroke];
+    [g_limitingColor setStroke];
     bezierPath.lineWidth = 2;
     [bezierPath stroke];
 
@@ -262,7 +264,7 @@
     //// gaugeArm Drawing
     CGContextSaveGState(context);
     CGContextTranslateCTM(context, 50, 50);
-    CGContextRotateCTM(context, -angle * M_PI / 180);
+    CGContextRotateCTM(context, -g_angle * M_PI / 180);
 
     UIBezierPath* gaugeArmPath = UIBezierPath.bezierPath;
     [gaugeArmPath moveToPoint: CGPointMake(-4, 9.94)];
@@ -272,9 +274,9 @@
     [gaugeArmPath addLineToPoint: CGPointMake(-4, -27.68)];
     [gaugeArmPath addLineToPoint: CGPointMake(-4, 9.94)];
     [gaugeArmPath closePath];
-    [limitingColor setFill];
+    [g_limitingColor setFill];
     [gaugeArmPath fill];
-    [limitingColor setStroke];
+    [g_limitingColor setStroke];
     gaugeArmPath.lineWidth = 2;
     [gaugeArmPath stroke];
 
@@ -286,45 +288,47 @@
     CGContextTranslateCTM(context, 50, 50);
 
     UIBezierPath* turnGearPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(-5.5, -5.5, 11, 11)];
-    [UIColor.whiteColor setFill];
+    [g_limitingFill setFill];
     [turnGearPath fill];
-    [overTimeColor setStroke];
+    [g_overTimeColor setStroke];
     turnGearPath.lineWidth = 2;
     [turnGearPath stroke];
 
     CGContextRestoreGState(context);
 }
 
-+ (void)drawGauge50WithMinSeconds: (CGFloat)minSeconds maxSeconds: (CGFloat)maxSeconds elapsedSeconds: (CGFloat)elapsedSeconds;
++ (void)drawGauge50WithG_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
 {
     //// General Declarations
     CGContextRef context = UIGraphicsGetCurrentContext();
 
     //// Color Declarations
-    UIColor* gaugeOutline = [UIColor colorWithRed: 0.569 green: 0.517 blue: 0.517 alpha: 1];
-    UIColor* gaugeOutlineOverTime = [UIColor colorWithRed: 0.946 green: 0.068 blue: 0.068 alpha: 1];
-    UIColor* lowPressureColor = [UIColor colorWithRed: 0.389 green: 0.8 blue: 0.32 alpha: 1];
-    UIColor* mediumPressureColor = [UIColor colorWithRed: 0.972 green: 0.924 blue: 0 alpha: 1];
-    UIColor* highPressureColor = [UIColor colorWithRed: 1 green: 0.106 blue: 0 alpha: 1];
-    UIColor* gaugeNormal = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1];
-    UIColor* white = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 1];
+    UIColor* g_GaugeOutline = [UIColor colorWithRed: 0.569 green: 0.517 blue: 0.517 alpha: 1];
+    UIColor* g_GaugeOutlineOverTime = [UIColor colorWithRed: 0.946 green: 0.068 blue: 0.068 alpha: 1];
+    UIColor* g_LowPressureColor = [UIColor colorWithRed: 0.389 green: 0.8 blue: 0.32 alpha: 1];
+    UIColor* g_MediumPressureColor = [UIColor colorWithRed: 0.972 green: 0.924 blue: 0 alpha: 1];
+    UIColor* g_HighPressureColor = [UIColor colorWithRed: 1 green: 0.106 blue: 0 alpha: 1];
+    UIColor* g_GaugeNormal = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1];
+    UIColor* g_white = [UIColor colorWithRed: 1 green: 0.998 blue: 0.998 alpha: 1];
+    UIColor* g_clear = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 0];
 
     //// Variable Declarations
-    CGFloat midSeconds = (minSeconds + maxSeconds) / 2.0;
-    CGFloat pressure = elapsedSeconds / (maxSeconds + 30);
-    CGFloat ppressure = pressure < 0 ? 0 : (pressure > 1 ? 1 : pressure);
-    CGFloat angle = -270 * ppressure + 135;
-    UIColor* limitingColor = elapsedSeconds <= 0 ? white : (elapsedSeconds < minSeconds ? gaugeNormal : (elapsedSeconds < midSeconds ? lowPressureColor : (elapsedSeconds < maxSeconds ? mediumPressureColor : highPressureColor)));
-    UIColor* overTimeColor = elapsedSeconds <= 0 ? white : (elapsedSeconds < maxSeconds + 30 ? gaugeOutline : gaugeOutlineOverTime);
+    CGFloat g_midSeconds = (g_minSeconds + g_maxSeconds) / 2.0;
+    CGFloat g_pressure = g_elapsedSeconds / (g_maxSeconds + 30);
+    CGFloat g_ppressure = g_pressure < 0 ? 0 : (g_pressure > 1 ? 1 : g_pressure);
+    CGFloat g_angle = -270 * g_ppressure + 135;
+    UIColor* g_limitingColor = g_elapsedSeconds <= 0 ? g_clear : (g_elapsedSeconds < g_minSeconds ? g_GaugeNormal : (g_elapsedSeconds < g_midSeconds ? g_LowPressureColor : (g_elapsedSeconds < g_maxSeconds ? g_MediumPressureColor : g_HighPressureColor)));
+    UIColor* g_overTimeColor = g_elapsedSeconds <= 0 ? g_clear : (g_elapsedSeconds < g_maxSeconds + 30 ? g_GaugeOutline : g_GaugeOutlineOverTime);
+    UIColor* g_limitingFill = g_elapsedSeconds <= 0 ? g_clear : g_white;
 
     //// Perimeter Drawing
     CGContextSaveGState(context);
     CGContextTranslateCTM(context, 25, 25);
 
     UIBezierPath* perimeterPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(-24, -24, 48, 48)];
-    [white setFill];
+    [g_limitingFill setFill];
     [perimeterPath fill];
-    [limitingColor setStroke];
+    [g_limitingColor setStroke];
     perimeterPath.lineWidth = 2;
     [perimeterPath stroke];
 
@@ -345,9 +349,9 @@
     [bezier5Path addLineToPoint: CGPointMake(34.08, 40.14)];
     [bezier5Path addLineToPoint: CGPointMake(35, 41.39)];
     [bezier5Path closePath];
-    [overTimeColor setFill];
+    [g_overTimeColor setFill];
     [bezier5Path fill];
-    [limitingColor setStroke];
+    [g_limitingColor setStroke];
     bezier5Path.lineWidth = 2;
     [bezier5Path stroke];
 
@@ -361,9 +365,7 @@
     [ticksPath addCurveToPoint: CGPointMake(13.67, -12.6) controlPoint1: CGPointMake(19.93, 1.12) controlPoint2: CGPointMake(19.04, -7.16)];
     [ticksPath addCurveToPoint: CGPointMake(-9.67, -12.6) controlPoint1: CGPointMake(7.22, -19.13) controlPoint2: CGPointMake(-3.22, -19.13)];
     [ticksPath addCurveToPoint: CGPointMake(-12.37, 7.44) controlPoint1: CGPointMake(-15.03, -7.17) controlPoint2: CGPointMake(-15.93, 1.06)];
-    [white setFill];
-    [ticksPath fill];
-    [overTimeColor setStroke];
+    [g_overTimeColor setStroke];
     ticksPath.lineWidth = 4;
     CGFloat ticksPattern[] = {1, 5};
     [ticksPath setLineDash: ticksPattern count: 2 phase: -8];
@@ -393,7 +395,7 @@
     [bezierPath addCurveToPoint: CGPointMake(35.08, 33.88) controlPoint1: CGPointMake(39.14, 20.76) controlPoint2: CGPointMake(39.44, 28.62)];
     [bezierPath addCurveToPoint: CGPointMake(34.27, 34.78) controlPoint1: CGPointMake(34.83, 34.19) controlPoint2: CGPointMake(34.27, 34.78)];
     [bezierPath closePath];
-    [limitingColor setStroke];
+    [g_limitingColor setStroke];
     bezierPath.lineWidth = 2;
     [bezierPath stroke];
 
@@ -401,7 +403,7 @@
     //// gaugeArm Drawing
     CGContextSaveGState(context);
     CGContextTranslateCTM(context, 25, 25);
-    CGContextRotateCTM(context, -angle * M_PI / 180);
+    CGContextRotateCTM(context, -g_angle * M_PI / 180);
 
     UIBezierPath* gaugeArmPath = UIBezierPath.bezierPath;
     [gaugeArmPath moveToPoint: CGPointMake(-2.91, 7)];
@@ -411,9 +413,9 @@
     [gaugeArmPath addLineToPoint: CGPointMake(-2.91, -12.68)];
     [gaugeArmPath addLineToPoint: CGPointMake(-2.91, 7)];
     [gaugeArmPath closePath];
-    [limitingColor setFill];
+    [g_limitingColor setFill];
     [gaugeArmPath fill];
-    [limitingColor setStroke];
+    [g_limitingColor setStroke];
     gaugeArmPath.lineWidth = 2;
     [gaugeArmPath stroke];
 
@@ -425,9 +427,9 @@
     CGContextTranslateCTM(context, 25, 25);
 
     UIBezierPath* turnGearPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(-5.5, -5.5, 11, 11)];
-    [UIColor.whiteColor setFill];
+    [g_limitingFill setFill];
     [turnGearPath fill];
-    [overTimeColor setStroke];
+    [g_overTimeColor setStroke];
     turnGearPath.lineWidth = 2;
     [turnGearPath stroke];
 

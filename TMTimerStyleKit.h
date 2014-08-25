@@ -15,8 +15,8 @@
 @interface TMTimerStyleKit : NSObject
 
 // Drawing Methods
-+ (void)drawTimerGaugeMediumWithFrame: (CGRect)frame minSeconds: (CGFloat)minSeconds maxSeconds: (CGFloat)maxSeconds elapsedSeconds: (CGFloat)elapsedSeconds;
-+ (void)drawTimerGaugeSmallWithMinSeconds: (CGFloat)minSeconds maxSeconds: (CGFloat)maxSeconds elapsedSeconds: (CGFloat)elapsedSeconds;
-+ (void)drawGauge50WithMinSeconds: (CGFloat)minSeconds maxSeconds: (CGFloat)maxSeconds elapsedSeconds: (CGFloat)elapsedSeconds;
++ (void)drawTimerGaugeMediumWithFrame: (CGRect)frame g_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
++ (void)drawTimerGaugeSmallWithG_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
++ (void)drawGauge50WithG_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
 
 @end

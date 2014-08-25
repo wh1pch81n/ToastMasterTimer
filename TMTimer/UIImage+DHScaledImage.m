@@ -18,9 +18,10 @@
         scale = size.width / self.size.width;
     }
     
-    CGRect newRect = CGRectMake(0, 0, self.size.width * scale, self.size.height * scale);
-    UIGraphicsBeginImageContext(newRect.size);
-    [self drawInRect:newRect];
+    CGRect newRect = CGRectMake(size.width/2, size.height/2, self.size.width * scale, self.size.height * scale);
+    UIGraphicsBeginImageContext(size);
+    UIRectFill(CGRectMake(0, 0, size.width, size.height));
+    [self drawInRect:CGRectOffset(newRect, -newRect.size.width/2, -newRect.size.height/2)];
     UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     

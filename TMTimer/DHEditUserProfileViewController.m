@@ -364,6 +364,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     _profilePic = info[UIImagePickerControllerEditedImage];
     self.imageViewProfilePic.image = _profilePic;
+    self.imageViewProfilePic.backgroundColor = [UIColor blackColor];
     
     self.didSetImage = YES;
     [picker dismissViewControllerAnimated:YES completion:nil];

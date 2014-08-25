@@ -25,7 +25,7 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    [TMTimerStyleKit drawGauge50WithMinSeconds:self.minSeconds maxSeconds:self.maxSeconds elapsedSeconds:self.elapsedSeconds];
+    [TMTimerStyleKit drawGauge50WithG_minSeconds:_minSeconds g_maxSeconds:_maxSeconds g_elapsedSeconds:_elapsedSeconds];
 }
 
 
