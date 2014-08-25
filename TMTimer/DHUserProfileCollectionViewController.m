@@ -37,6 +37,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewProfile)];
+    self.imageCache = [[NSCache alloc] init];
 }
 
 - (void)didReceiveMemoryWarning
@@ -173,6 +174,7 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     // In the simplest, most efficient, case, reload the table view.
+    self.imageCache = [NSCache new];
     [self.collectionView reloadData];
 }
 

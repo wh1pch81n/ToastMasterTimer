@@ -50,6 +50,7 @@ NSString *const kTableTopics = @"Table Topics";
 {
 	[super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    self.imageCache = [[NSCache alloc] init];
     self.canDisplayBannerAds = YES;
     
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -315,6 +316,7 @@ NSString *const kTableTopics = @"Table Topics";
 			break;
 			
 		case NSFetchedResultsChangeUpdate:
+            self.imageCache = [NSCache new];
             indexPath = [NSIndexPath indexPathForItem:indexPath.row inSection:1];
 			[self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
 			break;
