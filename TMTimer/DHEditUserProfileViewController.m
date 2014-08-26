@@ -168,6 +168,11 @@
         bgColor = [UIColor grayColor];
     }
     [[cell flag] setBackgroundColor:bgColor];
+    
+    cell.gauge.minSeconds = obj.minTime.integerValue * kSecondsInAMinute;
+    cell.gauge.maxSeconds = obj.maxTime.integerValue * kSecondsInAMinute;
+    cell.gauge.elapsedSeconds = [obj.endDate timeIntervalSinceDate:obj.startDate];
+    [cell.gauge setNeedsDisplay];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -192,12 +197,12 @@
     NSFetchRequest *fetchRequest = [NSFetchRequest new];
     fetchRequest.entity = [NSEntityDescription entityForName:@"Event"
                                       inManagedObjectContext:_managedObjectContext];
-    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"timeStamp" ascending:YES]];
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"timeStamp" ascending:NO]];
     fetchRequest.fetchBatchSize = 20;
     
     User_Profile *up = (User_Profile *)[self.managedObjectContext objectWithID:self.objectID];
 
-    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"ANY speeches_speaker.user_name == %@", up.user_name];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"speeches_speaker == %@", up];
     
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:_managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     

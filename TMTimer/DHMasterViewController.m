@@ -350,15 +350,11 @@ NSString *const kTableTopics = @"Table Topics";
 	Event *object = [self.fetchedResultsController objectAtIndexPath:ip];
 	
 	[[dhCell blurb] setText:[object blurb]];
-    NSTimeInterval total = [object.endDate timeIntervalSinceDate:object.startDate];
-    UIColor *bgColor = [[DHColorForTime shared] colorForSeconds:total
-                                                            min:object.minTime.integerValue
-                                                            max:object.maxTime.integerValue];
-    if ([bgColor isEqual:[UIColor blackColor]]) {
-        bgColor = [UIColor clearColor];
-    }
-    [[dhCell flag] setBackgroundColor:bgColor];
-    [[[dhCell flag] layer] setCornerRadius:dhCell.flag.frame.size.width/2];
+    
+    dhCell.flag.minSeconds = object.minTime.integerValue * kSecondsInAMinute;
+    dhCell.flag.maxSeconds = object.maxTime.integerValue * kSecondsInAMinute;
+    dhCell.flag.elapsedSeconds = [object.endDate timeIntervalSinceDate:object.startDate];
+    [dhCell.flag setNeedsDisplay];
     
     [[dhCell userName] setText:((User_Profile *)object.speeches_speaker).user_name];
 	
