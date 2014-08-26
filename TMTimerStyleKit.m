@@ -13,13 +13,361 @@
 
 @implementation TMTimerStyleKit
 
+#pragma mark Cache
+
+static UIColor* _g_LowPressureColor = nil;
+static UIColor* _g_MediumPressureColor = nil;
+static UIColor* _g_HighPressureColor = nil;
+static UIColor* _tM_ThemeAqua = nil;
+static UIColor* _tM_ThemeBlue = nil;
+static UIColor* _tM_ThemeAqua_bg = nil;
+
+static UIImage* _imageOfAddProfileButton = nil;
+static UIImage* _imageOfAddNewSpeaker = nil;
+static UIImage* _imageOfDuplicateSpeech = nil;
+static UIImage* _imageOfOverwrite = nil;
+static UIImage* _imageOfCancel = nil;
+
 #pragma mark Initialization
 
 + (void)initialize
 {
+    // Colors Initialization
+    _g_LowPressureColor = [UIColor colorWithRed: 0.389 green: 0.8 blue: 0.32 alpha: 1];
+    _g_MediumPressureColor = [UIColor colorWithRed: 0.972 green: 0.924 blue: 0 alpha: 1];
+    _g_HighPressureColor = [UIColor colorWithRed: 1 green: 0.106 blue: 0 alpha: 1];
+    _tM_ThemeAqua = [UIColor colorWithRed: 0.211 green: 0.868 blue: 0.869 alpha: 1];
+    CGFloat tM_ThemeAquaRGBA[4];
+    [_tM_ThemeAqua getRed: &tM_ThemeAquaRGBA[0] green: &tM_ThemeAquaRGBA[1] blue: &tM_ThemeAquaRGBA[2] alpha: &tM_ThemeAquaRGBA[3]];
+
+    _tM_ThemeAqua_bg = [UIColor colorWithRed: (tM_ThemeAquaRGBA[0] * 0.2 + 0.8) green: (tM_ThemeAquaRGBA[1] * 0.2 + 0.8) blue: (tM_ThemeAquaRGBA[2] * 0.2 + 0.8) alpha: (tM_ThemeAquaRGBA[3] * 0.2 + 0.8)];
+    _tM_ThemeBlue = [UIColor colorWithRed: 0.016 green: 0.397 blue: 0.699 alpha: 1];
+
 }
 
+#pragma mark Colors
+
++ (UIColor*)g_LowPressureColor { return _g_LowPressureColor; }
++ (UIColor*)g_MediumPressureColor { return _g_MediumPressureColor; }
++ (UIColor*)g_HighPressureColor { return _g_HighPressureColor; }
++ (UIColor*)tM_ThemeAqua { return _tM_ThemeAqua; }
++ (UIColor*)tM_ThemeBlue { return _tM_ThemeBlue; }
++ (UIColor*)tM_ThemeAqua_bg { return _tM_ThemeAqua_bg; }
+
 #pragma mark Drawing Methods
+
++ (void)drawTMNavBarWithFrame: (CGRect)frame;
+{
+    //// General Declarations
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+
+    //// Gradient Declarations
+    CGFloat gradientLocations[] = {0, 0.77, 1};
+    CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)@[(id)TMTimerStyleKit.tM_ThemeAqua.CGColor, (id)[UIColor colorWithRed: 0.113 green: 0.633 blue: 0.784 alpha: 1].CGColor, (id)TMTimerStyleKit.tM_ThemeBlue.CGColor], gradientLocations);
+
+    //// Rectangle Drawing
+    CGRect rectangleRect = CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), CGRectGetWidth(frame), CGRectGetHeight(frame));
+    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect: rectangleRect];
+    CGContextSaveGState(context);
+    [rectanglePath addClip];
+    CGContextDrawLinearGradient(context, gradient,
+        CGPointMake(CGRectGetMidX(rectangleRect), CGRectGetMinY(rectangleRect)),
+        CGPointMake(CGRectGetMidX(rectangleRect), CGRectGetMaxY(rectangleRect)),
+        0);
+    CGContextRestoreGState(context);
+
+
+    //// Cleanup
+    CGGradientRelease(gradient);
+    CGColorSpaceRelease(colorSpace);
+}
+
++ (void)drawAddProfileButton;
+{
+    //// General Declarations
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    //// Group
+    {
+        //// Bezier Drawing
+        CGContextSaveGState(context);
+        CGContextTranslateCTM(context, 12.5, 11.81);
+
+        UIBezierPath* bezierPath = UIBezierPath.bezierPath;
+        [bezierPath moveToPoint: CGPointMake(14.79, 14.88)];
+        [bezierPath addLineToPoint: CGPointMake(14.79, 17.25)];
+        [bezierPath addCurveToPoint: CGPointMake(18.17, 19.62) controlPoint1: CGPointMake(14.79, 17.25) controlPoint2: CGPointMake(16.26, 18.94)];
+        [bezierPath addCurveToPoint: CGPointMake(20.09, 20.3) controlPoint1: CGPointMake(20.09, 20.3) controlPoint2: CGPointMake(18.17, 19.62)];
+        [bezierPath addCurveToPoint: CGPointMake(22, 23.69) controlPoint1: CGPointMake(22, 20.98) controlPoint2: CGPointMake(22, 23.69)];
+        [bezierPath addLineToPoint: CGPointMake(3.11, 23.69)];
+        [bezierPath addCurveToPoint: CGPointMake(5.03, 20.3) controlPoint1: CGPointMake(3.11, 23.69) controlPoint2: CGPointMake(3.11, 20.98)];
+        [bezierPath addCurveToPoint: CGPointMake(6.94, 19.62) controlPoint1: CGPointMake(6.94, 19.62) controlPoint2: CGPointMake(5.03, 20.3)];
+        [bezierPath addCurveToPoint: CGPointMake(10.32, 17.25) controlPoint1: CGPointMake(8.86, 18.94) controlPoint2: CGPointMake(10.32, 17.25)];
+        [bezierPath addLineToPoint: CGPointMake(10.32, 14.88)];
+        [bezierPath addLineToPoint: CGPointMake(9.69, 13.52)];
+        [bezierPath addCurveToPoint: CGPointMake(9.05, 11.49) controlPoint1: CGPointMake(9.69, 13.52) controlPoint2: CGPointMake(9.05, 12.17)];
+        [bezierPath addCurveToPoint: CGPointMake(9.62, 5.92) controlPoint1: CGPointMake(9.05, 8.78) controlPoint2: CGPointMake(8.29, 7.81)];
+        [bezierPath addCurveToPoint: CGPointMake(15.49, 5.92) controlPoint1: CGPointMake(10.96, 4.04) controlPoint2: CGPointMake(14.15, 4.04)];
+        [bezierPath addCurveToPoint: CGPointMake(16.07, 11.49) controlPoint1: CGPointMake(16.83, 7.81) controlPoint2: CGPointMake(16.07, 8.78)];
+        [bezierPath addCurveToPoint: CGPointMake(15.43, 13.52) controlPoint1: CGPointMake(16.07, 12.17) controlPoint2: CGPointMake(15.61, 13.32)];
+        [bezierPath addCurveToPoint: CGPointMake(14.79, 14.88) controlPoint1: CGPointMake(15.24, 13.74) controlPoint2: CGPointMake(14.79, 14.88)];
+        [bezierPath closePath];
+        [TMTimerStyleKit.tM_ThemeAqua_bg setFill];
+        [bezierPath fill];
+        [TMTimerStyleKit.tM_ThemeBlue setStroke];
+        bezierPath.lineWidth = 1.5;
+        [bezierPath stroke];
+
+        CGContextRestoreGState(context);
+
+
+        //// Bezier 4 Drawing
+        UIBezierPath* bezier4Path = UIBezierPath.bezierPath;
+        [bezier4Path moveToPoint: CGPointMake(16.36, 12.5)];
+        [bezier4Path addCurveToPoint: CGPointMake(16.36, 19.84) controlPoint1: CGPointMake(16.36, 19.84) controlPoint2: CGPointMake(16.36, 19.84)];
+        [bezier4Path moveToPoint: CGPointMake(12.5, 16.17)];
+        [bezier4Path addCurveToPoint: CGPointMake(20.22, 16.17) controlPoint1: CGPointMake(19.52, 16.17) controlPoint2: CGPointMake(20.22, 16.17)];
+        [TMTimerStyleKit.tM_ThemeBlue setStroke];
+        bezier4Path.lineWidth = 1.5;
+        [bezier4Path stroke];
+    }
+}
+
++ (void)drawAddNewSpeaker;
+{
+
+    //// Group
+    {
+        //// Bezier 4 Drawing
+        UIBezierPath* bezier4Path = UIBezierPath.bezierPath;
+        [bezier4Path moveToPoint: CGPointMake(16.46, 12.5)];
+        [bezier4Path addCurveToPoint: CGPointMake(16.46, 20.43) controlPoint1: CGPointMake(16.46, 20.43) controlPoint2: CGPointMake(16.46, 20.43)];
+        [bezier4Path moveToPoint: CGPointMake(12.5, 16.46)];
+        [bezier4Path addCurveToPoint: CGPointMake(20.43, 16.46) controlPoint1: CGPointMake(19.71, 16.46) controlPoint2: CGPointMake(20.43, 16.46)];
+        [TMTimerStyleKit.tM_ThemeBlue setStroke];
+        bezier4Path.lineWidth = 1.5;
+        [bezier4Path stroke];
+
+
+        //// Bezier 7 Drawing
+        UIBezierPath* bezier7Path = UIBezierPath.bezierPath;
+        [bezier7Path moveToPoint: CGPointMake(22.26, 37.5)];
+        [bezier7Path addLineToPoint: CGPointMake(37.5, 37.5)];
+        [bezier7Path addLineToPoint: CGPointMake(37.5, 14.94)];
+        [bezier7Path addLineToPoint: CGPointMake(22.26, 14.94)];
+        [bezier7Path addLineToPoint: CGPointMake(22.26, 37.5)];
+        [bezier7Path closePath];
+        [bezier7Path moveToPoint: CGPointMake(24.7, 18.6)];
+        [bezier7Path addCurveToPoint: CGPointMake(28.96, 18.6) controlPoint1: CGPointMake(28.71, 18.6) controlPoint2: CGPointMake(28.96, 18.6)];
+        [bezier7Path moveToPoint: CGPointMake(24.7, 22.26)];
+        [bezier7Path addLineToPoint: CGPointMake(35.06, 22.26)];
+        [bezier7Path moveToPoint: CGPointMake(24.7, 25.92)];
+        [bezier7Path addLineToPoint: CGPointMake(35.06, 25.92)];
+        [bezier7Path moveToPoint: CGPointMake(24.7, 29.57)];
+        [bezier7Path addLineToPoint: CGPointMake(35.06, 29.57)];
+        [bezier7Path moveToPoint: CGPointMake(29.57, 33.23)];
+        [bezier7Path addLineToPoint: CGPointMake(35.06, 33.23)];
+        [TMTimerStyleKit.tM_ThemeAqua_bg setFill];
+        [bezier7Path fill];
+        [TMTimerStyleKit.tM_ThemeBlue setStroke];
+        bezier7Path.lineWidth = 1.5;
+        [bezier7Path stroke];
+    }
+}
+
++ (void)drawDuplicateSpeech;
+{
+
+    //// Bezier 7 Drawing
+    UIBezierPath* bezier7Path = UIBezierPath.bezierPath;
+    [bezier7Path moveToPoint: CGPointMake(28.26, 43.5)];
+    [bezier7Path addLineToPoint: CGPointMake(43.5, 43.5)];
+    [bezier7Path addLineToPoint: CGPointMake(43.5, 20.94)];
+    [bezier7Path addLineToPoint: CGPointMake(28.26, 20.94)];
+    [bezier7Path addLineToPoint: CGPointMake(28.26, 43.5)];
+    [bezier7Path closePath];
+    [bezier7Path moveToPoint: CGPointMake(30.7, 24.6)];
+    [bezier7Path addCurveToPoint: CGPointMake(34.96, 24.6) controlPoint1: CGPointMake(34.71, 24.6) controlPoint2: CGPointMake(34.96, 24.6)];
+    [bezier7Path moveToPoint: CGPointMake(30.7, 28.26)];
+    [bezier7Path addLineToPoint: CGPointMake(41.06, 28.26)];
+    [bezier7Path moveToPoint: CGPointMake(30.7, 31.92)];
+    [bezier7Path addLineToPoint: CGPointMake(41.06, 31.92)];
+    [bezier7Path moveToPoint: CGPointMake(30.7, 35.57)];
+    [bezier7Path addLineToPoint: CGPointMake(41.06, 35.57)];
+    [bezier7Path moveToPoint: CGPointMake(35.57, 39.23)];
+    [bezier7Path addLineToPoint: CGPointMake(41.06, 39.23)];
+    [TMTimerStyleKit.tM_ThemeAqua_bg setFill];
+    [bezier7Path fill];
+    [TMTimerStyleKit.tM_ThemeBlue setStroke];
+    bezier7Path.lineWidth = 1.5;
+    [bezier7Path stroke];
+
+
+    //// Bezier Drawing
+    UIBezierPath* bezierPath = UIBezierPath.bezierPath;
+    [bezierPath moveToPoint: CGPointMake(7.26, 43.5)];
+    [bezierPath addLineToPoint: CGPointMake(22.5, 43.5)];
+    [bezierPath addLineToPoint: CGPointMake(22.5, 20.94)];
+    [bezierPath addLineToPoint: CGPointMake(7.26, 20.94)];
+    [bezierPath addLineToPoint: CGPointMake(7.26, 43.5)];
+    [bezierPath closePath];
+    [bezierPath moveToPoint: CGPointMake(9.7, 24.6)];
+    [bezierPath addCurveToPoint: CGPointMake(13.96, 24.6) controlPoint1: CGPointMake(13.71, 24.6) controlPoint2: CGPointMake(13.96, 24.6)];
+    [bezierPath moveToPoint: CGPointMake(9.7, 28.26)];
+    [bezierPath addLineToPoint: CGPointMake(20.06, 28.26)];
+    [bezierPath moveToPoint: CGPointMake(9.7, 31.92)];
+    [bezierPath addLineToPoint: CGPointMake(20.06, 31.92)];
+    [bezierPath moveToPoint: CGPointMake(9.7, 35.57)];
+    [bezierPath addLineToPoint: CGPointMake(20.06, 35.57)];
+    [bezierPath moveToPoint: CGPointMake(14.57, 39.23)];
+    [bezierPath addLineToPoint: CGPointMake(20.06, 39.23)];
+    [TMTimerStyleKit.tM_ThemeAqua_bg setFill];
+    [bezierPath fill];
+    [TMTimerStyleKit.tM_ThemeBlue setStroke];
+    bezierPath.lineWidth = 1.5;
+    [bezierPath stroke];
+
+
+    //// Oval Drawing
+    UIBezierPath* ovalPath = UIBezierPath.bezierPath;
+    [ovalPath moveToPoint: CGPointMake(36.5, 16.24)];
+    [ovalPath addCurveToPoint: CGPointMake(33.13, 9.43) controlPoint1: CGPointMake(36.42, 13.77) controlPoint2: CGPointMake(35.3, 11.32)];
+    [ovalPath addCurveToPoint: CGPointMake(16.87, 9.43) controlPoint1: CGPointMake(28.64, 5.52) controlPoint2: CGPointMake(21.36, 5.52)];
+    [ovalPath addCurveToPoint: CGPointMake(13.5, 16.4) controlPoint1: CGPointMake(14.65, 11.36) controlPoint2: CGPointMake(13.53, 13.88)];
+    [TMTimerStyleKit.tM_ThemeBlue setStroke];
+    ovalPath.lineWidth = 1.5;
+    [ovalPath stroke];
+
+
+    //// Bezier 2 Drawing
+    UIBezierPath* bezier2Path = UIBezierPath.bezierPath;
+    [bezier2Path moveToPoint: CGPointMake(38, 17.5)];
+    [bezier2Path addLineToPoint: CGPointMake(34, 14.5)];
+    [bezier2Path addLineToPoint: CGPointMake(38, 12.5)];
+    [bezier2Path addLineToPoint: CGPointMake(38, 17.5)];
+    [bezier2Path closePath];
+    [TMTimerStyleKit.tM_ThemeBlue setFill];
+    [bezier2Path fill];
+    [TMTimerStyleKit.tM_ThemeBlue setStroke];
+    bezier2Path.lineWidth = 1;
+    [bezier2Path stroke];
+}
+
++ (void)drawOverwrite;
+{
+    //// General Declarations
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    //// Bezier 7 Drawing
+    UIBezierPath* bezier7Path = UIBezierPath.bezierPath;
+    [bezier7Path moveToPoint: CGPointMake(25.26, 41.5)];
+    [bezier7Path addLineToPoint: CGPointMake(40.5, 41.5)];
+    [bezier7Path addLineToPoint: CGPointMake(40.5, 18.94)];
+    [bezier7Path addLineToPoint: CGPointMake(25.26, 18.94)];
+    [bezier7Path addLineToPoint: CGPointMake(25.26, 41.5)];
+    [bezier7Path closePath];
+    [bezier7Path moveToPoint: CGPointMake(27.7, 22.6)];
+    [bezier7Path addCurveToPoint: CGPointMake(31.96, 22.6) controlPoint1: CGPointMake(31.71, 22.6) controlPoint2: CGPointMake(31.96, 22.6)];
+    [bezier7Path moveToPoint: CGPointMake(27.7, 26.26)];
+    [bezier7Path addLineToPoint: CGPointMake(38.06, 26.26)];
+    [bezier7Path moveToPoint: CGPointMake(27.7, 29.92)];
+    [bezier7Path addLineToPoint: CGPointMake(38.06, 29.92)];
+    [bezier7Path moveToPoint: CGPointMake(27.7, 33.57)];
+    [bezier7Path addLineToPoint: CGPointMake(38.06, 33.57)];
+    [bezier7Path moveToPoint: CGPointMake(32.57, 37.23)];
+    [bezier7Path addLineToPoint: CGPointMake(38.06, 37.23)];
+    [TMTimerStyleKit.tM_ThemeAqua_bg setFill];
+    [bezier7Path fill];
+    [TMTimerStyleKit.tM_ThemeBlue setStroke];
+    bezier7Path.lineWidth = 1.5;
+    [bezier7Path stroke];
+
+
+    //// Bezier Drawing
+    CGContextSaveGState(context);
+    CGContextTranslateCTM(context, 21.71, 20.03);
+    CGContextRotateCTM(context, -50.93 * M_PI / 180);
+
+    UIBezierPath* bezierPath = UIBezierPath.bezierPath;
+    [bezierPath moveToPoint: CGPointMake(3, -14.5)];
+    [bezierPath addCurveToPoint: CGPointMake(3, -9.42) controlPoint1: CGPointMake(3, -14.5) controlPoint2: CGPointMake(3, -10.98)];
+    [bezierPath addCurveToPoint: CGPointMake(3, -8.7) controlPoint1: CGPointMake(3, -8.98) controlPoint2: CGPointMake(3, -8.7)];
+    [bezierPath addCurveToPoint: CGPointMake(3, 7.98) controlPoint1: CGPointMake(3, -5.79) controlPoint2: CGPointMake(3, 5.06)];
+    [bezierPath addCurveToPoint: CGPointMake(3, 8.7) controlPoint1: CGPointMake(3, 8.44) controlPoint2: CGPointMake(3, 8.7)];
+    [bezierPath addLineToPoint: CGPointMake(2.67, 8.7)];
+    [bezierPath addCurveToPoint: CGPointMake(0, 14.5) controlPoint1: CGPointMake(1.89, 10.4) controlPoint2: CGPointMake(0, 14.5)];
+    [bezierPath addCurveToPoint: CGPointMake(-2.67, 8.7) controlPoint1: CGPointMake(0, 14.5) controlPoint2: CGPointMake(-1.89, 10.4)];
+    [bezierPath addLineToPoint: CGPointMake(-3, 8.7)];
+    [bezierPath addCurveToPoint: CGPointMake(-3, 7.98) controlPoint1: CGPointMake(-3, 8.7) controlPoint2: CGPointMake(-3, 8.44)];
+    [bezierPath addCurveToPoint: CGPointMake(-3, -8.7) controlPoint1: CGPointMake(-3, 5.06) controlPoint2: CGPointMake(-3, -5.79)];
+    [bezierPath addCurveToPoint: CGPointMake(-3, -9.42) controlPoint1: CGPointMake(-3, -8.7) controlPoint2: CGPointMake(-3, -8.98)];
+    [bezierPath addCurveToPoint: CGPointMake(-3, -14.5) controlPoint1: CGPointMake(-3, -10.98) controlPoint2: CGPointMake(-3, -14.5)];
+    [bezierPath addLineToPoint: CGPointMake(3, -14.5)];
+    [bezierPath addLineToPoint: CGPointMake(3, -14.5)];
+    [bezierPath closePath];
+    [TMTimerStyleKit.tM_ThemeAqua_bg setFill];
+    [bezierPath fill];
+    [TMTimerStyleKit.tM_ThemeBlue setStroke];
+    bezierPath.lineWidth = 1.5;
+    [bezierPath stroke];
+
+    CGContextRestoreGState(context);
+}
+
++ (void)drawCancel;
+{
+
+    //// Oval Drawing
+    UIBezierPath* ovalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(5, 5, 40, 40)];
+    [TMTimerStyleKit.tM_ThemeAqua_bg setFill];
+    [ovalPath fill];
+    [TMTimerStyleKit.tM_ThemeBlue setStroke];
+    ovalPath.lineWidth = 1.5;
+    [ovalPath stroke];
+
+
+    //// Group
+    {
+        //// Bezier Drawing
+        UIBezierPath* bezierPath = UIBezierPath.bezierPath;
+        [bezierPath moveToPoint: CGPointMake(13.5, 13.5)];
+        [bezierPath addLineToPoint: CGPointMake(36.5, 36.5)];
+        bezierPath.lineCapStyle = kCGLineCapRound;
+
+        [UIColor.grayColor setFill];
+        [bezierPath fill];
+        [TMTimerStyleKit.tM_ThemeBlue setStroke];
+        bezierPath.lineWidth = 1.5;
+        [bezierPath stroke];
+
+
+        //// Bezier 2 Drawing
+        UIBezierPath* bezier2Path = UIBezierPath.bezierPath;
+        [bezier2Path moveToPoint: CGPointMake(36.5, 13.5)];
+        [bezier2Path addLineToPoint: CGPointMake(13.5, 36.5)];
+        bezier2Path.lineCapStyle = kCGLineCapRound;
+
+        [UIColor.grayColor setFill];
+        [bezier2Path fill];
+        [TMTimerStyleKit.tM_ThemeBlue setStroke];
+        bezier2Path.lineWidth = 1.5;
+        [bezier2Path stroke];
+    }
+}
+
++ (void)drawButtonFrameAquaWithSoftAquaBGWithFrame: (CGRect)frame tM_ThemeCornerRadius: (CGFloat)tM_ThemeCornerRadius;
+{
+
+    //// Rectangle Drawing
+    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(CGRectGetMinX(frame) + 2.5, CGRectGetMinY(frame) + 2.5, CGRectGetWidth(frame) - 5, CGRectGetHeight(frame) - 5) cornerRadius: tM_ThemeCornerRadius];
+    [TMTimerStyleKit.tM_ThemeAqua_bg setFill];
+    [rectanglePath fill];
+    [TMTimerStyleKit.tM_ThemeAqua setStroke];
+    rectanglePath.lineWidth = 1;
+    [rectanglePath stroke];
+}
 
 + (void)drawGauge50WithG_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
 {
@@ -29,9 +377,6 @@
     //// Color Declarations
     UIColor* g_GaugeOutline = [UIColor colorWithRed: 0.569 green: 0.517 blue: 0.517 alpha: 1];
     UIColor* g_GaugeOutlineOverTime = [UIColor colorWithRed: 0.946 green: 0.068 blue: 0.068 alpha: 1];
-    UIColor* g_LowPressureColor = [UIColor colorWithRed: 0.389 green: 0.8 blue: 0.32 alpha: 1];
-    UIColor* g_MediumPressureColor = [UIColor colorWithRed: 0.972 green: 0.924 blue: 0 alpha: 1];
-    UIColor* g_HighPressureColor = [UIColor colorWithRed: 1 green: 0.106 blue: 0 alpha: 1];
     UIColor* g_GaugeNormal = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1];
     UIColor* g_white = [UIColor colorWithRed: 1 green: 0.998 blue: 0.998 alpha: 1];
     UIColor* g_clear = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 0];
@@ -41,7 +386,7 @@
     CGFloat g_pressure = g_elapsedSeconds / (g_maxSeconds + 30);
     CGFloat g_ppressure = g_pressure < 0 ? 0 : (g_pressure > 1 ? 1 : g_pressure);
     CGFloat g_angle = -270 * g_ppressure + 135;
-    UIColor* g_limitingColor = g_elapsedSeconds <= 0 ? g_clear : (g_elapsedSeconds < g_minSeconds ? g_GaugeNormal : (g_elapsedSeconds < g_midSeconds ? g_LowPressureColor : (g_elapsedSeconds < g_maxSeconds ? g_MediumPressureColor : g_HighPressureColor)));
+    UIColor* g_limitingColor = g_elapsedSeconds <= 0 ? g_clear : (g_elapsedSeconds < g_minSeconds ? g_GaugeNormal : (g_elapsedSeconds < g_midSeconds ? TMTimerStyleKit.g_LowPressureColor : (g_elapsedSeconds < g_maxSeconds ? TMTimerStyleKit.g_MediumPressureColor : TMTimerStyleKit.g_HighPressureColor)));
     UIColor* g_overTimeColor = g_elapsedSeconds <= 0 ? g_clear : (g_elapsedSeconds < g_maxSeconds + 30 ? g_GaugeOutline : g_GaugeOutlineOverTime);
     UIColor* g_limitingFill = g_elapsedSeconds <= 0 ? g_clear : g_white;
 
@@ -162,6 +507,91 @@
 
 #pragma mark Generated Images
 
++ (UIImage*)imageOfTMNavBarWithFrame: (CGRect)frame;
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(50, 50), NO, 0.0f);
+    [TMTimerStyleKit drawTMNavBarWithFrame: frame];
+    UIImage* imageOfTMNavBar = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return imageOfTMNavBar;
+}
+
++ (UIImage*)imageOfAddProfileButton;
+{
+    if (_imageOfAddProfileButton)
+        return _imageOfAddProfileButton;
+
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(50, 50), NO, 0.0f);
+    [TMTimerStyleKit drawAddProfileButton];
+    _imageOfAddProfileButton = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return _imageOfAddProfileButton;
+}
+
++ (UIImage*)imageOfAddNewSpeaker;
+{
+    if (_imageOfAddNewSpeaker)
+        return _imageOfAddNewSpeaker;
+
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(50, 50), NO, 0.0f);
+    [TMTimerStyleKit drawAddNewSpeaker];
+    _imageOfAddNewSpeaker = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return _imageOfAddNewSpeaker;
+}
+
++ (UIImage*)imageOfDuplicateSpeech;
+{
+    if (_imageOfDuplicateSpeech)
+        return _imageOfDuplicateSpeech;
+
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(50, 50), NO, 0.0f);
+    [TMTimerStyleKit drawDuplicateSpeech];
+    _imageOfDuplicateSpeech = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return _imageOfDuplicateSpeech;
+}
+
++ (UIImage*)imageOfOverwrite;
+{
+    if (_imageOfOverwrite)
+        return _imageOfOverwrite;
+
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(50, 50), NO, 0.0f);
+    [TMTimerStyleKit drawOverwrite];
+    _imageOfOverwrite = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return _imageOfOverwrite;
+}
+
++ (UIImage*)imageOfCancel;
+{
+    if (_imageOfCancel)
+        return _imageOfCancel;
+
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(50, 50), NO, 0.0f);
+    [TMTimerStyleKit drawCancel];
+    _imageOfCancel = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return _imageOfCancel;
+}
+
++ (UIImage*)imageOfButtonFrameAquaWithSoftAquaBGWithFrame: (CGRect)frame tM_ThemeCornerRadius: (CGFloat)tM_ThemeCornerRadius;
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 50), NO, 0.0f);
+    [TMTimerStyleKit drawButtonFrameAquaWithSoftAquaBGWithFrame: frame tM_ThemeCornerRadius: tM_ThemeCornerRadius];
+    UIImage* imageOfButtonFrameAquaWithSoftAquaBG = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return imageOfButtonFrameAquaWithSoftAquaBG;
+}
+
 + (UIImage*)imageOfGauge50WithG_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(50, 50), NO, 0.0f);
@@ -171,5 +601,48 @@
 
     return imageOfGauge50;
 }
+
+#pragma mark Customization Infrastructure
+
+- (void)setAddProfileButtonTargets: (NSArray*)addProfileButtonTargets
+{
+    _addProfileButtonTargets = addProfileButtonTargets;
+
+    for (id target in self.addProfileButtonTargets)
+        [target setImage: TMTimerStyleKit.imageOfAddProfileButton];
+}
+
+- (void)setAddNewSpeakerTargets: (NSArray*)addNewSpeakerTargets
+{
+    _addNewSpeakerTargets = addNewSpeakerTargets;
+
+    for (id target in self.addNewSpeakerTargets)
+        [target setImage: TMTimerStyleKit.imageOfAddNewSpeaker];
+}
+
+- (void)setDuplicateSpeechTargets: (NSArray*)duplicateSpeechTargets
+{
+    _duplicateSpeechTargets = duplicateSpeechTargets;
+
+    for (id target in self.duplicateSpeechTargets)
+        [target setImage: TMTimerStyleKit.imageOfDuplicateSpeech];
+}
+
+- (void)setOverwriteTargets: (NSArray*)overwriteTargets
+{
+    _overwriteTargets = overwriteTargets;
+
+    for (id target in self.overwriteTargets)
+        [target setImage: TMTimerStyleKit.imageOfOverwrite];
+}
+
+- (void)setCancelTargets: (NSArray*)cancelTargets
+{
+    _cancelTargets = cancelTargets;
+
+    for (id target in self.cancelTargets)
+        [target setImage: TMTimerStyleKit.imageOfCancel];
+}
+
 
 @end

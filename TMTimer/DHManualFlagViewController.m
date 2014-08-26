@@ -166,17 +166,17 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
 }
 
 - (void)FSM_green_flag {
-    [[self view] setBackgroundColor:[UIColor greenColor]];
+    [[self view] setBackgroundColor:[TMTimerStyleKit g_LowPressureColor]];
     [[self greenView] setBackgroundColor:[UIColor colorWithRed:0 green:0.75 blue:0 alpha:0.75]];
 }
 
 - (void)FSM_yellow_flag {
-    [[self view] setBackgroundColor:[UIColor yellowColor]];
+    [[self view] setBackgroundColor:[TMTimerStyleKit g_MediumPressureColor]];
      [[self yellowView] setBackgroundColor:[UIColor colorWithRed:0.75 green:0.75 blue:0 alpha:0.75]];
 }
 
 - (void)FSM_red_flag {
-    [[self view] setBackgroundColor:[UIColor redColor]];
+    [[self view] setBackgroundColor:[TMTimerStyleKit g_HighPressureColor]];
     [[self redView] setBackgroundColor:[UIColor colorWithRed:0.75 green:0 blue:0 alpha:0.75]];
 }
 

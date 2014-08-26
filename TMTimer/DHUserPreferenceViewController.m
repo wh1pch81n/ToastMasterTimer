@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *showRunningTimer;
 @property (weak, nonatomic) IBOutlet UISwitch *showUserHints;
 @property (weak, nonatomic) IBOutlet UISwitch *vibrateSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *viewProfileLabel;
 @end
 
 @implementation DHUserPreferenceViewController
@@ -33,6 +34,17 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.viewProfileLabel.textColor = [TMTimerStyleKit tM_ThemeBlue];
+    self.threeSecondDelay.onTintColor = [TMTimerStyleKit tM_ThemeAqua];
+    self.showRunningTimer.onTintColor = [TMTimerStyleKit tM_ThemeAqua];
+    self.showUserHints.onTintColor = [TMTimerStyleKit tM_ThemeAqua];
+    self.vibrateSwitch.onTintColor = [TMTimerStyleKit tM_ThemeAqua];
+    
+    self.threeSecondDelay.thumbTintColor = [TMTimerStyleKit tM_ThemeAqua_bg];
+    self.showRunningTimer.thumbTintColor = [TMTimerStyleKit tM_ThemeAqua_bg];
+    self.showUserHints.thumbTintColor = [TMTimerStyleKit tM_ThemeAqua_bg];
+    self.vibrateSwitch.thumbTintColor = [TMTimerStyleKit tM_ThemeAqua_bg];
+    
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:self];
     

@@ -79,6 +79,8 @@
 		7F8EF98618FB0F780077922C /* DHColorForTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F8EF98518FB0F780077922C /* DHColorForTime.m */; };
 		7F91B7471964C491002FC63E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F91B7461964C491002FC63E /* AudioToolbox.framework */; };
 		7F94EE1318CD0FC3005390C3 /* DHError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F94EE1218CD0FC3005390C3 /* DHError.m */; };
+		7FA32B7519AC1CC1006BCB30 /* TMThemeAquaButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA32B7419AC1CC1006BCB30 /* TMThemeAquaButton.m */; };
+		7FA32B7819AC5AE3006BCB30 /* TMTimerStyleKitWithColorExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA32B7719AC5AE3006BCB30 /* TMTimerStyleKitWithColorExtensions.m */; };
 		7FC84B4D19A566FC007F8BEB /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC84B4C19A566FC007F8BEB /* Event.m */; };
 		7FC92105191D9C620026660A /* DHManualFlagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC92104191D9C620026660A /* DHManualFlagViewController.m */; };
 		7FD4ABDF18E0F488004DA1DF /* DHNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */; };
@@ -199,6 +201,10 @@
 		7F91B7461964C491002FC63E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		7F94EE1118CD0FC3005390C3 /* DHError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHError.h; sourceTree = "<group>"; };
 		7F94EE1218CD0FC3005390C3 /* DHError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHError.m; sourceTree = "<group>"; };
+		7FA32B7319AC1CC1006BCB30 /* TMThemeAquaButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMThemeAquaButton.h; sourceTree = "<group>"; };
+		7FA32B7419AC1CC1006BCB30 /* TMThemeAquaButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMThemeAquaButton.m; sourceTree = "<group>"; };
+		7FA32B7619AC5AE3006BCB30 /* TMTimerStyleKitWithColorExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMTimerStyleKitWithColorExtensions.h; sourceTree = "<group>"; };
+		7FA32B7719AC5AE3006BCB30 /* TMTimerStyleKitWithColorExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMTimerStyleKitWithColorExtensions.m; sourceTree = "<group>"; };
 		7FC84B4B19A566FC007F8BEB /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		7FC84B4C19A566FC007F8BEB /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		7FC92103191D9C620026660A /* DHManualFlagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHManualFlagViewController.h; sourceTree = "<group>"; };
@@ -337,6 +343,8 @@
 				5095B4BB18AE7C440023210E /* Supporting Files */,
 				502B46B618B4063000A61D24 /* DHTableViewCell.h */,
 				502B46B718B4063000A61D24 /* DHTableViewCell.m */,
+				7FA32B7319AC1CC1006BCB30 /* TMThemeAquaButton.h */,
+				7FA32B7419AC1CC1006BCB30 /* TMThemeAquaButton.m */,
 				50A3ECE718BF10FF00DB3981 /* DHGlobalConstants.h */,
 				7F94EE1118CD0FC3005390C3 /* DHError.h */,
 				7F94EE1218CD0FC3005390C3 /* DHError.m */,
@@ -387,6 +395,8 @@
 			children = (
 				7F7145FC19AA9A4400DAEBF8 /* TMTimerStyleKit.h */,
 				7F7145FD19AA9A4400DAEBF8 /* TMTimerStyleKit.m */,
+				7FA32B7619AC5AE3006BCB30 /* TMTimerStyleKitWithColorExtensions.h */,
+				7FA32B7719AC5AE3006BCB30 /* TMTimerStyleKitWithColorExtensions.m */,
 			);
 			name = StyleKit;
 			sourceTree = "<group>";
@@ -592,6 +602,7 @@
 				7F86595118D3C4C50045F9F2 /* DHUserPreferenceViewController.m in Sources */,
 				7F185BBE196A867900055446 /* iRate.m in Sources */,
 				7FD4ABE518E1089D004DA1DF /* DHGradients.m in Sources */,
+				7FA32B7519AC1CC1006BCB30 /* TMThemeAquaButton.m in Sources */,
 				502B46B818B4063000A61D24 /* DHTableViewCell.m in Sources */,
 				7F7145FE19AA9A4400DAEBF8 /* TMTimerStyleKit.m in Sources */,
 				501518E818B1979200CC286D /* Event+helperMethods.m in Sources */,
@@ -600,6 +611,7 @@
 				7F8EF98618FB0F780077922C /* DHColorForTime.m in Sources */,
 				5095B4D118AE7C440023210E /* DHMasterViewController.m in Sources */,
 				7F407F5719A1F4E200E37E1B /* DHUserProfileCollectionViewCell.m in Sources */,
+				7FA32B7819AC5AE3006BCB30 /* TMTimerStyleKitWithColorExtensions.m in Sources */,
 				7FD4ABE218E0FD99004DA1DF /* DHNavigationBar.m in Sources */,
 				5095B4C118AE7C440023210E /* main.m in Sources */,
 			);

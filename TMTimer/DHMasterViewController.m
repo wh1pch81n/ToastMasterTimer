@@ -26,6 +26,7 @@ NSString *const kMoreViewSegue = @"MoreView";
 NSString *const kTableTopics = @"Table Topics";
 
 @interface DHMasterViewController ()
+@property (weak, nonatomic) IBOutlet UISegmentedControl *presetSegmentedButtons;
 
 @property (strong, nonatomic) NSDictionary *customStartDict;
 @property (assign) BOOL didUnwind;
@@ -60,11 +61,14 @@ NSString *const kTableTopics = @"Table Topics";
     
     [self setDidLoad:YES];
     
+    self.presetSegmentedButtons.tintColor = [TMTimerStyleKit tM_ThemeAqua];
+    
 	UIBarButtonItem *moreButtonItem = [[UIBarButtonItem alloc] initWithTitle:kMore style:UIBarButtonItemStyleBordered target:self action:@selector(moreView:)];
 	
 	self.navigationItem.leftBarButtonItem = moreButtonItem;
 	
-	UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+	UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithImage:[[TMTimerStyleKit imageOfAddNewSpeaker] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(insertNewObject:)];
+
 	self.navigationItem.rightBarButtonItem = addButton;
 	self.detailViewController = (DHDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	
@@ -75,7 +79,7 @@ NSString *const kTableTopics = @"Table Topics";
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(clearCacheNotification:)
-                                                 name:NSManagedObjectContextDidSaveNotification
+                                                 name:NSManagedObjectContextWillSaveNotification
                                                object:nil];
 }
 
@@ -91,7 +95,7 @@ NSString *const kTableTopics = @"Table Topics";
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:NSManagedObjectContextDidSaveNotification
+                                                    name:NSManagedObjectContextWillSaveNotification
                                                   object:nil];
 }
 
@@ -379,7 +383,7 @@ NSString *const kTableTopics = @"Table Topics";
 	
 	[dhCell setEntity:object];
 
-    NSString *key = [NSString stringWithFormat:@"%ld-%ld", indexPath.section, indexPath.row];
+    NSIndexPath *key = indexPath;
     if ((dhCell.userImageIcon.image = [self.imageCache objectForKey:key]) == nil) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             User_Profile *up = object.speeches_speaker;

@@ -15,9 +15,41 @@
 @interface TMTimerStyleKit : NSObject
 
 // iOS Controls Customization Outlets
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* tMNavBarTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* addProfileButtonTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* addNewSpeakerTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* duplicateSpeechTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* overwriteTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* cancelTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* buttonFrameAquaWithSoftAquaBGTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* gauge50Targets;
 
+// Colors
++ (UIColor*)g_LowPressureColor;
++ (UIColor*)g_MediumPressureColor;
++ (UIColor*)g_HighPressureColor;
++ (UIColor*)tM_ThemeAqua;
++ (UIColor*)tM_ThemeBlue;
++ (UIColor*)tM_ThemeAqua_bg;
+
+// Drawing Methods
++ (void)drawTMNavBarWithFrame: (CGRect)frame;
++ (void)drawAddProfileButton;
++ (void)drawAddNewSpeaker;
++ (void)drawDuplicateSpeech;
++ (void)drawOverwrite;
++ (void)drawCancel;
++ (void)drawButtonFrameAquaWithSoftAquaBGWithFrame: (CGRect)frame tM_ThemeCornerRadius: (CGFloat)tM_ThemeCornerRadius;
++ (void)drawGauge50WithG_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
+
 // Generated Images
++ (UIImage*)imageOfTMNavBarWithFrame: (CGRect)frame;
++ (UIImage*)imageOfAddProfileButton;
++ (UIImage*)imageOfAddNewSpeaker;
++ (UIImage*)imageOfDuplicateSpeech;
++ (UIImage*)imageOfOverwrite;
++ (UIImage*)imageOfCancel;
++ (UIImage*)imageOfButtonFrameAquaWithSoftAquaBGWithFrame: (CGRect)frame tM_ThemeCornerRadius: (CGFloat)tM_ThemeCornerRadius;
 + (UIImage*)imageOfGauge50WithG_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
 
 @end

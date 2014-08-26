@@ -17,4 +17,5 @@
     #import "DHAppDelegate.h"
     #import "DHError.h"
     #import "DHGlobalConstants.h"
+    #import "TMTimerStyleKit.h"
 #endif
