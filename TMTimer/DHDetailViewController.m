@@ -44,6 +44,10 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 @interface DHDetailViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *extraButtonsView;
+@property (weak, nonatomic) IBOutlet UIButton *buttonDuplicate;
+@property (weak, nonatomic) IBOutlet UIButton *buttonNew;
+@property (weak, nonatomic) IBOutlet UIButton *buttonOverwrite;
+@property (weak, nonatomic) IBOutlet UIButton *buttonCancel;
 
 @property (strong, nonatomic) DHUserProfileCollectionViewController *userProfileCollectionViewController;
 
@@ -152,6 +156,21 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:self];
     
+    self.presetTimesSegment.tintColor = [TMTimerStyleKit tM_ThemeAqua];
+    [self.extraButtonsView.layer setCornerRadius:5];
+    
+    [self.buttonDuplicate setImage:[[TMTimerStyleKit imageOfDuplicateSpeech]
+                                    imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+                          forState:UIControlStateNormal];
+    [self.buttonNew setImage:[[TMTimerStyleKit imageOfAddNewSpeaker]
+                              imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+                    forState:UIControlStateNormal];
+    [self.buttonOverwrite setImage:[[TMTimerStyleKit imageOfOverwrite]
+                                    imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+                          forState:UIControlStateNormal];
+    [self.buttonCancel setImage:[[TMTimerStyleKit imageOfCancel]
+                                 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+                       forState:UIControlStateNormal];
     
     [self setLocalDetailPropertiesWithDetail:self.detailItem];
 
@@ -341,7 +360,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	} else { //start timer
         self.canUpdate = YES;
         if (self.detailItem.startDate) {
-            [self.navigationItem.rightBarButtonItem setTitle:@""];
             [self moveInExtraButtonsView:YES];
         } else {
             [self FSM_startTimer];

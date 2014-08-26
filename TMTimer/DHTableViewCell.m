@@ -11,6 +11,12 @@
 #import "Event+helperMethods.h"
 #import "DHColorForTime.h"
 
+@interface DHTableViewCell ()
+
+@property (weak, nonatomic) IBOutlet UISegmentedControl *presetSegmentedButton;
+
+@end
+
 @implementation DHTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -41,5 +47,8 @@
 //    }
 //    [self.flag setBackgroundColor:bgColor];
 }
-
+- (void)drawRect:(CGRect)rect {
+    self.elapsedTime.textColor = [TMTimerStyleKit tM_ThemeBlue];
+    self.presetSegmentedButton.tintColor = [TMTimerStyleKit tM_ThemeBlue];
+}
 @end

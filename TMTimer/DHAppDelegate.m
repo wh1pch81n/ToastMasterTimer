@@ -48,6 +48,9 @@ NSString *const kHost = @"tmtimer328";
        NSFontAttributeName: [UIFont systemFontOfSize:kNavBarFontSize],
        NSForegroundColorAttributeName: [UIColor whiteColor]
        }];
+    [[UIBarButtonItem appearance] setTitleTextAttributes:
+     @{NSForegroundColorAttributeName: [TMTimerStyleKit tM_ThemeBlue]}
+                                                forState:UIControlStateNormal];
 	
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];

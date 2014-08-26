@@ -49,13 +49,13 @@
 #endif
     UIColor *color;
     if (seconds >= max) {
-        color = [UIColor redColor];
+        color = [TMTimerStyleKit g_HighPressureColor];
     }
     else if(seconds >= ((max+min)/2)) {
-        color = [UIColor yellowColor];
+        color = [TMTimerStyleKit g_MediumPressureColor];
     }
     else if(seconds >= min) {
-        color = [UIColor greenColor];
+        color = [TMTimerStyleKit g_LowPressureColor];
     }
     else {
         color = [UIColor blackColor];
