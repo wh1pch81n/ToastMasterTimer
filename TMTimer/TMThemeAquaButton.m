@@ -24,7 +24,7 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    [TMTimerStyleKit drawButtonFrameAquaWithSoftAquaBGWithFrame:rect tM_ThemeCornerRadius:5];
+    [TMTimerStyleKit drawButtonFrameAquaWithSoftAquaBGWithFrame:rect tM_ThemeCornerRadius:kThemeCornerRadius];
      [self setTitleColor:TMTimerStyleKit.tM_ThemeAqua forState:UIControlStateNormal];
 }
 

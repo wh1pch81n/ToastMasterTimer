@@ -191,7 +191,7 @@
     
     if ((cell.gauge.image = [self.gaugeImageCache objectForKey:indexPath]) == nil) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            UIImage *img = [TMTimerStyleKit imageOfGauge50WithG_minSeconds:obj.minTime.integerValue * kSecondsInAMinute g_maxSeconds:obj.maxTime.integerValue * kSecondsInAMinute g_elapsedSeconds:[obj.endDate timeIntervalSinceDate:obj.startDate]];
+            UIImage *img = [[TMTimerStyleKit imageOfGauge50WithG_minSeconds:obj.minTime.integerValue * kSecondsInAMinute g_maxSeconds:obj.maxTime.integerValue * kSecondsInAMinute g_elapsedSeconds:[obj.endDate timeIntervalSinceDate:obj.startDate]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
             if(img == nil) {return;}
             [self.gaugeImageCache setObject:img forKey:indexPath];
             dispatch_async(dispatch_get_main_queue(), ^{

@@ -50,5 +50,6 @@
 - (void)drawRect:(CGRect)rect {
     self.elapsedTime.textColor = [TMTimerStyleKit tM_ThemeBlue];
     self.presetSegmentedButton.tintColor = [TMTimerStyleKit tM_ThemeBlue];
+    self.layer.cornerRadius = kThemeCornerRadius;
 }
 @end

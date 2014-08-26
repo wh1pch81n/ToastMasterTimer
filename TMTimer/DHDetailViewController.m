@@ -157,7 +157,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     [appDelegate setTopVC:self];
     
     self.presetTimesSegment.tintColor = [TMTimerStyleKit tM_ThemeAqua];
-    [self.extraButtonsView.layer setCornerRadius:5];
+    [self.extraButtonsView.layer setCornerRadius:kThemeCornerRadius];
     
     [self.buttonDuplicate setImage:[[TMTimerStyleKit imageOfDuplicateSpeech]
                                     imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
