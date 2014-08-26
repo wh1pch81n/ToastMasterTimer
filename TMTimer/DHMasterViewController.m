@@ -76,11 +76,6 @@ NSString *const kTableTopics = @"Table Topics";
 #if DEBUG
     NSLog(@"TMTimer view did load");
 #endif
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(clearCacheNotification:)
-                                                 name:NSManagedObjectContextWillSaveNotification
-                                               object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -93,16 +88,10 @@ NSString *const kTableTopics = @"Table Topics";
 #endif
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:NSManagedObjectContextWillSaveNotification
-                                                  object:nil];
-}
-
 - (void)didReceiveMemoryWarning
 {
 	[super didReceiveMemoryWarning];
-	// Dispose of any resources that can be recreated.
+   	// Dispose of any resources that can be recreated.
 }
 
 #pragma mark - bar button actions
@@ -299,6 +288,8 @@ NSString *const kTableTopics = @"Table Topics";
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
 	[self.tableView beginUpdates];
+    [self.imageCache removeAllObjects];
+    [self.gaugeImageCache removeAllObjects];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
@@ -534,11 +525,6 @@ NSString *const kTableTopics = @"Table Topics";
 #endif
     self.didUnwind = YES;
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
-}
-
-- (void)clearCacheNotification:(NSNotification *)notification{
-    [self.imageCache removeAllObjects];
-    [self.gaugeImageCache removeAllObjects];
 }
 
 @end
