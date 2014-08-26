@@ -66,6 +66,12 @@
                                              action:@selector(tappedImage:)]];
     [[self imageViewProfilePic] setUserInteractionEnabled:YES];
     [self setUpViewWithMode];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBG:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -431,5 +437,8 @@
     [self presentViewController:picker animated:YES completion:nil];
 }
 
+- (void)didEnterBG:(NSNotification *)notification {
+    [self cancelEdits];
+}
 
 @end
