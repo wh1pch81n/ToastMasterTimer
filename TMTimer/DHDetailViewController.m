@@ -180,6 +180,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	//Default values
 	[self updateMin:_minTime max:_maxTime];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBG:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -876,6 +881,15 @@ Gets called on:
         }];
     } else {
         self.extraButtonsView.frame = destinationFrame;
+    }
+}
+
+
+#pragma mark - NSNotification
+
+- (void)didEnterBG:(NSNotification *)notification {
+    if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStart]) { //if in idle state
+        [self tappedCancelButton:notification];
     }
 }
 
