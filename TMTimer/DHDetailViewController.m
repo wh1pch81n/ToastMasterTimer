@@ -528,12 +528,14 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 		[sSelf.nameTextField setAlpha:0];
 		[sSelf.timeChooserParentView setAlpha:0];
         [sSelf.collectionView setAlpha:0];
+        [sSelf.buttonChooseName setAlpha:0];
 	} completion:^(BOOL finished) {
         __strong typeof(wSelf)sSelf = wSelf;
 		[sSelf.nameTextField setHidden:YES];
 		[sSelf.nameTextField resignFirstResponder];
 		[sSelf.timeChooserParentView setHidden:YES];
         [sSelf.collectionView setHidden:YES];
+        [sSelf.buttonChooseName setHidden:YES];
 	}];
 	//[self.navigationItem setHidesBackButton:YES];
 	[[UIApplication sharedApplication] setIdleTimerDisabled:YES]; //toggle sleep
@@ -549,11 +551,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[self.timeChooserParentView setHidden:NO];
 	[self.nameTextField setHidden:NO];
 	[self.nameTextField setAlpha:1];
-    //    [self.collectionView setHidden:NO]; //not sure why this remains unclickable
-//    [self.collectionView setAlpha:1];
-    
-//    [self.containerUP setHidden:NO];
-//    [self.containerUP setAlpha:1];
 }
 
 #pragma mark - On the fly edit
@@ -598,7 +595,7 @@ Gets called on:
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     self.canDisplayBannerAds = NO;
-    [self tappedCancelButton:textField];
+    [self moveOutExtraButtonsView:YES];
 	[self enableNavItemButtons:YES];
 }
 
@@ -707,8 +704,8 @@ Gets called on:
         cvc.speechEvent = self.detailItem;
         [cvc setManagedObjectContext:moc];
         [cvc setCustomCellTapResponse:^(User_Profile *up, DHUserProfileCollectionViewController *upcvc) {
-            self.containerUP.hidden = YES;
-            self.containerUP.alpha = 0;
+            //self.containerUP.hidden = YES;
+            //self.containerUP.alpha = 0;
             self.detailItem.speeches_speaker = up;
             [self.collectionView reloadData];
             

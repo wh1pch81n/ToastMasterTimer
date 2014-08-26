@@ -37,6 +37,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewProfile)];
+    self.imageCache = [[NSCache alloc] init];
 }
 
 - (void)didReceiveMemoryWarning
@@ -122,60 +123,61 @@
 //	[self.collectionView beginUpdates];
 //}
 
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
-           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
-{
-	switch(type) {
-		case NSFetchedResultsChangeInsert:
-            [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]];
-            break;
-			
-		case NSFetchedResultsChangeDelete:
-			[self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]];
-			break;
-	}
-}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
-       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-      newIndexPath:(NSIndexPath *)newIndexPath
-{
-	UICollectionView *collectionView = self.collectionView;
-	
-	switch(type) {
-		case NSFetchedResultsChangeInsert:
-            [collectionView insertItemsAtIndexPaths:@[newIndexPath]];
-			break;
-			
-		case NSFetchedResultsChangeDelete:
-			[collectionView deleteItemsAtIndexPaths:@[indexPath]];
-			break;
-			
-		case NSFetchedResultsChangeUpdate:
-			[self configureCell:[collectionView cellForItemAtIndexPath:indexPath] atIndexPath:indexPath];
-			break;
-			
-		case NSFetchedResultsChangeMove:
-            [collectionView deleteItemsAtIndexPaths:@[indexPath]];
-			[collectionView insertItemsAtIndexPaths:@[newIndexPath]];
-			break;
-	}
-}
+//- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+//           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+//{
+//	switch(type) {
+//		case NSFetchedResultsChangeInsert:
+//            [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]];
+//            break;
+//			
+//		case NSFetchedResultsChangeDelete:
+//			[self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]];
+//			break;
+//	}
+//}
+//
+//- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+//       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+//      newIndexPath:(NSIndexPath *)newIndexPath
+//{
+//	UICollectionView *collectionView = self.collectionView;
+//	
+//	switch(type) {
+//		case NSFetchedResultsChangeInsert:
+//            [collectionView insertItemsAtIndexPaths:@[newIndexPath]];
+//			break;
+//			
+//		case NSFetchedResultsChangeDelete:
+//			[collectionView deleteItemsAtIndexPaths:@[indexPath]];
+//			break;
+//			
+//		case NSFetchedResultsChangeUpdate:
+//			[self configureCell:[collectionView cellForItemAtIndexPath:indexPath] atIndexPath:indexPath];
+//			break;
+//			
+//		case NSFetchedResultsChangeMove:
+//            [collectionView deleteItemsAtIndexPaths:@[indexPath]];
+//			[collectionView insertItemsAtIndexPaths:@[newIndexPath]];
+//			break;
+//	}
+//}
 
 //- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 //{
 //	[self.tableView endUpdates];
 //}
 
-/*
- // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
- 
- - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
- {
- // In the simplest, most efficient, case, reload the table view.
- [self.tableView reloadData];
- }
- */
+
+// Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    // In the simplest, most efficient, case, reload the table view.
+    self.imageCache = [NSCache new];
+    [self.collectionView reloadData];
+}
+
 
 - (void)configureCell:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
