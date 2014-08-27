@@ -440,7 +440,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	NSInteger seconds = ti % 60;
 	NSInteger minutes = (ti / 60) % 60;
 	NSInteger hours = (ti / 3600);
+#if DEBUG
+    return [NSString stringWithFormat:@"%02d:%02d.%02d", (int)minutes, (int)seconds, arc4random_uniform(60)];
+#else
 	return [NSString stringWithFormat:@"%02d:%02d.%02d", (int)hours, (int)minutes, (int)seconds];
+#endif
 }
 
 /**
@@ -466,7 +470,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)FSM_idle {
+#if DEBUG
     self.canDisplayBannerAds = NO;
+#endif
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
 	[self.timeChooserParentView setHidden:NO];
@@ -505,7 +511,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     BOOL delayIsEnabled = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
     
     if (delayIsEnabled) {
+#if DEBUG
         self.canDisplayBannerAds = NO;
+#endif
         CGRect rect = CGRectMake(0, 0,
                                  CGRectGetWidth(self.originalContentView.frame),
                                  CGRectGetHeight(self.originalContentView.frame));
@@ -517,7 +525,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                                       stringOfCharactersToCountDown:@" 321"
                                                  completedCountDown:^{
                                                      __strong typeof(wSelf)sSelf = wSelf;
+#if DEBUG
                                                      sSelf.canDisplayBannerAds = YES;
+#endif
                                                      [sSelf FSM_startTimerBegin];
                                                      [[sSelf countDownView] removeFromSuperview];
                                                  }];
@@ -554,6 +564,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 		[sSelf.timeChooserParentView setHidden:YES];
         [sSelf.collectionView setHidden:YES];
         [sSelf.buttonChooseName setHidden:YES];
+        if ([sSelf.navigationItem.rightBarButtonItem.title isEqualToString:kStart]) {//in idle state
+            
+            //This is to correct a state where we have stoped the timer, but the animation is has not completed, and thus erroneously makes the stuff hidden.  since it is already idle just set it to the idle state.
+            [self FSM_idle];
+        }
 	}];
 	//[self.navigationItem setHidesBackButton:YES];
 	[[UIApplication sharedApplication] setIdleTimerDisabled:YES]; //toggle sleep
@@ -612,14 +627,18 @@ Gets called on:
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
+#if DEBUG
     self.canDisplayBannerAds = NO;
+#endif
     [self moveOutExtraButtonsView:YES];
 	[self enableNavItemButtons:YES];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if ([self.navItem.rightBarButtonItem.title isEqualToString:kStop]) {
+#if DEBUG
         self.canDisplayBannerAds = YES;
+#endif
     }
 	_blurb = self.nameTextField.text;
 	[self enableNavItemButtons:YES];
