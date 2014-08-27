@@ -26,9 +26,9 @@ NSString *const kHost = @"tmtimer328";
 
 #if DEBUG
 + (void)initialize {
-
+    
     [[iRate sharedInstance] setPreviewMode:YES];
-
+    
 }
 #endif
 
@@ -64,9 +64,8 @@ NSString *const kHost = @"tmtimer328";
 {
 	// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
 	// Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-#if DEBUG
-    NSLog(@"Will resign active");
-#endif
+    DHDLog(^{NSLog(@"Will resign active");});
+    
 	[self saveContext];
 }
 
@@ -74,34 +73,29 @@ NSString *const kHost = @"tmtimer328";
 {
 	// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
 	// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-#if DEBUG
-    NSLog(@"did enter background");
-#endif
+    DHDLog(^{NSLog(@"did enter background");});
+    
     NSFileManager *fm = [NSFileManager defaultManager];
     NSString *cacheLib = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
     NSError *error = nil;
     for (NSString *file in [fm contentsOfDirectoryAtPath:cacheLib error:&error]) {
         NSString *fileToDelete = [NSString stringWithFormat:@"%@/%@", cacheLib, file];
-#if DEBUG
-        NSLog(@"try Delete: ~/%@", file);
-#endif
+        
+        DHDLog(^{NSLog(@"try Delete: ~/%@", file);});
+        
         BOOL success = [fm removeItemAtPath:fileToDelete error:&error];
         if (!success || error) {
-#if DEBUG
-            NSLog(@"Could not delete: ~/%@", file);
-#endif
+            DHDLog(^{NSLog(@"Could not delete: ~/%@", file);});
         }
     }
-
+    
 	[self saveContext];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
 	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-#if DEBUG
-    NSLog(@"did will enter foreground");
-#endif
+    DHDLog(^{NSLog(@"did will enter foreground");});
     
 	[self saveContext];
 }
@@ -121,7 +115,7 @@ NSString *const kHost = @"tmtimer328";
     // Since you have 3 different views, you must make the masterview become the current view if it isn't already the current view.
     //Then you must call the public function of the master view that will allow you to do a quick start.
     //TODO: I suggest using the [url host] and [url path] methods instead of the str manip
-   if ([@"com.dnthome.TMTopic" isEqualToString:sourceApplication] == NO) return NO;
+    if ([@"com.dnthome.TMTopic" isEqualToString:sourceApplication] == NO) return NO;
     
     NSString *url_str = [url.absoluteString substringFromIndex:@"tmtimer328:".length];
     url_str = [url_str stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -201,15 +195,15 @@ NSString *const kHost = @"tmtimer328";
 - (void)registeringUserPreferences {
 	[[NSUserDefaults standardUserDefaults] registerDefaults:
 	 @{
-		 kUserDefaultMinTime:@4,
-		 kUserDefaultMaxTime:@6,
-		 kUserDefault3SecondDelay:@NO,
-		 kUserDefaultShowRunningTimer:@YES,
-         kQuickStart:@NO,
-         kUserDefaultShowUserHints:@YES,
-         kUserDefaultsVibrateOnFlagChange:@NO,
-         kUserDefaultsHasShownManualFlagInfoBefore:@NO
-		 }];
+       kUserDefaultMinTime:@4,
+       kUserDefaultMaxTime:@6,
+       kUserDefault3SecondDelay:@NO,
+       kUserDefaultShowRunningTimer:@YES,
+       kQuickStart:@NO,
+       kUserDefaultShowUserHints:@YES,
+       kUserDefaultsVibrateOnFlagChange:@NO,
+       kUserDefaultsHasShownManualFlagInfoBefore:@NO
+       }];
 }
 
 @end

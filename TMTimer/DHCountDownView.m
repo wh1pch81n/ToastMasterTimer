@@ -87,7 +87,7 @@ stringOfCharactersToCountDown:(NSString *)stringOfCharactersToCountDown
         [self completeAnimation];
         return;
     }
-
+    
     NSString *charArr = self.stringOfCharactersToCountDown;
     NSString *str = [charArr substringWithRange:NSMakeRange(self.characterIndex++, 1)];
     int fontSize = ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)?kiPadFontSize:kiPhoneFontSize;
@@ -96,7 +96,7 @@ stringOfCharactersToCountDown:(NSString *)stringOfCharactersToCountDown
     [self.characterDisplayed setAttributedText:attrStr];
     [self.characterDisplayed setTextAlignment:NSTextAlignmentCenter];
     
-
+    
     self.characterDisplayed.alpha = 1;
     self.characterDisplayed.transform = kBigScale;
     __weak typeof(self)wSelf = self;
@@ -105,9 +105,7 @@ stringOfCharactersToCountDown:(NSString *)stringOfCharactersToCountDown
         sSelf.characterDisplayed.transform = kSmallScale;
     }];
     
-#if DEBUG
-    NSLog(@"Count down text %@", self.characterDisplayed.text);
-#endif
+    DHDLog(^{NSLog(@"Count down text %@", self.characterDisplayed.text);});
 }
 
 @end

@@ -92,9 +92,7 @@
     self.textFieldName.text = up.user_name;
     self.labelTotalNumberOfSpeeches.text = up.total_speeches.stringValue;
     self.imageViewProfilePic.image = [UIImage imageWithContentsOfFile:up.profile_pic_path];
-#if DEBUG
-    NSLog(@"%@", up);
-#endif
+    DHDLog(^{NSLog(@"%@", up);});
 }
 
 - (void)didReceiveMemoryWarning
@@ -138,7 +136,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DHEditUserProfileTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"speechCell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
-
+    
     return cell;
 }
 
@@ -226,7 +224,7 @@
     fetchRequest.fetchBatchSize = 20;
     
     User_Profile *up = (User_Profile *)[self.managedObjectContext.parentContext objectWithID:self.objectID];
-
+    
     fetchRequest.predicate = [NSPredicate predicateWithFormat:@"speeches_speaker == %@", up];
     
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:_managedObjectContext.parentContext sectionNameKeyPath:nil cacheName:nil];
@@ -265,7 +263,7 @@
     [_managedObjectContext performBlock:^{
         up.user_name = [self.textFieldName.text stringByTrimmingCharactersInSet:
                         [NSCharacterSet whitespaceAndNewlineCharacterSet]];
-
+        
         if (self.didSetImage) {
             [self saveImageFileToDisk];
         }
@@ -297,7 +295,7 @@
     [self removeOldImageIfAny:up];
     //Save path
     up.profile_pic_filename = uniqueFileName;
-        
+    
     //get the image from the uiimageview
     UIImage *image = _profilePic;
     CGSize newSize = self.imageViewProfilePic.frame.size;
@@ -322,19 +320,15 @@
     NSData *imageThumbAsData = UIImagePNGRepresentation(imageThumb);
     
     if(![imageThumbAsData writeToFile:up.profile_pic_path atomically:YES]){
-#if DEBUG
-        NSLog(@"Could not save thumbnail image \n%@", up.profile_pic_path);
-#endif
+        DHDLog(^{NSLog(@"Could not save thumbnail image \n%@", up.profile_pic_path);});
     } else {
-#if DEBUG
-        NSLog(@"done saving Thumbnail image\n%@", up.profile_pic_path);
-#endif
+        DHDLog(^{NSLog(@"done saving Thumbnail image\n%@", up.profile_pic_path);});
     }
 }
 
 - (void)removeOldImageIfAny:(User_Profile *)userProfile {
     NSString *path = userProfile.profile_pic_path;
-
+    
     if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
         //move old image files to volitile space.
         NSString *libCacheDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
@@ -343,9 +337,7 @@
         NSError *err;
         [[NSFileManager defaultManager] moveItemAtPath:path toPath:newPath error:&err];
         if(err) {
-#if DEBUG
-            NSLog(@"Error: %@", [err localizedDescription]);
-#endif
+            DHDLog(^{NSLog(@"Error: %@", [err localizedDescription]);});
         }
     }
 }
@@ -353,16 +345,16 @@
 #pragma mark - Image
 
 - (IBAction)tappedImage:(id)sender {
-#if DEBUG
-    NSLog(@"Just Tapped Image");
-#endif
+    DHDLog(^{
+        NSLog(@"Just Tapped Image");
+    });
     if ([self.textFieldName isFirstResponder]) {
         [self.textFieldName resignFirstResponder];
     }
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-#if DEBUG
-        NSLog(@"This device has a camera.  Asking the user what they want to use.");
-#endif
+        DHDLog(^{
+            NSLog(@"This device has a camera.  Asking the user what they want to use.");
+        });
         UIActionSheet *photoSourceSheet = [[UIActionSheet alloc]
                                            initWithTitle:@"Select Photo"
                                            delegate:self
@@ -402,9 +394,9 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == actionSheet.cancelButtonIndex) {
-#if DEBUG
-        NSLog(@"Cancled Action Sheet");
-#endif
+        DHDLog(^{
+            NSLog(@"Cancled Action Sheet");
+        });
         return;
     }
     
@@ -414,16 +406,16 @@
     
     switch (buttonIndex) {
         case 0:
-#if DEBUG
-            NSLog(@"user wants to take a new picture");
-#endif
+            DHDLog(^{
+                NSLog(@"user wants to take a new picture");
+            });
             picker.sourceType = UIImagePickerControllerSourceTypeCamera;
             break;
             
         default:
-#if DEBUG
-            NSLog(@"user want to get photo from library");
-#endif
+            DHDLog(^{
+                NSLog(@"user want to get photo from library");
+            });
             picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
             break;
     }

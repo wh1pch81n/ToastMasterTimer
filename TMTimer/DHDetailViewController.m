@@ -151,7 +151,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-
+    
 	// Do any additional setup after loading the view, typically from a nib.
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:self];
@@ -173,7 +173,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                        forState:UIControlStateNormal];
     
     [self setLocalDetailPropertiesWithDetail:self.detailItem];
-
+    
 	[self configureView];
 	[self FSM_idle];
 	
@@ -201,9 +201,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                          startDate:_startDate
                            maxTime:_maxTime
                            minTime:_minTime
-                              blurb:_blurb
+                             blurb:_blurb
                          totalTime:_totalTime];
-
+    
 	[super viewDidDisappear:animated];
 }
 
@@ -217,9 +217,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     
     
     NSNumber *shouldQuickStart = [[NSUserDefaults standardUserDefaults] objectForKey:kQuickStart];
-#if DEBUG
-    NSLog(@"should quick start %@", shouldQuickStart);
-#endif
+    
+    DHDLog(^{NSLog(@"should quick start %@", shouldQuickStart);});
+    
     if (shouldQuickStart.boolValue == YES) {
         [self tappedStartStopButton:self];
         [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:kQuickStart];
@@ -390,18 +390,17 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     if (!canVibrate) {
         return;
     }
-    int min = _minTime.intValue;
-    int max = _maxTime.intValue;
+    __block int min = _minTime.intValue;
+    __block int max = _maxTime.intValue;
     const int k60Seconds = 60;
-#if DEBUG
-#else
-    min *= k60Seconds;
-    max *= k60Seconds;
-#endif
+    DHRLog(^{
+        min *= k60Seconds;
+        max *= k60Seconds;
+    });
     if ((int)timeInterval == min ||
         (int)timeInterval == max ||
         (int)timeInterval == (int)((min+max)/2)){
-            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     }
 }
 
@@ -437,14 +436,17 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
  */
 - (NSString *)stringFromTimeInterval:(NSTimeInterval)interval {
 	NSInteger ti = (NSInteger)interval;
-	NSInteger seconds = ti % 60;
-	NSInteger minutes = (ti / 60) % 60;
-	NSInteger hours = (ti / 3600);
-#if DEBUG
-    return [NSString stringWithFormat:@"%02d:%02d.%02d", (int)minutes, (int)seconds, arc4random_uniform(60)];
-#else
+	__block NSInteger seconds = ti % 60;
+	__block NSInteger minutes = (ti / 60) % 60;
+	__block NSInteger hours = (ti / 3600);
+    
+    DHDLog(^{
+        hours = minutes;
+        minutes = seconds;
+        seconds = arc4random_uniform(kSecondsInAMinute);
+    });
+    
 	return [NSString stringWithFormat:@"%02d:%02d.%02d", (int)hours, (int)minutes, (int)seconds];
-#endif
 }
 
 /**
@@ -470,9 +472,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)FSM_idle {
-#if DEBUG
-    self.canDisplayBannerAds = NO;
-#endif
+    
+    DHRLog(^{self.canDisplayBannerAds = NO;});
+    DHDLog(^{
+        
+    });
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
 	[self.timeChooserParentView setHidden:NO];
@@ -511,9 +515,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     BOOL delayIsEnabled = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
     
     if (delayIsEnabled) {
-#if DEBUG
-        self.canDisplayBannerAds = NO;
-#endif
+        DHDLog(^{self.canDisplayBannerAds = NO;});
+        
         CGRect rect = CGRectMake(0, 0,
                                  CGRectGetWidth(self.originalContentView.frame),
                                  CGRectGetHeight(self.originalContentView.frame));
@@ -525,9 +528,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                                       stringOfCharactersToCountDown:@" 321"
                                                  completedCountDown:^{
                                                      __strong typeof(wSelf)sSelf = wSelf;
-#if DEBUG
-                                                     sSelf.canDisplayBannerAds = YES;
-#endif
+                                                     
+                                                     DHDLog(^{sSelf.canDisplayBannerAds = YES;});
+                                                     
                                                      [sSelf FSM_startTimerBegin];
                                                      [[sSelf countDownView] removeFromSuperview];
                                                  }];
@@ -589,7 +592,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 #pragma mark - On the fly edit
 
 /**
-Gets called on:
+ Gets called on:
  1) tap view                  - (7.1/2x)   - (6.1/2x)
  2) start edit text field     - (7.1/82x)  - (6.1/11x)
  3) typing keys in text field - (7.1/13 per letter) - (6.1/1 per letter)
@@ -600,9 +603,8 @@ Gets called on:
  8) detail segue to master    - (7.1/138x) - (6.1/2x)
  */
 - (UIResponder *)nextResponder {
-#if DEBUG
-    NSLog(@"next responder was called");
-#endif
+    DHDLog(^{NSLog(@"next responder was called");});
+    
     if(self.isOnTheFlyEditing) {
         [self setSecondsUntilOnTheFlyEditingEnds:kOnTheFlyEditingTimeOUt];
     }
@@ -627,18 +629,15 @@ Gets called on:
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-#if DEBUG
-    self.canDisplayBannerAds = NO;
-#endif
+    DHDLog(^{self.canDisplayBannerAds = NO;});
+    
     [self moveOutExtraButtonsView:YES];
 	[self enableNavItemButtons:YES];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if ([self.navItem.rightBarButtonItem.title isEqualToString:kStop]) {
-#if DEBUG
-        self.canDisplayBannerAds = YES;
-#endif
+        DHDLog(^{self.canDisplayBannerAds = YES;});
     }
 	_blurb = self.nameTextField.text;
 	[self enableNavItemButtons:YES];
@@ -680,9 +679,7 @@ Gets called on:
  Sets the picker view to the right places, then updates the context
  */
 - (void)updateMin:(NSNumber *)min max:(NSNumber *)max {
-#if DEBUG
-	NSLog(@"%@   %@", min, max);
-#endif
+    DHDLog(^{NSLog(@"%@   %@", min, max);});
     
 	[[self pickerView] selectRow:min.integerValue inComponent:kTimeGreen animated:YES];
 	[[self pickerView] selectRow:max.integerValue-kPickerViewRedReelOffset inComponent:kTimeRed animated:YES];
@@ -731,7 +728,7 @@ Gets called on:
             self.detailItem.speeches_speaker = up;
             [self.collectionView reloadData];
             [self configureView];
-
+            
             [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kQuickStart];
         }];
     } else if ([segue.identifier isEqualToString:@"containerUP"]) {

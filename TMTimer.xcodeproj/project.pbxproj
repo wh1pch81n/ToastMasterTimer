@@ -72,6 +72,7 @@
 		7F8CD813199FAAAE00FC177F /* fingers3_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F8CD80D199FAAAE00FC177F /* fingers3_touch.png */; };
 		7F8CD815199FAB2900FC177F /* ManualFlagInfoAnimationImageNames.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F8CD814199FAB2900FC177F /* ManualFlagInfoAnimationImageNames.plist */; };
 		7F8CD819199FFEBB00FC177F /* fingers.pxm in Resources */ = {isa = PBXBuildFile; fileRef = 7F8CD818199FFEBB00FC177F /* fingers.pxm */; };
+		7F8EE36019AD9A720064F0B1 /* DHLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F8EE35F19AD9A720064F0B1 /* DHLog.m */; };
 		7F8EEA761946289F006B4C53 /* Icon72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F8EEA741946289F006B4C53 /* Icon72x72.png */; };
 		7F8EEA771946289F006B4C53 /* Icon72x72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F8EEA751946289F006B4C53 /* Icon72x72@2x.png */; };
 		7F8EEA7A194629ED006B4C53 /* Icon50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F8EEA78194629ED006B4C53 /* Icon50x50.png */; };
@@ -192,6 +193,8 @@
 		7F8CD80D199FAAAE00FC177F /* fingers3_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingers3_touch.png; sourceTree = "<group>"; };
 		7F8CD814199FAB2900FC177F /* ManualFlagInfoAnimationImageNames.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ManualFlagInfoAnimationImageNames.plist; sourceTree = "<group>"; };
 		7F8CD818199FFEBB00FC177F /* fingers.pxm */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = fingers.pxm; sourceTree = "<group>"; };
+		7F8EE35E19AD9A720064F0B1 /* DHLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHLog.h; sourceTree = "<group>"; };
+		7F8EE35F19AD9A720064F0B1 /* DHLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHLog.m; sourceTree = "<group>"; };
 		7F8EEA741946289F006B4C53 /* Icon72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon72x72.png; sourceTree = "<group>"; };
 		7F8EEA751946289F006B4C53 /* Icon72x72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon72x72@2x.png"; sourceTree = "<group>"; };
 		7F8EEA78194629ED006B4C53 /* Icon50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon50x50.png; sourceTree = "<group>"; };
@@ -258,6 +261,7 @@
 		5095B4A618AE7C440023210E = {
 			isa = PBXGroup;
 			children = (
+				7F8EE35D19AD9A350064F0B1 /* Debug */,
 				7F7145FB19AA9A3300DAEBF8 /* StyleKit */,
 				7F185BBB196A865900055446 /* iRate */,
 				7F0C3FCA18CBCD3D0068B26C /* Release Notes */,
@@ -449,6 +453,15 @@
 			name = Icon;
 			sourceTree = "<group>";
 		};
+		7F8EE35D19AD9A350064F0B1 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				7F8EE35E19AD9A720064F0B1 /* DHLog.h */,
+				7F8EE35F19AD9A720064F0B1 /* DHLog.m */,
+			);
+			name = Debug;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -601,6 +614,7 @@
 				7F87644E18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.m in Sources */,
 				7F86595118D3C4C50045F9F2 /* DHUserPreferenceViewController.m in Sources */,
 				7F185BBE196A867900055446 /* iRate.m in Sources */,
+				7F8EE36019AD9A720064F0B1 /* DHLog.m in Sources */,
 				7FD4ABE518E1089D004DA1DF /* DHGradients.m in Sources */,
 				7FA32B7519AC1CC1006BCB30 /* TMThemeAquaButton.m in Sources */,
 				502B46B818B4063000A61D24 /* DHTableViewCell.m in Sources */,
@@ -695,7 +709,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -722,13 +736,14 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "RELEASE=2";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;

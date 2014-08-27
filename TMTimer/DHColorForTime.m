@@ -36,17 +36,17 @@
  @param max number of minutes before the red flag shows up
  @return the color.
  */
-- (UIColor *)colorForSeconds:(NSTimeInterval)seconds min:(NSTimeInterval)min max:(NSTimeInterval)max
+- (UIColor *)colorForSeconds:(NSTimeInterval)seconds min:(NSTimeInterval)min_ max:(NSTimeInterval)max_
 {
+    __block NSTimeInterval min = min_, max = max_;
     if (seconds <= 0) {
         return [UIColor clearColor];
     }
     const int k60Seconds = 60;
-#if DEBUG
-#else
-    min *= k60Seconds;
-    max *= k60Seconds;
-#endif
+    DHRLog(^{
+        min *= k60Seconds;
+        max *= k60Seconds;
+    });
     UIColor *color;
     if (seconds >= max) {
         color = [TMTimerStyleKit g_HighPressureColor];
