@@ -172,7 +172,7 @@ NSString *const kTableTopics = @"Table Topics";
     if (indexPath.section == 0) {
         return 80;
     }
-    return 106;
+    return 132;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -360,6 +360,7 @@ NSString *const kTableTopics = @"Table Topics";
 	Event *object = [self.fetchedResultsController objectAtIndexPath:ip];
 	
 	[[dhCell blurb] setText:[object blurb]];
+    [[dhCell userImageIcon] setHidden:YES];
     
     [[dhCell userName] setText:((User_Profile *)object.speeches_speaker).user_name];
 	
@@ -386,6 +387,7 @@ NSString *const kTableTopics = @"Table Topics";
                 DHTableViewCell *cell = (DHTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
                 if(cell) {
                     cell.userImageIcon.image = pic;
+                    [cell.userImageIcon setHidden:NO];
                 }
             });
         });

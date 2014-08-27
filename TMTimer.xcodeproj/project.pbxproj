@@ -363,6 +363,8 @@
 				5095B4BD18AE7C440023210E /* InfoPlist.strings */,
 				5095B4C018AE7C440023210E /* main.m */,
 				5095B4C218AE7C440023210E /* TMTimer-Prefix.pch */,
+				7F8EE35A19AD54870064F0B1 /* DHQuickPanelTableViewCell.h */,
+				7F8EE35B19AD54870064F0B1 /* DHQuickPanelTableViewCell.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -621,6 +623,7 @@
 				7F7145FE19AA9A4400DAEBF8 /* TMTimerStyleKit.m in Sources */,
 				501518E818B1979200CC286D /* Event+helperMethods.m in Sources */,
 				7F896E6C19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.m in Sources */,
+				7F8EE35C19AD54870064F0B1 /* DHQuickPanelTableViewCell.m in Sources */,
 				7F407F5E19A29C5800E37E1B /* DHEditUserProfileViewController.m in Sources */,
 				7F8EF98618FB0F780077922C /* DHColorForTime.m in Sources */,
 				5095B4D118AE7C440023210E /* DHMasterViewController.m in Sources */,

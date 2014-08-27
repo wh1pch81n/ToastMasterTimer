@@ -157,7 +157,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     [appDelegate setTopVC:self];
     
     self.presetTimesSegment.tintColor = [TMTimerStyleKit tM_ThemeAqua];
-    [self.extraButtonsView.layer setCornerRadius:5];
+    [self.extraButtonsView.layer setCornerRadius:kThemeCornerRadius];
     
     [self.buttonDuplicate setImage:[[TMTimerStyleKit imageOfDuplicateSpeech]
                                     imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
@@ -180,6 +180,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	//Default values
 	[self updateMin:_minTime max:_maxTime];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBG:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -295,14 +300,14 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     } else {
         label = [[UILabel alloc] init];
     }
-	UIColor *color;
-	if (component == kTimeGreen) {
-		color = kPickerViewMinColumnColor;
-	} else if (component == kTimeRed) {
-		color = kPickerViewMaxColumnColor;
-	} else {
-		color = [UIColor blackColor];
-	}
+    UIColor *color;
+    if (component == kTimeGreen) {
+        color = kPickerViewMinColumnColor;
+    } else if (component == kTimeRed) {
+        color = kPickerViewMaxColumnColor;
+    } else {
+        color = [UIColor whiteColor];
+    }
 	
 	NSDictionary *attr = @{
                            NSForegroundColorAttributeName: kPickerViewTextColor,
@@ -892,6 +897,15 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
         }];
     } else {
         self.extraButtonsView.frame = destinationFrame;
+    }
+}
+
+
+#pragma mark - NSNotification
+
+- (void)didEnterBG:(NSNotification *)notification {
+    if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStart]) { //if in idle state
+        [self tappedCancelButton:notification];
     }
 }
 
