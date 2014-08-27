@@ -394,8 +394,17 @@ NSString *const kTableTopics = @"Table Topics";
     }
     if ((dhCell.flag.image = [self.gaugeImageCache objectForKey:key]) == nil) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            UIImage *pic =
-            [TMTimerStyleKit imageOfGauge50WithG_minSeconds:object.minTime.integerValue *kSecondsInAMinute g_maxSeconds:object.maxTime.integerValue *kSecondsInAMinute g_elapsedSeconds:[object.endDate timeIntervalSinceDate:object.startDate]];
+            __block UIImage *pic = nil;
+            DHRLog(^{
+                pic =
+                [TMTimerStyleKit imageOfGauge50WithG_minSeconds:object.minTime.integerValue *kSecondsInAMinute g_maxSeconds:object.maxTime.integerValue *kSecondsInAMinute g_elapsedSeconds:[object.endDate timeIntervalSinceDate:object.startDate]];
+            });
+            DHDLog(^{
+                pic =
+                [TMTimerStyleKit imageOfGauge50WithG_minSeconds:object.minTime.integerValue
+                                                   g_maxSeconds:object.maxTime.integerValue
+                                               g_elapsedSeconds:[object.endDate timeIntervalSinceDate:object.startDate]];
+            });
             if (pic == nil) return;
             [self.gaugeImageCache setObject:pic forKey:key];
             dispatch_async(dispatch_get_main_queue(), ^{

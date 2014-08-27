@@ -448,7 +448,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     DHDLog(^{
         hours = minutes;
         minutes = seconds;
-        seconds = arc4random_uniform(kSecondsInAMinute);
+        seconds = 0;
     });
     
 	return [NSString stringWithFormat:@"%02d:%02d.%02d", (int)hours, (int)minutes, (int)seconds];

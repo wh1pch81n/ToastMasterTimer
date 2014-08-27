@@ -72,8 +72,9 @@
 		7F8CD813199FAAAE00FC177F /* fingers3_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F8CD80D199FAAAE00FC177F /* fingers3_touch.png */; };
 		7F8CD815199FAB2900FC177F /* ManualFlagInfoAnimationImageNames.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F8CD814199FAB2900FC177F /* ManualFlagInfoAnimationImageNames.plist */; };
 		7F8CD819199FFEBB00FC177F /* fingers.pxm in Resources */ = {isa = PBXBuildFile; fileRef = 7F8CD818199FFEBB00FC177F /* fingers.pxm */; };
+		7F8EE35C19AD54870064F0B1 /* DHQuickPanelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F8EE35B19AD54870064F0B1 /* DHQuickPanelTableViewCell.m */; };
 		7F8EE36019AD9A720064F0B1 /* DHLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F8EE35F19AD9A720064F0B1 /* DHLog.m */; };
-		7F8EEA761946289F006B4C53 /* Icon72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F8EEA741946289F006B4C53 /* Icon72x72.png */; };
+		7F8EEA761946289F006B4C53 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		7F8EEA771946289F006B4C53 /* Icon72x72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F8EEA751946289F006B4C53 /* Icon72x72@2x.png */; };
 		7F8EEA7A194629ED006B4C53 /* Icon50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F8EEA78194629ED006B4C53 /* Icon50x50.png */; };
 		7F8EEA7B194629ED006B4C53 /* Icon50x50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F8EEA79194629ED006B4C53 /* Icon50x50@2x.png */; };
@@ -193,9 +194,10 @@
 		7F8CD80D199FAAAE00FC177F /* fingers3_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingers3_touch.png; sourceTree = "<group>"; };
 		7F8CD814199FAB2900FC177F /* ManualFlagInfoAnimationImageNames.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ManualFlagInfoAnimationImageNames.plist; sourceTree = "<group>"; };
 		7F8CD818199FFEBB00FC177F /* fingers.pxm */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = fingers.pxm; sourceTree = "<group>"; };
+		7F8EE35A19AD54870064F0B1 /* DHQuickPanelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHQuickPanelTableViewCell.h; sourceTree = "<group>"; };
+		7F8EE35B19AD54870064F0B1 /* DHQuickPanelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHQuickPanelTableViewCell.m; sourceTree = "<group>"; };
 		7F8EE35E19AD9A720064F0B1 /* DHLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHLog.h; sourceTree = "<group>"; };
 		7F8EE35F19AD9A720064F0B1 /* DHLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHLog.m; sourceTree = "<group>"; };
-		7F8EEA741946289F006B4C53 /* Icon72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon72x72.png; sourceTree = "<group>"; };
 		7F8EEA751946289F006B4C53 /* Icon72x72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon72x72@2x.png"; sourceTree = "<group>"; };
 		7F8EEA78194629ED006B4C53 /* Icon50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon50x50.png; sourceTree = "<group>"; };
 		7F8EEA79194629ED006B4C53 /* Icon50x50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon50x50@2x.png"; sourceTree = "<group>"; };
@@ -443,7 +445,6 @@
 				5071129418C51B3C000790E1 /* Icon-80.png */,
 				5071129518C51B3C000790E1 /* Icon-120.png */,
 				5071129618C51B3C000790E1 /* Icon-152.png */,
-				7F8EEA741946289F006B4C53 /* Icon72x72.png */,
 				7F8EEA751946289F006B4C53 /* Icon72x72@2x.png */,
 				5071129718C51B3C000790E1 /* Icon-Small-50.png */,
 				5071129818C51B3C000790E1 /* Icon-Small-57.png */,
@@ -560,7 +561,7 @@
 				507112A918C51B3C000790E1 /* Icon@2x.png in Resources */,
 				7F8CD810199FAAAE00FC177F /* fingers2_no_touch.png in Resources */,
 				507112AD18C51DBA000790E1 /* Icon-57.png in Resources */,
-				7F8EEA761946289F006B4C53 /* Icon72x72.png in Resources */,
+				7F8EEA761946289F006B4C53 /* (null) in Resources */,
 				7F8CD812199FAAAE00FC177F /* fingers3_no_touch.png in Resources */,
 				7F8CD815199FAB2900FC177F /* ManualFlagInfoAnimationImageNames.plist in Resources */,
 				5095B4BF18AE7C440023210E /* InfoPlist.strings in Resources */,
