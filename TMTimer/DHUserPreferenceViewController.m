@@ -51,28 +51,28 @@
 	NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
 	NSNumber *threeSecondDelay = [UD objectForKey:kUserDefault3SecondDelay];
 	[self.threeSecondDelay setOn:threeSecondDelay.boolValue animated:YES];
-#if DEBUG
-    NSLog(@"ThreeSecondDelay is %d", threeSecondDelay.boolValue);
-#endif
+    DHDLog(^{
+        NSLog(@"ThreeSecondDelay is %d", threeSecondDelay.boolValue);
+    });
     
 	NSNumber *showRunningTimer = [UD objectForKey:kUserDefaultShowRunningTimer];
 	[self.showRunningTimer setOn:showRunningTimer.boolValue animated:YES];
-#if DEBUG
-    NSLog(@"showRunningTimer is %d", showRunningTimer.boolValue);
-#endif
+    DHDLog(^{
+        NSLog(@"showRunningTimer is %d", showRunningTimer.boolValue);
+    });
     
     NSNumber *showUserHints = [UD objectForKey:kUserDefaultShowUserHints];
     [self.showUserHints setOn:showUserHints.boolValue animated:YES];
-#if DEBUG
-    NSLog(@"show user hints is %@", showUserHints.boolValue ?@"enabled":@"disabled");
-#endif
+    DHDLog(^{
+        NSLog(@"show user hints is %@", showUserHints.boolValue ?@"enabled":@"disabled");
+    });
     
     NSNumber *vibrate = [UD objectForKey:kUserDefaultsVibrateOnFlagChange];
     [self.vibrateSwitch setOn:vibrate.boolValue animated:YES];
-#if DEBUG
-    NSLog(@"show user hints is %@", vibrate.boolValue ?@"enabled":@"disabled");
-#endif
-
+    DHDLog(^{
+        NSLog(@"show user hints is %@", vibrate.boolValue ?@"enabled":@"disabled");
+    });
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,27 +82,27 @@
 }
 
 - (IBAction)switchAction:(id)sender {
-#if DEBUG
-    NSLog(@"ThreeSecondDelay became %d", self.threeSecondDelay.on);
-#endif
+    DHDLog(^{
+        NSLog(@"ThreeSecondDelay became %d", self.threeSecondDelay.on);
+    });
 	NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
 	[UD setObject:@(self.threeSecondDelay.on) forKey:kUserDefault3SecondDelay];
 	
-#if DEBUG
-    NSLog(@"showRunningTimer became %d", self.showRunningTimer.on);
-#endif
+    DHDLog(^{
+        NSLog(@"showRunningTimer became %d", self.showRunningTimer.on);
+    });
 	[UD setObject:@(self.showRunningTimer.on) forKey:kUserDefaultShowRunningTimer];
     
-#if DEBUG
-    NSLog(@"show user hints is %@", self.showUserHints.on?@"enabled":@"disabled");
-#endif
+    DHDLog(^{
+        NSLog(@"show user hints is %@", self.showUserHints.on?@"enabled":@"disabled");
+    });
     [UD setObject:@(self.showUserHints.on) forKey:kUserDefaultShowUserHints];
     
-#if DEBUG
-    NSLog(@"vibrations is %@", self.vibrateSwitch.on?@"enabled":@"disabled");
-#endif
+    DHDLog(^{
+        NSLog(@"vibrations is %@", self.vibrateSwitch.on?@"enabled":@"disabled");
+    });
     [UD setObject:@(self.vibrateSwitch.on) forKey:kUserDefaultsVibrateOnFlagChange];
-
+    
     
 }
 
@@ -120,10 +120,10 @@
 #pragma mark - Core Data
 
 - (void)clearListOfSpeakers {
-#if DEBUG
-    NSLog(@"begin clearing list of speakers");
-#endif
-
+    DHDLog(^{
+        NSLog(@"begin clearing list of speakers");
+    });
+    
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     NSFetchRequest *allSpeakers = [[NSFetchRequest alloc] init];
     [allSpeakers setEntity:[NSEntityDescription entityForName:@"Event" inManagedObjectContext:appDelegate.managedObjectContext]];
@@ -145,9 +145,9 @@
     }
     
     
-#if DEBUG
-    NSLog(@"finished clearing list of speakers");
-#endif
+    DHDLog(^{
+        NSLog(@"finished clearing list of speakers");
+    });
     
 }
 

@@ -41,10 +41,10 @@ NSString *const kTableTopics = @"Table Topics";
 
 - (void)awakeFromNib
 {
-//	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-//		self.clearsSelectionOnViewWillAppear = NO;
-//		self.preferredContentSize = CGSizeMake(320.0, 600.0);
-//	}
+    //	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    //		self.clearsSelectionOnViewWillAppear = NO;
+    //		self.preferredContentSize = CGSizeMake(320.0, 600.0);
+    //	}
 	[super awakeFromNib];
 }
 
@@ -54,8 +54,9 @@ NSString *const kTableTopics = @"Table Topics";
 	// Do any additional setup after loading the view, typically from a nib.
     self.imageCache = [[NSCache alloc] init];
     self.gaugeImageCache = [NSCache new];
-    self.canDisplayBannerAds = YES;
-    
+    DHDLog(^{
+        self.canDisplayBannerAds = YES;
+    });
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:nil];
     
@@ -68,14 +69,14 @@ NSString *const kTableTopics = @"Table Topics";
 	self.navigationItem.leftBarButtonItem = moreButtonItem;
 	
 	UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithImage:[[TMTimerStyleKit imageOfAddNewSpeaker] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(insertNewObject:)];
-
+    
 	self.navigationItem.rightBarButtonItem = addButton;
 	self.detailViewController = (DHDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	
 	[self.navigationItem setTitle:kMasterViewControllerTitle];
-#if DEBUG
-    NSLog(@"TMTimer view did load");
-#endif
+    DHDLog(^{
+        NSLog(@"TMTimer view did load");
+    });
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -83,9 +84,9 @@ NSString *const kTableTopics = @"Table Topics";
     if (self.customStartDict) {
         [self beginCustomStartTopic];
     }
-#if DEBUG
-    NSLog(@"TMTimer view did appear");
-#endif
+    DHDLog(^{
+        NSLog(@"TMTimer view did appear");
+    });
 }
 
 - (void)didReceiveMemoryWarning
@@ -100,9 +101,9 @@ NSString *const kTableTopics = @"Table Topics";
  launches a view that reveals extra options
  */
 - (void)moreView:(id)sender {
-#if DEBUG
-    NSLog(@"Pressed more view button");
-#endif
+    DHDLog(^{
+        NSLog(@"Pressed more view button");
+    });
 	[self performSegueWithIdentifier:kMoreViewSegue sender:sender];
 }
 
@@ -121,7 +122,7 @@ NSString *const kTableTopics = @"Table Topics";
 	NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
 	[newManagedObject setMinTime:[UD objectForKey:kUserDefaultMinTime]];
 	[newManagedObject setMaxTime:[UD objectForKey:kUserDefaultMaxTime]];
-  
+    
 	// Save the context.
 	DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
 	[appDelegate saveContext];
@@ -374,7 +375,7 @@ NSString *const kTableTopics = @"Table Topics";
 	[[dhCell timeRange] setText:qualifyingTime];
 	
 	[dhCell setEntity:object];
-
+    
     NSIndexPath *key = indexPath;
     if ((dhCell.userImageIcon.image = [self.imageCache objectForKey:key]) == nil) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
@@ -393,8 +394,17 @@ NSString *const kTableTopics = @"Table Topics";
     }
     if ((dhCell.flag.image = [self.gaugeImageCache objectForKey:key]) == nil) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            UIImage *pic =
-            [TMTimerStyleKit imageOfGauge50WithG_minSeconds:object.minTime.integerValue *kSecondsInAMinute g_maxSeconds:object.maxTime.integerValue *kSecondsInAMinute g_elapsedSeconds:[object.endDate timeIntervalSinceDate:object.startDate]];
+            __block UIImage *pic = nil;
+            DHRLog(^{
+                pic =
+                [TMTimerStyleKit imageOfGauge50WithG_minSeconds:object.minTime.integerValue *kSecondsInAMinute g_maxSeconds:object.maxTime.integerValue *kSecondsInAMinute g_elapsedSeconds:[object.endDate timeIntervalSinceDate:object.startDate]];
+            });
+            DHDLog(^{
+                pic =
+                [TMTimerStyleKit imageOfGauge50WithG_minSeconds:object.minTime.integerValue
+                                                   g_maxSeconds:object.maxTime.integerValue
+                                               g_elapsedSeconds:[object.endDate timeIntervalSinceDate:object.startDate]];
+            });
             if (pic == nil) return;
             [self.gaugeImageCache setObject:pic forKey:key];
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -405,7 +415,7 @@ NSString *const kTableTopics = @"Table Topics";
             });
         });
     }
-
+    
 }
 
 #pragma mark quickStartPanel
@@ -441,15 +451,15 @@ NSString *const kTableTopics = @"Table Topics";
 }
 
 - (void)customStartTopic:(NSString *)topic withMinTime:(int)min withMaxTime:(int)max {
-#if DEBUG
-    NSLog(@"custome startTopic");
-#endif
+    DHDLog(^{
+        NSLog(@"custome startTopic");
+    });
     [self setCustomStartDict:@{kName: topic, kMinValue:@(min), kMaxValue:@(max)}];
-
+    
     //begin right away if app is already loaded and already in the default view; otherwise, wait until the view did appear method to begin
-//    if (self.didLoad && !self.didUnwind) {
-//        [self beginCustomStartTopic];
-//    }
+    //    if (self.didLoad && !self.didUnwind) {
+    //        [self beginCustomStartTopic];
+    //    }
     
     /**
      Sometimes if we are already in the default view, the above condition will fail In that event, this scheduled timer will call it to start.
@@ -459,9 +469,9 @@ NSString *const kTableTopics = @"Table Topics";
 
 - (void)beginCustomStartTopic:(NSTimer *)aTimer {
     if (self.customStartDict) {
-#if DEBUG
-        NSLog(@"NSTimer Triggered CustomStartTopic");
-#endif
+        DHDLog(^{
+            NSLog(@"NSTimer Triggered CustomStartTopic");
+        });
         [self beginCustomStartTopic];
     }
 }
@@ -472,16 +482,16 @@ NSString *const kTableTopics = @"Table Topics";
     }
     [self quickStartBegin:self];
     [self setupFirstObjectWithBlurb:self.customStartDict[kName]
-                     minTimeNumber:self.customStartDict[kMinValue]
-                     maxTimeNumber:self.customStartDict[kMaxValue]];
+                      minTimeNumber:self.customStartDict[kMinValue]
+                      maxTimeNumber:self.customStartDict[kMaxValue]];
     [self quickStartEnds:self];
     [self setCustomStartDict:nil];
 }
 
 - (IBAction)tappedTableTopics:(id)sender {
-//    [self quickStartBegin:sender];
-//    
-//    [self setupFirstObjectWithName:kTableTopics minTime:kTableTopicsMin maxTime:kTableTopicsMax];
+    //    [self quickStartBegin:sender];
+    //
+    //    [self setupFirstObjectWithName:kTableTopics minTime:kTableTopicsMin maxTime:kTableTopicsMax];
     
     
     NSManagedObjectContext *tempContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
@@ -506,7 +516,7 @@ NSString *const kTableTopics = @"Table Topics";
         [tempContext.parentContext performBlock:^{
             NSError *error;
             if (![tempContext.parentContext save:&error]) {
-                 [DHError displayValidationError:error];
+                [DHError displayValidationError:error];
             }
         }];
     }];
@@ -522,9 +532,9 @@ NSString *const kTableTopics = @"Table Topics";
 }
 
 - (IBAction)unwindForURLScheme:(UIStoryboardSegue *)sender {
-#if DEBUG
-    NSLog(@"just unwinded");
-#endif
+    DHDLog(^{
+        NSLog(@"just unwinded");
+    });
     self.didUnwind = YES;
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
 }
