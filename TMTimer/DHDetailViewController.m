@@ -300,14 +300,14 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     } else {
         label = [[UILabel alloc] init];
     }
-	UIColor *color;
-	if (component == kTimeGreen) {
-		color = kPickerViewMinColumnColor;
-	} else if (component == kTimeRed) {
-		color = kPickerViewMaxColumnColor;
-	} else {
-		color = [UIColor blackColor];
-	}
+    UIColor *color;
+    if (component == kTimeGreen) {
+        color = kPickerViewMinColumnColor;
+    } else if (component == kTimeRed) {
+        color = kPickerViewMaxColumnColor;
+    } else {
+        color = [UIColor whiteColor];
+    }
 	
 	NSDictionary *attr = @{
                            NSForegroundColorAttributeName: kPickerViewTextColor,

@@ -35,7 +35,6 @@ static const int kCellSideMargin = 10;
 }
 
 -(void)drawRect:(CGRect)rect {
-    self.backgroundView = nil;
     self.layer.cornerRadius = kThemeCornerRadius;
     self.backgroundColor = [TMTimerStyleKit tM_ThemeAqua_bg];
     [self.layer setMasksToBounds:YES];
@@ -45,7 +44,6 @@ static const int kCellSideMargin = 10;
 - (void)setFrame:(CGRect)frame {
     frame.origin.x += kCellSideMargin;
     frame.size.width -= 2 * kCellSideMargin;
-
     [super setFrame:frame];
 }
 
