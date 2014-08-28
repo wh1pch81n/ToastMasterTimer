@@ -830,7 +830,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                              blurb:_blurb
                          totalTime:_totalTime];//set the MO then save to disk
     [self FSM_idle];
-    [self moveOutExtraButtonsView:YES];
+    [self moveOutExtraButtonsView:NO];
     NSManagedObjectContext *moc = [(DHAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
     Event *ev = [NSEntityDescription insertNewObjectForEntityForName:@"Event"
                                               inManagedObjectContext:moc];
