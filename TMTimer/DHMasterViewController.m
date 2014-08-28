@@ -54,9 +54,8 @@ NSString *const kTableTopics = @"Table Topics";
 	// Do any additional setup after loading the view, typically from a nib.
     self.imageCache = [[NSCache alloc] init];
     self.gaugeImageCache = [NSCache new];
-    DHDLog(^{
-        self.canDisplayBannerAds = YES;
-    }, nil);
+    DHRLog(^{self.canDisplayBannerAds = YES;}, nil);
+    
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:nil];
     

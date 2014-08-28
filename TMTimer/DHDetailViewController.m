@@ -478,7 +478,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)FSM_idle {
     
-    DHRLog(^{self.canDisplayBannerAds = NO;}, @"cool ade %@", @"Whistle");
+    DHRLog(^{self.canDisplayBannerAds = NO;}, nil);
 
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
@@ -518,7 +518,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     BOOL delayIsEnabled = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
     
     if (delayIsEnabled) {
-        DHDLog(^{self.canDisplayBannerAds = NO;}, nil);
+        DHRLog(^{self.canDisplayBannerAds = NO;}, nil);
         
         CGRect rect = CGRectMake(0, 0,
                                  CGRectGetWidth(self.originalContentView.frame),
@@ -532,7 +532,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                                                  completedCountDown:^{
                                                      __strong typeof(wSelf)sSelf = wSelf;
                                                      
-                                                     DHDLog(^{sSelf.canDisplayBannerAds = YES;}, nil);
+                                                     DHRLog(^{sSelf.canDisplayBannerAds = YES;}, nil);
                                                      
                                                      [sSelf FSM_startTimerBegin];
                                                      [[sSelf countDownView] removeFromSuperview];
@@ -632,7 +632,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    DHDLog(^{self.canDisplayBannerAds = NO;}, nil);
+    DHRLog(^{self.canDisplayBannerAds = NO;}, nil);
     
     [self moveOutExtraButtonsView:YES];
 	[self enableNavItemButtons:YES];
@@ -640,7 +640,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if ([self.navItem.rightBarButtonItem.title isEqualToString:kStop]) {
-        DHDLog(^{self.canDisplayBannerAds = YES;}, nil);
+        DHRLog(^{self.canDisplayBannerAds = YES;}, nil);
     }
 	_blurb = self.nameTextField.text;
 	[self enableNavItemButtons:YES];
