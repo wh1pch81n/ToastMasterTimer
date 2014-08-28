@@ -398,7 +398,7 @@ NSString *const kTableTopics = @"Table Topics";
                 [TMTimerStyleKit imageOfGauge50WithG_minSeconds:object.minTime.integerValue
                                                    g_maxSeconds:object.maxTime.integerValue
                                                g_elapsedSeconds:[object.endDate timeIntervalSinceDate:object.startDate]];
-            }, nil);
+            }, @"The Guage color will be correct, but the pointer will be wrong.  Reason is because of a 30 second hard coded value in the guage code.  A minor issue and nothing to worry about.");
             if (pic == nil) return;
             [self.gaugeImageCache setObject:pic forKey:key];
             dispatch_async(dispatch_get_main_queue(), ^{
