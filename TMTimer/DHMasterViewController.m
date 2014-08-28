@@ -385,6 +385,8 @@ NSString *const kTableTopics = @"Table Topics";
                 }
             });
         });
+    } else {
+        [dhCell.userImageIcon setHidden:NO];
     }
     if ((dhCell.flag.image = [self.gaugeImageCache objectForKey:key]) == nil) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
