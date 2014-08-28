@@ -64,7 +64,7 @@ NSString *const kHost = @"tmtimer328";
 {
 	// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
 	// Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    DHDLog(^{NSLog(@"Will resign active");});
+    DHDLog(nil, @"Will resign active");
     
 	[self saveContext];
 }
@@ -73,7 +73,7 @@ NSString *const kHost = @"tmtimer328";
 {
 	// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
 	// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    DHDLog(^{NSLog(@"did enter background");});
+    DHDLog( nil, @"did enter background");
     
     NSFileManager *fm = [NSFileManager defaultManager];
     NSString *cacheLib = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
@@ -81,11 +81,11 @@ NSString *const kHost = @"tmtimer328";
     for (NSString *file in [fm contentsOfDirectoryAtPath:cacheLib error:&error]) {
         NSString *fileToDelete = [NSString stringWithFormat:@"%@/%@", cacheLib, file];
         
-        DHDLog(^{NSLog(@"try Delete: ~/%@", file);});
+        DHDLog( nil, @"try Delete: ~/%@", file);
         
         BOOL success = [fm removeItemAtPath:fileToDelete error:&error];
         if (!success || error) {
-            DHDLog(^{NSLog(@"Could not delete: ~/%@", file);});
+            DHDLog( nil, @"Could not delete: ~/%@", file);
         }
     }
     
@@ -95,7 +95,7 @@ NSString *const kHost = @"tmtimer328";
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
 	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    DHDLog(^{NSLog(@"did will enter foreground");});
+    DHDLog( nil, @"did will enter foreground");
     
 	[self saveContext];
 }

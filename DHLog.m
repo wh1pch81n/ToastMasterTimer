@@ -8,19 +8,40 @@
 
 #import "DHLog.h"
 
-void DHRLog(void(^action)()) {
+void DHRLog(void(^action)(), NSString *format, ...) {
 #if RELEASE
     if (action) {
         action();
     }
+    if (format) {
+        va_list argumentList;
+        va_start(argumentList, format);
+        NSMutableString * message = [[NSMutableString alloc] initWithFormat:format
+                                                                  arguments:argumentList];
+        
+        [message appendString:@"Our Logger!"]; // Our custom Message!
+        NSLogv(format, argumentList); // Originally NSLog is a wrapper around NSLogv.
+        va_end(argumentList);
+    }
 #endif
 }
 
-void DHDLog(void(^action)()) {
+void DHDLog(void(^action)(), NSString *format, ...) {
 #if DEBUG
     if (action) {
         action();
     }
+    if (format) {
+        va_list argumentList;
+        va_start(argumentList, format);
+        NSMutableString * message = [[NSMutableString alloc] initWithFormat:format
+                                                                  arguments:argumentList];
+        
+        [message appendString:@"Our Logger!"]; // Our custom Message!
+        NSLogv(format, argumentList); // Originally NSLog is a wrapper around NSLogv.
+        va_end(argumentList);
+    }
+
 #endif
 }
 

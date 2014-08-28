@@ -36,6 +36,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate setTopVC:self];
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[TMTimerStyleKit imageOfAddProfileButton] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(addNewProfile)];
  
     self.imageCache = [[NSCache alloc] init];
@@ -62,8 +65,8 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     // the number of sections should the 26 letters of the alphabet plus a number and misclanious section
-#warning temp hard code of 1 section
-    return 1;
+    
+    return 1;//hard code of 1 section
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

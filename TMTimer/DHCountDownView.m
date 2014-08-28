@@ -105,7 +105,7 @@ stringOfCharactersToCountDown:(NSString *)stringOfCharactersToCountDown
         sSelf.characterDisplayed.transform = kSmallScale;
     }];
     
-    DHDLog(^{NSLog(@"Count down text %@", self.characterDisplayed.text);});
+    DHDLog( nil, @"Count down text %@", self.characterDisplayed.text);
 }
 
 @end

@@ -46,7 +46,7 @@
     DHRLog(^{
         min *= k60Seconds;
         max *= k60Seconds;
-    });
+    }, nil);
     UIColor *color;
     if (seconds >= max) {
         color = [TMTimerStyleKit g_HighPressureColor];

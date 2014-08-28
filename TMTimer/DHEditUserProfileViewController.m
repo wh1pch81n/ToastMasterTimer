@@ -59,6 +59,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate setTopVC:self];
+    
     self.gaugeImageCache = [NSCache new];
     [self registerCustomTableViewCell];
     [[self imageViewProfilePic] addGestureRecognizer:
@@ -98,7 +101,7 @@
     self.textFieldName.text = up.user_name;
     self.labelTotalNumberOfSpeeches.text = up.total_speeches.stringValue;
     self.imageViewProfilePic.image = [UIImage imageWithContentsOfFile:up.profile_pic_path];
-    DHDLog(^{NSLog(@"%@", up);});
+    DHDLog( nil, @"%@", up);
 }
 
 - (void)didReceiveMemoryWarning
@@ -291,10 +294,7 @@
 
 - (void)saveImageFileToDisk {
     //construct the path to the file in our Documents director.
-    NSString *imageDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES) lastObject];
     NSString *uniqueFileName = [[NSUUID UUID] UUIDString];
-    NSString *imagePath = [imageDir stringByAppendingPathComponent:uniqueFileName];
-    
     
     User_Profile *up = (User_Profile *)[self.managedObjectContext objectWithID:self.objectID];
     //remove old path if any
@@ -326,9 +326,9 @@
     NSData *imageThumbAsData = UIImagePNGRepresentation(imageThumb);
     
     if(![imageThumbAsData writeToFile:up.profile_pic_path atomically:YES]){
-        DHDLog(^{NSLog(@"Could not save thumbnail image \n%@", up.profile_pic_path);});
+        DHDLog( nil, @"Could not save thumbnail image \n%@", up.profile_pic_path);
     } else {
-        DHDLog(^{NSLog(@"done saving Thumbnail image\n%@", up.profile_pic_path);});
+        DHDLog( nil, @"done saving Thumbnail image\n%@", up.profile_pic_path);
     }
 }
 
@@ -343,7 +343,7 @@
         NSError *err;
         [[NSFileManager defaultManager] moveItemAtPath:path toPath:newPath error:&err];
         if(err) {
-            DHDLog(^{NSLog(@"Error: %@", [err localizedDescription]);});
+            DHDLog( nil, @"Error: %@", [err localizedDescription]);
         }
     }
 }
@@ -351,16 +351,14 @@
 #pragma mark - Image
 
 - (IBAction)tappedImage:(id)sender {
-    DHDLog(^{
-        NSLog(@"Just Tapped Image");
-    });
+    DHDLog(nil, @"Just Tapped Image");
+   
     if ([self.textFieldName isFirstResponder]) {
         [self.textFieldName resignFirstResponder];
     }
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        DHDLog(^{
-            NSLog(@"This device has a camera.  Asking the user what they want to use.");
-        });
+        DHDLog(nil, @"This device has a camera.  Asking the user what they want to use.");
+        
         UIActionSheet *photoSourceSheet = [[UIActionSheet alloc]
                                            initWithTitle:@"Select Photo"
                                            delegate:self
@@ -400,9 +398,7 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == actionSheet.cancelButtonIndex) {
-        DHDLog(^{
-            NSLog(@"Cancled Action Sheet");
-        });
+        DHDLog(nil, @"Cancled Action Sheet");
         return;
     }
     
@@ -412,16 +408,13 @@
     
     switch (buttonIndex) {
         case 0:
-            DHDLog(^{
-                NSLog(@"user wants to take a new picture");
-            });
+            DHDLog(nil, @"user wants to take a new picture");
             picker.sourceType = UIImagePickerControllerSourceTypeCamera;
             break;
             
         default:
-            DHDLog(^{
-                NSLog(@"user want to get photo from library");
-            });
+            DHDLog(nil, @"user want to get photo from library");
+        
             picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
             break;
     }

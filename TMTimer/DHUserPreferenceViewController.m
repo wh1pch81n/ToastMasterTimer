@@ -51,28 +51,21 @@
 	NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
 	NSNumber *threeSecondDelay = [UD objectForKey:kUserDefault3SecondDelay];
 	[self.threeSecondDelay setOn:threeSecondDelay.boolValue animated:YES];
-    DHDLog(^{
-        NSLog(@"ThreeSecondDelay is %d", threeSecondDelay.boolValue);
-    });
+    DHDLog(nil, @"ThreeSecondDelay is %d", threeSecondDelay.boolValue);
+    
     
 	NSNumber *showRunningTimer = [UD objectForKey:kUserDefaultShowRunningTimer];
 	[self.showRunningTimer setOn:showRunningTimer.boolValue animated:YES];
-    DHDLog(^{
-        NSLog(@"showRunningTimer is %d", showRunningTimer.boolValue);
-    });
+    DHDLog(nil, @"showRunningTimer is %d", showRunningTimer.boolValue);
     
     NSNumber *showUserHints = [UD objectForKey:kUserDefaultShowUserHints];
     [self.showUserHints setOn:showUserHints.boolValue animated:YES];
-    DHDLog(^{
-        NSLog(@"show user hints is %@", showUserHints.boolValue ?@"enabled":@"disabled");
-    });
+    DHDLog(nil, @"show user hints is %@", showUserHints.boolValue ?@"enabled":@"disabled");
     
     NSNumber *vibrate = [UD objectForKey:kUserDefaultsVibrateOnFlagChange];
     [self.vibrateSwitch setOn:vibrate.boolValue animated:YES];
-    DHDLog(^{
-        NSLog(@"show user hints is %@", vibrate.boolValue ?@"enabled":@"disabled");
-    });
     
+    DHDLog(nil, @"show user hints is %@", vibrate.boolValue ?@"enabled":@"disabled");
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,25 +75,21 @@
 }
 
 - (IBAction)switchAction:(id)sender {
-    DHDLog(^{
-        NSLog(@"ThreeSecondDelay became %d", self.threeSecondDelay.on);
-    });
+    DHDLog(nil, @"ThreeSecondDelay became %d", self.threeSecondDelay.on);
+
 	NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
 	[UD setObject:@(self.threeSecondDelay.on) forKey:kUserDefault3SecondDelay];
 	
-    DHDLog(^{
-        NSLog(@"showRunningTimer became %d", self.showRunningTimer.on);
-    });
+    DHDLog(nil, @"showRunningTimer became %d", self.showRunningTimer.on);
+    
 	[UD setObject:@(self.showRunningTimer.on) forKey:kUserDefaultShowRunningTimer];
     
-    DHDLog(^{
-        NSLog(@"show user hints is %@", self.showUserHints.on?@"enabled":@"disabled");
-    });
+    DHDLog(nil, @"show user hints is %@", self.showUserHints.on?@"enabled":@"disabled");
+
     [UD setObject:@(self.showUserHints.on) forKey:kUserDefaultShowUserHints];
     
-    DHDLog(^{
-        NSLog(@"vibrations is %@", self.vibrateSwitch.on?@"enabled":@"disabled");
-    });
+    DHDLog(nil, @"vibrations is %@", self.vibrateSwitch.on?@"enabled":@"disabled");
+    
     [UD setObject:@(self.vibrateSwitch.on) forKey:kUserDefaultsVibrateOnFlagChange];
     
     
@@ -109,7 +98,7 @@
 - (IBAction)tappedClearSpeakerList:(id)sender {
     //launch alert and if select yes, then call clearListOfSpeakers
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Delete Data?"
-                                                    message:@"Selecting YES will clear the entire list of speakers."
+                                                    message:@"Selecting YES will clear the entire list of speech times."
                                                    delegate:self
                                           cancelButtonTitle:@"NO"
                                           otherButtonTitles:@"YES", nil];
@@ -119,10 +108,8 @@
 
 #pragma mark - Core Data
 
-- (void)clearListOfSpeakers {
-    DHDLog(^{
-        NSLog(@"begin clearing list of speakers");
-    });
+- (void)clearListOfSpeechTimes {
+    DHDLog(nil, @"begin clearing list of speech times");
     
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     NSFetchRequest *allSpeakers = [[NSFetchRequest alloc] init];
@@ -145,9 +132,7 @@
     }
     
     
-    DHDLog(^{
-        NSLog(@"finished clearing list of speakers");
-    });
+    DHDLog(nil, @"finished clearing list of speech times");
     
 }
 
@@ -157,7 +142,7 @@
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [[appDelegate arrOfAlerts] removeObject:alertView];
     if (buttonIndex == 1) {
-        [self clearListOfSpeakers];
+        [self clearListOfSpeechTimes];
     }
 }
 

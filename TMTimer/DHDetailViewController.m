@@ -223,7 +223,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     
     NSNumber *shouldQuickStart = [[NSUserDefaults standardUserDefaults] objectForKey:kQuickStart];
     
-    DHDLog(^{NSLog(@"should quick start %@", shouldQuickStart);});
+    DHDLog( nil, @"should quick start %@", shouldQuickStart);
     
     if (shouldQuickStart.boolValue == YES) {
         [self tappedStartStopButton:self];
@@ -401,7 +401,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     DHRLog(^{
         min *= k60Seconds;
         max *= k60Seconds;
-    });
+    }, nil);
     if ((int)timeInterval == min ||
         (int)timeInterval == max ||
         (int)timeInterval == (int)((min+max)/2)){
@@ -449,7 +449,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
         hours = minutes;
         minutes = seconds;
         seconds = 0;
-    });
+    }, nil);
     
 	return [NSString stringWithFormat:@"%02d:%02d.%02d", (int)hours, (int)minutes, (int)seconds];
 }
@@ -478,10 +478,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)FSM_idle {
     
-    DHRLog(^{self.canDisplayBannerAds = NO;});
-    DHDLog(^{
-        
-    });
+    DHRLog(^{self.canDisplayBannerAds = NO;}, @"cool ade %@", @"Whistle");
+
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
 	[self.timeChooserParentView setHidden:NO];
@@ -520,7 +518,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     BOOL delayIsEnabled = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
     
     if (delayIsEnabled) {
-        DHDLog(^{self.canDisplayBannerAds = NO;});
+        DHDLog(^{self.canDisplayBannerAds = NO;}, nil);
         
         CGRect rect = CGRectMake(0, 0,
                                  CGRectGetWidth(self.originalContentView.frame),
@@ -534,7 +532,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                                                  completedCountDown:^{
                                                      __strong typeof(wSelf)sSelf = wSelf;
                                                      
-                                                     DHDLog(^{sSelf.canDisplayBannerAds = YES;});
+                                                     DHDLog(^{sSelf.canDisplayBannerAds = YES;}, nil);
                                                      
                                                      [sSelf FSM_startTimerBegin];
                                                      [[sSelf countDownView] removeFromSuperview];
@@ -608,7 +606,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
  8) detail segue to master    - (7.1/138x) - (6.1/2x)
  */
 - (UIResponder *)nextResponder {
-    DHDLog(^{NSLog(@"next responder was called");});
+    DHDLog( nil, @"next responder was called");
     
     if(self.isOnTheFlyEditing) {
         [self setSecondsUntilOnTheFlyEditingEnds:kOnTheFlyEditingTimeOUt];
@@ -634,7 +632,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    DHDLog(^{self.canDisplayBannerAds = NO;});
+    DHDLog(^{self.canDisplayBannerAds = NO;}, nil);
     
     [self moveOutExtraButtonsView:YES];
 	[self enableNavItemButtons:YES];
@@ -642,7 +640,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if ([self.navItem.rightBarButtonItem.title isEqualToString:kStop]) {
-        DHDLog(^{self.canDisplayBannerAds = YES;});
+        DHDLog(^{self.canDisplayBannerAds = YES;}, nil);
     }
 	_blurb = self.nameTextField.text;
 	[self enableNavItemButtons:YES];
@@ -684,7 +682,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
  Sets the picker view to the right places, then updates the context
  */
 - (void)updateMin:(NSNumber *)min max:(NSNumber *)max {
-    DHDLog(^{NSLog(@"%@   %@", min, max);});
+    DHDLog( nil, @"%@   %@", min, max);
     
 	[[self pickerView] selectRow:min.integerValue inComponent:kTimeGreen animated:YES];
 	[[self pickerView] selectRow:max.integerValue-kPickerViewRedReelOffset inComponent:kTimeRed animated:YES];
@@ -710,7 +708,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
         [self.nameTextField resignFirstResponder];
     }
     
-#warning Also it seems that leaving the detail view will cause the timer to stop.  You should not segue, but insead put the view inside a sub view and present it above type able area
+
     if ([segue.identifier isEqualToString:@"selectAndCreateUP"]) {
         DHAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
         NSManagedObjectContext *moc = appDelegate.managedObjectContext;
@@ -737,6 +735,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
             [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kQuickStart];
         }];
     } else if ([segue.identifier isEqualToString:@"containerUP"]) {
+#warning Also it seems that leaving the detail view will cause the timer to stop.  You should not segue, but insead put the view inside a sub view and present it above type able area
         DHAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
         NSManagedObjectContext *moc = appDelegate.managedObjectContext;
         DHUserProfileCollectionViewController *cvc = [segue destinationViewController];

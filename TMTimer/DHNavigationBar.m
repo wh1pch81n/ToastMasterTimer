@@ -9,8 +9,6 @@
 #import "DHNavigationBar.h"
 #import "DHGradients.h"
 
-static const NSInteger kGodsMagicNumber = 77;
-
 @implementation DHNavigationBar
 
 - (id)initWithFrame:(CGRect)frame
