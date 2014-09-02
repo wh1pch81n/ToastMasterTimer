@@ -11,6 +11,7 @@
 @class Event;
 @interface DHTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIView *cellBG;
 @property (weak, nonatomic) IBOutlet UILabel *blurb;
 @property (weak, nonatomic) IBOutlet UILabel *creationDate;
 @property (weak, nonatomic) IBOutlet UILabel *elapsedTime;
