@@ -11,9 +11,6 @@
 #import "Event+helperMethods.h"
 #import "DHColorForTime.h"
 
-static const int kCellBottomMargin = 5;
-static const int kCellSideMargin = 10;
-
 @interface DHTableViewCell ()
 
 @end
@@ -37,25 +34,12 @@ static const int kCellSideMargin = 10;
     [self.userImageIcon.layer setBorderColor:[TMTimerStyleKit tM_ThemeBlue].CGColor];
     [self.userImageIcon.layer setMasksToBounds:YES];
     
-//    {//make the rounded corders of cells and a the margins
-//        self.layer.cornerRadius = kThemeCornerRadius;
-//        self.backgroundColor = [TMTimerStyleKit tM_ThemeAqua_bg];
-//        [self.layer setMasksToBounds:YES];
-//        [self.layer setBounds:CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height - kCellBottomMargin)];
-//    }
     {//make the rounded corders of cells and a the margins
         self.cellBG.layer.cornerRadius = kThemeCornerRadius;
         self.cellBG.backgroundColor = [TMTimerStyleKit tM_ThemeAqua_bg];
         [self.cellBG.layer setMasksToBounds:YES];
-        //[self.cellBG.layer setFrame:CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height - kCellBottomMargin)];
     }
 
 }
-
-//- (void)setFrame:(CGRect)frame {
-//    frame.origin.x += kCellSideMargin;
-//    frame.size.width -= 2 * kCellSideMargin;
-//    [super setFrame:frame];
-//}
 
 @end
