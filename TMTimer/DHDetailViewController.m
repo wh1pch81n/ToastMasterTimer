@@ -87,7 +87,10 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 @end
 
-@implementation DHDetailViewController
+@implementation DHDetailViewController {
+//    __strong NSMutableArray *timerArray;
+    __strong NSPointerArray *timerArray;
+}
 
 #pragma mark - Managing the detail item
 
@@ -549,7 +552,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     [self enableNavItemButtons:YES];
     [self setStartDate:[NSDate date]];
     [self setEndDate:nil];
-    [[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates:) userInfo:nil repeats:YES] fire];
+    [self createNSTimer];
     [[self swipeGesture] setEnabled:YES];
     [[self tapGesture1f1t] setEnabled:YES];
     [[self tapGesture2f2t] setEnabled:YES];
@@ -905,6 +908,29 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 - (void)didEnterBG:(NSNotification *)notification {
     if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStart]) { //if in idle state
         [self tappedCancelButton:notification];
+    }
+}
+
+
+#pragma mark array of nstimers
+
+- (void)createNSTimer {
+   if (timerArray == nil) {
+        timerArray = [NSPointerArray weakObjectsPointerArray];
+    }
+    [self printTimerArray:@"pretimer creation: %@"];
+    
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updates:) userInfo:nil repeats:YES];
+    [timer fire];
+    
+    [timerArray addPointer:(void *)timer];
+    [self printTimerArray:@"posttimer creation: %@"];
+}
+
+- (void)printTimerArray:(NSString *)msg {
+    for (int i = 0; i < timerArray.count; i++) {
+        NSTimer *t = (id)[timerArray pointerAtIndex:i];
+        NSLog(@"%@: %@", msg, t );
     }
 }
 
