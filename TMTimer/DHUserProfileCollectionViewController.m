@@ -39,8 +39,16 @@
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:self];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[TMTimerStyleKit imageOfAddProfileButton] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(addNewProfile)];
- 
+    UIImage *addProfile = [TMTimerStyleKit imageOfAddProfileButton];
+    if ([addProfile respondsToSelector:@selector(imageWithRenderingMode:)]) {
+        addProfile = [addProfile imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    }
+    self.navigationItem
+    .rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:addProfile
+                                                           style:UIBarButtonItemStylePlain
+                                                          target:self
+                                                          action:@selector(addNewProfile)];
+    
     self.imageCache = [[NSCache alloc] init];
 }
 

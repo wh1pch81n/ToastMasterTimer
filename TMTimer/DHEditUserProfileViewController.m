@@ -192,7 +192,15 @@
     
     if ((cell.gauge.image = [self.gaugeImageCache objectForKey:indexPath]) == nil) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            UIImage *img = [[TMTimerStyleKit imageOfGauge50WithG_minSeconds:obj.minTime.integerValue * kSecondsInAMinute g_maxSeconds:obj.maxTime.integerValue * kSecondsInAMinute g_elapsedSeconds:[obj.endDate timeIntervalSinceDate:obj.startDate]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            NSInteger minSeconds = obj.minTime.integerValue * kSecondsInAMinute;
+            NSInteger maxSeconds = obj.maxTime.integerValue * kSecondsInAMinute;
+            NSInteger elapsedSeconds = [obj.endDate timeIntervalSinceDate:obj.startDate];
+            UIImage *img = [TMTimerStyleKit imageOfGauge50WithG_minSeconds:minSeconds
+                                                              g_maxSeconds:maxSeconds
+                                                          g_elapsedSeconds:elapsedSeconds];
+            if ([img respondsToSelector:@selector(imageWithRenderingMode:)]) {
+                img = [img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            }
             if(img == nil) {return;}
             [self.gaugeImageCache setObject:img forKey:indexPath];
             dispatch_async(dispatch_get_main_queue(), ^{

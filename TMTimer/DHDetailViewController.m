@@ -159,17 +159,31 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     self.presetTimesSegment.tintColor = [TMTimerStyleKit tM_ThemeAqua];
     [self.extraButtonsView.layer setCornerRadius:kThemeCornerRadius];
     
-    [self.buttonDuplicate setImage:[[TMTimerStyleKit imageOfDuplicateSpeech]
-                                    imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+    //prepare button images
+    UIImage *duplicate = [TMTimerStyleKit imageOfDuplicateSpeech];
+    if ([duplicate respondsToSelector:@selector(imageWithRenderingMode:)]) {
+        duplicate = [duplicate imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    }
+    UIImage *newSpeaker = [TMTimerStyleKit imageOfAddNewSpeaker];
+    if ([newSpeaker respondsToSelector:@selector(imageWithRenderingMode:)]) {
+        newSpeaker = [newSpeaker imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    }
+    UIImage *overwrite = [TMTimerStyleKit imageOfOverwrite];
+    if ([overwrite respondsToSelector:@selector(imageWithRenderingMode:)]) {
+        overwrite = [overwrite imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    }
+    UIImage *cancel = [TMTimerStyleKit imageOfCancel];
+    if ([cancel respondsToSelector:@selector(imageWithRenderingMode:)]) {
+        cancel = [cancel imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    }
+    
+    [self.buttonDuplicate setImage:duplicate
                           forState:UIControlStateNormal];
-    [self.buttonNew setImage:[[TMTimerStyleKit imageOfAddNewSpeaker]
-                              imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+    [self.buttonNew setImage:newSpeaker
                     forState:UIControlStateNormal];
-    [self.buttonOverwrite setImage:[[TMTimerStyleKit imageOfOverwrite]
-                                    imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+    [self.buttonOverwrite setImage:overwrite
                           forState:UIControlStateNormal];
-    [self.buttonCancel setImage:[[TMTimerStyleKit imageOfCancel]
-                                 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+    [self.buttonCancel setImage:cancel
                        forState:UIControlStateNormal];
     
     [self setLocalDetailPropertiesWithDetail:self.detailItem];
@@ -478,7 +492,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)FSM_idle {
     
-    DHRLog(^{self.canDisplayBannerAds = NO;}, nil);
+    DHRLog(^{if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)])
+        self.canDisplayBannerAds = NO;}, nil);
 
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
@@ -518,7 +533,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     BOOL delayIsEnabled = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
     
     if (delayIsEnabled) {
-        DHRLog(^{self.canDisplayBannerAds = NO;}, nil);
+        DHRLog(^{if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)])
+            self.canDisplayBannerAds = NO;}, nil);
         
         CGRect rect = CGRectMake(0, 0,
                                  CGRectGetWidth(self.originalContentView.frame),
@@ -532,7 +548,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                                                  completedCountDown:^{
                                                      __strong typeof(wSelf)sSelf = wSelf;
                                                      
-                                                     DHRLog(^{sSelf.canDisplayBannerAds = YES;}, nil);
+                                                     DHRLog(^{if ([sSelf respondsToSelector:@selector(setCanDisplayBannerAds:)])
+                                                         sSelf.canDisplayBannerAds = YES;}, nil);
                                                      
                                                      [sSelf FSM_startTimerBegin];
                                                      [[sSelf countDownView] removeFromSuperview];
@@ -632,7 +649,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    DHRLog(^{self.canDisplayBannerAds = NO;}, nil);
+    DHRLog(^{if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)])
+        self.canDisplayBannerAds = NO;}, nil);
     
     [self moveOutExtraButtonsView:YES];
 	[self enableNavItemButtons:YES];
@@ -640,7 +658,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if ([self.navItem.rightBarButtonItem.title isEqualToString:kStop]) {
-        DHRLog(^{self.canDisplayBannerAds = YES;}, nil);
+        DHRLog(^{if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)])
+            self.canDisplayBannerAds = YES;}, nil);
     }
 	_blurb = self.nameTextField.text;
 	[self enableNavItemButtons:YES];

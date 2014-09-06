@@ -54,7 +54,8 @@ NSString *const kTableTopics = @"Table Topics";
 	// Do any additional setup after loading the view, typically from a nib.
     self.imageCache = [[NSCache alloc] init];
     self.gaugeImageCache = [NSCache new];
-    DHRLog(^{self.canDisplayBannerAds = YES;}, nil);
+    DHRLog(^{if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)])
+        self.canDisplayBannerAds = YES;}, nil);
     
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:nil];
@@ -63,11 +64,18 @@ NSString *const kTableTopics = @"Table Topics";
     
     self.presetSegmentedButtons.tintColor = [TMTimerStyleKit tM_ThemeAqua];
     
-	UIBarButtonItem *moreButtonItem = [[UIBarButtonItem alloc] initWithTitle:kMore style:UIBarButtonItemStyleBordered target:self action:@selector(moreView:)];
+	UIBarButtonItem *moreButtonItem = [[UIBarButtonItem alloc] initWithTitle:kMore style:UIBarButtonItemStylePlain target:self action:@selector(moreView:)];
 	
 	self.navigationItem.leftBarButtonItem = moreButtonItem;
 	
-	UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithImage:[[TMTimerStyleKit imageOfAddNewSpeaker] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(insertNewObject:)];
+    UIImage *addImg = [TMTimerStyleKit imageOfAddNewSpeaker];
+    if ([addImg respondsToSelector:@selector(imageWithRenderingMode:)]) {
+        addImg = [addImg imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    }
+	UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithImage:addImg
+                                                                  style:UIBarButtonItemStylePlain
+                                                                 target:self
+                                                                 action:@selector(insertNewObject:)];
     
 	self.navigationItem.rightBarButtonItem = addButton;
 	self.detailViewController = (DHDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
