@@ -43,11 +43,12 @@
     if ([addProfile respondsToSelector:@selector(imageWithRenderingMode:)]) {
         addProfile = [addProfile imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     }
+    UIButton *_addProfile = [UIButton buttonWithType:UIButtonTypeCustom];
+    _addProfile.frame = CGRectMake(0, 0, 50, 50);
+    [_addProfile setBackgroundImage:addProfile forState:UIControlStateNormal];
+    [_addProfile addTarget:self action:@selector(addNewProfile) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem
-    .rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:addProfile
-                                                           style:UIBarButtonItemStylePlain
-                                                          target:self
-                                                          action:@selector(addNewProfile)];
+    .rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_addProfile];
     
     self.imageCache = [[NSCache alloc] init];
 }

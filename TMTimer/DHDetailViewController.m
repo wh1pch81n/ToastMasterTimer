@@ -431,7 +431,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     UIColor *bgColor = [[DHColorForTime shared] colorForSeconds:total
                                                             min:_minTime.integerValue
                                                             max:_maxTime.integerValue];
-    [self.originalContentView setBackgroundColor:bgColor];
+    if ([self respondsToSelector:@selector(originalContentView)]) {
+        [self.originalContentView setBackgroundColor:bgColor];
+    } else {
+        [self.view setBackgroundColor:bgColor];
+    }
 }
 
 /**
@@ -503,7 +507,12 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     __weak typeof(self)wSelf = self;
 	[UIView animateWithDuration:0.5 animations:^{
         __strong typeof(wSelf)sSelf = wSelf;
-		[sSelf.originalContentView setBackgroundColor:[UIColor whiteColor]]; //reset to default color
+        if ([sSelf respondsToSelector:@selector(originalContentView)]) {
+            [sSelf.originalContentView setBackgroundColor:[UIColor whiteColor]]; //reset to default color
+        } else {
+            [sSelf.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
+        }
+		
 		[sSelf.nameTextField setAlpha:1];
         [sSelf.timeChooserParentView setAlpha:1];
         [sSelf.collectionView setAlpha:1];
@@ -536,9 +545,16 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
         DHRLog(^{if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)])
             self.canDisplayBannerAds = NO;}, nil);
         
-        CGRect rect = CGRectMake(0, 0,
-                                 CGRectGetWidth(self.originalContentView.frame),
-                                 CGRectGetHeight(self.originalContentView.frame));
+        CGRect rect;
+        if ([self respondsToSelector:@selector(originalContentView)]) {
+            rect = CGRectMake(0, 0,
+                              CGRectGetWidth(self.originalContentView.frame),
+                              CGRectGetHeight(self.originalContentView.frame));
+        } else {
+            rect = CGRectMake(0, 0,
+                              CGRectGetWidth(self.view.frame),
+                              CGRectGetHeight(self.view.frame));
+        }
         
         __weak typeof(self)wSelf = self;
         self.countDownView = [[DHCountDownView alloc] initWithFrame:rect
@@ -652,7 +668,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     DHRLog(^{if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)])
         self.canDisplayBannerAds = NO;}, nil);
     
-    [self moveOutExtraButtonsView:YES];
+    if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStart]) { //should only happen in idle state
+        [self moveOutExtraButtonsView:YES];
+    }
 	[self enableNavItemButtons:YES];
 }
 
