@@ -62,23 +62,34 @@ NSString *const kTableTopics = @"Table Topics";
     
     [self setDidLoad:YES];
     
-    self.presetSegmentedButtons.tintColor = [TMTimerStyleKit tM_ThemeAqua];
-    
-	UIBarButtonItem *moreButtonItem = [[UIBarButtonItem alloc] initWithTitle:kMore style:UIBarButtonItemStylePlain target:self action:@selector(moreView:)];
-	
-	self.navigationItem.leftBarButtonItem = moreButtonItem;
-	
-    UIImage *addImg = [TMTimerStyleKit imageOfAddNewSpeaker];
-    if ([addImg respondsToSelector:@selector(imageWithRenderingMode:)]) {
-        addImg = [addImg imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        self.presetSegmentedButtons.tintColor = [TMTimerStyleKit tM_ThemeAqua];
     }
-	UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithImage:addImg
-                                                                  style:UIBarButtonItemStylePlain
-                                                                 target:self
-                                                                 action:@selector(insertNewObject:)];
+    {//set left button
+        UIButton *_more = [UIButton buttonWithType:UIButtonTypeCustom];
+        _more.frame = CGRectMake(0, 0, 50, 50);
+        [_more setTitle:kMore forState:UIControlStateNormal];
+        [_more setTitleColor:[TMTimerStyleKit tM_ThemeBlue] forState:UIControlStateNormal];
+        [_more addTarget:self action:@selector(moreView:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *moreButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_more];
+        
+        self.navigationItem.leftBarButtonItem = moreButtonItem;
+    }
+    {//set right button
+        UIImage *addImg = [TMTimerStyleKit imageOfAddNewSpeaker];
+        if ([addImg respondsToSelector:@selector(imageWithRenderingMode:)]) {
+            addImg = [addImg imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        }
+        UIButton *_addButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _addButton.frame = CGRectMake(0, 0, 50, 50);
+        [_addButton setBackgroundImage:addImg forState:UIControlStateNormal];
+        [_addButton addTarget:self action:@selector(insertNewObject:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithCustomView:_addButton];
+        
+        self.navigationItem.rightBarButtonItem = addButton;
+    }
     
-	self.navigationItem.rightBarButtonItem = addButton;
-	self.detailViewController = (DHDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    self.detailViewController = (DHDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	
 	[self.navigationItem setTitle:kMasterViewControllerTitle];
     DHDLog(nil, @"TMTimer view did load");
