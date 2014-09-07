@@ -372,6 +372,18 @@ NSString *const kTableTopics = @"Table Topics";
     NSIndexPath *ip = [NSIndexPath indexPathForItem:indexPath.row inSection:0];
 	Event *object = [self.fetchedResultsController objectAtIndexPath:ip];
 	
+    NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:object.timeStamp];
+    NSDateComponents *today = [[NSCalendar currentCalendar] components:NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:[NSDate date]];
+    if(!([today day] == [otherDay day] &&
+         [today month] == [otherDay month] &&
+         [today year] == [otherDay year] &&
+         [today era] == [otherDay era])) {
+        //This cell is not today
+        dhCell.cellBG.backgroundColor = [UIColor clearColor];
+    } else {
+        dhCell.cellBG.backgroundColor = [TMTimerStyleKit tM_ThemeAqua_bg];
+    }
+    
 	[[dhCell blurb] setText:[object blurb]];
     [[dhCell userImageIcon] setHidden:YES];
     
