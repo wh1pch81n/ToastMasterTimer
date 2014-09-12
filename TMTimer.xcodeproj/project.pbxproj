@@ -300,60 +300,37 @@
 		5095B4BA18AE7C440023210E /* TMTimer */ = {
 			isa = PBXGroup;
 			children = (
-				7F896E6E19A50C600081A2A1 /* UIImage+DHScaledImage.h */,
-				7F896E6F19A50C600081A2A1 /* UIImage+DHScaledImage.m */,
-				5071126618C518E0000790E1 /* Images */,
 				5095B4C318AE7C440023210E /* DHAppDelegate.h */,
 				5095B4C418AE7C440023210E /* DHAppDelegate.m */,
 				5095B4C618AE7C440023210E /* Main_iPhone.storyboard */,
-				5095B4CF18AE7C440023210E /* DHMasterViewController.h */,
-				5095B4D018AE7C440023210E /* DHMasterViewController.m */,
-				5095B4D218AE7C440023210E /* DHDetailViewController.h */,
-				5095B4D318AE7C440023210E /* DHDetailViewController.m */,
-				7F86594F18D3C4C50045F9F2 /* DHUserPreferenceViewController.h */,
-				7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */,
-				7FC92103191D9C620026660A /* DHManualFlagViewController.h */,
-				7FC92104191D9C620026660A /* DHManualFlagViewController.m */,
-				7F86595218D3D0090045F9F2 /* DHCountDownView.h */,
-				7F86595318D3D0090045F9F2 /* DHCountDownView.m */,
 				7FD4ABDD18E0F488004DA1DF /* DHNavigationItem.h */,
 				7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */,
+				7FBB1D1019C3851B00387FBD /* SpeakerList */,
+				7FBB1D0D19C3849C00387FBD /* TimerInterfaceView */,
+				7FBB1D0F19C384D200387FBD /* MoreView */,
+				7F86595218D3D0090045F9F2 /* DHCountDownView.h */,
+				7F86595318D3D0090045F9F2 /* DHCountDownView.m */,
 				7FD4ABE018E0FD99004DA1DF /* DHNavigationBar.h */,
 				7FD4ABE118E0FD99004DA1DF /* DHNavigationBar.m */,
+				5095B4D518AE7C440023210E /* Images.xcassets */,
+				7FBB1D1219C385AB00387FBD /* UserProfiles */,
+				7FBB1D1419C385EA00387FBD /* ModifyUserProfiles */,
+				7FBB1D1619C3862200387FBD /* CoreData */,
+				5095B4BB18AE7C440023210E /* Supporting Files */,
+				5071126618C518E0000790E1 /* Images */,
+				7F87644C18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.h */,
+				7F87644D18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.m */,
+				50A3ECE718BF10FF00DB3981 /* DHGlobalConstants.h */,
+				7F94EE1118CD0FC3005390C3 /* DHError.h */,
+				7F94EE1218CD0FC3005390C3 /* DHError.m */,
+				7F896E6E19A50C600081A2A1 /* UIImage+DHScaledImage.h */,
+				7F896E6F19A50C600081A2A1 /* UIImage+DHScaledImage.m */,
 				7FD4ABE318E1089D004DA1DF /* DHGradients.h */,
 				7FD4ABE418E1089D004DA1DF /* DHGradients.m */,
 				7F8EF98418FB0F780077922C /* DHColorForTime.h */,
 				7F8EF98518FB0F780077922C /* DHColorForTime.m */,
-				5095B4D518AE7C440023210E /* Images.xcassets */,
-				7F407F5519A1F4E200E37E1B /* DHUserProfileCollectionViewCell.h */,
-				7F407F5619A1F4E200E37E1B /* DHUserProfileCollectionViewCell.m */,
-				7F407F5819A1F85C00E37E1B /* DHUserProfileCollectionViewController.h */,
-				7F407F5919A1F85C00E37E1B /* DHUserProfileCollectionViewController.m */,
-				7F407F5B19A29C5800E37E1B /* DHEditUserProfileViewController.h */,
-				7F407F5C19A29C5800E37E1B /* DHEditUserProfileViewController.m */,
-				7F407F5D19A29C5800E37E1B /* DHEditUserProfileViewController.xib */,
-				7F896E6819A40FB30081A2A1 /* DHEditUserProfileTableViewCell.xib */,
-				7F896E6A19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.h */,
-				7F896E6B19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.m */,
-				7F407F6019A2AD4D00E37E1B /* User_Profile+helperMethods.h */,
-				7F407F6119A2AD4D00E37E1B /* User_Profile+helperMethods.m */,
-				5095B4CC18AE7C440023210E /* TMTimer.xcdatamodeld */,
-				7F2AC6BA19A8149E00C9DAE7 /* User_Profile.h */,
-				7F2AC6BB19A8149E00C9DAE7 /* User_Profile.m */,
-				7FC84B4B19A566FC007F8BEB /* Event.h */,
-				7FC84B4C19A566FC007F8BEB /* Event.m */,
-				501518E618B1979200CC286D /* Event+helperMethods.h */,
-				501518E718B1979200CC286D /* Event+helperMethods.m */,
-				7F87644C18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.h */,
-				7F87644D18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.m */,
-				5095B4BB18AE7C440023210E /* Supporting Files */,
-				502B46B618B4063000A61D24 /* DHTableViewCell.h */,
-				502B46B718B4063000A61D24 /* DHTableViewCell.m */,
 				7FA32B7319AC1CC1006BCB30 /* TMThemeAquaButton.h */,
 				7FA32B7419AC1CC1006BCB30 /* TMThemeAquaButton.m */,
-				50A3ECE718BF10FF00DB3981 /* DHGlobalConstants.h */,
-				7F94EE1118CD0FC3005390C3 /* DHError.h */,
-				7F94EE1218CD0FC3005390C3 /* DHError.m */,
 			);
 			path = TMTimer;
 			sourceTree = "<group>";
@@ -463,6 +440,125 @@
 				7F8EE35F19AD9A720064F0B1 /* DHLog.m */,
 			);
 			name = Debug;
+			sourceTree = "<group>";
+		};
+		7FBB1D0D19C3849C00387FBD /* TimerInterfaceView */ = {
+			isa = PBXGroup;
+			children = (
+				5095B4D218AE7C440023210E /* DHDetailViewController.h */,
+				5095B4D318AE7C440023210E /* DHDetailViewController.m */,
+			);
+			name = TimerInterfaceView;
+			sourceTree = "<group>";
+		};
+		7FBB1D0E19C384C100387FBD /* ManualFlag */ = {
+			isa = PBXGroup;
+			children = (
+				7FC92103191D9C620026660A /* DHManualFlagViewController.h */,
+				7FC92104191D9C620026660A /* DHManualFlagViewController.m */,
+			);
+			name = ManualFlag;
+			sourceTree = "<group>";
+		};
+		7FBB1D0F19C384D200387FBD /* MoreView */ = {
+			isa = PBXGroup;
+			children = (
+				7FBB1D0E19C384C100387FBD /* ManualFlag */,
+				7F86594F18D3C4C50045F9F2 /* DHUserPreferenceViewController.h */,
+				7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */,
+			);
+			name = MoreView;
+			sourceTree = "<group>";
+		};
+		7FBB1D1019C3851B00387FBD /* SpeakerList */ = {
+			isa = PBXGroup;
+			children = (
+				5095B4CF18AE7C440023210E /* DHMasterViewController.h */,
+				5095B4D018AE7C440023210E /* DHMasterViewController.m */,
+				7FBB1D1119C3853D00387FBD /* TableViewCells */,
+			);
+			name = SpeakerList;
+			sourceTree = "<group>";
+		};
+		7FBB1D1119C3853D00387FBD /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				502B46B618B4063000A61D24 /* DHTableViewCell.h */,
+				502B46B718B4063000A61D24 /* DHTableViewCell.m */,
+			);
+			name = TableViewCells;
+			sourceTree = "<group>";
+		};
+		7FBB1D1219C385AB00387FBD /* UserProfiles */ = {
+			isa = PBXGroup;
+			children = (
+				7FBB1D1319C385C700387FBD /* CollectionCells */,
+				7F407F5819A1F85C00E37E1B /* DHUserProfileCollectionViewController.h */,
+				7F407F5919A1F85C00E37E1B /* DHUserProfileCollectionViewController.m */,
+			);
+			name = UserProfiles;
+			sourceTree = "<group>";
+		};
+		7FBB1D1319C385C700387FBD /* CollectionCells */ = {
+			isa = PBXGroup;
+			children = (
+				7F407F5519A1F4E200E37E1B /* DHUserProfileCollectionViewCell.h */,
+				7F407F5619A1F4E200E37E1B /* DHUserProfileCollectionViewCell.m */,
+			);
+			name = CollectionCells;
+			sourceTree = "<group>";
+		};
+		7FBB1D1419C385EA00387FBD /* ModifyUserProfiles */ = {
+			isa = PBXGroup;
+			children = (
+				7F407F5B19A29C5800E37E1B /* DHEditUserProfileViewController.h */,
+				7F407F5C19A29C5800E37E1B /* DHEditUserProfileViewController.m */,
+				7F407F5D19A29C5800E37E1B /* DHEditUserProfileViewController.xib */,
+				7FBB1D1519C3860300387FBD /* TableViewCells */,
+			);
+			name = ModifyUserProfiles;
+			sourceTree = "<group>";
+		};
+		7FBB1D1519C3860300387FBD /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				7F896E6819A40FB30081A2A1 /* DHEditUserProfileTableViewCell.xib */,
+				7F896E6A19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.h */,
+				7F896E6B19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.m */,
+			);
+			name = TableViewCells;
+			sourceTree = "<group>";
+		};
+		7FBB1D1619C3862200387FBD /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				7FBB1D1819C3864700387FBD /* UserProfileObject */,
+				5095B4CC18AE7C440023210E /* TMTimer.xcdatamodeld */,
+				7FBB1D1719C3863700387FBD /* SpeechObject */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+		7FBB1D1719C3863700387FBD /* SpeechObject */ = {
+			isa = PBXGroup;
+			children = (
+				7FC84B4B19A566FC007F8BEB /* Event.h */,
+				7FC84B4C19A566FC007F8BEB /* Event.m */,
+				501518E618B1979200CC286D /* Event+helperMethods.h */,
+				501518E718B1979200CC286D /* Event+helperMethods.m */,
+			);
+			name = SpeechObject;
+			sourceTree = "<group>";
+		};
+		7FBB1D1819C3864700387FBD /* UserProfileObject */ = {
+			isa = PBXGroup;
+			children = (
+				7F407F6019A2AD4D00E37E1B /* User_Profile+helperMethods.h */,
+				7F407F6119A2AD4D00E37E1B /* User_Profile+helperMethods.m */,
+				7F2AC6BA19A8149E00C9DAE7 /* User_Profile.h */,
+				7F2AC6BB19A8149E00C9DAE7 /* User_Profile.m */,
+			);
+			name = UserProfileObject;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
