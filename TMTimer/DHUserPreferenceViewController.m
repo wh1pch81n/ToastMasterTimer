@@ -10,8 +10,10 @@
 #import "DHGlobalConstants.h"
 #import "DHAppDelegate.h"
 #import "DHError.h"
+#import "iRate.h"
 
-@interface DHUserPreferenceViewController ()
+@interface DHUserPreferenceViewController () <iRateDelegate>
+@property (weak, nonatomic) IBOutlet UIButton *rateButton;
 @property (weak, nonatomic) IBOutlet UISwitch *threeSecondDelay;
 @property (weak, nonatomic) IBOutlet UISwitch *showRunningTimer;
 @property (weak, nonatomic) IBOutlet UISwitch *showUserHints;
@@ -34,6 +36,11 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    iRate.sharedInstance.delegate = self;
+    
+    [self.rateButton
+     setTitleColor:[TMTimerStyleKit tM_ThemeBlue]
+     forState:UIControlStateNormal];
     self.viewProfileLabel
     .textColor = [TMTimerStyleKit tM_ThemeBlue];
     self.threeSecondDelay
@@ -166,6 +173,12 @@
     if ([[segue identifier] isEqualToString:@"UserProfileSegue"]) {
         [[segue destinationViewController] setManagedObjectContext:_managedObjectContext];
     }
+}
+
+#pragma mark - iRate
+
+- (IBAction)tappedRateButton:(id)sender {
+    [[iRate sharedInstance] promptIfNetworkAvailable];
 }
 
 @end

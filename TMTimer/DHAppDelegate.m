@@ -24,13 +24,18 @@ NSString *const kHost = @"tmtimer328";
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
-#if DEBUG
 + (void)initialize {
     
-    [[iRate sharedInstance] setPreviewMode:YES];
-    
+    DHDLog(^{
+        iRate.sharedInstance.previewMode = YES;
+    }, nil);
+    DHRLog(^{
+        iRate.sharedInstance.daysUntilPrompt = 3;
+        iRate.sharedInstance.usesUntilPrompt = 3;
+        iRate.sharedInstance.remindPeriod = 7;
+        iRate.sharedInstance.promptForNewVersionIfUserRated = YES;
+    }, nil);
 }
-#endif
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
