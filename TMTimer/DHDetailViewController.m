@@ -542,8 +542,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     BOOL delayIsEnabled = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
     
     if (delayIsEnabled) {
-        DHRLog(^{if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)])
-            self.canDisplayBannerAds = NO;}, nil);
+        DHRLog(^{
+            if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
+                self.canDisplayBannerAds = NO;
+            }
+        }, nil);
         
         CGRect rect;
         if ([self respondsToSelector:@selector(originalContentView)]) {
@@ -557,19 +560,24 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
         }
         
         __weak typeof(self)wSelf = self;
-        self.countDownView = [[DHCountDownView alloc] initWithFrame:rect
-                                                           delegate:self
-                                                     characterDelay:1.0
-                                      stringOfCharactersToCountDown:@" 321"
-                                                 completedCountDown:^{
-                                                     __strong typeof(wSelf)sSelf = wSelf;
-                                                     
-                                                     DHRLog(^{if ([sSelf respondsToSelector:@selector(setCanDisplayBannerAds:)])
-                                                         sSelf.canDisplayBannerAds = YES;}, nil);
-                                                     
-                                                     [sSelf FSM_startTimerBegin];
-                                                     [[sSelf countDownView] removeFromSuperview];
-                                                 }];
+        self.countDownView =
+        [[DHCountDownView alloc] initWithFrame:rect
+                                      delegate:self
+                                characterDelay:1.0
+                 stringOfCharactersToCountDown:@" 321"
+                            completedCountDown:^{
+                                __strong typeof(wSelf)sSelf = wSelf;
+                                
+                                DHRLog(^{
+                                    if ([sSelf respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
+                                        sSelf.canDisplayBannerAds = YES;
+                                    }
+                                }, nil);
+                                
+                                [sSelf FSM_startTimerBegin];
+                                [[sSelf countDownView] removeFromSuperview];
+                                sSelf.countDownView = nil;
+                            }];
         [[self view] addSubview:self.countDownView];
         [[self countDownView] runCountDown:delayIsEnabled];
         
@@ -907,6 +915,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     CGRect destinationFrame0 = CGRectMake(CGRectGetWidth(self.view.frame) - CGRectGetWidth(self.extraButtonsView.frame) - 20, 0, CGRectGetWidth(self.extraButtonsView.frame), CGRectGetHeight(self.extraButtonsView.frame));
     CGRect destinationFrame1 = CGRectOffset(destinationFrame0, 20, 0);
     
+    self.extraButtonsView.hidden = NO;
+    
     if (animated) {
         [UIView animateWithDuration:0.2 animations:^{
             self.extraButtonsView.frame = destinationFrame0;
@@ -930,9 +940,12 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     if (animated) {
         [UIView animateWithDuration:0.5 animations:^{
             self.extraButtonsView.frame = destinationFrame;
+        } completion:^(BOOL finished) {
+            self.extraButtonsView.hidden = YES;
         }];
     } else {
         self.extraButtonsView.frame = destinationFrame;
+        self.extraButtonsView.hidden = YES;
     }
 }
 
