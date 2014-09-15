@@ -90,6 +90,8 @@
 		7FBB1DB519C6BE6F00387FBD /* TMPurchasesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBB1DB319C6BE6F00387FBD /* TMPurchasesViewController.xib */; };
 		7FBB1DBA19C6C10500387FBD /* TMPurchasesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB1DB819C6C10500387FBD /* TMPurchasesTableViewCell.m */; };
 		7FBB1DBB19C6C10500387FBD /* TMPurchasesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBB1DB919C6C10500387FBD /* TMPurchasesTableViewCell.xib */; };
+		7FBB1DBF19C6F3F400387FBD /* TMChangeFlagGraphicTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB1DBE19C6F3F400387FBD /* TMChangeFlagGraphicTableViewController.m */; };
+		7FBB1DC219C6F68400387FBD /* TMChangeFlagTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB1DC119C6F68400387FBD /* TMChangeFlagTableViewCell.m */; };
 		7FC84B4D19A566FC007F8BEB /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC84B4C19A566FC007F8BEB /* Event.m */; };
 		7FC92105191D9C620026660A /* DHManualFlagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC92104191D9C620026660A /* DHManualFlagViewController.m */; };
 		7FD4ABDF18E0F488004DA1DF /* DHNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */; };
@@ -228,6 +230,10 @@
 		7FBB1DB719C6C10500387FBD /* TMPurchasesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMPurchasesTableViewCell.h; sourceTree = "<group>"; };
 		7FBB1DB819C6C10500387FBD /* TMPurchasesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMPurchasesTableViewCell.m; sourceTree = "<group>"; };
 		7FBB1DB919C6C10500387FBD /* TMPurchasesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TMPurchasesTableViewCell.xib; sourceTree = "<group>"; };
+		7FBB1DBD19C6F3F400387FBD /* TMChangeFlagGraphicTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMChangeFlagGraphicTableViewController.h; sourceTree = "<group>"; };
+		7FBB1DBE19C6F3F400387FBD /* TMChangeFlagGraphicTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMChangeFlagGraphicTableViewController.m; sourceTree = "<group>"; };
+		7FBB1DC019C6F68400387FBD /* TMChangeFlagTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMChangeFlagTableViewCell.h; sourceTree = "<group>"; };
+		7FBB1DC119C6F68400387FBD /* TMChangeFlagTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMChangeFlagTableViewCell.m; sourceTree = "<group>"; };
 		7FC84B4B19A566FC007F8BEB /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		7FC84B4C19A566FC007F8BEB /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		7FC92103191D9C620026660A /* DHManualFlagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHManualFlagViewController.h; sourceTree = "<group>"; };
@@ -484,6 +490,7 @@
 		7FBB1D0F19C384D200387FBD /* MoreView */ = {
 			isa = PBXGroup;
 			children = (
+				7FBB1DBC19C6F3A700387FBD /* ChangeFlagGraphicTableView */,
 				7FBB1DB019C6BE0C00387FBD /* InAppPurchasesStoreView */,
 				7FBB1D0E19C384C100387FBD /* ManualFlagView */,
 				7F86594F18D3C4C50045F9F2 /* DHUserPreferenceViewController.h */,
@@ -613,6 +620,17 @@
 				7FBB1DB919C6C10500387FBD /* TMPurchasesTableViewCell.xib */,
 			);
 			name = tableViewCells;
+			sourceTree = "<group>";
+		};
+		7FBB1DBC19C6F3A700387FBD /* ChangeFlagGraphicTableView */ = {
+			isa = PBXGroup;
+			children = (
+				7FBB1DBD19C6F3F400387FBD /* TMChangeFlagGraphicTableViewController.h */,
+				7FBB1DBE19C6F3F400387FBD /* TMChangeFlagGraphicTableViewController.m */,
+				7FBB1DC019C6F68400387FBD /* TMChangeFlagTableViewCell.h */,
+				7FBB1DC119C6F68400387FBD /* TMChangeFlagTableViewCell.m */,
+			);
+			name = ChangeFlagGraphicTableView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -761,6 +779,7 @@
 			files = (
 				7FD4ABDF18E0F488004DA1DF /* DHNavigationItem.m in Sources */,
 				7F896E7019A50C600081A2A1 /* UIImage+DHScaledImage.m in Sources */,
+				7FBB1DC219C6F68400387FBD /* TMChangeFlagTableViewCell.m in Sources */,
 				7F407F6219A2AD4D00E37E1B /* User_Profile+helperMethods.m in Sources */,
 				7FBB1DB419C6BE6F00387FBD /* TMPurchasesViewController.m in Sources */,
 				7FBB1DAF19C6A30C00387FBD /* TMIAPHelper.m in Sources */,
@@ -785,6 +804,7 @@
 				7FBB1DAC19C6A00700387FBD /* DHIAPHelper.m in Sources */,
 				7F896E6C19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.m in Sources */,
 				7F8EE35C19AD54870064F0B1 /* DHQuickPanelTableViewCell.m in Sources */,
+				7FBB1DBF19C6F3F400387FBD /* TMChangeFlagGraphicTableViewController.m in Sources */,
 				7F407F5E19A29C5800E37E1B /* DHEditUserProfileViewController.m in Sources */,
 				7FBB1DBA19C6C10500387FBD /* TMPurchasesTableViewCell.m in Sources */,
 				7F8EF98618FB0F780077922C /* DHColorForTime.m in Sources */,

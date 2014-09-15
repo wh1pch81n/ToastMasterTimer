@@ -32,7 +32,7 @@ NSString *const kWineTimerFlags = @"com.dnthome.TMTimer.Wine_Timer_Flags";
 }
 
 - (BOOL)canDefaultFlags {
-    return YES;
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultTimerFlags];
 }
 
 - (BOOL)canWineFlags {

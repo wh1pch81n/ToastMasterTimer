@@ -15,6 +15,7 @@
 #import "TMPurchasesViewController.h"
 
 @interface DHUserPreferenceViewController () <iRateDelegate>
+@property (weak, nonatomic) IBOutlet UITableViewCell *changeFlagTableViewCell;
 @property (weak, nonatomic) IBOutlet UIButton *rateButton;
 @property (weak, nonatomic) IBOutlet UIButton *removeAdsButton;
 @property (weak, nonatomic) IBOutlet UISwitch *threeSecondDelay;
