@@ -456,7 +456,7 @@ NSString *const kTableTopics = @"Table Topics";
 }
 
 - (void)quickStartEnds:(id)sender {
-    [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kQuickStart];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kQuickStart];
     
     [self performSegueWithIdentifier:@"showDetail" sender:sender];
 }
@@ -533,7 +533,7 @@ NSString *const kTableTopics = @"Table Topics";
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kQuickStart];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kQuickStart];
             [self performSegueWithIdentifier:@"showDetail" sender:newManagedObject.objectID];
         });
         

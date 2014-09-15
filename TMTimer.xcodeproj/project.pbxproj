@@ -83,6 +83,9 @@
 		7F94EE1318CD0FC3005390C3 /* DHError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F94EE1218CD0FC3005390C3 /* DHError.m */; };
 		7FA32B7519AC1CC1006BCB30 /* TMThemeAquaButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA32B7419AC1CC1006BCB30 /* TMThemeAquaButton.m */; };
 		7FA32B7819AC5AE3006BCB30 /* TMTimerStyleKitWithColorExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA32B7719AC5AE3006BCB30 /* TMTimerStyleKitWithColorExtensions.m */; };
+		7FBB1DA819C69BD800387FBD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB1DA719C69BD800387FBD /* StoreKit.framework */; };
+		7FBB1DAC19C6A00700387FBD /* DHIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB1DAB19C6A00700387FBD /* DHIAPHelper.m */; };
+		7FBB1DAF19C6A30C00387FBD /* TMIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB1DAE19C6A30C00387FBD /* TMIAPHelper.m */; };
 		7FC84B4D19A566FC007F8BEB /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC84B4C19A566FC007F8BEB /* Event.m */; };
 		7FC92105191D9C620026660A /* DHManualFlagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC92104191D9C620026660A /* DHManualFlagViewController.m */; };
 		7FD4ABDF18E0F488004DA1DF /* DHNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */; };
@@ -210,6 +213,11 @@
 		7FA32B7419AC1CC1006BCB30 /* TMThemeAquaButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMThemeAquaButton.m; sourceTree = "<group>"; };
 		7FA32B7619AC5AE3006BCB30 /* TMTimerStyleKitWithColorExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMTimerStyleKitWithColorExtensions.h; sourceTree = "<group>"; };
 		7FA32B7719AC5AE3006BCB30 /* TMTimerStyleKitWithColorExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMTimerStyleKitWithColorExtensions.m; sourceTree = "<group>"; };
+		7FBB1DA719C69BD800387FBD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		7FBB1DAA19C6A00700387FBD /* DHIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHIAPHelper.h; sourceTree = "<group>"; };
+		7FBB1DAB19C6A00700387FBD /* DHIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHIAPHelper.m; sourceTree = "<group>"; };
+		7FBB1DAD19C6A30C00387FBD /* TMIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMIAPHelper.h; sourceTree = "<group>"; };
+		7FBB1DAE19C6A30C00387FBD /* TMIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMIAPHelper.m; sourceTree = "<group>"; };
 		7FC84B4B19A566FC007F8BEB /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		7FC84B4C19A566FC007F8BEB /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		7FC92103191D9C620026660A /* DHManualFlagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHManualFlagViewController.h; sourceTree = "<group>"; };
@@ -228,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F91B7471964C491002FC63E /* AudioToolbox.framework in Frameworks */,
+				7FBB1DA819C69BD800387FBD /* StoreKit.framework in Frameworks */,
 				7F75F66D18C9142F0040986B /* iAd.framework in Frameworks */,
 				5095B4B518AE7C440023210E /* CoreGraphics.framework in Frameworks */,
 				5095B4B918AE7C440023210E /* CoreData.framework in Frameworks */,
@@ -263,6 +272,7 @@
 		5095B4A618AE7C440023210E = {
 			isa = PBXGroup;
 			children = (
+				7FBB1DA919C69BF700387FBD /* InAppPurchases */,
 				7F8EE35D19AD9A350064F0B1 /* Debug */,
 				7F7145FB19AA9A3300DAEBF8 /* StyleKit */,
 				7F185BBB196A865900055446 /* iRate */,
@@ -286,6 +296,7 @@
 		5095B4B118AE7C440023210E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7FBB1DA719C69BD800387FBD /* StoreKit.framework */,
 				7F91B7461964C491002FC63E /* AudioToolbox.framework */,
 				7F75F66C18C9142F0040986B /* iAd.framework */,
 				5095B4B218AE7C440023210E /* Foundation.framework */,
@@ -305,7 +316,7 @@
 				5095B4C618AE7C440023210E /* Main_iPhone.storyboard */,
 				7FD4ABDD18E0F488004DA1DF /* DHNavigationItem.h */,
 				7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */,
-				7FBB1D1019C3851B00387FBD /* SpeakerList */,
+				7FBB1D1019C3851B00387FBD /* SpeakerListView */,
 				7FBB1D0D19C3849C00387FBD /* TimerInterfaceView */,
 				7FBB1D0F19C384D200387FBD /* MoreView */,
 				7F86595218D3D0090045F9F2 /* DHCountDownView.h */,
@@ -470,14 +481,14 @@
 			name = MoreView;
 			sourceTree = "<group>";
 		};
-		7FBB1D1019C3851B00387FBD /* SpeakerList */ = {
+		7FBB1D1019C3851B00387FBD /* SpeakerListView */ = {
 			isa = PBXGroup;
 			children = (
 				5095B4CF18AE7C440023210E /* DHMasterViewController.h */,
 				5095B4D018AE7C440023210E /* DHMasterViewController.m */,
 				7FBB1D1119C3853D00387FBD /* TableViewCells */,
 			);
-			name = SpeakerList;
+			name = SpeakerListView;
 			sourceTree = "<group>";
 		};
 		7FBB1D1119C3853D00387FBD /* TableViewCells */ = {
@@ -561,6 +572,17 @@
 			name = UserProfileObject;
 			sourceTree = "<group>";
 		};
+		7FBB1DA919C69BF700387FBD /* InAppPurchases */ = {
+			isa = PBXGroup;
+			children = (
+				7FBB1DAA19C6A00700387FBD /* DHIAPHelper.h */,
+				7FBB1DAB19C6A00700387FBD /* DHIAPHelper.m */,
+				7FBB1DAD19C6A30C00387FBD /* TMIAPHelper.h */,
+				7FBB1DAE19C6A30C00387FBD /* TMIAPHelper.m */,
+			);
+			name = InAppPurchases;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -611,6 +633,11 @@
 				TargetAttributes = {
 					5095B4AE18AE7C440023210E = {
 						DevelopmentTeam = SX585CK9M9;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 					5095B4DA18AE7C440023210E = {
 						TestTargetID = 5095B4AE18AE7C440023210E;
@@ -701,6 +728,7 @@
 				7FD4ABDF18E0F488004DA1DF /* DHNavigationItem.m in Sources */,
 				7F896E7019A50C600081A2A1 /* UIImage+DHScaledImage.m in Sources */,
 				7F407F6219A2AD4D00E37E1B /* User_Profile+helperMethods.m in Sources */,
+				7FBB1DAF19C6A30C00387FBD /* TMIAPHelper.m in Sources */,
 				7F2AC6BC19A8149E00C9DAE7 /* User_Profile.m in Sources */,
 				5095B4D418AE7C440023210E /* DHDetailViewController.m in Sources */,
 				7F86595418D3D0090045F9F2 /* DHCountDownView.m in Sources */,
@@ -719,6 +747,7 @@
 				502B46B818B4063000A61D24 /* DHTableViewCell.m in Sources */,
 				7F7145FE19AA9A4400DAEBF8 /* TMTimerStyleKit.m in Sources */,
 				501518E818B1979200CC286D /* Event+helperMethods.m in Sources */,
+				7FBB1DAC19C6A00700387FBD /* DHIAPHelper.m in Sources */,
 				7F896E6C19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.m in Sources */,
 				7F8EE35C19AD54870064F0B1 /* DHQuickPanelTableViewCell.m in Sources */,
 				7F407F5E19A29C5800E37E1B /* DHEditUserProfileViewController.m in Sources */,

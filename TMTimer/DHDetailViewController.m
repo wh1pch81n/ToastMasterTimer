@@ -111,7 +111,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	if (self.detailItem) {
 		self.nameTextField.text = _blurb;
 		
-		BOOL titleIsVisible = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowRunningTimer] boolValue];
+		BOOL titleIsVisible = [NSUserDefaults
+                               .standardUserDefaults boolForKey:kUserDefaultShowRunningTimer];
 		if (titleIsVisible) {
 			[[self navItem] setTitle:_totalTime];
 		} else {
@@ -235,19 +236,19 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     [super viewWillAppear:animated];
     
     
-    NSNumber *shouldQuickStart = [[NSUserDefaults standardUserDefaults] objectForKey:kQuickStart];
+    BOOL shouldQuickStart = [NSUserDefaults.standardUserDefaults boolForKey:kQuickStart];
     
-    DHDLog( nil, @"should quick start %@", shouldQuickStart);
+    DHDLog( nil, @"should quick start %d", shouldQuickStart);
     
-    if (shouldQuickStart.boolValue == YES) {
+    if (shouldQuickStart == YES) {
         [self tappedStartStopButton:self];
-        [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:kQuickStart];
+        [NSUserDefaults.standardUserDefaults setBool:NO forKey:kQuickStart];
     }
     
-    NSNumber *showUserHints =(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowUserHints];
+    BOOL showUserHints =[[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultShowUserHints];
     
-    [[self labelSwipeRightToStop] setHidden:!showUserHints.boolValue];
-    [[self labelTapToEdit] setHidden:!showUserHints.boolValue];
+    [[self labelSwipeRightToStop] setHidden:!showUserHints];
+    [[self labelTapToEdit] setHidden:!showUserHints];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -405,7 +406,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
  */
 - (void)updateVibrate:(NSTimeInterval)timeInterval {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    BOOL canVibrate = [(NSNumber *)[ud objectForKey:kUserDefaultsVibrateOnFlagChange] boolValue];
+    BOOL canVibrate = [ud boolForKey:kUserDefaultsVibrateOnFlagChange];
     if (!canVibrate) {
         return;
     }
@@ -445,7 +446,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	NSTimeInterval interval = timeInterval;
 	[self setTotalTime:[self stringFromTimeInterval:interval]];
     
-    BOOL titleIsVisible = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowRunningTimer] boolValue];
+    BOOL titleIsVisible = [NSUserDefaults
+                           .standardUserDefaults boolForKey:kUserDefaultShowRunningTimer];
     if (titleIsVisible) {
         [[self navItem] setTitle:_totalTime];
     } else {
@@ -539,7 +541,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     [[self tapGesture1f1t] setEnabled:NO];
     [[self tapGesture2f2t] setEnabled:NO];
     
-    BOOL delayIsEnabled = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
+    BOOL delayIsEnabled = [NSUserDefaults.standardUserDefaults boolForKey:kUserDefault3SecondDelay];
     
     if (delayIsEnabled) {
         DHRLog(^{
@@ -777,7 +779,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
             [self.collectionView reloadData];
             [self configureView];
             
-            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kQuickStart];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kQuickStart];
         }];
     } else if ([segue.identifier isEqualToString:@"containerUP"]) {
 #warning Also it seems that leaving the detail view will cause the timer to stop.  You should not segue, but insead put the view inside a sub view and present it above type able area

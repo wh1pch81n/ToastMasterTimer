@@ -126,10 +126,11 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
         [imageView setAnimationRepeatCount:1];
         [self setInfoImageView:imageView];
         
-        NSNumber *autoLaunch = [[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultsHasShownManualFlagInfoBefore];
+        BOOL autoLaunch = [NSUserDefaults
+                           .standardUserDefaults boolForKey:kUserDefaultsHasShownManualFlagInfoBefore];
         
-        if ([autoLaunch boolValue] == NO) {
-            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kUserDefaultsHasShownManualFlagInfoBefore];
+        if (autoLaunch == NO) {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserDefaultsHasShownManualFlagInfoBefore];
             [self presentInfoAnimation];
         } else if (self.hasRequestedInfoImages == YES) {
             self.hasRequestedInfoImages = NO;
