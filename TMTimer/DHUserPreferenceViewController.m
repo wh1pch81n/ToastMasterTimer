@@ -11,14 +11,18 @@
 #import "DHAppDelegate.h"
 #import "DHError.h"
 #import "iRate.h"
+#import "TMIAPHelper.h"
+#import "TMPurchasesViewController.h"
 
 @interface DHUserPreferenceViewController () <iRateDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *rateButton;
+@property (weak, nonatomic) IBOutlet UIButton *removeAdsButton;
 @property (weak, nonatomic) IBOutlet UISwitch *threeSecondDelay;
 @property (weak, nonatomic) IBOutlet UISwitch *showRunningTimer;
 @property (weak, nonatomic) IBOutlet UISwitch *showUserHints;
 @property (weak, nonatomic) IBOutlet UISwitch *vibrateSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *viewProfileLabel;
+@property (strong, nonatomic) TMPurchasesViewController *purchasesViewController;
 @end
 
 @implementation DHUserPreferenceViewController
@@ -83,6 +87,13 @@
     [self.vibrateSwitch setOn:vibrate.boolValue animated:YES];
     
     DHDLog(nil, @"show user hints is %@", vibrate.boolValue ?@"enabled":@"disabled");
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if ([[TMIAPHelper sharedInstance] canDisplayAds] == NO) {
+        [self.removeAdsButton setEnabled:NO];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -179,6 +190,17 @@
 
 - (IBAction)tappedRateButton:(id)sender {
     [[iRate sharedInstance] promptIfNetworkAvailable];
+}
+
+#pragma mark - In App Purchase
+
+- (IBAction)tappedInAppPurchasesButton:(id)sender {
+    TMPurchasesViewController *pvc = [TMPurchasesViewController.alloc initWithNibName:@"TMPurchasesViewController" bundle:nil];
+    self.purchasesViewController = pvc;
+    [self.navigationController pushViewController:pvc animated:YES];
+}
+- (IBAction)tappedRestorePastPurchases:(id)sender {
+    [TMIAPHelper.sharedInstance restoreCompletedTransactions];
 }
 
 @end

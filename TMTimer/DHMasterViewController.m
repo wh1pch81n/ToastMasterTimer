@@ -19,6 +19,7 @@
 #import "User_Profile.h"
 #import "User_Profile+helperMethods.h"
 #import "TMTimerStyleKit.h"
+#import "TMIAPHelper.h"
 
 NSString *const kMasterViewControllerTitle = @" ";
 NSString *const kMore = @"More";
@@ -54,9 +55,7 @@ NSString *const kTableTopics = @"Table Topics";
 	// Do any additional setup after loading the view, typically from a nib.
     self.imageCache = [[NSCache alloc] init];
     self.gaugeImageCache = [NSCache new];
-    DHRLog(^{if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)])
-        self.canDisplayBannerAds = YES;}, nil);
-    
+
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:nil];
     
@@ -97,10 +96,22 @@ NSString *const kTableTopics = @"Table Topics";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
+        if ([[TMIAPHelper sharedInstance] canDisplayAds]) {
+            self.canDisplayBannerAds = YES;
+        }
+    }
     if (self.customStartDict) {
         [self beginCustomStartTopic];
     }
     DHDLog(nil, @"TMTimer view did appear");
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
+        self.canDisplayBannerAds = NO;
+    }
+    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning

@@ -247,10 +247,96 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="In App Purchases" id="tud-QM-BnO">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="TzL-uL-1FX">
+                                        <rect key="frame" x="0.0" y="127" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TzL-uL-1FX" id="CZk-W4-YEx">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qDQ-ei-OLw">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                                    <state key="normal" title="Store">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="tappedInAppPurchasesButton:" destination="2i9-yI-Ppu" eventType="touchUpInside" id="Muy-ga-7sz"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="qDQ-ei-OLw" secondAttribute="bottom" id="8Gc-DH-K9U"/>
+                                                <constraint firstItem="qDQ-ei-OLw" firstAttribute="leading" secondItem="CZk-W4-YEx" secondAttribute="leading" id="Mcu-sc-Jx4"/>
+                                                <constraint firstAttribute="trailing" secondItem="qDQ-ei-OLw" secondAttribute="trailing" id="OiV-Gs-zvS"/>
+                                                <constraint firstItem="qDQ-ei-OLw" firstAttribute="top" secondItem="CZk-W4-YEx" secondAttribute="top" id="gqa-kd-Lpg"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="cS6-tb-Zhy">
+                                        <rect key="frame" x="0.0" y="171" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cS6-tb-Zhy" id="hbg-2n-tva">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UIe-ri-tO1">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                                    <state key="normal" title="Remove Ads">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="tappedInAppPurchasesButton:" destination="2i9-yI-Ppu" eventType="touchUpInside" id="SRK-eM-ZNc"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="UIe-ri-tO1" firstAttribute="top" secondItem="hbg-2n-tva" secondAttribute="top" id="C0I-H3-cbE"/>
+                                                <constraint firstAttribute="trailing" secondItem="UIe-ri-tO1" secondAttribute="trailing" id="W2O-Q5-THQ"/>
+                                                <constraint firstAttribute="bottom" secondItem="UIe-ri-tO1" secondAttribute="bottom" id="fps-mr-G2i"/>
+                                                <constraint firstItem="UIe-ri-tO1" firstAttribute="leading" secondItem="hbg-2n-tva" secondAttribute="leading" id="pqv-88-Wcq"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="zSp-kB-w9m">
+                                        <rect key="frame" x="0.0" y="215" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zSp-kB-w9m" id="iBA-t4-R7r">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hBh-4i-MPn">
+                                                    <rect key="frame" x="0.0" y="1" width="320" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                                    <state key="normal" title="Restore Past Purchases">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="tappedInAppPurchasesButton:" destination="2i9-yI-Ppu" eventType="touchUpInside" id="ufD-QP-lZD"/>
+                                                        <action selector="tappedRestorePastPurchases:" destination="2i9-yI-Ppu" eventType="touchUpInside" id="ZVz-St-VHz"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="hBh-4i-MPn" secondAttribute="trailing" id="AXo-x3-KNi"/>
+                                                <constraint firstAttribute="bottom" secondItem="hBh-4i-MPn" secondAttribute="bottom" id="MeH-em-zlw"/>
+                                                <constraint firstItem="hBh-4i-MPn" firstAttribute="top" secondItem="iBA-t4-R7r" secondAttribute="top" id="SFH-uk-vb2"/>
+                                                <constraint firstItem="hBh-4i-MPn" firstAttribute="leading" secondItem="iBA-t4-R7r" secondAttribute="leading" id="XQ9-2k-cfb"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="Speaker Profiles" id="7PQ-ES-bqh">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Qot-TT-Wq2" style="IBUITableViewCellStyleDefault" id="4qz-Gq-Z1u">
-                                        <rect key="frame" x="0.0" y="127" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="307" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4qz-Gq-Z1u" id="qbE-TO-n1G">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -274,7 +360,7 @@
                             <tableViewSection headerTitle="Settings" id="agv-5g-Kss">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="w89-gZ-q22">
-                                        <rect key="frame" x="0.0" y="219" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="399" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="w89-gZ-q22" id="fV1-Hk-IJd">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -307,7 +393,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Syv-XW-9Ch">
-                                        <rect key="frame" x="0.0" y="263" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="443" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Syv-XW-9Ch" id="qP2-vD-5ji">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -340,7 +426,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="tfu-0G-mDb">
-                                        <rect key="frame" x="0.0" y="307" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="487" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tfu-0G-mDb" id="176-CH-wbI">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -373,7 +459,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="hZN-YO-2XS">
-                                        <rect key="frame" x="0.0" y="351" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="531" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hZN-YO-2XS" id="clh-wH-JTF">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -406,7 +492,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="ip6-tf-kVx" style="IBUITableViewCellStyleDefault" id="Ar6-Rk-2kp">
-                                        <rect key="frame" x="0.0" y="395" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="575" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ar6-Rk-2kp" id="6DD-p1-QCN">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -430,7 +516,7 @@
                             <tableViewSection headerTitle="Manage Data" id="RW5-eY-1ky">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="vGf-zF-LWI">
-                                        <rect key="frame" x="0.0" y="487" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="667" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vGf-zF-LWI" id="UDk-yQ-6vn">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -467,6 +553,7 @@
                     <navigationItem key="navigationItem" id="MfT-FM-8PM"/>
                     <connections>
                         <outlet property="rateButton" destination="9gR-5Y-GTs" id="xHz-xy-BH6"/>
+                        <outlet property="removeAdsButton" destination="UIe-ri-tO1" id="Fh7-ut-sxP"/>
                         <outlet property="showRunningTimer" destination="Qph-Zz-9hb" id="Rpb-W8-06s"/>
                         <outlet property="showUserHints" destination="oKd-t6-NL9" id="QpA-c8-TBk"/>
                         <outlet property="threeSecondDelay" destination="A40-fO-KdK" id="GQA-jt-euB"/>

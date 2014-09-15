@@ -86,6 +86,10 @@
 		7FBB1DA819C69BD800387FBD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB1DA719C69BD800387FBD /* StoreKit.framework */; };
 		7FBB1DAC19C6A00700387FBD /* DHIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB1DAB19C6A00700387FBD /* DHIAPHelper.m */; };
 		7FBB1DAF19C6A30C00387FBD /* TMIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB1DAE19C6A30C00387FBD /* TMIAPHelper.m */; };
+		7FBB1DB419C6BE6F00387FBD /* TMPurchasesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB1DB219C6BE6F00387FBD /* TMPurchasesViewController.m */; };
+		7FBB1DB519C6BE6F00387FBD /* TMPurchasesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBB1DB319C6BE6F00387FBD /* TMPurchasesViewController.xib */; };
+		7FBB1DBA19C6C10500387FBD /* TMPurchasesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB1DB819C6C10500387FBD /* TMPurchasesTableViewCell.m */; };
+		7FBB1DBB19C6C10500387FBD /* TMPurchasesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBB1DB919C6C10500387FBD /* TMPurchasesTableViewCell.xib */; };
 		7FC84B4D19A566FC007F8BEB /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC84B4C19A566FC007F8BEB /* Event.m */; };
 		7FC92105191D9C620026660A /* DHManualFlagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC92104191D9C620026660A /* DHManualFlagViewController.m */; };
 		7FD4ABDF18E0F488004DA1DF /* DHNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */; };
@@ -218,6 +222,12 @@
 		7FBB1DAB19C6A00700387FBD /* DHIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHIAPHelper.m; sourceTree = "<group>"; };
 		7FBB1DAD19C6A30C00387FBD /* TMIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMIAPHelper.h; sourceTree = "<group>"; };
 		7FBB1DAE19C6A30C00387FBD /* TMIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMIAPHelper.m; sourceTree = "<group>"; };
+		7FBB1DB119C6BE6F00387FBD /* TMPurchasesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMPurchasesViewController.h; sourceTree = "<group>"; };
+		7FBB1DB219C6BE6F00387FBD /* TMPurchasesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMPurchasesViewController.m; sourceTree = "<group>"; };
+		7FBB1DB319C6BE6F00387FBD /* TMPurchasesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TMPurchasesViewController.xib; sourceTree = "<group>"; };
+		7FBB1DB719C6C10500387FBD /* TMPurchasesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMPurchasesTableViewCell.h; sourceTree = "<group>"; };
+		7FBB1DB819C6C10500387FBD /* TMPurchasesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMPurchasesTableViewCell.m; sourceTree = "<group>"; };
+		7FBB1DB919C6C10500387FBD /* TMPurchasesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TMPurchasesTableViewCell.xib; sourceTree = "<group>"; };
 		7FC84B4B19A566FC007F8BEB /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		7FC84B4C19A566FC007F8BEB /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		7FC92103191D9C620026660A /* DHManualFlagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHManualFlagViewController.h; sourceTree = "<group>"; };
@@ -462,19 +472,20 @@
 			name = TimerInterfaceView;
 			sourceTree = "<group>";
 		};
-		7FBB1D0E19C384C100387FBD /* ManualFlag */ = {
+		7FBB1D0E19C384C100387FBD /* ManualFlagView */ = {
 			isa = PBXGroup;
 			children = (
 				7FC92103191D9C620026660A /* DHManualFlagViewController.h */,
 				7FC92104191D9C620026660A /* DHManualFlagViewController.m */,
 			);
-			name = ManualFlag;
+			name = ManualFlagView;
 			sourceTree = "<group>";
 		};
 		7FBB1D0F19C384D200387FBD /* MoreView */ = {
 			isa = PBXGroup;
 			children = (
-				7FBB1D0E19C384C100387FBD /* ManualFlag */,
+				7FBB1DB019C6BE0C00387FBD /* InAppPurchasesStoreView */,
+				7FBB1D0E19C384C100387FBD /* ManualFlagView */,
 				7F86594F18D3C4C50045F9F2 /* DHUserPreferenceViewController.h */,
 				7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */,
 			);
@@ -583,6 +594,27 @@
 			name = InAppPurchases;
 			sourceTree = "<group>";
 		};
+		7FBB1DB019C6BE0C00387FBD /* InAppPurchasesStoreView */ = {
+			isa = PBXGroup;
+			children = (
+				7FBB1DB119C6BE6F00387FBD /* TMPurchasesViewController.h */,
+				7FBB1DB219C6BE6F00387FBD /* TMPurchasesViewController.m */,
+				7FBB1DB319C6BE6F00387FBD /* TMPurchasesViewController.xib */,
+				7FBB1DB619C6C0DA00387FBD /* tableViewCells */,
+			);
+			name = InAppPurchasesStoreView;
+			sourceTree = "<group>";
+		};
+		7FBB1DB619C6C0DA00387FBD /* tableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				7FBB1DB719C6C10500387FBD /* TMPurchasesTableViewCell.h */,
+				7FBB1DB819C6C10500387FBD /* TMPurchasesTableViewCell.m */,
+				7FBB1DB919C6C10500387FBD /* TMPurchasesTableViewCell.xib */,
+			);
+			name = tableViewCells;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -676,6 +708,7 @@
 				50143EA218C55A6700350947 /* Default_768x1024.png in Resources */,
 				50143EA118C55A6700350947 /* Default_1536x2048.png in Resources */,
 				50143EA318C55A6700350947 /* Default_320x480.png in Resources */,
+				7FBB1DBB19C6C10500387FBD /* TMPurchasesTableViewCell.xib in Resources */,
 				7F8CD811199FAAAE00FC177F /* fingers2_touch.png in Resources */,
 				5095B4D618AE7C440023210E /* Images.xcassets in Resources */,
 				7F0C3FCB18CBCD3D0068B26C /* Release Notes in Resources */,
@@ -704,6 +737,7 @@
 				7F407FA619A407C600E37E1B /* fetch.php.jpeg in Resources */,
 				7F8CD80E199FAAAE00FC177F /* finger1_not_touch.png in Resources */,
 				7F8EEA771946289F006B4C53 /* Icon72x72@2x.png in Resources */,
+				7FBB1DB519C6BE6F00387FBD /* TMPurchasesViewController.xib in Resources */,
 				507112A018C51B3C000790E1 /* Icon-58.png in Resources */,
 				50143EA418C55A6700350947 /* Default_640x1136.png in Resources */,
 				507112AA18C51B3C000790E1 /* iTunesArtwork in Resources */,
@@ -728,6 +762,7 @@
 				7FD4ABDF18E0F488004DA1DF /* DHNavigationItem.m in Sources */,
 				7F896E7019A50C600081A2A1 /* UIImage+DHScaledImage.m in Sources */,
 				7F407F6219A2AD4D00E37E1B /* User_Profile+helperMethods.m in Sources */,
+				7FBB1DB419C6BE6F00387FBD /* TMPurchasesViewController.m in Sources */,
 				7FBB1DAF19C6A30C00387FBD /* TMIAPHelper.m in Sources */,
 				7F2AC6BC19A8149E00C9DAE7 /* User_Profile.m in Sources */,
 				5095B4D418AE7C440023210E /* DHDetailViewController.m in Sources */,
@@ -751,6 +786,7 @@
 				7F896E6C19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.m in Sources */,
 				7F8EE35C19AD54870064F0B1 /* DHQuickPanelTableViewCell.m in Sources */,
 				7F407F5E19A29C5800E37E1B /* DHEditUserProfileViewController.m in Sources */,
+				7FBB1DBA19C6C10500387FBD /* TMPurchasesTableViewCell.m in Sources */,
 				7F8EF98618FB0F780077922C /* DHColorForTime.m in Sources */,
 				5095B4D118AE7C440023210E /* DHMasterViewController.m in Sources */,
 				7F407F5719A1F4E200E37E1B /* DHUserProfileCollectionViewCell.m in Sources */,

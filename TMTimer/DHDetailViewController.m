@@ -18,6 +18,7 @@
 #import "UISegmentedControl+extractMinMaxData.h"
 #import "DHUserProfileCollectionViewCell.h"
 #import "DHUserProfileCollectionViewController.h"
+#import "TMIAPHelper.h"
 
 enum {
 	kdummy0,
@@ -497,9 +498,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)FSM_idle {
-    
-    DHRLog(^{if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)])
-        self.canDisplayBannerAds = NO;}, nil);
+    if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
+        self.canDisplayBannerAds = NO;
+    }
 
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
@@ -544,11 +545,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     BOOL delayIsEnabled = [NSUserDefaults.standardUserDefaults boolForKey:kUserDefault3SecondDelay];
     
     if (delayIsEnabled) {
-        DHRLog(^{
-            if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
-                self.canDisplayBannerAds = NO;
-            }
-        }, nil);
+        if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
+            self.canDisplayBannerAds = NO;
+        }
         
         CGRect rect;
         if ([self respondsToSelector:@selector(originalContentView)]) {
@@ -570,11 +569,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                             completedCountDown:^{
                                 __strong typeof(wSelf)sSelf = wSelf;
                                 
-                                DHRLog(^{
-                                    if ([sSelf respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
+                                if ([sSelf respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
+                                    if ([[TMIAPHelper sharedInstance] canDisplayAds]) {
                                         sSelf.canDisplayBannerAds = YES;
                                     }
-                                }, nil);
+                                }
                                 
                                 [sSelf FSM_startTimerBegin];
                                 [[sSelf countDownView] removeFromSuperview];
@@ -585,6 +584,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
         
     } else {
         [self FSM_startTimerBegin];
+        if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
+            if ([[TMIAPHelper sharedInstance] canDisplayAds]) {
+                self.canDisplayBannerAds = YES;
+            }
+        }
     }
 }
 
@@ -675,9 +679,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    DHRLog(^{if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)])
-        self.canDisplayBannerAds = NO;}, nil);
-    
+    if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
+        self.canDisplayBannerAds = NO;
+    }
     if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStart]) { //should only happen in idle state
         [self moveOutExtraButtonsView:YES];
     }
@@ -686,8 +690,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if ([self.navItem.rightBarButtonItem.title isEqualToString:kStop]) {
-        DHRLog(^{if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)])
-            self.canDisplayBannerAds = YES;}, nil);
+        if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
+            if ([[TMIAPHelper sharedInstance] canDisplayAds]) {
+                self.canDisplayBannerAds = YES;
+            }
+        }
     }
 	_blurb = self.nameTextField.text;
 	[self enableNavItemButtons:YES];
