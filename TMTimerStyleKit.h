@@ -23,6 +23,9 @@
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* cancelTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* buttonFrameAquaWithSoftAquaBGTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* gauge50Targets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* wineGauge50Targets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* no_AdsTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* plainGauge50_Targets;
 
 // Colors
 + (UIColor*)g_LowPressureColor;
@@ -43,6 +46,7 @@
 + (void)drawGauge50WithG_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
 + (void)drawWineGauge50WithG_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
 + (void)drawNo_Ads;
++ (void)drawPlainGauge50_WithG_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
 
 // Generated Images
 + (UIImage*)imageOfTMNavBarWithFrame: (CGRect)frame;
@@ -53,5 +57,8 @@
 + (UIImage*)imageOfCancel;
 + (UIImage*)imageOfButtonFrameAquaWithSoftAquaBGWithFrame: (CGRect)frame tM_ThemeCornerRadius: (CGFloat)tM_ThemeCornerRadius;
 + (UIImage*)imageOfGauge50WithG_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
++ (UIImage*)imageOfWineGauge50WithG_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
++ (UIImage*)imageOfNo_Ads;
++ (UIImage*)imageOfPlainGauge50_WithG_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
 
 @end

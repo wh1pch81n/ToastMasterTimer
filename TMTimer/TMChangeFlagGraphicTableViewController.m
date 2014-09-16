@@ -54,9 +54,15 @@ NSString *const kFlagSelectionWine = @"kFlagSelectionWine";
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    self.plainGreenFlag.backgroundColor = [UIColor greenColor];
-    self.plainYelloFlag.backgroundColor = [UIColor yellowColor];
-    self.plainRedFlag.backgroundColor = [UIColor redColor];
+    self.plainGreenFlag.image = [TMTimerStyleKit imageOfPlainGauge50_WithG_minSeconds:1
+                                                                         g_maxSeconds:3
+                                                                     g_elapsedSeconds:1];
+    self.plainYelloFlag.image = [TMTimerStyleKit imageOfPlainGauge50_WithG_minSeconds:1
+                                                                         g_maxSeconds:3
+                                                                     g_elapsedSeconds:2];
+    self.plainRedFlag.image = [TMTimerStyleKit imageOfPlainGauge50_WithG_minSeconds:1
+                                                                       g_maxSeconds:3
+                                                                   g_elapsedSeconds:3];
     
     self.gaugeGreenFlag.image = [TMTimerStyleKit imageOfGauge50WithG_minSeconds:1 g_maxSeconds:3
                                                                g_elapsedSeconds:1];
@@ -65,9 +71,14 @@ NSString *const kFlagSelectionWine = @"kFlagSelectionWine";
     self.gaugeRedFlag.image = [TMTimerStyleKit imageOfGauge50WithG_minSeconds:1 g_maxSeconds:3
                                                              g_elapsedSeconds:3];
     
-    self.wineGreenFlag.image = nil;
-    self.wineYelloFlag.image = nil;
-    self.wineRedFlag.image = nil;
+    self.wineGreenFlag.image = [TMTimerStyleKit imageOfWineGauge50WithG_minSeconds:1
+                                                                      g_maxSeconds:3 g_elapsedSeconds:1];
+    self.wineYelloFlag.image = [TMTimerStyleKit imageOfWineGauge50WithG_minSeconds:1
+                                                                      g_maxSeconds:3
+                                                                  g_elapsedSeconds:2];
+    self.wineRedFlag.image = [TMTimerStyleKit imageOfWineGauge50WithG_minSeconds:1
+                                                                    g_maxSeconds:3
+                                                                g_elapsedSeconds:3];
     
     self.plainCell.cellName = kFlagSelectionPlain;
     self.gaugeCell.cellName = kFlagSelectionGauge;

@@ -7,6 +7,7 @@
 //
 
 #import "TMTimerStyleKitWithColorExtensions.h"
+#import "TMChangeFlagGraphicTableViewController.h"
 
 @implementation TMTimerStyleKitWithColorExtensions
 
@@ -47,4 +48,25 @@
     
     [self setColorTargets:self.tmColorThemeAquaBGTargets color:[TMTimerStyleKit tM_ThemeAqua_bg]];
 }
+
++ (UIImage *)timerFlagWithMinTime:(float)minTime maxTime:(float)maxTime elapsedTime:(float)elapsedTime {
+    UIImage *img;
+    NSString *flagName = [[NSUserDefaults standardUserDefaults] stringForKey:kUserDefaultsCurrentTimerFlagName];
+    if ([flagName isEqualToString:kFlagSelectionPlain]) {
+        img = [TMTimerStyleKit imageOfPlainGauge50_WithG_minSeconds:minTime
+                                                       g_maxSeconds:maxTime
+                                                   g_elapsedSeconds:elapsedTime];
+    } else if ([flagName isEqualToString:kFlagSelectionWine]) {
+   img = [TMTimerStyleKit imageOfWineGauge50WithG_minSeconds:minTime
+                                                g_maxSeconds:maxTime
+                                            g_elapsedSeconds:elapsedTime];
+    } else { //it is either blank or in gauge
+        img = [TMTimerStyleKit imageOfGauge50WithG_minSeconds:minTime
+                                                 g_maxSeconds:maxTime
+                                             g_elapsedSeconds:elapsedTime];
+    }
+
+    return img;
+}
+
 @end

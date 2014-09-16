@@ -27,6 +27,7 @@ static UIImage* _imageOfAddNewSpeaker = nil;
 static UIImage* _imageOfDuplicateSpeech = nil;
 static UIImage* _imageOfOverwrite = nil;
 static UIImage* _imageOfCancel = nil;
+static UIImage* _imageOfNo_Ads = nil;
 
 #pragma mark Initialization
 
@@ -723,6 +724,22 @@ static UIImage* _imageOfCancel = nil;
     [bezierPath stroke];
 }
 
++ (void)drawPlainGauge50_WithG_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
+{
+    //// Color Declarations
+    UIColor* g_GaugeNormal = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1];
+    UIColor* g_clear = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 0];
+
+    //// Variable Declarations
+    CGFloat g_midSeconds = (g_minSeconds + g_maxSeconds) / 2.0;
+    UIColor* g_limitingColor = g_elapsedSeconds <= 0 ? g_clear : (g_elapsedSeconds < g_minSeconds ? g_GaugeNormal : (g_elapsedSeconds < g_midSeconds ? TMTimerStyleKit.g_LowPressureColor : (g_elapsedSeconds < g_maxSeconds ? TMTimerStyleKit.g_MediumPressureColor : TMTimerStyleKit.g_HighPressureColor)));
+
+    //// Rectangle Drawing
+    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, 50, 50)];
+    [g_limitingColor setFill];
+    [rectanglePath fill];
+}
+
 #pragma mark Generated Images
 
 + (UIImage*)imageOfTMNavBarWithFrame: (CGRect)frame;
@@ -820,6 +837,39 @@ static UIImage* _imageOfCancel = nil;
     return imageOfGauge50;
 }
 
++ (UIImage*)imageOfWineGauge50WithG_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(50, 50), NO, 0.0f);
+    [TMTimerStyleKit drawWineGauge50WithG_minSeconds: g_minSeconds g_maxSeconds: g_maxSeconds g_elapsedSeconds: g_elapsedSeconds];
+    UIImage* imageOfWineGauge50 = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return imageOfWineGauge50;
+}
+
++ (UIImage*)imageOfNo_Ads;
+{
+    if (_imageOfNo_Ads)
+        return _imageOfNo_Ads;
+
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(50, 50), NO, 0.0f);
+    [TMTimerStyleKit drawNo_Ads];
+    _imageOfNo_Ads = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return _imageOfNo_Ads;
+}
+
++ (UIImage*)imageOfPlainGauge50_WithG_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(50, 50), NO, 0.0f);
+    [TMTimerStyleKit drawPlainGauge50_WithG_minSeconds: g_minSeconds g_maxSeconds: g_maxSeconds g_elapsedSeconds: g_elapsedSeconds];
+    UIImage* imageOfPlainGauge50_ = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return imageOfPlainGauge50_;
+}
+
 #pragma mark Customization Infrastructure
 
 - (void)setAddProfileButtonTargets: (NSArray*)addProfileButtonTargets
@@ -860,6 +910,14 @@ static UIImage* _imageOfCancel = nil;
 
     for (id target in self.cancelTargets)
         [target setImage: TMTimerStyleKit.imageOfCancel];
+}
+
+- (void)setNo_AdsTargets: (NSArray*)no_AdsTargets
+{
+    _no_AdsTargets = no_AdsTargets;
+
+    for (id target in self.no_AdsTargets)
+        [target setImage: TMTimerStyleKit.imageOfNo_Ads];
 }
 
 
