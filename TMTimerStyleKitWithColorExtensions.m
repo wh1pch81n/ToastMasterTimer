@@ -50,20 +50,32 @@
 }
 
 + (UIImage *)timerFlagWithMinTime:(float)minTime maxTime:(float)maxTime elapsedTime:(float)elapsedTime {
+    __block float _minTime = minTime;
+    __block float _maxTime = maxTime;
+    DHDLog(^{
+        _minTime /= kSecondsInAMinute;
+        _maxTime /= kSecondsInAMinute;
+    }, nil);
+    minTime = _minTime;
+    maxTime = _maxTime;
+    
     UIImage *img;
     NSString *flagName = [[NSUserDefaults standardUserDefaults] stringForKey:kUserDefaultsCurrentTimerFlagName];
     if ([flagName isEqualToString:kFlagSelectionPlain]) {
         img = [TMTimerStyleKit imageOfPlainGauge50_WithG_minSeconds:minTime
                                                        g_maxSeconds:maxTime
                                                    g_elapsedSeconds:elapsedTime];
+        
     } else if ([flagName isEqualToString:kFlagSelectionWine]) {
-   img = [TMTimerStyleKit imageOfWineGauge50WithG_minSeconds:minTime
-                                                g_maxSeconds:maxTime
-                                            g_elapsedSeconds:elapsedTime];
+        img = [TMTimerStyleKit imageOfWineGauge50WithG_minSeconds:minTime
+                                                     g_maxSeconds:maxTime
+                                                 g_elapsedSeconds:elapsedTime];
+        DHDLog(nil, @"The Wine will be correct, but the spill time will be wrong.  Reason is because of a 30 second hard coded value in the code.  A minor issue and nothing to worry about.");
     } else { //it is either blank or in gauge
         img = [TMTimerStyleKit imageOfGauge50WithG_minSeconds:minTime
                                                  g_maxSeconds:maxTime
                                              g_elapsedSeconds:elapsedTime];
+        DHDLog(nil, @"The Guage color will be correct, but the pointer will be wrong.  Reason is because of a 30 second hard coded value in the guage code.  A minor issue and nothing to worry about.");
     }
 
     return img;

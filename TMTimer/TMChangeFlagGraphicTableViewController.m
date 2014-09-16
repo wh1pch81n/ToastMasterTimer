@@ -78,7 +78,7 @@ NSString *const kFlagSelectionWine = @"kFlagSelectionWine";
                                                                   g_elapsedSeconds:2];
     self.wineRedFlag.image = [TMTimerStyleKit imageOfWineGauge50WithG_minSeconds:1
                                                                     g_maxSeconds:3
-                                                                g_elapsedSeconds:3];
+                                                                g_elapsedSeconds:40];
     
     self.plainCell.cellName = kFlagSelectionPlain;
     self.gaugeCell.cellName = kFlagSelectionGauge;

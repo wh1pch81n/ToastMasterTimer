@@ -18,7 +18,6 @@
 #import "UISegmentedControl+extractMinMaxData.h"
 #import "User_Profile.h"
 #import "User_Profile+helperMethods.h"
-#import "TMTimerStyleKit.h"
 #import "TMIAPHelper.h"
 
 NSString *const kMasterViewControllerTitle = @" ";
@@ -433,16 +432,15 @@ NSString *const kTableTopics = @"Table Topics";
     if ((dhCell.flag.image = [self.gaugeImageCache objectForKey:key]) == nil) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             __block UIImage *pic = nil;
-            DHRLog(^{
-                pic =
-                [TMTimerStyleKit imageOfGauge50WithG_minSeconds:object.minTime.integerValue *kSecondsInAMinute g_maxSeconds:object.maxTime.integerValue *kSecondsInAMinute g_elapsedSeconds:[object.endDate timeIntervalSinceDate:object.startDate]];
-            }, nil);
-            DHDLog(^{
-                pic =
-                [TMTimerStyleKit imageOfGauge50WithG_minSeconds:object.minTime.integerValue
-                                                   g_maxSeconds:object.maxTime.integerValue
-                                               g_elapsedSeconds:[object.endDate timeIntervalSinceDate:object.startDate]];
-            }, @"The Guage color will be correct, but the pointer will be wrong.  Reason is because of a 30 second hard coded value in the guage code.  A minor issue and nothing to worry about.");
+            
+            int min = object.minTime.integerValue *kSecondsInAMinute;
+            int max = object.maxTime.integerValue *kSecondsInAMinute;
+            int ela = [object.endDate timeIntervalSinceDate:object.startDate];
+            pic =
+            [TMTimerStyleKitWithColorExtensions timerFlagWithMinTime:min
+                                                             maxTime:max
+                                                         elapsedTime:ela];
+            
             if (pic == nil) return;
             [self.gaugeImageCache setObject:pic forKey:key];
             dispatch_async(dispatch_get_main_queue(), ^{
