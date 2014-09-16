@@ -122,27 +122,24 @@
         }
     }
     {//set Button
-        
-        self.priceFormatter.locale = product.priceLocale;
-        
-        NSString *priceString = [self.priceFormatter stringFromNumber:product.price];
-        [cell.productPriceButton setTitle:priceString
-                                 forState:UIControlStateNormal];
-        [cell.productPriceButton removeTarget:self
-                                       action:NULL
-                             forControlEvents:UIControlEventTouchUpInside];
-        cell.productPriceButton.tag = indexPath.row;
-        if ([TMIAPHelper.sharedInstance productPurchased:product.productIdentifier]) {
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            cell.accessoryView = nil;
-            cell.productPriceButton.hidden = YES;
+        if ([[TMIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
+            [cell.productPriceButton setTitle:@"Paid" forState:UIControlStateDisabled];
+            cell.productPriceButton.enabled = NO;
         } else {
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            cell.accessoryView = nil;
-            cell.productPriceButton.hidden = NO;
-            [cell.productPriceButton addTarget:self
-                                        action:@selector(buyButtonTapped:)
+            cell.productPriceButton.enabled = YES;
+            self.priceFormatter.locale = product.priceLocale;
+            
+            NSString *priceString = [self.priceFormatter stringFromNumber:product.price];
+            [cell.productPriceButton setTitle:priceString
+                                     forState:UIControlStateNormal];
+            
+            //clear the all actions on button
+            [cell.productPriceButton removeTarget:self action:NULL
+                                 forControlEvents:UIControlEventTouchUpInside];
+            //add action to button
+            [cell.productPriceButton addTarget:self action:@selector(buyButtonTapped:)
                               forControlEvents:UIControlEventTouchUpInside];
+            cell.productPriceButton.tag = indexPath.row;
         }
     }
     return cell;
