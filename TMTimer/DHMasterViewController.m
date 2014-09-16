@@ -19,6 +19,7 @@
 #import "User_Profile.h"
 #import "User_Profile+helperMethods.h"
 #import "TMIAPHelper.h"
+#import "TMChangeFlagGraphicTableViewController.h"
 
 NSString *const kMasterViewControllerTitle = @" ";
 NSString *const kMore = @"More";
@@ -91,6 +92,11 @@ NSString *const kTableTopics = @"Table Topics";
 	
 	[self.navigationItem setTitle:kMasterViewControllerTitle];
     DHDLog(nil, @"TMTimer view did load");
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(recievedChangeNotification:)
+                                                 name:kChangedFlagGraphicNotification
+                                               object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -111,6 +117,13 @@ NSString *const kTableTopics = @"Table Topics";
         self.canDisplayBannerAds = NO;
     }
     [super viewWillDisappear:animated];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kChangedFlagGraphicNotification
+                                                  object:nil];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -569,6 +582,13 @@ NSString *const kTableTopics = @"Table Topics";
     
     self.didUnwind = YES;
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
+}
+
+#pragma mark - kChangedFlagGraphicNotification
+
+- (void)recievedChangeNotification:(NSNotification *)notification {
+    [self.gaugeImageCache removeAllObjects];
+    [self.tableView reloadData];
 }
 
 @end

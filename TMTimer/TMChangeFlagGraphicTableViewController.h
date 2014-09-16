@@ -12,6 +12,8 @@ extern NSString *const kFlagSelectionPlain;
 extern NSString *const kFlagSelectionGauge;
 extern NSString *const kFlagSelectionWine;
 
+extern NSString *const kChangedFlagGraphicNotification;
+
 @interface TMChangeFlagGraphicTableViewController : UITableViewController <UIAlertViewDelegate>
 
 @end

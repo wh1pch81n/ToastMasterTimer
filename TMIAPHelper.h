@@ -9,7 +9,7 @@
 #import "DHIAPHelper.h"
 
 extern NSString *const kRemoveAdvertisements;
-extern NSString *const kDefaultTimerFlags;
+extern NSString *const kPlainTimerFlags;
 extern NSString *const kWineTimerFlags;
 
 @interface TMIAPHelper : DHIAPHelper
@@ -23,7 +23,7 @@ extern NSString *const kWineTimerFlags;
  */
 - (BOOL)canDisplayAds;
 
-- (BOOL)canDefaultFlags;
+- (BOOL)canPlainFlags;
 
 - (BOOL)canWineFlags;
 @end

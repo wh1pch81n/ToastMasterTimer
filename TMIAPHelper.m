@@ -9,7 +9,7 @@
 #import "TMIAPHelper.h"
 
 NSString *const kRemoveAdvertisements = @"com.dnthome.TMTimer.Remove_Advertisements";
-NSString *const kDefaultTimerFlags = @"com.dnthome.TMTimer.Default_Timer_Flag";
+NSString *const kPlainTimerFlags = @"com.dnthome.TMTimer.Default_Timer_Flag";
 NSString *const kWineTimerFlags = @"com.dnthome.TMTimer.Wine_Timer_Flags";
 
 @implementation TMIAPHelper
@@ -19,7 +19,7 @@ NSString *const kWineTimerFlags = @"com.dnthome.TMTimer.Wine_Timer_Flags";
     static dispatch_once_t predicate;
     dispatch_once(&predicate, ^{
         NSArray *productIdentifiers = @[kRemoveAdvertisements,
-                                        kDefaultTimerFlags,
+                                        kPlainTimerFlags,
                                         kWineTimerFlags];
         _sharedInstance =
         [self.alloc initWithProductIdentifiers:[NSSet setWithArray:productIdentifiers]];
@@ -31,8 +31,8 @@ NSString *const kWineTimerFlags = @"com.dnthome.TMTimer.Wine_Timer_Flags";
     return [[NSUserDefaults standardUserDefaults] boolForKey:kRemoveAdvertisements] == NO;
 }
 
-- (BOOL)canDefaultFlags {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultTimerFlags];
+- (BOOL)canPlainFlags {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kPlainTimerFlags];
 }
 
 - (BOOL)canWineFlags {

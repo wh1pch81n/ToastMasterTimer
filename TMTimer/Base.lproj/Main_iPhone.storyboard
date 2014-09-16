@@ -599,7 +599,7 @@
                         <sections>
                             <tableViewSection id="vhP-rC-uY4">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="3Wo-fw-NCc" customClass="TMChangeFlagTableViewCell">
+                                    <tableViewCell alpha="0.5" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="3Wo-fw-NCc" customClass="TMChangeFlagTableViewCell">
                                         <rect key="frame" x="0.0" y="35" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3Wo-fw-NCc" id="wfM-ae-cIV">
@@ -621,7 +621,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="4gv-Qn-ssD" customClass="TMChangeFlagTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="4gv-Qn-ssD" customClass="TMChangeFlagTableViewCell">
                                         <rect key="frame" x="0.0" y="79" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4gv-Qn-ssD" id="HK5-cd-o9V">
@@ -643,7 +643,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="AsF-Gc-WNJ" customClass="TMChangeFlagTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="AsF-Gc-WNJ" customClass="TMChangeFlagTableViewCell">
                                         <rect key="frame" x="0.0" y="123" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AsF-Gc-WNJ" id="vMR-iV-No3">
@@ -682,11 +682,11 @@
                         <outlet property="plainCell" destination="3Wo-fw-NCc" id="Gdw-YL-j8z"/>
                         <outlet property="plainGreenFlag" destination="VPl-et-1uE" id="HgR-48-RBt"/>
                         <outlet property="plainRedFlag" destination="zQn-co-a1e" id="v19-0T-Syd"/>
-                        <outlet property="plainYelloFlag" destination="4hY-dl-sZC" id="ZrR-NS-6IW"/>
+                        <outlet property="plainYellowFlag" destination="4hY-dl-sZC" id="vRK-10-tme"/>
                         <outlet property="wineCell" destination="AsF-Gc-WNJ" id="fHm-5Q-JEX"/>
                         <outlet property="wineGreenFlag" destination="Soe-CJ-NV1" id="7nO-YV-JLK"/>
                         <outlet property="wineRedFlag" destination="fLa-Mr-IPV" id="py1-GV-dmB"/>
-                        <outlet property="wineYelloFlag" destination="KK2-aL-BOT" id="pyJ-Ug-gio"/>
+                        <outlet property="wineYellowFlag" destination="KK2-aL-BOT" id="dfl-IQ-9SG"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2CG-ec-Lyf" userLabel="First Responder" sceneMemberID="firstResponder"/>

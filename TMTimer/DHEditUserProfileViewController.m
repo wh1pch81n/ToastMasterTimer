@@ -195,9 +195,10 @@
             NSInteger minSeconds = obj.minTime.integerValue * kSecondsInAMinute;
             NSInteger maxSeconds = obj.maxTime.integerValue * kSecondsInAMinute;
             NSInteger elapsedSeconds = [obj.endDate timeIntervalSinceDate:obj.startDate];
-            UIImage *img = [TMTimerStyleKit imageOfGauge50WithG_minSeconds:minSeconds
-                                                              g_maxSeconds:maxSeconds
-                                                          g_elapsedSeconds:elapsedSeconds];
+            UIImage *img =
+            [TMTimerStyleKitWithColorExtensions timerFlagWithMinTime:minSeconds
+                                                             maxTime:maxSeconds
+                                                         elapsedTime:elapsedSeconds];
             if ([img respondsToSelector:@selector(imageWithRenderingMode:)]) {
                 img = [img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
             }
