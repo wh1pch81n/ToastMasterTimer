@@ -688,6 +688,41 @@ static UIImage* _imageOfCancel = nil;
     }
 }
 
++ (void)drawNo_Ads;
+{
+    //// Color Declarations
+    UIColor* maroon = [UIColor colorWithRed: 0.8 green: 0.32 blue: 0.32 alpha: 1];
+    UIColor* maroonTransparent = [maroon colorWithAlphaComponent: 0.8];
+
+    //// Text Drawing
+    CGRect textRect = CGRectMake(0, 0, 50, 50);
+    {
+        NSString* textContent = @"Ads";
+        NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
+        textStyle.alignment = NSTextAlignmentCenter;
+
+        NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"ComicSansMS" size: 26], NSForegroundColorAttributeName: TMTimerStyleKit.tM_ThemeBlue, NSParagraphStyleAttributeName: textStyle};
+
+        [textContent drawInRect: CGRectOffset(textRect, 0, (CGRectGetHeight(textRect) - [textContent boundingRectWithSize: textRect.size options: NSStringDrawingUsesLineFragmentOrigin attributes: textFontAttributes context: nil].size.height) / 2) withAttributes: textFontAttributes];
+    }
+
+
+    //// Oval Drawing
+    UIBezierPath* ovalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(2, 2, 46, 46)];
+    [maroonTransparent setStroke];
+    ovalPath.lineWidth = 2;
+    [ovalPath stroke];
+
+
+    //// Bezier Drawing
+    UIBezierPath* bezierPath = UIBezierPath.bezierPath;
+    [bezierPath moveToPoint: CGPointMake(40, 8)];
+    [bezierPath addLineToPoint: CGPointMake(10, 42)];
+    [maroonTransparent setStroke];
+    bezierPath.lineWidth = 5;
+    [bezierPath stroke];
+}
+
 #pragma mark Generated Images
 
 + (UIImage*)imageOfTMNavBarWithFrame: (CGRect)frame;

@@ -42,6 +42,7 @@
 + (void)drawButtonFrameAquaWithSoftAquaBGWithFrame: (CGRect)frame tM_ThemeCornerRadius: (CGFloat)tM_ThemeCornerRadius;
 + (void)drawGauge50WithG_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
 + (void)drawWineGauge50WithG_minSeconds: (CGFloat)g_minSeconds g_maxSeconds: (CGFloat)g_maxSeconds g_elapsedSeconds: (CGFloat)g_elapsedSeconds;
++ (void)drawNo_Ads;
 
 // Generated Images
 + (UIImage*)imageOfTMNavBarWithFrame: (CGRect)frame;
