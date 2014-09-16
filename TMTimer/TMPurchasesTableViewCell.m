@@ -22,4 +22,8 @@
     // Configure the view for the selected state
 }
 
+- (void)drawRect:(CGRect)rect {
+    [self.productNameLabel setTextColor:[TMTimerStyleKit tM_ThemeBlue]];
+}
+
 @end

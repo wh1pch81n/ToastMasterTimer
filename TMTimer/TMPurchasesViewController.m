@@ -106,7 +106,6 @@
         cell.productNameLabel.text = product.localizedTitle;
     }
     {//set graphic
-#warning needs implementing.  Creating StyleKit for this
         if ([product.productIdentifier isEqualToString:kRemoveAdvertisements]) {
             cell.productGraphicView0.image = [TMTimerStyleKit imageOfNo_Ads];
             cell.productGraphicView1.image = nil;

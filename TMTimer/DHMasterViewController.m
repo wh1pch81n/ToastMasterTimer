@@ -446,9 +446,9 @@ NSString *const kTableTopics = @"Table Topics";
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             __block UIImage *pic = nil;
             
-            int min = object.minTime.integerValue *kSecondsInAMinute;
-            int max = object.maxTime.integerValue *kSecondsInAMinute;
-            int ela = [object.endDate timeIntervalSinceDate:object.startDate];
+            NSInteger min = object.minTime.integerValue *kSecondsInAMinute;
+            NSInteger max = object.maxTime.integerValue *kSecondsInAMinute;
+            NSInteger ela = [object.endDate timeIntervalSinceDate:object.startDate];
             pic =
             [TMTimerStyleKitWithColorExtensions timerFlagWithMinTime:min
                                                              maxTime:max

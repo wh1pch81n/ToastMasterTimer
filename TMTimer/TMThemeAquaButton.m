@@ -25,7 +25,7 @@
 - (void)drawRect:(CGRect)rect
 {
     [TMTimerStyleKit drawButtonFrameAquaWithSoftAquaBGWithFrame:rect tM_ThemeCornerRadius:kThemeCornerRadius];
-     [self setTitleColor:TMTimerStyleKit.tM_ThemeAqua forState:UIControlStateNormal];
+    [self setTitleColor:TMTimerStyleKit.tM_ThemeAqua forState:UIControlStateNormal];
 }
 
 

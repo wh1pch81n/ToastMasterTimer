@@ -113,7 +113,7 @@ NSString *const kChangedFlagGraphicNotification = @"kChangedFlagGraphicNotificat
     } else {
         [[NSUserDefaults standardUserDefaults] setObject:rowName forKey:kUserDefaultsCurrentTimerFlagName];
     }
-    
+    [[NSUserDefaults standardUserDefaults] synchronize];
     [self refreshCells];
     [[NSNotificationCenter defaultCenter] postNotificationName:kChangedFlagGraphicNotification object:nil userInfo:nil];
 }
