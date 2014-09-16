@@ -22,4 +22,16 @@
 */
 + (UIImage *)timerFlagWithMinTime:(float)minTime maxTime:(float)maxTime elapsedTime:(float)elapsedTime;
 
++ (UIImage *)greenPlainFlagImage;
++ (UIImage *)yellowPlainFlagImage;
++ (UIImage *)redPlainFlagImage;
+
++ (UIImage *)greenGaugeFlagImage;
++ (UIImage *)yellowGaugeFlagImage;
++ (UIImage *)redSuperGuageFlagImage;
+
++ (UIImage *)greenWineFlagImage;
++ (UIImage *)yellowWineFlagImage;
++ (UIImage *)redSpillWineFlagImage;
+
 @end

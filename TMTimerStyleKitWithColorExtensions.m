@@ -81,4 +81,59 @@
     return img;
 }
 
++ (UIImage *)greenPlainFlagImage {
+    return [TMTimerStyleKit imageOfPlainGauge50_WithG_minSeconds:1
+                                                    g_maxSeconds:3
+                                                g_elapsedSeconds:1];
+}
++ (UIImage *)yellowPlainFlagImage {
+    return [TMTimerStyleKit imageOfPlainGauge50_WithG_minSeconds:1
+                                                    g_maxSeconds:3
+                                                g_elapsedSeconds:2];
+}
+
++ (UIImage *)redPlainFlagImage {
+    return [TMTimerStyleKit imageOfPlainGauge50_WithG_minSeconds:1
+                                                    g_maxSeconds:3
+                                                g_elapsedSeconds:3];
+}
+
++ (UIImage *)greenGaugeFlagImage {
+    return [TMTimerStyleKit imageOfGauge50WithG_minSeconds:1
+                                              g_maxSeconds:3
+                                          g_elapsedSeconds:1];
+}
+
++ (UIImage *)yellowGaugeFlagImage {
+    return [TMTimerStyleKit imageOfGauge50WithG_minSeconds:1
+                                              g_maxSeconds:3
+                                          g_elapsedSeconds:2];
+}
+
++ (UIImage *)redSuperGuageFlagImage {
+    return [TMTimerStyleKit imageOfGauge50WithG_minSeconds:1
+                                              g_maxSeconds:3
+                                          g_elapsedSeconds:40]; //it is 40 to simulate the over time
+}
+
+
++ (UIImage *)greenWineFlagImage {
+    return [TMTimerStyleKit imageOfWineGauge50WithG_minSeconds:1
+                                                  g_maxSeconds:3
+                                              g_elapsedSeconds:1];
+}
+
++ (UIImage *)yellowWineFlagImage {
+    return [TMTimerStyleKit imageOfWineGauge50WithG_minSeconds:1
+                                                  g_maxSeconds:3
+                                              g_elapsedSeconds:2];
+}
+
++ (UIImage *)redSpillWineFlagImage {
+    return [TMTimerStyleKit imageOfWineGauge50WithG_minSeconds:1
+                                                  g_maxSeconds:3
+                                              g_elapsedSeconds:40]; // it is 40 to stimulate the spill over
+}
+
+
 @end

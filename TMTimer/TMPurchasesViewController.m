@@ -107,6 +107,19 @@
     }
     {//set graphic
 #warning needs implementing.  Creating StyleKit for this
+        if ([product.productIdentifier isEqualToString:kRemoveAdvertisements]) {
+            cell.productGraphicView0.image = [TMTimerStyleKit imageOfNo_Ads];
+            cell.productGraphicView1.image = nil;
+            cell.productGraphicView2.image = nil;
+        } else if ([product.productIdentifier isEqualToString:kPlainTimerFlags]) {
+            cell.productGraphicView0.image = [TMTimerStyleKitWithColorExtensions greenPlainFlagImage];
+            cell.productGraphicView1.image = [TMTimerStyleKitWithColorExtensions yellowPlainFlagImage];
+            cell.productGraphicView2.image = [TMTimerStyleKitWithColorExtensions redPlainFlagImage];
+        } else if ([product.productIdentifier isEqualToString:kWineTimerFlags]) {
+            cell.productGraphicView0.image = [TMTimerStyleKitWithColorExtensions greenWineFlagImage];
+            cell.productGraphicView1.image = [TMTimerStyleKitWithColorExtensions yellowWineFlagImage];
+            cell.productGraphicView2.image = [TMTimerStyleKitWithColorExtensions redSpillWineFlagImage];
+        }
     }
     {//set Button
         

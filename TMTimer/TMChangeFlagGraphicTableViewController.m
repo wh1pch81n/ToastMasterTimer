@@ -56,31 +56,17 @@ NSString *const kChangedFlagGraphicNotification = @"kChangedFlagGraphicNotificat
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    self.plainGreenFlag.image = [TMTimerStyleKit imageOfPlainGauge50_WithG_minSeconds:1
-                                                                         g_maxSeconds:3
-                                                                     g_elapsedSeconds:1];
-    self.plainYellowFlag.image = [TMTimerStyleKit imageOfPlainGauge50_WithG_minSeconds:1
-                                                                         g_maxSeconds:3
-                                                                     g_elapsedSeconds:2];
-    self.plainRedFlag.image = [TMTimerStyleKit imageOfPlainGauge50_WithG_minSeconds:1
-                                                                       g_maxSeconds:3
-                                                                   g_elapsedSeconds:3];
+    self.plainGreenFlag.image = [TMTimerStyleKitWithColorExtensions greenPlainFlagImage];
+    self.plainYellowFlag.image = [TMTimerStyleKitWithColorExtensions yellowPlainFlagImage];
+    self.plainRedFlag.image = [TMTimerStyleKitWithColorExtensions redPlainFlagImage];
     
-    self.gaugeGreenFlag.image = [TMTimerStyleKit imageOfGauge50WithG_minSeconds:1 g_maxSeconds:3
-                                                               g_elapsedSeconds:1];
-    self.gaugeYellowFlag.image = [TMTimerStyleKit imageOfGauge50WithG_minSeconds:1 g_maxSeconds:3
-                                                                g_elapsedSeconds:2];
-    self.gaugeRedFlag.image = [TMTimerStyleKit imageOfGauge50WithG_minSeconds:1 g_maxSeconds:3
-                                                             g_elapsedSeconds:3];
+    self.gaugeGreenFlag.image = [TMTimerStyleKitWithColorExtensions greenGaugeFlagImage];
+    self.gaugeYellowFlag.image = [TMTimerStyleKitWithColorExtensions yellowGaugeFlagImage];
+    self.gaugeRedFlag.image = [TMTimerStyleKitWithColorExtensions redSuperGuageFlagImage];
     
-    self.wineGreenFlag.image = [TMTimerStyleKit imageOfWineGauge50WithG_minSeconds:1
-                                                                      g_maxSeconds:3 g_elapsedSeconds:1];
-    self.wineYellowFlag.image = [TMTimerStyleKit imageOfWineGauge50WithG_minSeconds:1
-                                                                      g_maxSeconds:3
-                                                                  g_elapsedSeconds:2];
-    self.wineRedFlag.image = [TMTimerStyleKit imageOfWineGauge50WithG_minSeconds:1
-                                                                    g_maxSeconds:3
-                                                                g_elapsedSeconds:40];
+    self.wineGreenFlag.image = [TMTimerStyleKitWithColorExtensions greenWineFlagImage];
+    self.wineYellowFlag.image = [TMTimerStyleKitWithColorExtensions yellowWineFlagImage];
+    self.wineRedFlag.image = [TMTimerStyleKitWithColorExtensions redSpillWineFlagImage];
     
     self.plainCell.cellName = kFlagSelectionPlain;
     self.gaugeCell.cellName = kFlagSelectionGauge;
