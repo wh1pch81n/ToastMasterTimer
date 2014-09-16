@@ -38,7 +38,10 @@ NSString *const kTableTopics = @"Table Topics";
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
-@implementation DHMasterViewController
+@implementation DHMasterViewController {
+    dispatch_queue_t imageQueue;
+    dispatch_queue_t flagQueue;
+}
 
 - (void)awakeFromNib
 {
@@ -55,6 +58,8 @@ NSString *const kTableTopics = @"Table Topics";
 	// Do any additional setup after loading the view, typically from a nib.
     self.imageCache = [[NSCache alloc] init];
     self.gaugeImageCache = [NSCache new];
+    imageQueue = dispatch_queue_create("TM_IMAGE_QUEUE", DISPATCH_QUEUE_CONCURRENT);
+    flagQueue = dispatch_queue_create("TM_FLAG_QUEUE", DISPATCH_QUEUE_CONCURRENT);
 
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:nil];
@@ -426,7 +431,7 @@ NSString *const kTableTopics = @"Table Topics";
     
     NSIndexPath *key = indexPath;
     if ((dhCell.userImageIcon.image = [self.imageCache objectForKey:key]) == nil) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        dispatch_async(imageQueue, ^{
             User_Profile *up = object.speeches_speaker;
             UIImage *pic = [UIImage imageWithContentsOfFile:up.profile_pic_path];
             if (pic == nil) {return;}
@@ -443,7 +448,7 @@ NSString *const kTableTopics = @"Table Topics";
         [dhCell.userImageIcon setHidden:NO];
     }
     if ((dhCell.flag.image = [self.gaugeImageCache objectForKey:key]) == nil) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        dispatch_async(flagQueue, ^{
             __block UIImage *pic = nil;
             
             NSInteger min = object.minTime.integerValue *kSecondsInAMinute;
