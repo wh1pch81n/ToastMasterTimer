@@ -85,19 +85,20 @@ NSString *const DHIAPHelperProductPurchaseNotification = @"DHIAPHelperProductPur
             [self restoreTransaction:transaction];
         }
     }
-    UIApplication.sharedApplication.networkActivityIndicatorVisible = NO;
 }
 
 - (void)completeTransaction:(SKPaymentTransaction *)transaction {
     DHDLog(nil, @"completeTransaction:");
     [self provideContentForProductIdentifier:transaction.payment.productIdentifier];
     [SKPaymentQueue.defaultQueue finishTransaction:transaction];
+    UIApplication.sharedApplication.networkActivityIndicatorVisible = NO;
 }
 
 - (void)restoreTransaction:(SKPaymentTransaction *)transaction {
     DHDLog(nil, @"restoreTransaction:");
     [self provideContentForProductIdentifier:transaction.originalTransaction.payment.productIdentifier];
     [SKPaymentQueue.defaultQueue finishTransaction:transaction];
+    UIApplication.sharedApplication.networkActivityIndicatorVisible = NO;
 }
 
 - (void)failedTransaction:(SKPaymentTransaction *)transaction {
@@ -114,6 +115,7 @@ NSString *const DHIAPHelperProductPurchaseNotification = @"DHIAPHelperProductPur
          show];
       }
     [SKPaymentQueue.defaultQueue finishTransaction:transaction];
+    UIApplication.sharedApplication.networkActivityIndicatorVisible = NO;
 }
 
 - (void)provideContentForProductIdentifier:(NSString *)productIdentifier {

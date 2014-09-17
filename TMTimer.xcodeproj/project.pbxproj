@@ -47,6 +47,8 @@
 		5095B4E018AE7C440023210E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5095B4B818AE7C440023210E /* CoreData.framework */; };
 		5095B4E818AE7C440023210E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5095B4E618AE7C440023210E /* InfoPlist.strings */; };
 		5095B4EA18AE7C440023210E /* TMTimerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5095B4E918AE7C440023210E /* TMTimerTests.m */; };
+		7F01E15B19C93A64006C1263 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F01E15A19C93A64006C1263 /* StoreKit.framework */; };
+		7F01E15D19C93B8E006C1263 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F01E15C19C93B8E006C1263 /* GameKit.framework */; };
 		7F0C3FCB18CBCD3D0068B26C /* Release Notes in Resources */ = {isa = PBXBuildFile; fileRef = 7F0C3FCA18CBCD3D0068B26C /* Release Notes */; };
 		7F185BBE196A867900055446 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F185BBD196A867900055446 /* iRate.m */; };
 		7F2AC6BC19A8149E00C9DAE7 /* User_Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2AC6BB19A8149E00C9DAE7 /* User_Profile.m */; };
@@ -83,7 +85,6 @@
 		7F94EE1318CD0FC3005390C3 /* DHError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F94EE1218CD0FC3005390C3 /* DHError.m */; };
 		7FA32B7519AC1CC1006BCB30 /* TMThemeAquaButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA32B7419AC1CC1006BCB30 /* TMThemeAquaButton.m */; };
 		7FA32B7819AC5AE3006BCB30 /* TMTimerStyleKitWithColorExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA32B7719AC5AE3006BCB30 /* TMTimerStyleKitWithColorExtensions.m */; };
-		7FBB1DA819C69BD800387FBD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBB1DA719C69BD800387FBD /* StoreKit.framework */; };
 		7FBB1DAC19C6A00700387FBD /* DHIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB1DAB19C6A00700387FBD /* DHIAPHelper.m */; };
 		7FBB1DAF19C6A30C00387FBD /* TMIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB1DAE19C6A30C00387FBD /* TMIAPHelper.m */; };
 		7FBB1DB419C6BE6F00387FBD /* TMPurchasesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB1DB219C6BE6F00387FBD /* TMPurchasesViewController.m */; };
@@ -164,6 +165,8 @@
 		5095B4F318AE7DC80023210E /* TMTimer 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TMTimer 2.xcdatamodel"; sourceTree = "<group>"; };
 		50A3ECE718BF10FF00DB3981 /* DHGlobalConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHGlobalConstants.h; sourceTree = "<group>"; };
 		50B0FC5F18B2FFC0007694F3 /* TMTimer 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TMTimer 5.xcdatamodel"; sourceTree = "<group>"; };
+		7F01E15A19C93A64006C1263 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		7F01E15C19C93B8E006C1263 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		7F0C3FCA18CBCD3D0068B26C /* Release Notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Release Notes"; path = "TMTimer/Release Notes"; sourceTree = "<group>"; };
 		7F185BBC196A867900055446 /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
 		7F185BBD196A867900055446 /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
@@ -219,7 +222,6 @@
 		7FA32B7419AC1CC1006BCB30 /* TMThemeAquaButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMThemeAquaButton.m; sourceTree = "<group>"; };
 		7FA32B7619AC5AE3006BCB30 /* TMTimerStyleKitWithColorExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMTimerStyleKitWithColorExtensions.h; sourceTree = "<group>"; };
 		7FA32B7719AC5AE3006BCB30 /* TMTimerStyleKitWithColorExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMTimerStyleKitWithColorExtensions.m; sourceTree = "<group>"; };
-		7FBB1DA719C69BD800387FBD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		7FBB1DAA19C6A00700387FBD /* DHIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHIAPHelper.h; sourceTree = "<group>"; };
 		7FBB1DAB19C6A00700387FBD /* DHIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHIAPHelper.m; sourceTree = "<group>"; };
 		7FBB1DAD19C6A30C00387FBD /* TMIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMIAPHelper.h; sourceTree = "<group>"; };
@@ -252,12 +254,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F91B7471964C491002FC63E /* AudioToolbox.framework in Frameworks */,
-				7FBB1DA819C69BD800387FBD /* StoreKit.framework in Frameworks */,
+				7F01E15B19C93A64006C1263 /* StoreKit.framework in Frameworks */,
 				7F75F66D18C9142F0040986B /* iAd.framework in Frameworks */,
 				5095B4B518AE7C440023210E /* CoreGraphics.framework in Frameworks */,
 				5095B4B918AE7C440023210E /* CoreData.framework in Frameworks */,
 				5095B4B718AE7C440023210E /* UIKit.framework in Frameworks */,
 				5095B4B318AE7C440023210E /* Foundation.framework in Frameworks */,
+				7F01E15D19C93B8E006C1263 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,7 +315,8 @@
 		5095B4B118AE7C440023210E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7FBB1DA719C69BD800387FBD /* StoreKit.framework */,
+				7F01E15C19C93B8E006C1263 /* GameKit.framework */,
+				7F01E15A19C93A64006C1263 /* StoreKit.framework */,
 				7F91B7461964C491002FC63E /* AudioToolbox.framework */,
 				7F75F66C18C9142F0040986B /* iAd.framework */,
 				5095B4B218AE7C440023210E /* Foundation.framework */,
@@ -684,6 +688,9 @@
 					5095B4AE18AE7C440023210E = {
 						DevelopmentTeam = SX585CK9M9;
 						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
 							com.apple.InAppPurchase = {
 								enabled = 1;
 							};
