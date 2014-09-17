@@ -31,10 +31,20 @@
 @property (strong, nonatomic) NSCache *gaugeImageCache;
 
 @property (nonatomic) BOOL didSetImage;
+
+@property (strong, nonatomic) dispatch_queue_t dispatchQueue_gaugeImage;
+
 @end
 
 @implementation DHEditUserProfileViewController {
     UIImage *_profilePic;
+}
+
+- (dispatch_queue_t)dispatchQueue_gaugeImage {
+    if (_dispatchQueue_gaugeImage) return _dispatchQueue_gaugeImage;
+    const char *name = [NSStringFromSelector(@selector(dispatchQueue_gaugeImage)) UTF8String];
+    _dispatchQueue_gaugeImage = dispatch_queue_create(name, DISPATCH_QUEUE_CONCURRENT);
+    return _dispatchQueue_gaugeImage;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -191,8 +201,17 @@
     [[cell flag] setBackgroundColor:bgColor];
     
     if ((cell.gauge.image = [self.gaugeImageCache objectForKey:indexPath]) == nil) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            UIImage *img = [[TMTimerStyleKit imageOfGauge50WithG_minSeconds:obj.minTime.integerValue * kSecondsInAMinute g_maxSeconds:obj.maxTime.integerValue * kSecondsInAMinute g_elapsedSeconds:[obj.endDate timeIntervalSinceDate:obj.startDate]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        dispatch_async(self.dispatchQueue_gaugeImage, ^{
+            NSInteger minSeconds = obj.minTime.integerValue * kSecondsInAMinute;
+            NSInteger maxSeconds = obj.maxTime.integerValue * kSecondsInAMinute;
+            NSInteger elapsedSeconds = [obj.endDate timeIntervalSinceDate:obj.startDate];
+            UIImage *img =
+            [TMTimerStyleKitWithColorExtensions timerFlagWithMinTime:minSeconds
+                                                             maxTime:maxSeconds
+                                                         elapsedTime:elapsedSeconds];
+            if ([img respondsToSelector:@selector(imageWithRenderingMode:)]) {
+                img = [img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            }
             if(img == nil) {return;}
             [self.gaugeImageCache setObject:img forKey:indexPath];
             dispatch_async(dispatch_get_main_queue(), ^{

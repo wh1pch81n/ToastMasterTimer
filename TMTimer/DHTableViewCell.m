@@ -36,7 +36,7 @@
     
     {//make the rounded corders of cells and a the margins
         self.cellBG.layer.cornerRadius = kThemeCornerRadius;
-        self.cellBG.backgroundColor = [TMTimerStyleKit tM_ThemeAqua_bg];
+        //self.cellBG.backgroundColor = [TMTimerStyleKit tM_ThemeAqua_bg];
         [self.cellBG.layer setMasksToBounds:YES];
     }
 

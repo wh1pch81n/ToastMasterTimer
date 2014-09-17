@@ -18,7 +18,8 @@
 #import "UISegmentedControl+extractMinMaxData.h"
 #import "User_Profile.h"
 #import "User_Profile+helperMethods.h"
-#import "TMTimerStyleKit.h"
+#import "TMIAPHelper.h"
+#import "TMChangeFlagGraphicTableViewController.h"
 
 NSString *const kMasterViewControllerTitle = @" ";
 NSString *const kMore = @"More";
@@ -37,7 +38,10 @@ NSString *const kTableTopics = @"Table Topics";
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
-@implementation DHMasterViewController
+@implementation DHMasterViewController {
+    dispatch_queue_t imageQueue;
+    dispatch_queue_t flagQueue;
+}
 
 - (void)awakeFromNib
 {
@@ -54,34 +58,77 @@ NSString *const kTableTopics = @"Table Topics";
 	// Do any additional setup after loading the view, typically from a nib.
     self.imageCache = [[NSCache alloc] init];
     self.gaugeImageCache = [NSCache new];
-    DHRLog(^{self.canDisplayBannerAds = YES;}, nil);
-    
+    imageQueue = dispatch_queue_create("TM_IMAGE_QUEUE", DISPATCH_QUEUE_CONCURRENT);
+    flagQueue = dispatch_queue_create("TM_FLAG_QUEUE", DISPATCH_QUEUE_CONCURRENT);
+
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:nil];
     
     [self setDidLoad:YES];
     
-    self.presetSegmentedButtons.tintColor = [TMTimerStyleKit tM_ThemeAqua];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        self.presetSegmentedButtons.tintColor = [TMTimerStyleKit tM_ThemeAqua];
+    }
+    {//set left button
+        UIButton *_more = [UIButton buttonWithType:UIButtonTypeCustom];
+        _more.frame = CGRectMake(0, 0, 50, 50);
+        [_more setTitle:kMore forState:UIControlStateNormal];
+        [_more setTitleColor:[TMTimerStyleKit tM_ThemeBlue] forState:UIControlStateNormal];
+        [_more addTarget:self action:@selector(moreView:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *moreButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_more];
+        
+        self.navigationItem.leftBarButtonItem = moreButtonItem;
+    }
+    {//set right button
+        UIImage *addImg = [TMTimerStyleKit imageOfAddNewSpeaker];
+        if ([addImg respondsToSelector:@selector(imageWithRenderingMode:)]) {
+            addImg = [addImg imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        }
+        UIButton *_addButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _addButton.frame = CGRectMake(0, 0, 50, 50);
+        [_addButton setBackgroundImage:addImg forState:UIControlStateNormal];
+        [_addButton addTarget:self action:@selector(insertNewObject:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithCustomView:_addButton];
+        
+        self.navigationItem.rightBarButtonItem = addButton;
+    }
     
-	UIBarButtonItem *moreButtonItem = [[UIBarButtonItem alloc] initWithTitle:kMore style:UIBarButtonItemStyleBordered target:self action:@selector(moreView:)];
-	
-	self.navigationItem.leftBarButtonItem = moreButtonItem;
-	
-	UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithImage:[[TMTimerStyleKit imageOfAddNewSpeaker] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(insertNewObject:)];
-    
-	self.navigationItem.rightBarButtonItem = addButton;
-	self.detailViewController = (DHDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    self.detailViewController = (DHDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	
 	[self.navigationItem setTitle:kMasterViewControllerTitle];
     DHDLog(nil, @"TMTimer view did load");
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(recievedChangeNotification:)
+                                                 name:kChangedFlagGraphicNotification
+                                               object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
+        if ([[TMIAPHelper sharedInstance] canDisplayAds]) {
+            self.canDisplayBannerAds = YES;
+        }
+    }
     if (self.customStartDict) {
         [self beginCustomStartTopic];
     }
     DHDLog(nil, @"TMTimer view did appear");
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
+        self.canDisplayBannerAds = NO;
+    }
+    [super viewWillDisappear:animated];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kChangedFlagGraphicNotification
+                                                  object:nil];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -353,6 +400,18 @@ NSString *const kTableTopics = @"Table Topics";
     NSIndexPath *ip = [NSIndexPath indexPathForItem:indexPath.row inSection:0];
 	Event *object = [self.fetchedResultsController objectAtIndexPath:ip];
 	
+    NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:object.timeStamp];
+    NSDateComponents *today = [[NSCalendar currentCalendar] components:NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:[NSDate date]];
+    if(!([today day] == [otherDay day] &&
+         [today month] == [otherDay month] &&
+         [today year] == [otherDay year] &&
+         [today era] == [otherDay era])) {
+        //This cell is not today
+        dhCell.cellBG.backgroundColor = [UIColor clearColor];
+    } else {
+        dhCell.cellBG.backgroundColor = [TMTimerStyleKit tM_ThemeAqua_bg];
+    }
+    
 	[[dhCell blurb] setText:[object blurb]];
     [[dhCell userImageIcon] setHidden:YES];
     
@@ -372,7 +431,7 @@ NSString *const kTableTopics = @"Table Topics";
     
     NSIndexPath *key = indexPath;
     if ((dhCell.userImageIcon.image = [self.imageCache objectForKey:key]) == nil) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        dispatch_async(imageQueue, ^{
             User_Profile *up = object.speeches_speaker;
             UIImage *pic = [UIImage imageWithContentsOfFile:up.profile_pic_path];
             if (pic == nil) {return;}
@@ -389,18 +448,17 @@ NSString *const kTableTopics = @"Table Topics";
         [dhCell.userImageIcon setHidden:NO];
     }
     if ((dhCell.flag.image = [self.gaugeImageCache objectForKey:key]) == nil) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        dispatch_async(flagQueue, ^{
             __block UIImage *pic = nil;
-            DHRLog(^{
-                pic =
-                [TMTimerStyleKit imageOfGauge50WithG_minSeconds:object.minTime.integerValue *kSecondsInAMinute g_maxSeconds:object.maxTime.integerValue *kSecondsInAMinute g_elapsedSeconds:[object.endDate timeIntervalSinceDate:object.startDate]];
-            }, nil);
-            DHDLog(^{
-                pic =
-                [TMTimerStyleKit imageOfGauge50WithG_minSeconds:object.minTime.integerValue
-                                                   g_maxSeconds:object.maxTime.integerValue
-                                               g_elapsedSeconds:[object.endDate timeIntervalSinceDate:object.startDate]];
-            }, @"The Guage color will be correct, but the pointer will be wrong.  Reason is because of a 30 second hard coded value in the guage code.  A minor issue and nothing to worry about.");
+            
+            NSInteger min = object.minTime.integerValue *kSecondsInAMinute;
+            NSInteger max = object.maxTime.integerValue *kSecondsInAMinute;
+            NSInteger ela = [object.endDate timeIntervalSinceDate:object.startDate];
+            pic =
+            [TMTimerStyleKitWithColorExtensions timerFlagWithMinTime:min
+                                                             maxTime:max
+                                                         elapsedTime:ela];
+            
             if (pic == nil) return;
             [self.gaugeImageCache setObject:pic forKey:key];
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -425,7 +483,7 @@ NSString *const kTableTopics = @"Table Topics";
 }
 
 - (void)quickStartEnds:(id)sender {
-    [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kQuickStart];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kQuickStart];
     
     [self performSegueWithIdentifier:@"showDetail" sender:sender];
 }
@@ -502,7 +560,7 @@ NSString *const kTableTopics = @"Table Topics";
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kQuickStart];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kQuickStart];
             [self performSegueWithIdentifier:@"showDetail" sender:newManagedObject.objectID];
         });
         
@@ -529,6 +587,13 @@ NSString *const kTableTopics = @"Table Topics";
     
     self.didUnwind = YES;
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
+}
+
+#pragma mark - kChangedFlagGraphicNotification
+
+- (void)recievedChangeNotification:(NSNotification *)notification {
+    [self.gaugeImageCache removeAllObjects];
+    [self.tableView reloadData];
 }
 
 @end

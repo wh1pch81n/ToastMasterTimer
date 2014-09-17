@@ -10,13 +10,20 @@
 #import "DHGlobalConstants.h"
 #import "DHAppDelegate.h"
 #import "DHError.h"
+#import "iRate.h"
+#import "TMIAPHelper.h"
+#import "TMPurchasesViewController.h"
 
-@interface DHUserPreferenceViewController ()
+@interface DHUserPreferenceViewController () <iRateDelegate>
+@property (weak, nonatomic) IBOutlet UITableViewCell *changeFlagTableViewCell;
+@property (weak, nonatomic) IBOutlet UIButton *rateButton;
+@property (weak, nonatomic) IBOutlet UIButton *removeAdsButton;
 @property (weak, nonatomic) IBOutlet UISwitch *threeSecondDelay;
 @property (weak, nonatomic) IBOutlet UISwitch *showRunningTimer;
 @property (weak, nonatomic) IBOutlet UISwitch *showUserHints;
 @property (weak, nonatomic) IBOutlet UISwitch *vibrateSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *viewProfileLabel;
+@property (strong, nonatomic) TMPurchasesViewController *purchasesViewController;
 @end
 
 @implementation DHUserPreferenceViewController
@@ -34,24 +41,39 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.viewProfileLabel.textColor = [TMTimerStyleKit tM_ThemeBlue];
-    self.threeSecondDelay.onTintColor = [TMTimerStyleKit tM_ThemeAqua];
-    self.showRunningTimer.onTintColor = [TMTimerStyleKit tM_ThemeAqua];
-    self.showUserHints.onTintColor = [TMTimerStyleKit tM_ThemeAqua];
-    self.vibrateSwitch.onTintColor = [TMTimerStyleKit tM_ThemeAqua];
+    iRate.sharedInstance.delegate = self;
     
-    self.threeSecondDelay.thumbTintColor = [TMTimerStyleKit tM_ThemeAqua_bg];
-    self.showRunningTimer.thumbTintColor = [TMTimerStyleKit tM_ThemeAqua_bg];
-    self.showUserHints.thumbTintColor = [TMTimerStyleKit tM_ThemeAqua_bg];
-    self.vibrateSwitch.thumbTintColor = [TMTimerStyleKit tM_ThemeAqua_bg];
+    [self.rateButton
+     setTitleColor:[TMTimerStyleKit tM_ThemeBlue]
+     forState:UIControlStateNormal];
+    self.viewProfileLabel
+    .textColor = [TMTimerStyleKit tM_ThemeBlue];
+    self.threeSecondDelay
+    .onTintColor = [TMTimerStyleKit tM_ThemeAqua];
+    self.showRunningTimer
+    .onTintColor = [TMTimerStyleKit tM_ThemeAqua];
+    self.showUserHints
+    .onTintColor = [TMTimerStyleKit tM_ThemeAqua];
+    self.vibrateSwitch
+    .onTintColor = [TMTimerStyleKit tM_ThemeAqua];
     
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        self.threeSecondDelay
+        .thumbTintColor = [TMTimerStyleKit tM_ThemeAqua_bg];
+        self.showRunningTimer
+        .thumbTintColor = [TMTimerStyleKit tM_ThemeAqua_bg];
+        self.showUserHints
+        .thumbTintColor = [TMTimerStyleKit tM_ThemeAqua_bg];
+        self.vibrateSwitch
+        .thumbTintColor = [TMTimerStyleKit tM_ThemeAqua_bg];
+    }
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:self];
     
 	NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
-	NSNumber *threeSecondDelay = [UD objectForKey:kUserDefault3SecondDelay];
-	[self.threeSecondDelay setOn:threeSecondDelay.boolValue animated:YES];
-    DHDLog(nil, @"ThreeSecondDelay is %d", threeSecondDelay.boolValue);
+	BOOL threeSecondDelay = [UD boolForKey:kUserDefault3SecondDelay];
+	[self.threeSecondDelay setOn:threeSecondDelay animated:YES];
+    DHDLog(nil, @"ThreeSecondDelay is %d", threeSecondDelay);
     
     
 	NSNumber *showRunningTimer = [UD objectForKey:kUserDefaultShowRunningTimer];
@@ -68,6 +90,15 @@
     DHDLog(nil, @"show user hints is %@", vibrate.boolValue ?@"enabled":@"disabled");
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if ([[TMIAPHelper sharedInstance] canDisplayAds] == NO ||
+        (UIDevice.currentDevice.systemVersion.floatValue < 7))
+      {
+        [self.removeAdsButton setEnabled:NO];
+      }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -78,19 +109,19 @@
     DHDLog(nil, @"ThreeSecondDelay became %d", self.threeSecondDelay.on);
 
 	NSUserDefaults *UD = [NSUserDefaults standardUserDefaults];
-	[UD setObject:@(self.threeSecondDelay.on) forKey:kUserDefault3SecondDelay];
+	[UD setBool:self.threeSecondDelay.on forKey:kUserDefault3SecondDelay];
 	
     DHDLog(nil, @"showRunningTimer became %d", self.showRunningTimer.on);
     
-	[UD setObject:@(self.showRunningTimer.on) forKey:kUserDefaultShowRunningTimer];
+	[UD setBool:self.showRunningTimer.on forKey:kUserDefaultShowRunningTimer];
     
     DHDLog(nil, @"show user hints is %@", self.showUserHints.on?@"enabled":@"disabled");
 
-    [UD setObject:@(self.showUserHints.on) forKey:kUserDefaultShowUserHints];
+    [UD setBool:self.showUserHints.on forKey:kUserDefaultShowUserHints];
     
     DHDLog(nil, @"vibrations is %@", self.vibrateSwitch.on?@"enabled":@"disabled");
     
-    [UD setObject:@(self.vibrateSwitch.on) forKey:kUserDefaultsVibrateOnFlagChange];
+    [UD setBool:self.vibrateSwitch.on forKey:kUserDefaultsVibrateOnFlagChange];
     
     
 }
@@ -156,6 +187,23 @@
     if ([[segue identifier] isEqualToString:@"UserProfileSegue"]) {
         [[segue destinationViewController] setManagedObjectContext:_managedObjectContext];
     }
+}
+
+#pragma mark - iRate
+
+- (IBAction)tappedRateButton:(id)sender {
+    [[iRate sharedInstance] promptIfNetworkAvailable];
+}
+
+#pragma mark - In App Purchase
+
+- (IBAction)tappedInAppPurchasesButton:(id)sender {
+    TMPurchasesViewController *pvc = [TMPurchasesViewController.alloc initWithNibName:@"TMPurchasesViewController" bundle:nil];
+    self.purchasesViewController = pvc;
+    [self.navigationController pushViewController:pvc animated:YES];
+}
+- (IBAction)tappedRestorePastPurchases:(id)sender {
+    [TMIAPHelper.sharedInstance restoreCompletedTransactions];
 }
 
 @end

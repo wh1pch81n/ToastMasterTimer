@@ -7,6 +7,7 @@
 //
 
 #import "TMTimerStyleKitWithColorExtensions.h"
+#import "TMChangeFlagGraphicTableViewController.h"
 
 @implementation TMTimerStyleKitWithColorExtensions
 
@@ -47,4 +48,92 @@
     
     [self setColorTargets:self.tmColorThemeAquaBGTargets color:[TMTimerStyleKit tM_ThemeAqua_bg]];
 }
+
++ (UIImage *)timerFlagWithMinTime:(float)minTime maxTime:(float)maxTime elapsedTime:(float)elapsedTime {
+    __block float _minTime = minTime;
+    __block float _maxTime = maxTime;
+    DHDLog(^{
+        _minTime /= kSecondsInAMinute;
+        _maxTime /= kSecondsInAMinute;
+    }, nil);
+    minTime = _minTime;
+    maxTime = _maxTime;
+    
+    UIImage *img;
+    NSString *flagName = [[NSUserDefaults standardUserDefaults] stringForKey:kUserDefaultsCurrentTimerFlagName];
+    if ([flagName isEqualToString:kFlagSelectionPlain]) {
+        img = [TMTimerStyleKit imageOfPlainGauge50_WithG_minSeconds:minTime
+                                                       g_maxSeconds:maxTime
+                                                   g_elapsedSeconds:elapsedTime];
+        
+    } else if ([flagName isEqualToString:kFlagSelectionWine]) {
+        img = [TMTimerStyleKit imageOfWineGauge50WithG_minSeconds:minTime
+                                                     g_maxSeconds:maxTime
+                                                 g_elapsedSeconds:elapsedTime];
+        DHDLog(nil, @"The Wine will be correct, but the spill time will be wrong.  Reason is because of a 30 second hard coded value in the code.  A minor issue and nothing to worry about.");
+    } else { //it is either blank or in gauge
+        img = [TMTimerStyleKit imageOfGauge50WithG_minSeconds:minTime
+                                                 g_maxSeconds:maxTime
+                                             g_elapsedSeconds:elapsedTime];
+        DHDLog(nil, @"The Guage color will be correct, but the pointer will be wrong.  Reason is because of a 30 second hard coded value in the guage code.  A minor issue and nothing to worry about.");
+    }
+
+    return img;
+}
+
++ (UIImage *)greenPlainFlagImage {
+    return [TMTimerStyleKit imageOfPlainGauge50_WithG_minSeconds:1
+                                                    g_maxSeconds:3
+                                                g_elapsedSeconds:1];
+}
++ (UIImage *)yellowPlainFlagImage {
+    return [TMTimerStyleKit imageOfPlainGauge50_WithG_minSeconds:1
+                                                    g_maxSeconds:3
+                                                g_elapsedSeconds:2];
+}
+
++ (UIImage *)redPlainFlagImage {
+    return [TMTimerStyleKit imageOfPlainGauge50_WithG_minSeconds:1
+                                                    g_maxSeconds:3
+                                                g_elapsedSeconds:3];
+}
+
++ (UIImage *)greenGaugeFlagImage {
+    return [TMTimerStyleKit imageOfGauge50WithG_minSeconds:1
+                                              g_maxSeconds:3
+                                          g_elapsedSeconds:1];
+}
+
++ (UIImage *)yellowGaugeFlagImage {
+    return [TMTimerStyleKit imageOfGauge50WithG_minSeconds:1
+                                              g_maxSeconds:3
+                                          g_elapsedSeconds:2];
+}
+
++ (UIImage *)redSuperGuageFlagImage {
+    return [TMTimerStyleKit imageOfGauge50WithG_minSeconds:1
+                                              g_maxSeconds:3
+                                          g_elapsedSeconds:40]; //it is 40 to simulate the over time
+}
+
+
++ (UIImage *)greenWineFlagImage {
+    return [TMTimerStyleKit imageOfWineGauge50WithG_minSeconds:1
+                                                  g_maxSeconds:3
+                                              g_elapsedSeconds:1];
+}
+
++ (UIImage *)yellowWineFlagImage {
+    return [TMTimerStyleKit imageOfWineGauge50WithG_minSeconds:1
+                                                  g_maxSeconds:3
+                                              g_elapsedSeconds:2];
+}
+
++ (UIImage *)redSpillWineFlagImage {
+    return [TMTimerStyleKit imageOfWineGauge50WithG_minSeconds:1
+                                                  g_maxSeconds:3
+                                              g_elapsedSeconds:40]; // it is 40 to stimulate the spill over
+}
+
+
 @end

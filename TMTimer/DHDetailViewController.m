@@ -18,6 +18,7 @@
 #import "UISegmentedControl+extractMinMaxData.h"
 #import "DHUserProfileCollectionViewCell.h"
 #import "DHUserProfileCollectionViewController.h"
+#import "TMIAPHelper.h"
 
 enum {
 	kdummy0,
@@ -84,10 +85,20 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 @property (strong, nonatomic) NSString *blurb, *totalTime;
 
 - (void)configureView;
+@property (strong, nonatomic) dispatch_queue_t currentSpeakerImageQueue;
 
 @end
 
 @implementation DHDetailViewController
+
+#pragma mark - create dispatch Queue
+
+- (dispatch_queue_t)currentSpeakerImageQueue {
+    if (_currentSpeakerImageQueue) return _currentSpeakerImageQueue;
+    const char *name = [NSStringFromSelector(@selector(currentSpeakerImageQueue)) UTF8String];
+    _currentSpeakerImageQueue = dispatch_queue_create(name, DISPATCH_QUEUE_CONCURRENT);
+    return _currentSpeakerImageQueue;
+}
 
 #pragma mark - Managing the detail item
 
@@ -111,7 +122,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	if (self.detailItem) {
 		self.nameTextField.text = _blurb;
 		
-		BOOL titleIsVisible = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowRunningTimer] boolValue];
+		BOOL titleIsVisible = [NSUserDefaults
+                               .standardUserDefaults boolForKey:kUserDefaultShowRunningTimer];
 		if (titleIsVisible) {
 			[[self navItem] setTitle:_totalTime];
 		} else {
@@ -159,17 +171,31 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     self.presetTimesSegment.tintColor = [TMTimerStyleKit tM_ThemeAqua];
     [self.extraButtonsView.layer setCornerRadius:kThemeCornerRadius];
     
-    [self.buttonDuplicate setImage:[[TMTimerStyleKit imageOfDuplicateSpeech]
-                                    imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+    //prepare button images
+    UIImage *duplicate = [TMTimerStyleKit imageOfDuplicateSpeech];
+    if ([duplicate respondsToSelector:@selector(imageWithRenderingMode:)]) {
+        duplicate = [duplicate imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    }
+    UIImage *newSpeaker = [TMTimerStyleKit imageOfAddNewSpeaker];
+    if ([newSpeaker respondsToSelector:@selector(imageWithRenderingMode:)]) {
+        newSpeaker = [newSpeaker imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    }
+    UIImage *overwrite = [TMTimerStyleKit imageOfOverwrite];
+    if ([overwrite respondsToSelector:@selector(imageWithRenderingMode:)]) {
+        overwrite = [overwrite imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    }
+    UIImage *cancel = [TMTimerStyleKit imageOfCancel];
+    if ([cancel respondsToSelector:@selector(imageWithRenderingMode:)]) {
+        cancel = [cancel imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    }
+    
+    [self.buttonDuplicate setImage:duplicate
                           forState:UIControlStateNormal];
-    [self.buttonNew setImage:[[TMTimerStyleKit imageOfAddNewSpeaker]
-                              imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+    [self.buttonNew setImage:newSpeaker
                     forState:UIControlStateNormal];
-    [self.buttonOverwrite setImage:[[TMTimerStyleKit imageOfOverwrite]
-                                    imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+    [self.buttonOverwrite setImage:overwrite
                           forState:UIControlStateNormal];
-    [self.buttonCancel setImage:[[TMTimerStyleKit imageOfCancel]
-                                 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+    [self.buttonCancel setImage:cancel
                        forState:UIControlStateNormal];
     
     [self setLocalDetailPropertiesWithDetail:self.detailItem];
@@ -221,19 +247,19 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     [super viewWillAppear:animated];
     
     
-    NSNumber *shouldQuickStart = [[NSUserDefaults standardUserDefaults] objectForKey:kQuickStart];
+    BOOL shouldQuickStart = [NSUserDefaults.standardUserDefaults boolForKey:kQuickStart];
     
-    DHDLog( nil, @"should quick start %@", shouldQuickStart);
+    DHDLog( nil, @"should quick start %d", shouldQuickStart);
     
-    if (shouldQuickStart.boolValue == YES) {
+    if (shouldQuickStart == YES) {
         [self tappedStartStopButton:self];
-        [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:kQuickStart];
+        [NSUserDefaults.standardUserDefaults setBool:NO forKey:kQuickStart];
     }
     
-    NSNumber *showUserHints =(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowUserHints];
+    BOOL showUserHints =[[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultShowUserHints];
     
-    [[self labelSwipeRightToStop] setHidden:!showUserHints.boolValue];
-    [[self labelTapToEdit] setHidden:!showUserHints.boolValue];
+    [[self labelSwipeRightToStop] setHidden:!showUserHints];
+    [[self labelTapToEdit] setHidden:!showUserHints];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -391,7 +417,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
  */
 - (void)updateVibrate:(NSTimeInterval)timeInterval {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    BOOL canVibrate = [(NSNumber *)[ud objectForKey:kUserDefaultsVibrateOnFlagChange] boolValue];
+    BOOL canVibrate = [ud boolForKey:kUserDefaultsVibrateOnFlagChange];
     if (!canVibrate) {
         return;
     }
@@ -417,7 +443,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     UIColor *bgColor = [[DHColorForTime shared] colorForSeconds:total
                                                             min:_minTime.integerValue
                                                             max:_maxTime.integerValue];
-    [self.originalContentView setBackgroundColor:bgColor];
+    if ([self respondsToSelector:@selector(originalContentView)]) {
+        [self.originalContentView setBackgroundColor:bgColor];
+    } else {
+        [self.view setBackgroundColor:bgColor];
+    }
 }
 
 /**
@@ -427,7 +457,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	NSTimeInterval interval = timeInterval;
 	[self setTotalTime:[self stringFromTimeInterval:interval]];
     
-    BOOL titleIsVisible = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultShowRunningTimer] boolValue];
+    BOOL titleIsVisible = [NSUserDefaults
+                           .standardUserDefaults boolForKey:kUserDefaultShowRunningTimer];
     if (titleIsVisible) {
         [[self navItem] setTitle:_totalTime];
     } else {
@@ -477,8 +508,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)FSM_idle {
-    
-    DHRLog(^{self.canDisplayBannerAds = NO;}, nil);
+    if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
+        self.canDisplayBannerAds = NO;
+    }
 
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
@@ -488,7 +520,12 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     __weak typeof(self)wSelf = self;
 	[UIView animateWithDuration:0.5 animations:^{
         __strong typeof(wSelf)sSelf = wSelf;
-		[sSelf.originalContentView setBackgroundColor:[UIColor whiteColor]]; //reset to default color
+        if ([sSelf respondsToSelector:@selector(originalContentView)]) {
+            [sSelf.originalContentView setBackgroundColor:[UIColor whiteColor]]; //reset to default color
+        } else {
+            [sSelf.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
+        }
+		
 		[sSelf.nameTextField setAlpha:1];
         [sSelf.timeChooserParentView setAlpha:1];
         [sSelf.collectionView setAlpha:1];
@@ -515,33 +552,53 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     [[self tapGesture1f1t] setEnabled:NO];
     [[self tapGesture2f2t] setEnabled:NO];
     
-    BOOL delayIsEnabled = [(NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefault3SecondDelay] boolValue];
+    BOOL delayIsEnabled = [NSUserDefaults.standardUserDefaults boolForKey:kUserDefault3SecondDelay];
     
     if (delayIsEnabled) {
-        DHRLog(^{self.canDisplayBannerAds = NO;}, nil);
+        if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
+            self.canDisplayBannerAds = NO;
+        }
         
-        CGRect rect = CGRectMake(0, 0,
-                                 CGRectGetWidth(self.originalContentView.frame),
-                                 CGRectGetHeight(self.originalContentView.frame));
+        CGRect rect;
+        if ([self respondsToSelector:@selector(originalContentView)]) {
+            rect = CGRectMake(0, 0,
+                              CGRectGetWidth(self.originalContentView.frame),
+                              CGRectGetHeight(self.originalContentView.frame));
+        } else {
+            rect = CGRectMake(0, 0,
+                              CGRectGetWidth(self.view.frame),
+                              CGRectGetHeight(self.view.frame));
+        }
         
         __weak typeof(self)wSelf = self;
-        self.countDownView = [[DHCountDownView alloc] initWithFrame:rect
-                                                           delegate:self
-                                                     characterDelay:1.0
-                                      stringOfCharactersToCountDown:@" 321"
-                                                 completedCountDown:^{
-                                                     __strong typeof(wSelf)sSelf = wSelf;
-                                                     
-                                                     DHRLog(^{sSelf.canDisplayBannerAds = YES;}, nil);
-                                                     
-                                                     [sSelf FSM_startTimerBegin];
-                                                     [[sSelf countDownView] removeFromSuperview];
-                                                 }];
+        self.countDownView =
+        [[DHCountDownView alloc] initWithFrame:rect
+                                      delegate:self
+                                characterDelay:1.0
+                 stringOfCharactersToCountDown:@" 321"
+                            completedCountDown:^{
+                                __strong typeof(wSelf)sSelf = wSelf;
+                                
+                                if ([sSelf respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
+                                    if ([[TMIAPHelper sharedInstance] canDisplayAds]) {
+                                        sSelf.canDisplayBannerAds = YES;
+                                    }
+                                }
+                                
+                                [sSelf FSM_startTimerBegin];
+                                [[sSelf countDownView] removeFromSuperview];
+                                sSelf.countDownView = nil;
+                            }];
         [[self view] addSubview:self.countDownView];
         [[self countDownView] runCountDown:delayIsEnabled];
         
     } else {
         [self FSM_startTimerBegin];
+        if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
+            if ([[TMIAPHelper sharedInstance] canDisplayAds]) {
+                self.canDisplayBannerAds = YES;
+            }
+        }
     }
 }
 
@@ -632,15 +689,22 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    DHRLog(^{self.canDisplayBannerAds = NO;}, nil);
-    
-    [self moveOutExtraButtonsView:YES];
+    if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
+        self.canDisplayBannerAds = NO;
+    }
+    if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStart]) { //should only happen in idle state
+        [self moveOutExtraButtonsView:YES];
+    }
 	[self enableNavItemButtons:YES];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if ([self.navItem.rightBarButtonItem.title isEqualToString:kStop]) {
-        DHRLog(^{self.canDisplayBannerAds = YES;}, nil);
+        if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
+            if ([[TMIAPHelper sharedInstance] canDisplayAds]) {
+                self.canDisplayBannerAds = YES;
+            }
+        }
     }
 	_blurb = self.nameTextField.text;
 	[self enableNavItemButtons:YES];
@@ -732,7 +796,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
             [self.collectionView reloadData];
             [self configureView];
             
-            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kQuickStart];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kQuickStart];
         }];
     } else if ([segue.identifier isEqualToString:@"containerUP"]) {
 #warning Also it seems that leaving the detail view will cause the timer to stop.  You should not segue, but insead put the view inside a sub view and present it above type able area
@@ -767,7 +831,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     User_Profile *up = (User_Profile *)self.detailItem.speeches_speaker;
     cell.labelProfileName.text = up.user_name;
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(self.currentSpeakerImageQueue, ^{
         UIImage * img= [UIImage imageWithContentsOfFile:up.profile_pic_path];
         dispatch_async(dispatch_get_main_queue(), ^{
             DHUserProfileCollectionViewCell *cell = (id)[collectionView cellForItemAtIndexPath:indexPath];
@@ -870,6 +934,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     CGRect destinationFrame0 = CGRectMake(CGRectGetWidth(self.view.frame) - CGRectGetWidth(self.extraButtonsView.frame) - 20, 0, CGRectGetWidth(self.extraButtonsView.frame), CGRectGetHeight(self.extraButtonsView.frame));
     CGRect destinationFrame1 = CGRectOffset(destinationFrame0, 20, 0);
     
+    self.extraButtonsView.hidden = NO;
+    
     if (animated) {
         [UIView animateWithDuration:0.2 animations:^{
             self.extraButtonsView.frame = destinationFrame0;
@@ -893,9 +959,12 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     if (animated) {
         [UIView animateWithDuration:0.5 animations:^{
             self.extraButtonsView.frame = destinationFrame;
+        } completion:^(BOOL finished) {
+            self.extraButtonsView.hidden = YES;
         }];
     } else {
         self.extraButtonsView.frame = destinationFrame;
+        self.extraButtonsView.hidden = YES;
     }
 }
 

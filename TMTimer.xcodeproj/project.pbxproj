@@ -47,6 +47,8 @@
 		5095B4E018AE7C440023210E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5095B4B818AE7C440023210E /* CoreData.framework */; };
 		5095B4E818AE7C440023210E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5095B4E618AE7C440023210E /* InfoPlist.strings */; };
 		5095B4EA18AE7C440023210E /* TMTimerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5095B4E918AE7C440023210E /* TMTimerTests.m */; };
+		7F01E15B19C93A64006C1263 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F01E15A19C93A64006C1263 /* StoreKit.framework */; };
+		7F01E15D19C93B8E006C1263 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F01E15C19C93B8E006C1263 /* GameKit.framework */; };
 		7F0C3FCB18CBCD3D0068B26C /* Release Notes in Resources */ = {isa = PBXBuildFile; fileRef = 7F0C3FCA18CBCD3D0068B26C /* Release Notes */; };
 		7F185BBE196A867900055446 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F185BBD196A867900055446 /* iRate.m */; };
 		7F2AC6BC19A8149E00C9DAE7 /* User_Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2AC6BB19A8149E00C9DAE7 /* User_Profile.m */; };
@@ -83,6 +85,14 @@
 		7F94EE1318CD0FC3005390C3 /* DHError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F94EE1218CD0FC3005390C3 /* DHError.m */; };
 		7FA32B7519AC1CC1006BCB30 /* TMThemeAquaButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA32B7419AC1CC1006BCB30 /* TMThemeAquaButton.m */; };
 		7FA32B7819AC5AE3006BCB30 /* TMTimerStyleKitWithColorExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA32B7719AC5AE3006BCB30 /* TMTimerStyleKitWithColorExtensions.m */; };
+		7FBB1DAC19C6A00700387FBD /* DHIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB1DAB19C6A00700387FBD /* DHIAPHelper.m */; };
+		7FBB1DAF19C6A30C00387FBD /* TMIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB1DAE19C6A30C00387FBD /* TMIAPHelper.m */; };
+		7FBB1DB419C6BE6F00387FBD /* TMPurchasesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB1DB219C6BE6F00387FBD /* TMPurchasesViewController.m */; };
+		7FBB1DB519C6BE6F00387FBD /* TMPurchasesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBB1DB319C6BE6F00387FBD /* TMPurchasesViewController.xib */; };
+		7FBB1DBA19C6C10500387FBD /* TMPurchasesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB1DB819C6C10500387FBD /* TMPurchasesTableViewCell.m */; };
+		7FBB1DBB19C6C10500387FBD /* TMPurchasesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBB1DB919C6C10500387FBD /* TMPurchasesTableViewCell.xib */; };
+		7FBB1DBF19C6F3F400387FBD /* TMChangeFlagGraphicTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB1DBE19C6F3F400387FBD /* TMChangeFlagGraphicTableViewController.m */; };
+		7FBB1DC219C6F68400387FBD /* TMChangeFlagTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBB1DC119C6F68400387FBD /* TMChangeFlagTableViewCell.m */; };
 		7FC84B4D19A566FC007F8BEB /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC84B4C19A566FC007F8BEB /* Event.m */; };
 		7FC92105191D9C620026660A /* DHManualFlagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FC92104191D9C620026660A /* DHManualFlagViewController.m */; };
 		7FD4ABDF18E0F488004DA1DF /* DHNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */; };
@@ -155,6 +165,8 @@
 		5095B4F318AE7DC80023210E /* TMTimer 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TMTimer 2.xcdatamodel"; sourceTree = "<group>"; };
 		50A3ECE718BF10FF00DB3981 /* DHGlobalConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHGlobalConstants.h; sourceTree = "<group>"; };
 		50B0FC5F18B2FFC0007694F3 /* TMTimer 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TMTimer 5.xcdatamodel"; sourceTree = "<group>"; };
+		7F01E15A19C93A64006C1263 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		7F01E15C19C93B8E006C1263 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		7F0C3FCA18CBCD3D0068B26C /* Release Notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Release Notes"; path = "TMTimer/Release Notes"; sourceTree = "<group>"; };
 		7F185BBC196A867900055446 /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
 		7F185BBD196A867900055446 /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
@@ -210,6 +222,20 @@
 		7FA32B7419AC1CC1006BCB30 /* TMThemeAquaButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMThemeAquaButton.m; sourceTree = "<group>"; };
 		7FA32B7619AC5AE3006BCB30 /* TMTimerStyleKitWithColorExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMTimerStyleKitWithColorExtensions.h; sourceTree = "<group>"; };
 		7FA32B7719AC5AE3006BCB30 /* TMTimerStyleKitWithColorExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMTimerStyleKitWithColorExtensions.m; sourceTree = "<group>"; };
+		7FBB1DAA19C6A00700387FBD /* DHIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHIAPHelper.h; sourceTree = "<group>"; };
+		7FBB1DAB19C6A00700387FBD /* DHIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHIAPHelper.m; sourceTree = "<group>"; };
+		7FBB1DAD19C6A30C00387FBD /* TMIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMIAPHelper.h; sourceTree = "<group>"; };
+		7FBB1DAE19C6A30C00387FBD /* TMIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMIAPHelper.m; sourceTree = "<group>"; };
+		7FBB1DB119C6BE6F00387FBD /* TMPurchasesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMPurchasesViewController.h; sourceTree = "<group>"; };
+		7FBB1DB219C6BE6F00387FBD /* TMPurchasesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMPurchasesViewController.m; sourceTree = "<group>"; };
+		7FBB1DB319C6BE6F00387FBD /* TMPurchasesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TMPurchasesViewController.xib; sourceTree = "<group>"; };
+		7FBB1DB719C6C10500387FBD /* TMPurchasesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMPurchasesTableViewCell.h; sourceTree = "<group>"; };
+		7FBB1DB819C6C10500387FBD /* TMPurchasesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMPurchasesTableViewCell.m; sourceTree = "<group>"; };
+		7FBB1DB919C6C10500387FBD /* TMPurchasesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TMPurchasesTableViewCell.xib; sourceTree = "<group>"; };
+		7FBB1DBD19C6F3F400387FBD /* TMChangeFlagGraphicTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMChangeFlagGraphicTableViewController.h; sourceTree = "<group>"; };
+		7FBB1DBE19C6F3F400387FBD /* TMChangeFlagGraphicTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMChangeFlagGraphicTableViewController.m; sourceTree = "<group>"; };
+		7FBB1DC019C6F68400387FBD /* TMChangeFlagTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMChangeFlagTableViewCell.h; sourceTree = "<group>"; };
+		7FBB1DC119C6F68400387FBD /* TMChangeFlagTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMChangeFlagTableViewCell.m; sourceTree = "<group>"; };
 		7FC84B4B19A566FC007F8BEB /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		7FC84B4C19A566FC007F8BEB /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		7FC92103191D9C620026660A /* DHManualFlagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHManualFlagViewController.h; sourceTree = "<group>"; };
@@ -228,11 +254,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F91B7471964C491002FC63E /* AudioToolbox.framework in Frameworks */,
+				7F01E15B19C93A64006C1263 /* StoreKit.framework in Frameworks */,
 				7F75F66D18C9142F0040986B /* iAd.framework in Frameworks */,
 				5095B4B518AE7C440023210E /* CoreGraphics.framework in Frameworks */,
 				5095B4B918AE7C440023210E /* CoreData.framework in Frameworks */,
 				5095B4B718AE7C440023210E /* UIKit.framework in Frameworks */,
 				5095B4B318AE7C440023210E /* Foundation.framework in Frameworks */,
+				7F01E15D19C93B8E006C1263 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +291,7 @@
 		5095B4A618AE7C440023210E = {
 			isa = PBXGroup;
 			children = (
+				7FBB1DA919C69BF700387FBD /* InAppPurchases */,
 				7F8EE35D19AD9A350064F0B1 /* Debug */,
 				7F7145FB19AA9A3300DAEBF8 /* StyleKit */,
 				7F185BBB196A865900055446 /* iRate */,
@@ -286,6 +315,8 @@
 		5095B4B118AE7C440023210E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7F01E15C19C93B8E006C1263 /* GameKit.framework */,
+				7F01E15A19C93A64006C1263 /* StoreKit.framework */,
 				7F91B7461964C491002FC63E /* AudioToolbox.framework */,
 				7F75F66C18C9142F0040986B /* iAd.framework */,
 				5095B4B218AE7C440023210E /* Foundation.framework */,
@@ -300,60 +331,37 @@
 		5095B4BA18AE7C440023210E /* TMTimer */ = {
 			isa = PBXGroup;
 			children = (
-				7F896E6E19A50C600081A2A1 /* UIImage+DHScaledImage.h */,
-				7F896E6F19A50C600081A2A1 /* UIImage+DHScaledImage.m */,
-				5071126618C518E0000790E1 /* Images */,
 				5095B4C318AE7C440023210E /* DHAppDelegate.h */,
 				5095B4C418AE7C440023210E /* DHAppDelegate.m */,
 				5095B4C618AE7C440023210E /* Main_iPhone.storyboard */,
-				5095B4CF18AE7C440023210E /* DHMasterViewController.h */,
-				5095B4D018AE7C440023210E /* DHMasterViewController.m */,
-				5095B4D218AE7C440023210E /* DHDetailViewController.h */,
-				5095B4D318AE7C440023210E /* DHDetailViewController.m */,
-				7F86594F18D3C4C50045F9F2 /* DHUserPreferenceViewController.h */,
-				7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */,
-				7FC92103191D9C620026660A /* DHManualFlagViewController.h */,
-				7FC92104191D9C620026660A /* DHManualFlagViewController.m */,
-				7F86595218D3D0090045F9F2 /* DHCountDownView.h */,
-				7F86595318D3D0090045F9F2 /* DHCountDownView.m */,
 				7FD4ABDD18E0F488004DA1DF /* DHNavigationItem.h */,
 				7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */,
+				7FBB1D1019C3851B00387FBD /* SpeakerListView */,
+				7FBB1D0D19C3849C00387FBD /* TimerInterfaceView */,
+				7FBB1D0F19C384D200387FBD /* MoreView */,
+				7F86595218D3D0090045F9F2 /* DHCountDownView.h */,
+				7F86595318D3D0090045F9F2 /* DHCountDownView.m */,
 				7FD4ABE018E0FD99004DA1DF /* DHNavigationBar.h */,
 				7FD4ABE118E0FD99004DA1DF /* DHNavigationBar.m */,
+				5095B4D518AE7C440023210E /* Images.xcassets */,
+				7FBB1D1219C385AB00387FBD /* UserProfiles */,
+				7FBB1D1419C385EA00387FBD /* ModifyUserProfiles */,
+				7FBB1D1619C3862200387FBD /* CoreData */,
+				5095B4BB18AE7C440023210E /* Supporting Files */,
+				5071126618C518E0000790E1 /* Images */,
+				7F87644C18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.h */,
+				7F87644D18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.m */,
+				50A3ECE718BF10FF00DB3981 /* DHGlobalConstants.h */,
+				7F94EE1118CD0FC3005390C3 /* DHError.h */,
+				7F94EE1218CD0FC3005390C3 /* DHError.m */,
+				7F896E6E19A50C600081A2A1 /* UIImage+DHScaledImage.h */,
+				7F896E6F19A50C600081A2A1 /* UIImage+DHScaledImage.m */,
 				7FD4ABE318E1089D004DA1DF /* DHGradients.h */,
 				7FD4ABE418E1089D004DA1DF /* DHGradients.m */,
 				7F8EF98418FB0F780077922C /* DHColorForTime.h */,
 				7F8EF98518FB0F780077922C /* DHColorForTime.m */,
-				5095B4D518AE7C440023210E /* Images.xcassets */,
-				7F407F5519A1F4E200E37E1B /* DHUserProfileCollectionViewCell.h */,
-				7F407F5619A1F4E200E37E1B /* DHUserProfileCollectionViewCell.m */,
-				7F407F5819A1F85C00E37E1B /* DHUserProfileCollectionViewController.h */,
-				7F407F5919A1F85C00E37E1B /* DHUserProfileCollectionViewController.m */,
-				7F407F5B19A29C5800E37E1B /* DHEditUserProfileViewController.h */,
-				7F407F5C19A29C5800E37E1B /* DHEditUserProfileViewController.m */,
-				7F407F5D19A29C5800E37E1B /* DHEditUserProfileViewController.xib */,
-				7F896E6819A40FB30081A2A1 /* DHEditUserProfileTableViewCell.xib */,
-				7F896E6A19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.h */,
-				7F896E6B19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.m */,
-				7F407F6019A2AD4D00E37E1B /* User_Profile+helperMethods.h */,
-				7F407F6119A2AD4D00E37E1B /* User_Profile+helperMethods.m */,
-				5095B4CC18AE7C440023210E /* TMTimer.xcdatamodeld */,
-				7F2AC6BA19A8149E00C9DAE7 /* User_Profile.h */,
-				7F2AC6BB19A8149E00C9DAE7 /* User_Profile.m */,
-				7FC84B4B19A566FC007F8BEB /* Event.h */,
-				7FC84B4C19A566FC007F8BEB /* Event.m */,
-				501518E618B1979200CC286D /* Event+helperMethods.h */,
-				501518E718B1979200CC286D /* Event+helperMethods.m */,
-				7F87644C18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.h */,
-				7F87644D18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.m */,
-				5095B4BB18AE7C440023210E /* Supporting Files */,
-				502B46B618B4063000A61D24 /* DHTableViewCell.h */,
-				502B46B718B4063000A61D24 /* DHTableViewCell.m */,
 				7FA32B7319AC1CC1006BCB30 /* TMThemeAquaButton.h */,
 				7FA32B7419AC1CC1006BCB30 /* TMThemeAquaButton.m */,
-				50A3ECE718BF10FF00DB3981 /* DHGlobalConstants.h */,
-				7F94EE1118CD0FC3005390C3 /* DHError.h */,
-				7F94EE1218CD0FC3005390C3 /* DHError.m */,
 			);
 			path = TMTimer;
 			sourceTree = "<group>";
@@ -465,6 +473,170 @@
 			name = Debug;
 			sourceTree = "<group>";
 		};
+		7FBB1D0D19C3849C00387FBD /* TimerInterfaceView */ = {
+			isa = PBXGroup;
+			children = (
+				5095B4D218AE7C440023210E /* DHDetailViewController.h */,
+				5095B4D318AE7C440023210E /* DHDetailViewController.m */,
+			);
+			name = TimerInterfaceView;
+			sourceTree = "<group>";
+		};
+		7FBB1D0E19C384C100387FBD /* ManualFlagView */ = {
+			isa = PBXGroup;
+			children = (
+				7FC92103191D9C620026660A /* DHManualFlagViewController.h */,
+				7FC92104191D9C620026660A /* DHManualFlagViewController.m */,
+			);
+			name = ManualFlagView;
+			sourceTree = "<group>";
+		};
+		7FBB1D0F19C384D200387FBD /* MoreView */ = {
+			isa = PBXGroup;
+			children = (
+				7FBB1DBC19C6F3A700387FBD /* ChangeFlagGraphicTableView */,
+				7FBB1DB019C6BE0C00387FBD /* InAppPurchasesStoreView */,
+				7FBB1D0E19C384C100387FBD /* ManualFlagView */,
+				7F86594F18D3C4C50045F9F2 /* DHUserPreferenceViewController.h */,
+				7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */,
+			);
+			name = MoreView;
+			sourceTree = "<group>";
+		};
+		7FBB1D1019C3851B00387FBD /* SpeakerListView */ = {
+			isa = PBXGroup;
+			children = (
+				5095B4CF18AE7C440023210E /* DHMasterViewController.h */,
+				5095B4D018AE7C440023210E /* DHMasterViewController.m */,
+				7FBB1D1119C3853D00387FBD /* TableViewCells */,
+			);
+			name = SpeakerListView;
+			sourceTree = "<group>";
+		};
+		7FBB1D1119C3853D00387FBD /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				502B46B618B4063000A61D24 /* DHTableViewCell.h */,
+				502B46B718B4063000A61D24 /* DHTableViewCell.m */,
+			);
+			name = TableViewCells;
+			sourceTree = "<group>";
+		};
+		7FBB1D1219C385AB00387FBD /* UserProfiles */ = {
+			isa = PBXGroup;
+			children = (
+				7FBB1D1319C385C700387FBD /* CollectionCells */,
+				7F407F5819A1F85C00E37E1B /* DHUserProfileCollectionViewController.h */,
+				7F407F5919A1F85C00E37E1B /* DHUserProfileCollectionViewController.m */,
+			);
+			name = UserProfiles;
+			sourceTree = "<group>";
+		};
+		7FBB1D1319C385C700387FBD /* CollectionCells */ = {
+			isa = PBXGroup;
+			children = (
+				7F407F5519A1F4E200E37E1B /* DHUserProfileCollectionViewCell.h */,
+				7F407F5619A1F4E200E37E1B /* DHUserProfileCollectionViewCell.m */,
+			);
+			name = CollectionCells;
+			sourceTree = "<group>";
+		};
+		7FBB1D1419C385EA00387FBD /* ModifyUserProfiles */ = {
+			isa = PBXGroup;
+			children = (
+				7F407F5B19A29C5800E37E1B /* DHEditUserProfileViewController.h */,
+				7F407F5C19A29C5800E37E1B /* DHEditUserProfileViewController.m */,
+				7F407F5D19A29C5800E37E1B /* DHEditUserProfileViewController.xib */,
+				7FBB1D1519C3860300387FBD /* TableViewCells */,
+			);
+			name = ModifyUserProfiles;
+			sourceTree = "<group>";
+		};
+		7FBB1D1519C3860300387FBD /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				7F896E6819A40FB30081A2A1 /* DHEditUserProfileTableViewCell.xib */,
+				7F896E6A19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.h */,
+				7F896E6B19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.m */,
+			);
+			name = TableViewCells;
+			sourceTree = "<group>";
+		};
+		7FBB1D1619C3862200387FBD /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				7FBB1D1819C3864700387FBD /* UserProfileObject */,
+				5095B4CC18AE7C440023210E /* TMTimer.xcdatamodeld */,
+				7FBB1D1719C3863700387FBD /* SpeechObject */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+		7FBB1D1719C3863700387FBD /* SpeechObject */ = {
+			isa = PBXGroup;
+			children = (
+				7FC84B4B19A566FC007F8BEB /* Event.h */,
+				7FC84B4C19A566FC007F8BEB /* Event.m */,
+				501518E618B1979200CC286D /* Event+helperMethods.h */,
+				501518E718B1979200CC286D /* Event+helperMethods.m */,
+			);
+			name = SpeechObject;
+			sourceTree = "<group>";
+		};
+		7FBB1D1819C3864700387FBD /* UserProfileObject */ = {
+			isa = PBXGroup;
+			children = (
+				7F407F6019A2AD4D00E37E1B /* User_Profile+helperMethods.h */,
+				7F407F6119A2AD4D00E37E1B /* User_Profile+helperMethods.m */,
+				7F2AC6BA19A8149E00C9DAE7 /* User_Profile.h */,
+				7F2AC6BB19A8149E00C9DAE7 /* User_Profile.m */,
+			);
+			name = UserProfileObject;
+			sourceTree = "<group>";
+		};
+		7FBB1DA919C69BF700387FBD /* InAppPurchases */ = {
+			isa = PBXGroup;
+			children = (
+				7FBB1DAA19C6A00700387FBD /* DHIAPHelper.h */,
+				7FBB1DAB19C6A00700387FBD /* DHIAPHelper.m */,
+				7FBB1DAD19C6A30C00387FBD /* TMIAPHelper.h */,
+				7FBB1DAE19C6A30C00387FBD /* TMIAPHelper.m */,
+			);
+			name = InAppPurchases;
+			sourceTree = "<group>";
+		};
+		7FBB1DB019C6BE0C00387FBD /* InAppPurchasesStoreView */ = {
+			isa = PBXGroup;
+			children = (
+				7FBB1DB119C6BE6F00387FBD /* TMPurchasesViewController.h */,
+				7FBB1DB219C6BE6F00387FBD /* TMPurchasesViewController.m */,
+				7FBB1DB319C6BE6F00387FBD /* TMPurchasesViewController.xib */,
+				7FBB1DB619C6C0DA00387FBD /* tableViewCells */,
+			);
+			name = InAppPurchasesStoreView;
+			sourceTree = "<group>";
+		};
+		7FBB1DB619C6C0DA00387FBD /* tableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				7FBB1DB719C6C10500387FBD /* TMPurchasesTableViewCell.h */,
+				7FBB1DB819C6C10500387FBD /* TMPurchasesTableViewCell.m */,
+				7FBB1DB919C6C10500387FBD /* TMPurchasesTableViewCell.xib */,
+			);
+			name = tableViewCells;
+			sourceTree = "<group>";
+		};
+		7FBB1DBC19C6F3A700387FBD /* ChangeFlagGraphicTableView */ = {
+			isa = PBXGroup;
+			children = (
+				7FBB1DBD19C6F3F400387FBD /* TMChangeFlagGraphicTableViewController.h */,
+				7FBB1DBE19C6F3F400387FBD /* TMChangeFlagGraphicTableViewController.m */,
+				7FBB1DC019C6F68400387FBD /* TMChangeFlagTableViewCell.h */,
+				7FBB1DC119C6F68400387FBD /* TMChangeFlagTableViewCell.m */,
+			);
+			name = ChangeFlagGraphicTableView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -515,6 +687,14 @@
 				TargetAttributes = {
 					5095B4AE18AE7C440023210E = {
 						DevelopmentTeam = SX585CK9M9;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 					5095B4DA18AE7C440023210E = {
 						TestTargetID = 5095B4AE18AE7C440023210E;
@@ -553,6 +733,7 @@
 				50143EA218C55A6700350947 /* Default_768x1024.png in Resources */,
 				50143EA118C55A6700350947 /* Default_1536x2048.png in Resources */,
 				50143EA318C55A6700350947 /* Default_320x480.png in Resources */,
+				7FBB1DBB19C6C10500387FBD /* TMPurchasesTableViewCell.xib in Resources */,
 				7F8CD811199FAAAE00FC177F /* fingers2_touch.png in Resources */,
 				5095B4D618AE7C440023210E /* Images.xcassets in Resources */,
 				7F0C3FCB18CBCD3D0068B26C /* Release Notes in Resources */,
@@ -581,6 +762,7 @@
 				7F407FA619A407C600E37E1B /* fetch.php.jpeg in Resources */,
 				7F8CD80E199FAAAE00FC177F /* finger1_not_touch.png in Resources */,
 				7F8EEA771946289F006B4C53 /* Icon72x72@2x.png in Resources */,
+				7FBB1DB519C6BE6F00387FBD /* TMPurchasesViewController.xib in Resources */,
 				507112A018C51B3C000790E1 /* Icon-58.png in Resources */,
 				50143EA418C55A6700350947 /* Default_640x1136.png in Resources */,
 				507112AA18C51B3C000790E1 /* iTunesArtwork in Resources */,
@@ -604,7 +786,10 @@
 			files = (
 				7FD4ABDF18E0F488004DA1DF /* DHNavigationItem.m in Sources */,
 				7F896E7019A50C600081A2A1 /* UIImage+DHScaledImage.m in Sources */,
+				7FBB1DC219C6F68400387FBD /* TMChangeFlagTableViewCell.m in Sources */,
 				7F407F6219A2AD4D00E37E1B /* User_Profile+helperMethods.m in Sources */,
+				7FBB1DB419C6BE6F00387FBD /* TMPurchasesViewController.m in Sources */,
+				7FBB1DAF19C6A30C00387FBD /* TMIAPHelper.m in Sources */,
 				7F2AC6BC19A8149E00C9DAE7 /* User_Profile.m in Sources */,
 				5095B4D418AE7C440023210E /* DHDetailViewController.m in Sources */,
 				7F86595418D3D0090045F9F2 /* DHCountDownView.m in Sources */,
@@ -623,9 +808,12 @@
 				502B46B818B4063000A61D24 /* DHTableViewCell.m in Sources */,
 				7F7145FE19AA9A4400DAEBF8 /* TMTimerStyleKit.m in Sources */,
 				501518E818B1979200CC286D /* Event+helperMethods.m in Sources */,
+				7FBB1DAC19C6A00700387FBD /* DHIAPHelper.m in Sources */,
 				7F896E6C19A4118B0081A2A1 /* DHEditUserProfileTableViewCell.m in Sources */,
 				7F8EE35C19AD54870064F0B1 /* DHQuickPanelTableViewCell.m in Sources */,
+				7FBB1DBF19C6F3F400387FBD /* TMChangeFlagGraphicTableViewController.m in Sources */,
 				7F407F5E19A29C5800E37E1B /* DHEditUserProfileViewController.m in Sources */,
+				7FBB1DBA19C6C10500387FBD /* TMPurchasesTableViewCell.m in Sources */,
 				7F8EF98618FB0F780077922C /* DHColorForTime.m in Sources */,
 				5095B4D118AE7C440023210E /* DHMasterViewController.m in Sources */,
 				7F407F5719A1F4E200E37E1B /* DHUserProfileCollectionViewCell.m in Sources */,
@@ -713,7 +901,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -747,7 +935,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
@@ -764,7 +952,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TMTimer/TMTimer-Prefix.pch";
 				INFOPLIST_FILE = "TMTimer/TMTimer-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -782,7 +970,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TMTimer/TMTimer-Prefix.pch";
 				INFOPLIST_FILE = "TMTimer/TMTimer-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

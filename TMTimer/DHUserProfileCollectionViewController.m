@@ -19,9 +19,18 @@
 
 @property (strong, nonatomic) NSCache *imageCache;
 
+@property (strong, nonatomic) dispatch_queue_t dispatchQueue_profileImages;
+
 @end
 
 @implementation DHUserProfileCollectionViewController
+
+- (dispatch_queue_t)dispatchQueue_profileImages {
+    if (_dispatchQueue_profileImages) return _dispatchQueue_profileImages;
+    const char *name = [NSStringFromSelector(@selector(dispatchQueue_profileImages)) UTF8String];
+    _dispatchQueue_profileImages = dispatch_queue_create(name, DISPATCH_QUEUE_CONCURRENT);
+    return _dispatchQueue_profileImages;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,8 +48,17 @@
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:self];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[TMTimerStyleKit imageOfAddProfileButton] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(addNewProfile)];
- 
+    UIImage *addProfile = [TMTimerStyleKit imageOfAddProfileButton];
+    if ([addProfile respondsToSelector:@selector(imageWithRenderingMode:)]) {
+        addProfile = [addProfile imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    }
+    UIButton *_addProfile = [UIButton buttonWithType:UIButtonTypeCustom];
+    _addProfile.frame = CGRectMake(0, 0, 50, 50);
+    [_addProfile setBackgroundImage:addProfile forState:UIControlStateNormal];
+    [_addProfile addTarget:self action:@selector(addNewProfile) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem
+    .rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_addProfile];
+    
     self.imageCache = [[NSCache alloc] init];
 }
 
@@ -194,7 +212,7 @@
     dhCell.ImageProfilePic.image = [UIImage imageWithContentsOfFile:object.profile_pic_path];
     
     if ((dhCell.ImageProfilePic.image = [self.imageCache objectForKey:indexPath]) == nil) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_async(self.dispatchQueue_profileImages, ^{
             UIImage * img= [UIImage imageWithContentsOfFile:object.profile_pic_path];
             dispatch_async(dispatch_get_main_queue(), ^{
                 DHUserProfileCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];

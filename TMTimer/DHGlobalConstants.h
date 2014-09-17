@@ -16,7 +16,9 @@
 #define kUserDefaultShowUserHints @"UDUserHints"
 #define kUserDefaultsVibrateOnFlagChange @"UDFlagChangeVibrate"
 #define kUserDefaultsHasShownManualFlagInfoBefore @"UDHasShownManualFlagInfoBefore"
+#define kUserDefaultsCurrentTimerFlagName @"UDCurrentTimerFlagName"
 
+#define kSegueIAPStore @"segueIAPStore"
 #define kStart @"Start"
 #define kStop @"Stop"
 
