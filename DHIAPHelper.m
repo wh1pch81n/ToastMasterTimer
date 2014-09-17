@@ -50,6 +50,7 @@ NSString *const DHIAPHelperProductPurchaseNotification = @"DHIAPHelperProductPur
 
 - (void)buyProduct:(SKProduct *)product {
     DHDLog(nil, @"Buying %@...", product.productIdentifier);
+    UIApplication.sharedApplication.networkActivityIndicatorVisible = YES;
     SKPayment *payment = [SKPayment paymentWithProduct:product];
     [SKPaymentQueue.defaultQueue addPayment:payment];
 }
@@ -84,6 +85,7 @@ NSString *const DHIAPHelperProductPurchaseNotification = @"DHIAPHelperProductPur
             [self restoreTransaction:transaction];
         }
     }
+    UIApplication.sharedApplication.networkActivityIndicatorVisible = NO;
 }
 
 - (void)completeTransaction:(SKPaymentTransaction *)transaction {

@@ -715,12 +715,9 @@ static UIImage* _imageOfNo_Ads = nil;
     CGRect textRect = CGRectMake(0, 0, 50, 50);
     {
         NSString* textContent = @"Ads";
-        NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
-        textStyle.alignment = NSTextAlignmentCenter;
-
-        NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"MarkerFelt-Wide" size: 30], NSForegroundColorAttributeName: TMTimerStyleKit.tM_ThemeBlue, NSParagraphStyleAttributeName: textStyle};
-
-        [textContent drawInRect: CGRectOffset(textRect, 0, (CGRectGetHeight(textRect) - [textContent boundingRectWithSize: textRect.size options: NSStringDrawingUsesLineFragmentOrigin attributes: textFontAttributes context: nil].size.height) / 2) withAttributes: textFontAttributes];
+        UIFont* textFont = [UIFont fontWithName: @"MarkerFelt-Wide" size: 30];
+        [TMTimerStyleKit.tM_ThemeBlue setFill];
+        [textContent drawInRect: CGRectOffset(textRect, 0, (CGRectGetHeight(textRect) - [textContent sizeWithFont: textFont constrainedToSize: textRect.size lineBreakMode: UILineBreakModeWordWrap].height) / 2) withFont: textFont lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
     }
 
 

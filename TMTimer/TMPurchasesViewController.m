@@ -76,7 +76,11 @@
         if (success) {
         
             NSMutableArray *arr = [NSMutableArray new];
-            [arr addObjectsFromArray:[products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.productIdentifier = %@", kRemoveAdvertisements]]];
+            //Only iOS 7+ uses ads.
+            if (UIDevice.currentDevice.systemVersion.floatValue >= 7) {
+                
+                [arr addObjectsFromArray:[products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.productIdentifier = %@", kRemoveAdvertisements]]];
+            }
             [arr addObjectsFromArray:[products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.productIdentifier = %@", kPlainTimerFlags]]];
             [arr addObjectsFromArray:[products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.productIdentifier = %@", kWineTimerFlags]]];
             

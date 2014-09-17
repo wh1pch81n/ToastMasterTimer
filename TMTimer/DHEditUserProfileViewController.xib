@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
@@ -76,7 +77,7 @@
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="iD0-9Y-iEC">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="149" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="iD0-9Y-iEC">
                     <rect key="frame" x="0.0" y="202" width="320" height="366"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -99,6 +100,9 @@
                     <rect key="frame" x="40" y="187" width="240" height="7"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.29803922772407532" green="0.29803922772407532" blue="0.29803922772407532" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="7" id="ulE-Rn-mff"/>
+                    </constraints>
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -110,7 +114,6 @@
                 <constraint firstItem="YcC-Pe-VNx" firstAttribute="centerX" secondItem="YCm-fZ-3Bn" secondAttribute="centerX" id="H0I-Q6-zMY"/>
                 <constraint firstItem="rWz-Ko-Hv0" firstAttribute="leading" secondItem="bq3-Vp-u1q" secondAttribute="trailing" constant="8" id="Jnm-2U-DZJ"/>
                 <constraint firstItem="YcC-Pe-VNx" firstAttribute="top" secondItem="vzE-jj-QAV" secondAttribute="bottom" constant="15" id="Kbd-O3-dkF"/>
-                <constraint firstItem="iD0-9Y-iEC" firstAttribute="top" secondItem="GyA-5G-P3V" secondAttribute="bottom" constant="8" symbolic="YES" id="PKH-gL-U3M"/>
                 <constraint firstItem="bq3-Vp-u1q" firstAttribute="top" secondItem="ZKa-g0-NAg" secondAttribute="bottom" constant="25" id="Q0x-rP-heM"/>
                 <constraint firstItem="YcC-Pe-VNx" firstAttribute="width" secondItem="YCm-fZ-3Bn" secondAttribute="width" id="Q46-vU-51A"/>
                 <constraint firstAttribute="trailing" secondItem="GyA-5G-P3V" secondAttribute="trailing" constant="40" id="QMt-e0-IQK"/>

@@ -92,9 +92,11 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if ([[TMIAPHelper sharedInstance] canDisplayAds] == NO) {
+    if ([[TMIAPHelper sharedInstance] canDisplayAds] == NO ||
+        (UIDevice.currentDevice.systemVersion.floatValue < 7))
+      {
         [self.removeAdsButton setEnabled:NO];
-    }
+      }
 }
 
 - (void)didReceiveMemoryWarning
