@@ -85,10 +85,20 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 @property (strong, nonatomic) NSString *blurb, *totalTime;
 
 - (void)configureView;
+@property (strong, nonatomic) dispatch_queue_t currentSpeakerImageQueue;
 
 @end
 
 @implementation DHDetailViewController
+
+#pragma mark - create dispatch Queue
+
+- (dispatch_queue_t)currentSpeakerImageQueue {
+    if (_currentSpeakerImageQueue) return _currentSpeakerImageQueue;
+    const char *name = [NSStringFromSelector(@selector(currentSpeakerImageQueue)) UTF8String];
+    _currentSpeakerImageQueue = dispatch_queue_create(name, DISPATCH_QUEUE_CONCURRENT);
+    return _currentSpeakerImageQueue;
+}
 
 #pragma mark - Managing the detail item
 
@@ -821,7 +831,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     User_Profile *up = (User_Profile *)self.detailItem.speeches_speaker;
     cell.labelProfileName.text = up.user_name;
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(self.currentSpeakerImageQueue, ^{
         UIImage * img= [UIImage imageWithContentsOfFile:up.profile_pic_path];
         dispatch_async(dispatch_get_main_queue(), ^{
             DHUserProfileCollectionViewCell *cell = (id)[collectionView cellForItemAtIndexPath:indexPath];

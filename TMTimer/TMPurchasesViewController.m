@@ -44,7 +44,7 @@
     self.priceFormatter.formatterBehavior = NSNumberFormatterBehavior10_4;
     self.priceFormatter.numberStyle = NSNumberFormatterCurrencyStyle;
     
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem.alloc initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:TMIAPHelper.sharedInstance action:@selector(restoreCompletedTransactions:)];
+//    self.navigationItem.rightBarButtonItem = [UIBarButtonItem.alloc initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:TMIAPHelper.sharedInstance action:@selector(restoreCompletedTransactions)];
     
     [NSNotificationCenter.defaultCenter addObserver:self
                                            selector:@selector(productPurchased:)

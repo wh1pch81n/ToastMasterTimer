@@ -71,17 +71,6 @@ NSString *const kChangedFlagGraphicNotification = @"kChangedFlagGraphicNotificat
     self.plainCell.cellName = kFlagSelectionPlain;
     self.gaugeCell.cellName = kFlagSelectionGauge;
     self.wineCell.cellName = kFlagSelectionWine;
-    
-    if ([TMIAPHelper sharedInstance].canPlainFlags == NO) {
-        self.plainGreenFlag.alpha = 0.1;
-        self.plainYellowFlag.alpha = 0.1;
-        self.plainRedFlag.alpha = 0.1;
-    }
-    if ([TMIAPHelper sharedInstance].canWineFlags == NO) {
-        self.wineGreenFlag.alpha = 0.1;
-        self.wineYellowFlag.alpha = 0.1;
-        self.wineRedFlag.alpha = 0.1;
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -119,6 +108,22 @@ NSString *const kChangedFlagGraphicNotification = @"kChangedFlagGraphicNotificat
 }
 
 - (void)refreshCells {
+    const float kLockedAlpha = 0.1;
+    const float kUnlockedAlpha = 1;
+    
+    self.plainGreenFlag.alpha =
+    self.plainYellowFlag.alpha =
+    self.plainRedFlag.alpha =
+    ([TMIAPHelper sharedInstance].canPlainFlags)?kUnlockedAlpha
+    :kLockedAlpha;
+    
+    self.wineGreenFlag.alpha =
+    self.wineYellowFlag.alpha =
+    self.wineRedFlag.alpha =
+    ([TMIAPHelper sharedInstance].canWineFlags)?kUnlockedAlpha
+    :kLockedAlpha;
+  
+    
     [self.plainCell setUserInteractionEnabled:YES];
     [self.wineCell setUserInteractionEnabled:YES];
     [self.gaugeCell setUserInteractionEnabled:YES];
