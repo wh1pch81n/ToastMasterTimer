@@ -100,15 +100,17 @@ NSString *const DHIAPHelperProductPurchaseNotification = @"DHIAPHelperProductPur
 
 - (void)failedTransaction:(SKPaymentTransaction *)transaction {
     DHDLog(nil, @"failedTransaction:");
-    if (transaction.error.code != SKErrorPaymentCancelled) {
+    if (transaction.error.code != SKErrorPaymentCancelled &&
+        transaction.error.code != SKErrorPaymentNotAllowed)
+      {
         DHDLog(nil, @"Transaction Error: %@", transaction.error.localizedDescription);
         [[UIAlertView.alloc initWithTitle:@"Transaction Error"
-                                 message:@"Transaction could not be completed at this time.  Wait a bit and try again later"
-                                delegate:nil
-                       cancelButtonTitle:@"OK"
-                       otherButtonTitles:nil]
+                                  message:@"Transaction could not be completed at this time.  Wait a bit and try again later"
+                                 delegate:nil
+                        cancelButtonTitle:@"OK"
+                        otherButtonTitles:nil]
          show];
-    }
+      }
     [SKPaymentQueue.defaultQueue finishTransaction:transaction];
 }
 
