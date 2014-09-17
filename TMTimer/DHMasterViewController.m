@@ -106,11 +106,7 @@ NSString *const kTableTopics = @"Table Topics";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
-        if ([[TMIAPHelper sharedInstance] canDisplayAds]) {
-            self.canDisplayBannerAds = YES;
-        }
-    }
+    self.canDisplayBannerAds = YES;
     if (self.customStartDict) {
         [self beginCustomStartTopic];
     }
@@ -118,9 +114,7 @@ NSString *const kTableTopics = @"Table Topics";
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    if ([self respondsToSelector:@selector(setCanDisplayBannerAds:)]) {
-        self.canDisplayBannerAds = NO;
-    }
+    self.canDisplayBannerAds = NO;
     [super viewWillDisappear:animated];
 }
 
@@ -129,6 +123,14 @@ NSString *const kTableTopics = @"Table Topics";
                                                     name:kChangedFlagGraphicNotification
                                                   object:nil];
 
+}
+
+- (void)setCanDisplayBannerAds:(BOOL)b {
+    if ([[TMIAPHelper sharedInstance] canDisplayAds]) {
+        if (UIDevice.currentDevice.systemVersion.floatValue >= 7) {
+            [super setCanDisplayBannerAds:b];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
