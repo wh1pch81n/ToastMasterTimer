@@ -46,9 +46,9 @@
 
 
 #if TARGET_OS_IPHONE
-#import <UIKit/UIKit.h>
+@import UIKit;
 #else
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
 #endif
 
 

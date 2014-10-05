@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 ryukkusakku. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <iAd/iAd.h>
+@import UIKit;
+@import iAd;
 
 @class DHDetailViewController;
 
-#import <CoreData/CoreData.h>
+@import CoreData;
 
 @interface DHMasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 

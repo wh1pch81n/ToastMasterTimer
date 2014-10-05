@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 ryukkusakku. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 /**
  By default, Xcode defines the DEBUG macro to 1.

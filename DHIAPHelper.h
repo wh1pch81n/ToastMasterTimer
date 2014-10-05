@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 ryukkusakku. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <StoreKit/StoreKit.h>
+@import Foundation;
+@import StoreKit;
 
 /**
  subscribe to this notification to be notified of when a purchase or restoration has completed.

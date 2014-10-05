@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 ryukkusakku. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @interface DHGradients : NSObject
 + (void)produceRandomDots:(NSUInteger)numLines inFrame:(CGRect)rect withColor:(UIColor *)color;

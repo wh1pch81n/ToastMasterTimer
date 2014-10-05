@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 ryukkusakku. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
+@import Foundation;
+@import CoreData;
 
 @class Event;
 

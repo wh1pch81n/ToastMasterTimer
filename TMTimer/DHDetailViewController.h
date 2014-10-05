@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 ryukkusakku. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <iAd/iAd.h>
-#import <AudioToolbox/AudioServices.h>
+@import UIKit;
+@import iAd;
+@import AudioToolbox;
 #import "DHCountDownView.h"
 
 @class Event;

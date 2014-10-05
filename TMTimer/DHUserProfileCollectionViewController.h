@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 ryukkusakku. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 @class Event;
 @class User_Profile;

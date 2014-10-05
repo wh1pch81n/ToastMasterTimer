@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Derrick Ho. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 @interface UIImage (DHScaledImage)
 
