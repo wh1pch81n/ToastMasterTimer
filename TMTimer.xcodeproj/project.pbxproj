@@ -52,11 +52,11 @@
 		7F0C3FCB18CBCD3D0068B26C /* Release Notes in Resources */ = {isa = PBXBuildFile; fileRef = 7F0C3FCA18CBCD3D0068B26C /* Release Notes */; };
 		7F185BBE196A867900055446 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F185BBD196A867900055446 /* iRate.m */; };
 		7F23E8FC1FBC2CE700BE2F25 /* LaunchImage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F23E8FB1FBC2CE700BE2F25 /* LaunchImage.xib */; };
+		7F23E9011FBCC53800BE2F25 /* DHLatestFeaturesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F23E9001FBCC53800BE2F25 /* DHLatestFeaturesViewController.m */; };
 		7F2AC6BC19A8149E00C9DAE7 /* User_Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2AC6BB19A8149E00C9DAE7 /* User_Profile.m */; };
 		7F407F5719A1F4E200E37E1B /* DHUserProfileCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F407F5619A1F4E200E37E1B /* DHUserProfileCollectionViewCell.m */; };
 		7F407F5A19A1F85C00E37E1B /* DHUserProfileCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F407F5919A1F85C00E37E1B /* DHUserProfileCollectionViewController.m */; };
 		7F407F5E19A29C5800E37E1B /* DHEditUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F407F5C19A29C5800E37E1B /* DHEditUserProfileViewController.m */; };
-		7F407F5F19A29C5800E37E1B /* DHEditUserProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F407F5D19A29C5800E37E1B /* DHEditUserProfileViewController.xib */; };
 		7F407F6219A2AD4D00E37E1B /* User_Profile+helperMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F407F6119A2AD4D00E37E1B /* User_Profile+helperMethods.m */; };
 		7F407FA619A407C600E37E1B /* fetch.php.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 7F407FA519A407C600E37E1B /* fetch.php.jpeg */; };
 		7F7145FE19AA9A4400DAEBF8 /* TMTimerStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7145FD19AA9A4400DAEBF8 /* TMTimerStyleKit.m */; };
@@ -172,6 +172,8 @@
 		7F185BBC196A867900055446 /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
 		7F185BBD196A867900055446 /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
 		7F23E8FB1FBC2CE700BE2F25 /* LaunchImage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchImage.xib; sourceTree = "<group>"; };
+		7F23E8FF1FBCC53800BE2F25 /* DHLatestFeaturesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DHLatestFeaturesViewController.h; sourceTree = "<group>"; };
+		7F23E9001FBCC53800BE2F25 /* DHLatestFeaturesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DHLatestFeaturesViewController.m; sourceTree = "<group>"; };
 		7F2AC6B919A813CA00C9DAE7 /* TMTimer 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TMTimer 7.xcdatamodel"; sourceTree = "<group>"; };
 		7F2AC6BA19A8149E00C9DAE7 /* User_Profile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User_Profile.h; sourceTree = "<group>"; };
 		7F2AC6BB19A8149E00C9DAE7 /* User_Profile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User_Profile.m; sourceTree = "<group>"; };
@@ -182,7 +184,6 @@
 		7F407F5919A1F85C00E37E1B /* DHUserProfileCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHUserProfileCollectionViewController.m; sourceTree = "<group>"; };
 		7F407F5B19A29C5800E37E1B /* DHEditUserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHEditUserProfileViewController.h; sourceTree = "<group>"; };
 		7F407F5C19A29C5800E37E1B /* DHEditUserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHEditUserProfileViewController.m; sourceTree = "<group>"; };
-		7F407F5D19A29C5800E37E1B /* DHEditUserProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DHEditUserProfileViewController.xib; sourceTree = "<group>"; };
 		7F407F6019A2AD4D00E37E1B /* User_Profile+helperMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User_Profile+helperMethods.h"; sourceTree = "<group>"; };
 		7F407F6119A2AD4D00E37E1B /* User_Profile+helperMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User_Profile+helperMethods.m"; sourceTree = "<group>"; };
 		7F407FA519A407C600E37E1B /* fetch.php.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = fetch.php.jpeg; path = ../../fetch.php.jpeg; sourceTree = "<group>"; };
@@ -365,6 +366,8 @@
 				7F8EF98518FB0F780077922C /* DHColorForTime.m */,
 				7FA32B7319AC1CC1006BCB30 /* TMThemeAquaButton.h */,
 				7FA32B7419AC1CC1006BCB30 /* TMThemeAquaButton.m */,
+				7F23E8FF1FBCC53800BE2F25 /* DHLatestFeaturesViewController.h */,
+				7F23E9001FBCC53800BE2F25 /* DHLatestFeaturesViewController.m */,
 			);
 			path = TMTimer;
 			sourceTree = "<group>";
@@ -549,7 +552,6 @@
 			children = (
 				7F407F5B19A29C5800E37E1B /* DHEditUserProfileViewController.h */,
 				7F407F5C19A29C5800E37E1B /* DHEditUserProfileViewController.m */,
-				7F407F5D19A29C5800E37E1B /* DHEditUserProfileViewController.xib */,
 				7FBB1D1519C3860300387FBD /* TableViewCells */,
 			);
 			name = ModifyUserProfiles;
@@ -757,7 +759,6 @@
 				7F8CD813199FAAAE00FC177F /* fingers3_touch.png in Resources */,
 				7F8CD819199FFEBB00FC177F /* fingers.pxm in Resources */,
 				5071129F18C51B3C000790E1 /* Icon-40.png in Resources */,
-				7F407F5F19A29C5800E37E1B /* DHEditUserProfileViewController.xib in Resources */,
 				507112A618C51B3C000790E1 /* Icon-Small.png in Resources */,
 				7F8EEA7B194629ED006B4C53 /* Icon50x50@2x.png in Resources */,
 				507112A418C51B3C000790E1 /* Icon-Small-50.png in Resources */,
@@ -794,6 +795,7 @@
 				7F407F6219A2AD4D00E37E1B /* User_Profile+helperMethods.m in Sources */,
 				7FBB1DB419C6BE6F00387FBD /* TMPurchasesViewController.m in Sources */,
 				7FBB1DAF19C6A30C00387FBD /* TMIAPHelper.m in Sources */,
+				7F23E9011FBCC53800BE2F25 /* DHLatestFeaturesViewController.m in Sources */,
 				7F2AC6BC19A8149E00C9DAE7 /* User_Profile.m in Sources */,
 				5095B4D418AE7C440023210E /* DHDetailViewController.m in Sources */,
 				7F86595418D3D0090045F9F2 /* DHCountDownView.m in Sources */,

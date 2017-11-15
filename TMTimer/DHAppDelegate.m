@@ -51,7 +51,7 @@ NSString *const kHost = @"tmtimer328";
 	[[UINavigationBar appearance] setTitleTextAttributes:
      @{
        NSFontAttributeName: [UIFont systemFontOfSize:kNavBarFontSize],
-       NSForegroundColorAttributeName: [UIColor whiteColor]
+       NSForegroundColorAttributeName: [TMTimerStyleKit tM_ThemeBlue]
        }];
     [[UIBarButtonItem appearance] setTitleTextAttributes:
      @{NSForegroundColorAttributeName: [TMTimerStyleKit tM_ThemeBlue]}

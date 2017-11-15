@@ -227,7 +227,7 @@
 #pragma mark - creation/ editing
 
 - (void)addNewProfile {
-    DHEditUserProfileViewController *vc = [DHEditUserProfileViewController new];
+    DHEditUserProfileViewController *vc = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"DHEditUserProfileViewController"];
     NSManagedObjectContext *tempMoc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     tempMoc.parentContext = _managedObjectContext;
     User_Profile *up = [NSEntityDescription insertNewObjectForEntityForName:@"User_Profile"
@@ -235,18 +235,18 @@
     vc.objectID = up.objectID;
     vc.managedObjectContext = tempMoc;
     vc.EditingMode = UserProfileMode_NEW_PROFILE;
-    [self presentViewController:vc animated:YES completion:nil];
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:vc] animated:YES completion:nil];
 }
 
 - (void)editProfileWithObject:(User_Profile *)up {
     NSManagedObjectContext *tempMoc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     tempMoc.parentContext = _managedObjectContext;
     
-    DHEditUserProfileViewController *vc = [[DHEditUserProfileViewController alloc]
-                                           initWithContext:tempMoc
-                                           objectID:up.objectID
-                                           editingMode:UserProfileMode_MODIFY_PROFILE];
-    [self presentViewController:vc animated:YES completion:nil];
+    DHEditUserProfileViewController *vc = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"DHEditUserProfileViewController"];
+    vc.managedObjectContext = tempMoc;
+    vc.objectID = up.objectID;
+    vc.EditingMode = UserProfileMode_MODIFY_PROFILE;
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:vc] animated:YES completion:nil];
 }
 
 @end

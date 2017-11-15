@@ -558,15 +558,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
         self.canDisplayBannerAds = NO;
         
         CGRect rect;
-        if ([self respondsToSelector:@selector(originalContentView)]) {
-            rect = CGRectMake(0, 0,
-                              CGRectGetWidth(self.originalContentView.frame),
-                              CGRectGetHeight(self.originalContentView.frame));
-        } else {
-            rect = CGRectMake(0, 0,
-                              CGRectGetWidth(self.view.frame),
-                              CGRectGetHeight(self.view.frame));
-        }
+        rect = CGRectMake(0, 0,
+                          CGRectGetWidth(self.view.frame),
+                          CGRectGetHeight(self.view.frame));
         
         __weak typeof(self)wSelf = self;
         self.countDownView =

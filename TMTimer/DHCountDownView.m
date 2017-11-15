@@ -39,6 +39,7 @@ stringOfCharactersToCountDown:(NSString *)stringOfCharactersToCountDown
  completedCountDown:(void (^)(void))completed {
     self = [super initWithFrame:frame];
     if(self) {
+        self.backgroundColor = [UIColor whiteColor];
         self.characterDisplayed = [[UILabel alloc] initWithFrame:frame];
         [self addSubview:self.characterDisplayed];
         self.delegate = delegate;
@@ -91,11 +92,10 @@ stringOfCharactersToCountDown:(NSString *)stringOfCharactersToCountDown
     NSString *charArr = self.stringOfCharactersToCountDown;
     NSString *str = [charArr substringWithRange:NSMakeRange(self.characterIndex++, 1)];
     int fontSize = ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)?kiPadFontSize:kiPhoneFontSize;
-    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:str
-                                                                  attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:fontSize]}];
-    [self.characterDisplayed setAttributedText:attrStr];
-    [self.characterDisplayed setTextAlignment:NSTextAlignmentCenter];
     
+    [self.characterDisplayed setFont:[UIFont systemFontOfSize:fontSize]];
+    [self.characterDisplayed setText:str];
+    [self.characterDisplayed setTextAlignment:NSTextAlignmentCenter];
     
     self.characterDisplayed.alpha = 1;
     self.characterDisplayed.transform = kBigScale;

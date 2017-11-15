@@ -24,7 +24,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *textFieldName;
 @property (weak, nonatomic) IBOutlet UILabel *labelTotalNumberOfSpeeches, *labelTotalSpeechesLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewProfilePic;
-@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
@@ -45,15 +44,6 @@
     const char *name = [NSStringFromSelector(@selector(dispatchQueue_gaugeImage)) UTF8String];
     _dispatchQueue_gaugeImage = dispatch_queue_create(name, DISPATCH_QUEUE_CONCURRENT);
     return _dispatchQueue_gaugeImage;
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
 }
 
 - (id)initWithContext:(NSManagedObjectContext *)context objectID:(NSManagedObjectID *)objectID editingMode:(enum Mode)mode {

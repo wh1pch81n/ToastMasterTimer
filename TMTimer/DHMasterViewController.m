@@ -22,7 +22,7 @@
 #import "TMChangeFlagGraphicTableViewController.h"
 
 NSString *const kMasterViewControllerTitle = @" ";
-NSString *const kMore = @"More";
+NSString *const kMore = @"Settings";
 NSString *const kMoreViewSegue = @"MoreView";
 NSString *const kTableTopics = @"Table Topics";
 
