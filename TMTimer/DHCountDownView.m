@@ -18,7 +18,7 @@
 
 @property (strong, nonatomic) UILabel *characterDisplayed;
 @property (nonatomic, assign) int characterIndex;
-@property (nonatomic, copy) void (^complete)();
+@property (nonatomic, copy) void (^complete)(void);
 @property (strong, nonatomic) NSMutableArray *arrTimers;
 
 @property float characterDelay;
@@ -36,7 +36,7 @@
            delegate:(id<DHCountDownViewDelegate>)delegate
      characterDelay:(float)characterDelay
 stringOfCharactersToCountDown:(NSString *)stringOfCharactersToCountDown
- completedCountDown:(void (^)())completed {
+ completedCountDown:(void (^)(void))completed {
     self = [super initWithFrame:frame];
     if(self) {
         self.characterDisplayed = [[UILabel alloc] initWithFrame:frame];

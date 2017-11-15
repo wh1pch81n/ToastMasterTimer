@@ -15,7 +15,7 @@
 @interface DHCountDownView : UIView
 @property (weak, nonatomic) id <DHCountDownViewDelegate> delegate;
 
-- (id)initWithFrame:(CGRect)frame delegate:(id<DHCountDownViewDelegate>)delegate characterDelay:(float)characterDelay stringOfCharactersToCountDown:(NSString *)stringOfCharactersToCountDown completedCountDown:(void(^)())completed;
+- (id)initWithFrame:(CGRect)frame delegate:(id<DHCountDownViewDelegate>)delegate characterDelay:(float)characterDelay stringOfCharactersToCountDown:(NSString *)stringOfCharactersToCountDown completedCountDown:(void(^)(void))completed;
 
 - (void)runCountDown:(BOOL)run;
 

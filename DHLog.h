@@ -19,10 +19,10 @@
 /**
  Calls the block when on RELEASE
  */
-void DHRLog(void(^action)(), NSString *format, ...);
+void DHRLog(void(^action)(void), NSString *format, ...);
 
 /**
  Calls the block when on DEBUG
  */
-void DHDLog(void(^action)(), NSString *format, ...);
+void DHDLog(void(^action)(void), NSString *format, ...);
 

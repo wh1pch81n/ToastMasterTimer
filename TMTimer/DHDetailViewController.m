@@ -203,6 +203,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 	[self configureView];
 	[self FSM_idle];
 	
+    [self moveOutExtraButtonsView:NO];
+    
 	//Default values
 	[self updateMin:_minTime max:_maxTime];
     
@@ -219,11 +221,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
             [super setCanDisplayBannerAds:b];
         }
     }
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    [self moveOutExtraButtonsView:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -451,11 +448,8 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     UIColor *bgColor = [[DHColorForTime shared] colorForSeconds:total
                                                             min:_minTime.integerValue
                                                             max:_maxTime.integerValue];
-    if ([self respondsToSelector:@selector(originalContentView)]) {
-        [self.originalContentView setBackgroundColor:bgColor];
-    } else {
-        [self.view setBackgroundColor:bgColor];
-    }
+    
+    [self.view setBackgroundColor:bgColor];
 }
 
 /**
@@ -660,11 +654,11 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
  */
 - (UIResponder *)nextResponder {
     DHDLog( nil, @"next responder was called");
-    
+
     if(self.isOnTheFlyEditing) {
         [self setSecondsUntilOnTheFlyEditingEnds:kOnTheFlyEditingTimeOUt];
     }
-	return [super nextResponder];
+    return [super nextResponder];
 }
 
 - (void)disableOnTheFlyEditingOnTimesUp {
@@ -764,7 +758,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     
 
     if ([segue.identifier isEqualToString:@"selectAndCreateUP"]) {
-        DHAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        DHAppDelegate *appDelegate = (id)[[UIApplication sharedApplication] delegate];
         NSManagedObjectContext *moc = appDelegate.managedObjectContext;
         DHUserProfileCollectionViewController *cvc = [segue destinationViewController];
         cvc.speechEvent = self.detailItem;
@@ -775,7 +769,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
             [self.collectionView reloadData];
         }];
     } else if ([segue.identifier isEqualToString:@"selectOrCreateNewSpeechesUP"]) {
-        DHAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        DHAppDelegate *appDelegate = (id)[[UIApplication sharedApplication] delegate];
         NSManagedObjectContext *moc = appDelegate.managedObjectContext;
         DHUserProfileCollectionViewController *cvc = [segue destinationViewController];
         cvc.speechEvent = self.detailItem;

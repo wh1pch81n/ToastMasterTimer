@@ -48,13 +48,17 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
     // Do any additional setup after loading the view.
     DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate setTopVC:self];
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    
     [self initializeTouchEvents];
     infoQueue = dispatch_queue_create("info_queue", nil);
     
     [self stylizeToLookLikeButton:self.greenView];
     [self stylizeToLookLikeButton:self.yellowView];
     [self stylizeToLookLikeButton:self.redView];
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return YES;
 }
 
 - (void)stylizeToLookLikeButton:(UIView *)view {

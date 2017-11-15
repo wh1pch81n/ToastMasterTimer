@@ -8,7 +8,7 @@
 
 #import "DHLog.h"
 
-void DHRLog(void(^action)(), NSString *format, ...) {
+void DHRLog(void(^action)(void), NSString *format, ...) {
 #if RELEASE
     if (action) {
         action();
@@ -26,7 +26,7 @@ void DHRLog(void(^action)(), NSString *format, ...) {
 #endif
 }
 
-void DHDLog(void(^action)(), NSString *format, ...) {
+void DHDLog(void(^action)(void), NSString *format, ...) {
 #if DEBUG
     if (action) {
         action();

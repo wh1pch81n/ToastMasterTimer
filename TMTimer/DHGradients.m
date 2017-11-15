@@ -52,7 +52,7 @@
 		[self drawPoint:pB withColor:[UIColor colorWithRed:r2 green:g2 blue:b2 alpha:a2]];
 	} else if (pA.x == pB.x) { //vertical line
 		NSInteger inc = (pA.y - pB.y) < 0? +1: -1;
-		NSInteger distance = fabsf(pA.y - pB.y);
+        NSInteger distance = fabs(pA.y - pB.y);
 		
 		rInc = ((r-r2)/distance);
 		gInc = ((g-g2)/distance);
@@ -76,8 +76,8 @@
 		
 		int dx, dy, sx, sy, err;
 		BOOL notdone;
-		dx = fabsf( x1-x0);
-		dy = fabsf( y1-y0);
+        dx = abs( x1-x0);
+        dy = abs( y1-y0);
 		sx = -1;
 		sy = -1;
 		if( x0 < x1){ sx = 1;}
@@ -162,7 +162,7 @@
 	[colorA getRed:&r green:&g blue:&b alpha:&a];
 	[colorB getRed:&r2 green:&g2 blue:&b2 alpha:&a2];
 	
-	NSInteger distance = fabsf(x1 - x0);
+    NSInteger distance = labs(x1 - x0);
 	CGFloat rInc = (r2-r) / distance;
 	CGFloat gInc = (g2-g) / distance;
 	CGFloat bInc = (b2-b) / distance;

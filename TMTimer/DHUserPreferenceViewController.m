@@ -178,7 +178,10 @@
 }
 
 - (IBAction)unwindBackToUserPreferences:(UIStoryboardSegue *)sender {
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return NO;
 }
 
 #pragma mark - SEGUE
