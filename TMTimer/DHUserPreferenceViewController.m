@@ -10,11 +10,10 @@
 #import "DHGlobalConstants.h"
 #import "DHAppDelegate.h"
 #import "DHError.h"
-#import "iRate.h"
 #import "TMIAPHelper.h"
 #import "TMPurchasesViewController.h"
 
-@interface DHUserPreferenceViewController () <iRateDelegate>
+@interface DHUserPreferenceViewController ()
 @property (weak, nonatomic) IBOutlet UITableViewCell *changeFlagTableViewCell;
 @property (weak, nonatomic) IBOutlet UIButton *rateButton;
 @property (weak, nonatomic) IBOutlet UIButton *removeAdsButton;
@@ -41,7 +40,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    iRate.sharedInstance.delegate = self;
     
     [self.rateButton
      setTitleColor:[TMTimerStyleKit tM_ThemeBlue]
@@ -190,12 +188,6 @@
     if ([[segue identifier] isEqualToString:@"UserProfileSegue"]) {
         [[segue destinationViewController] setManagedObjectContext:_managedObjectContext];
     }
-}
-
-#pragma mark - iRate
-
-- (IBAction)tappedRateButton:(id)sender {
-    [[iRate sharedInstance] promptIfNetworkAvailable];
 }
 
 #pragma mark - In App Purchase

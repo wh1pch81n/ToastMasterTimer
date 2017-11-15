@@ -10,7 +10,6 @@
 #import "DHGlobalConstants.h"
 #import "DHMasterViewController.h"
 #import "DHError.h"
-#import "iRate.h"
 
 NSString *const kName = @"name";
 NSString *const kMinValue = @"min_value";
@@ -23,19 +22,6 @@ NSString *const kHost = @"tmtimer328";
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-
-+ (void)initialize {
-    
-    DHDLog(^{
-        iRate.sharedInstance.previewMode = YES;
-    }, nil);
-    DHRLog(^{
-        iRate.sharedInstance.daysUntilPrompt = 3;
-        iRate.sharedInstance.usesUntilPrompt = 3;
-        iRate.sharedInstance.remindPeriod = 7;
-        iRate.sharedInstance.promptForNewVersionIfUserRated = YES;
-    }, nil);
-}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

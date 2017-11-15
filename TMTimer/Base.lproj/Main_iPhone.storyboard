@@ -38,13 +38,17 @@
         <!--Latest Features View Controller-->
         <scene sceneID="gfq-8B-8XG">
             <objects>
-                <viewController id="vG2-k1-uHE" customClass="DHLatestFeaturesViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DHLatestFeaturesViewController" id="vG2-k1-uHE" customClass="DHLatestFeaturesViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2fb-P7-2EF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iC1-6c-Srb">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hhv-Q6-ND6">
-                                <rect key="frame" x="28" y="99.5" width="319" height="489.5"/>
+                                <rect key="frame" x="28" y="99" width="319" height="489.5"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon-120.png" translatesAutoresizingMaskIntoConstraints="NO" id="aHY-wb-K72">
                                         <rect key="frame" x="99" y="50" width="120" height="120"/>
@@ -130,7 +134,11 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="wGP-II-hEq" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Hhv-Q6-ND6" secondAttribute="bottom" id="0ey-Qm-X8C"/>
+                            <constraint firstItem="iC1-6c-Srb" firstAttribute="top" secondItem="2fb-P7-2EF" secondAttribute="top" id="AqF-l4-z9v"/>
+                            <constraint firstAttribute="trailing" secondItem="iC1-6c-Srb" secondAttribute="trailing" id="Cbb-rF-kQ1"/>
+                            <constraint firstItem="iC1-6c-Srb" firstAttribute="leading" secondItem="2fb-P7-2EF" secondAttribute="leading" id="PXA-iK-3xZ"/>
                             <constraint firstItem="Hhv-Q6-ND6" firstAttribute="centerY" secondItem="wGP-II-hEq" secondAttribute="centerY" id="SfS-Nx-Rwr"/>
+                            <constraint firstAttribute="bottom" secondItem="iC1-6c-Srb" secondAttribute="bottom" id="TxE-DE-00t"/>
                             <constraint firstItem="Hhv-Q6-ND6" firstAttribute="top" relation="greaterThanOrEqual" secondItem="wGP-II-hEq" secondAttribute="top" id="VOP-tr-ZgU"/>
                             <constraint firstItem="wGP-II-hEq" firstAttribute="trailing" secondItem="Hhv-Q6-ND6" secondAttribute="trailing" constant="28" id="ZVF-iv-TrU"/>
                             <constraint firstItem="Hhv-Q6-ND6" firstAttribute="leading" secondItem="wGP-II-hEq" secondAttribute="leading" constant="28" id="bNA-zE-Yzm"/>
@@ -140,7 +148,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5P2-h1-c0x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="125.59999999999999" y="929.68515742128943"/>
+            <point key="canvasLocation" x="2868" y="-2135"/>
         </scene>
         <!--Edit User Profile View Controller-->
         <scene sceneID="eio-jk-SyL">
@@ -630,11 +638,11 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gR-5Y-GTs">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                                    <state key="normal" title="Rate This App">
+                                                    <state key="normal" title="View Latest Changes: v1.4.1">
                                                         <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="tappedRateButton:" destination="2i9-yI-Ppu" eventType="touchUpInside" id="R5k-7e-8Al"/>
+                                                        <segue destination="vG2-k1-uHE" kind="presentation" modalPresentationStyle="overCurrentContext" id="YFQ-Ke-Zsm"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -786,7 +794,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zUJ-fR-iWs" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="ZWg-2H-5xZ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1632" y="-609.89505247376314"/>
+            <point key="canvasLocation" x="1633" y="-718"/>
         </scene>
         <!--Flag Types-->
         <scene sceneID="3li-Vy-9pf">
@@ -1032,7 +1040,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XnM-ae-Tpe" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="JCf-ts-uC0" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3502" y="-668"/>
+            <point key="canvasLocation" x="3866" y="-667"/>
         </scene>
         <!--Detail-->
         <scene sceneID="Cn3-H9-jdl">
@@ -1404,6 +1412,6 @@
         <image name="fetch.php.jpeg" width="300" height="284"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="T95-hk-7yO"/>
+        <segue reference="fZy-B7-hlg"/>
     </inferredMetricsTieBreakers>
 </document>

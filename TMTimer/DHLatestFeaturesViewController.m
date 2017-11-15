@@ -20,6 +20,11 @@
 
 - (IBAction)tappedGiveRating:(id)sender {
     [self dismissViewControllerAnimated:true completion:^{}];
+
+    NSURL *url = [NSURL URLWithString:@"https://itunes.apple.com/us/app/toastmaster-timer/id837916943?mt=8&action=write-review"];
+    [[UIApplication sharedApplication] openURL:url
+                                       options:@{}
+                             completionHandler:^(BOOL success) {}];
 }
 
 @end
