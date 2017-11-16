@@ -601,7 +601,6 @@ NSString *const UserDefaultsKey_NewVersion = @"newVersion";
     DHDLog(nil, @"just unwinded");
     
     self.didUnwind = YES;
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
 }
 
 #pragma mark - kChangedFlagGraphicNotification

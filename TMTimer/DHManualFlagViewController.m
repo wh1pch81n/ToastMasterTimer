@@ -57,10 +57,6 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
     [self stylizeToLookLikeButton:self.redView];
 }
 
-- (BOOL)prefersStatusBarHidden {
-    return YES;
-}
-
 - (void)stylizeToLookLikeButton:(UIView *)view {
     [view.layer setCornerRadius:self.greenView.frame.size.width/2];
     

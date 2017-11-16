@@ -178,10 +178,6 @@
 - (IBAction)unwindBackToUserPreferences:(UIStoryboardSegue *)sender {
 }
 
-- (BOOL)prefersStatusBarHidden {
-    return NO;
-}
-
 #pragma mark - SEGUE
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

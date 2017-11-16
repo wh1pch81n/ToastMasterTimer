@@ -43,8 +43,6 @@ NSString *const kHost = @"tmtimer328";
      @{NSForegroundColorAttributeName: [TMTimerStyleKit tM_ThemeBlue]}
                                                 forState:UIControlStateNormal];
 	
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
 	[self registeringUserPreferences];
 	
