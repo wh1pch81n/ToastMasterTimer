@@ -34,7 +34,7 @@
 	
 	if ((NSInteger)pA.y == (NSInteger)pB.y) { //horizontal line
 		NSInteger inc = (pA.x - pB.x) < 0? +1: -1;
-		NSInteger distance = fabsf(pA.x - pB.x);
+        NSInteger distance = fabs(pA.x - pB.x);
 		
 		rInc = ((r-r2)/distance);
 		gInc = ((g-g2)/distance);

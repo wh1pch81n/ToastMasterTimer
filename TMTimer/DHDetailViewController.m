@@ -778,7 +778,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
         }];
     } else if ([segue.identifier isEqualToString:@"containerUP"]) {
 #warning Also it seems that leaving the detail view will cause the timer to stop.  You should not segue, but insead put the view inside a sub view and present it above type able area
-        DHAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        DHAppDelegate *appDelegate = (id)[[UIApplication sharedApplication] delegate];
         NSManagedObjectContext *moc = appDelegate.managedObjectContext;
         DHUserProfileCollectionViewController *cvc = [segue destinationViewController];
         cvc.speechEvent = self.detailItem;
