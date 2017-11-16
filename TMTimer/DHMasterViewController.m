@@ -20,11 +20,13 @@
 #import "User_Profile+helperMethods.h"
 #import "TMIAPHelper.h"
 #import "TMChangeFlagGraphicTableViewController.h"
+#import "DHLatestFeaturesViewController.h"
 
 NSString *const kMasterViewControllerTitle = @" ";
 NSString *const kMore = @"Settings";
 NSString *const kMoreViewSegue = @"MoreView";
 NSString *const kTableTopics = @"Table Topics";
+NSString *const UserDefaultsKey_NewVersion = @"newVersion";
 
 @interface DHMasterViewController ()
 @property (weak, nonatomic) IBOutlet UISegmentedControl *presetSegmentedButtons;
@@ -110,6 +112,17 @@ NSString *const kTableTopics = @"Table Topics";
     if (self.customStartDict) {
         [self beginCustomStartTopic];
     }
+    
+    NSString *lastVersion = [[NSUserDefaults standardUserDefaults] objectForKey:UserDefaultsKey_NewVersion];
+    NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    
+    if (![lastVersion isEqualToString:appVersionString]) {
+        DHLatestFeaturesViewController *vc = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"DHLatestFeaturesViewController"];
+        vc.modalPresentationStyle = UIModalPresentationCustom;
+        
+        [self presentViewController:vc animated:true completion:^{}];
+    }
+    
     DHDLog(nil, @"TMTimer view did appear");
 }
 

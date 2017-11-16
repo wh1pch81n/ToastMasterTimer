@@ -7,12 +7,20 @@
 //
 
 #import "DHLatestFeaturesViewController.h"
+#import "DHMasterViewController.h"
 
 @interface DHLatestFeaturesViewController ()
 
 @end
 
 @implementation DHLatestFeaturesViewController
+
+- (void)dealloc {
+    NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:appVersionString
+                                              forKey:UserDefaultsKey_NewVersion];
+}
 
 - (IBAction)tappedCancel:(id)sender {
     [self dismissViewControllerAnimated:true completion:^{}];

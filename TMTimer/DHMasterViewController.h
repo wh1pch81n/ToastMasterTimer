@@ -11,6 +11,8 @@
 
 @class DHDetailViewController;
 
+extern NSString *const UserDefaultsKey_NewVersion;
+
 #import <CoreData/CoreData.h>
 
 @interface DHMasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>

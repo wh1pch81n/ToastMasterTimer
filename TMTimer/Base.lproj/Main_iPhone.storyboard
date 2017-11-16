@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rS3-R9-Ivy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rS3-R9-Ivy">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -43,7 +43,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iC1-6c-Srb">
+                            <view alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iC1-6c-Srb">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -53,44 +53,30 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon-120.png" translatesAutoresizingMaskIntoConstraints="NO" id="aHY-wb-K72">
                                         <rect key="frame" x="99" y="50" width="120" height="120"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S11-D2-gaf">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="S11-D2-gaf">
                                         <rect key="frame" x="8" y="186" width="303" height="199.5"/>
                                         <attributedString key="attributedText">
                                             <fragment content="What's new in ">
                                                 <attributes>
                                                     <font key="NSFont" size="19" name="MarkerFelt-Thin"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" paragraphSpacing="5" headIndent="30" tighteningFactorForTruncation="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingTail" baseWritingDirection="natural" paragraphSpacing="5" headIndent="30" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
                                             <fragment content="1.4.1">
                                                 <attributes>
                                                     <font key="NSFont" size="19" name="Menlo-Regular"/>
                                                     <font key="NSOriginalFont" size="19" name="Menlo-Regular"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" paragraphSpacing="5" headIndent="30" tighteningFactorForTruncation="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingTail" baseWritingDirection="natural" paragraphSpacing="5" headIndent="30" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
                                             <fragment>
                                                 <string key="content">
 	• Optimized for iOS 11
-</string>
+	• Fixed an issue that would prevent the Red, Blue, or Green flags from automatically appearing during the timing session
+	• Fixed an issue where the extra timing options menu would not appear properly</string>
                                                 <attributes>
                                                     <font key="NSFont" metaFont="system" size="17"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" paragraphSpacing="5" headIndent="30" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment>
-                                                <string key="content">	• Fixed an issue that would prevent the Red, Blue, or Green flags to automatically appear during the timing session
-</string>
-                                                <attributes>
-                                                    <font key="NSFont" metaFont="system" size="17"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" paragraphSpacing="5" headIndent="30" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment>
-                                                <string key="content">	• Fixed an issue where the extra timing options menu would not appear properly</string>
-                                                <attributes>
-                                                    <font key="NSFont" metaFont="system" size="17"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" paragraphSpacing="5" headIndent="30" tighteningFactorForTruncation="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingTail" baseWritingDirection="natural" paragraphSpacing="5" headIndent="30" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
                                         </attributedString>
@@ -301,22 +287,22 @@
                                 <rect key="frame" x="0.0" y="102" width="375" height="131"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rgB-Qf-vgK" id="KWc-iA-nD5">
-                                    <rect key="frame" x="0.0" y="0.0" width="342" height="131"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="131"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dqJ-am-n33" userLabel="View - bg">
-                                            <rect key="frame" x="5" y="4" width="332" height="123"/>
+                                            <rect key="frame" x="5" y="4" width="331" height="123"/>
                                             <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OIp-ES-2d4" userLabel="View - flag" customClass="UIImageView">
-                                            <rect key="frame" x="282" y="28" width="50" height="50"/>
+                                            <rect key="frame" x="281" y="28" width="50" height="50"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="50" id="j3Y-Ck-3nB"/>
                                                 <constraint firstAttribute="height" constant="50" id="leM-Rw-6WU"/>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.30000000000000004" preferredMaxLayoutWidth="209" translatesAutoresizingMaskIntoConstraints="NO" id="6XQ-VF-K2R" userLabel="Label - blurb">
-                                            <rect key="frame" x="10" y="30" width="264" height="57"/>
+                                            <rect key="frame" x="10" y="30" width="263" height="57"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="57" id="MJ8-ZA-Rei"/>
                                             </constraints>
@@ -326,7 +312,7 @@
                                             <size key="shadowOffset" width="1" height="1"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Created: May 15, 2014" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="DIF-aU-Ff9" userLabel="Label - dateCreated">
-                                            <rect key="frame" x="10" y="87" width="264" height="14"/>
+                                            <rect key="frame" x="10" y="87" width="263" height="14"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="14" id="KFN-K3-AFL"/>
                                             </constraints>
@@ -341,12 +327,12 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="OPp-pt-aW4" userLabel="Label - qualifyingTime">
-                                            <rect key="frame" x="55" y="101" width="219" height="21"/>
+                                            <rect key="frame" x="55" y="101" width="218" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hky-3I-8Pk" userLabel="Label - user name">
-                                            <rect key="frame" x="31" y="9" width="243" height="21"/>
+                                            <rect key="frame" x="31" y="9" width="242" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="M7D-iD-vP3"/>
                                             </constraints>
@@ -440,7 +426,7 @@
                                         <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4qz-Gq-Z1u" id="qbE-TO-n1G">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Speaker Profiles" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Qot-TT-Wq2">
@@ -460,7 +446,7 @@
                                         <rect key="frame" x="0.0" y="99.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ar6-Rk-2kp" id="6DD-p1-QCN">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Manual Flags" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ip6-tf-kVx">
@@ -484,7 +470,7 @@
                                         <rect key="frame" x="0.0" y="191.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dhA-GK-8Cn" id="Z5B-F4-Ewi">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Change Flag Image" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GW1-1U-boG">
@@ -905,7 +891,7 @@
         <scene sceneID="cxQ-vb-zHO">
             <objects>
                 <collectionViewController autoresizesArchivedViewToFullSize="NO" id="Pm9-VN-LeJ" customClass="DHUserProfileCollectionViewController" sceneMemberID="viewController">
-                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="CoD-0b-tmq">
+                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="CoD-0b-tmq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="5" id="Gn1-dE-xGF">
@@ -915,7 +901,7 @@
                             <inset key="sectionInset" minX="5" minY="10" maxX="5" maxY="10"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="profileCell" id="Gy5-9v-l1p" customClass="DHUserProfileCollectionViewCell">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="profileCell" id="Gy5-9v-l1p" customClass="DHUserProfileCollectionViewCell">
                                 <rect key="frame" x="5" y="10" width="100" height="142"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
