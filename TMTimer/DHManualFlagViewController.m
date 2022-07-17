@@ -108,10 +108,10 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
     if (self.infoImageView) {
         return;
     }
+    CGRect imageFrame = CGRectMake(self.view.center.x -150, self.view.center.y -150, 300, 300);
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:imageFrame];
     dispatch_queue_t loadAnimationQueue = infoQueue;
     dispatch_async(loadAnimationQueue, ^{
-        CGRect imageFrame = CGRectMake(self.view.center.x -150, self.view.center.y -150, 300, 300);
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:imageFrame];
         NSURL *pathToInfoImages = [[NSBundle mainBundle] URLForResource:@"ManualFlagInfoAnimationImageNames"
                                                           withExtension:@"plist"];
         NSDictionary *InfoDict = [NSDictionary dictionaryWithContentsOfURL:pathToInfoImages];
@@ -121,10 +121,12 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
             [mut addObject:[UIImage imageNamed:[name stringByAppendingPathExtension:ext]]];
         }
         
-        [imageView setAnimationImages:mut];
-        [imageView setAnimationDuration:mut.count];
-        [imageView setAnimationRepeatCount:1];
-        [self setInfoImageView:imageView];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [imageView setAnimationImages:mut];
+            [imageView setAnimationDuration:mut.count];
+            [imageView setAnimationRepeatCount:1];
+            [self setInfoImageView:imageView];
+        });
         
         BOOL autoLaunch = [NSUserDefaults
                            .standardUserDefaults boolForKey:kUserDefaultsHasShownManualFlagInfoBefore];
@@ -179,18 +181,6 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
 - (void)FSM_red_flag {
     [[self view] setBackgroundColor:[TMTimerStyleKit g_HighPressureColor]];
     [[self redView] setBackgroundColor:[UIColor colorWithRed:0.75 green:0 blue:0 alpha:0.75]];
-}
-
-- (void)FSM_end {
-    //present a pop up that will ask if they want to exit or to repeat
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:kUIAlertDemoEndedTitle
-                                message:nil
-                               delegate:self
-                      cancelButtonTitle:kUIAlertDemoCancelButtonTitle
-                      otherButtonTitles:kUIAlertDemoRepeatButtonTitle, nil];
-    [alert show];
-    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
-    [[appDelegate arrOfAlerts] addObject:alert];
 }
 
 - (void)FSM_exit {

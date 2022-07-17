@@ -17,7 +17,6 @@ extern NSString *const kHost;
 @interface DHAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (weak, nonatomic) UIViewController *topVC;
-@property (strong, nonatomic) NSMutableArray *arrOfAlerts; // Every alert that is called should be added into here so you may dismiss them manually if you do a url scheme
 @property (strong, nonatomic) UIWindow *window;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;

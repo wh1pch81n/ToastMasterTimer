@@ -270,27 +270,30 @@
 - (void)saveEdits {
     User_Profile *up = (User_Profile *)[_managedObjectContext objectWithID:_objectID];
     if ([self.textFieldName.text isEqualToString:@""]) {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Name Required" message:@"Speaker's name can not be blank" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [alert show];
-        //[[(DHAppDelegate *)[[UIApplication sharedApplication] delegate] arrOfAlerts] addObject:alert];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Name Required" message:@"Speaker's name can not be blank" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}]];
+        [self presentViewController:alert animated:YES completion:^{}];
         return;// don't let them save
     }
     
+    NSString *textFieldText = [self.textFieldName.text stringByTrimmingCharactersInSet:
+                    [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    __weak DHEditUserProfileViewController *weakSelf = self;
     [_managedObjectContext performBlock:^{
-        up.user_name = [self.textFieldName.text stringByTrimmingCharactersInSet:
-                        [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        up.user_name = textFieldText;
         
         if (self.didSetImage) {
             [self saveImageFileToDisk];
         }
         NSError *error;
-        if(![_managedObjectContext save:&error]) {
+        if(![weakSelf.managedObjectContext save:&error]) {
             [DHError displayValidationError:error];
         }
         
-        [_managedObjectContext.parentContext performBlock:^{
+        [weakSelf.managedObjectContext.parentContext performBlock:^{
             NSError *error;
-            if (![_managedObjectContext.parentContext save:&error]) {
+            if (![weakSelf.managedObjectContext.parentContext save:&error]) {
                 [DHError displayValidationError:error];
             }
         }];

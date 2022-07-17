@@ -200,9 +200,10 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     
     [self setLocalDetailPropertiesWithDetail:self.detailItem];
     
-	[self configureView];
-	[self FSM_idle];
-	
+    [self configureView];
+    [self FSM_idle];
+    
+    [self.view addSubview:self.extraButtonsView];
     [self moveOutExtraButtonsView:NO];
     
 	//Default values

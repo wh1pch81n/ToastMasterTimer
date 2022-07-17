@@ -112,16 +112,6 @@ NSString *const UserDefaultsKey_NewVersion = @"newVersion";
         [self beginCustomStartTopic];
     }
     
-    NSString *lastVersion = [[NSUserDefaults standardUserDefaults] objectForKey:UserDefaultsKey_NewVersion];
-    NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    
-    if (![lastVersion isEqualToString:appVersionString]) {
-        DHLatestFeaturesViewController *vc = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"DHLatestFeaturesViewController"];
-        vc.modalPresentationStyle = UIModalPresentationCustom;
-        
-        [self presentViewController:vc animated:true completion:^{}];
-    }
-    
     DHDLog(nil, @"TMTimer view did appear");
 }
 

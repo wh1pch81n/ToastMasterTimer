@@ -59,7 +59,6 @@
 		7F407F6219A2AD4D00E37E1B /* User_Profile+helperMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F407F6119A2AD4D00E37E1B /* User_Profile+helperMethods.m */; };
 		7F407FA619A407C600E37E1B /* fetch.php.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 7F407FA519A407C600E37E1B /* fetch.php.jpeg */; };
 		7F7145FE19AA9A4400DAEBF8 /* TMTimerStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7145FD19AA9A4400DAEBF8 /* TMTimerStyleKit.m */; };
-		7F75F66D18C9142F0040986B /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F75F66C18C9142F0040986B /* iAd.framework */; };
 		7F86595118D3C4C50045F9F2 /* DHUserPreferenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */; };
 		7F86595418D3D0090045F9F2 /* DHCountDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F86595318D3D0090045F9F2 /* DHCountDownView.m */; };
 		7F87644E18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F87644D18FDFF1400BB7FFA /* UISegmentedControl+extractMinMaxData.m */; };
@@ -255,7 +254,6 @@
 			files = (
 				7F91B7471964C491002FC63E /* AudioToolbox.framework in Frameworks */,
 				7F01E15B19C93A64006C1263 /* StoreKit.framework in Frameworks */,
-				7F75F66D18C9142F0040986B /* iAd.framework in Frameworks */,
 				5095B4B518AE7C440023210E /* CoreGraphics.framework in Frameworks */,
 				5095B4B918AE7C440023210E /* CoreData.framework in Frameworks */,
 				5095B4B718AE7C440023210E /* UIKit.framework in Frameworks */,
@@ -983,6 +981,7 @@
 				GCC_PREFIX_HEADER = "TMTimer/TMTimer-Prefix.pch";
 				INFOPLIST_FILE = "TMTimer/TMTimer-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.4.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dnthome.TMTimer328;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1001,6 +1000,7 @@
 				GCC_PREFIX_HEADER = "TMTimer/TMTimer-Prefix.pch";
 				INFOPLIST_FILE = "TMTimer/TMTimer-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.4.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dnthome.TMTimer328;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

@@ -146,22 +146,15 @@ NSString *const kChangedFlagGraphicNotification = @"kChangedFlagGraphicNotificat
 }
 
 - (void) goToIAPStore {
-    [[UIAlertView.alloc initWithTitle:@"Currently Locked"
-                             message:@"Would you like to unlock this?"
-                            delegate:self
-                   cancelButtonTitle:@"No Thanks"
-                   otherButtonTitles:@"Sure", nil] show];
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if(buttonIndex == alertView.cancelButtonIndex) {
-        return;
-    }
-    TMPurchasesViewController *pvc = [TMPurchasesViewController.alloc initWithNibName:nil bundle:nil];
-    [self.navigationController pushViewController:pvc animated:YES];
-
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Currently Locked" message:@"Would you like to unlock this?" preferredStyle:UIAlertControllerStyleAlert];
+    __weak TMChangeFlagGraphicTableViewController *weakSelf = self;
+    [alert addAction:[UIAlertAction actionWithTitle:@"Sure" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        TMPurchasesViewController *pvc = [[TMPurchasesViewController alloc] initWithNibName:nil bundle:nil];
+        [weakSelf.navigationController pushViewController:pvc animated:YES];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"No Thanks" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}]];
+    
+    [self presentViewController:alert animated:YES completion:^{}];
 }
 
 @end

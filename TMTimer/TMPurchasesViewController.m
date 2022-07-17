@@ -70,8 +70,9 @@
 }
 
 - (void)reload {
-    _products = nil;
+    self.products = nil;
     [self.tableView reloadData];
+    __weak TMPurchasesViewController *weakSelf = self;
     [TMIAPHelper.sharedInstance requestProductWithCompletionHandler:^(BOOL success, NSArray *products) {
         if (success) {
         
@@ -84,7 +85,7 @@
             [arr addObjectsFromArray:[products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.productIdentifier = %@", kPlainTimerFlags]]];
             [arr addObjectsFromArray:[products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.productIdentifier = %@", kWineTimerFlags]]];
             
-            _products = arr;
+            weakSelf.products = arr;
             [self.tableView reloadData];
         }
         [self.refreshControl endRefreshing];
