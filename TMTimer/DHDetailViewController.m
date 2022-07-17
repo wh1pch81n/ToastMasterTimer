@@ -215,14 +215,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
 
-- (void)setCanDisplayBannerAds:(BOOL)b {
-    if ([[TMIAPHelper sharedInstance] canDisplayAds]) {
-        if (UIDevice.currentDevice.systemVersion.floatValue >= 7) {
-            [super setCanDisplayBannerAds:b];
-        }
-    }
-}
-
 - (void)viewWillDisappear:(BOOL)animated {
     if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStop]) {//should stop the timer before leaving this view.
         [self tappedStartStopButton:self];
@@ -510,8 +502,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)FSM_idle {
-    self.canDisplayBannerAds = NO;
-
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
 	[self.timeChooserParentView setHidden:NO];
@@ -520,11 +510,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     __weak typeof(self)wSelf = self;
 	[UIView animateWithDuration:0.5 animations:^{
         __strong typeof(wSelf)sSelf = wSelf;
-        if ([sSelf respondsToSelector:@selector(originalContentView)]) {
-            [sSelf.originalContentView setBackgroundColor:[UIColor whiteColor]]; //reset to default color
-        } else {
             [sSelf.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
-        }
 		
 		[sSelf.nameTextField setAlpha:1];
         [sSelf.timeChooserParentView setAlpha:1];
@@ -555,8 +541,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     BOOL delayIsEnabled = [NSUserDefaults.standardUserDefaults boolForKey:kUserDefault3SecondDelay];
     
     if (delayIsEnabled) {
-        self.canDisplayBannerAds = NO;
-        
         CGRect rect;
         rect = CGRectMake(0, 0,
                           CGRectGetWidth(self.view.frame),
@@ -570,9 +554,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                  stringOfCharactersToCountDown:@" 321"
                             completedCountDown:^{
                                 __strong typeof(wSelf)sSelf = wSelf;
-                                
-                                sSelf.canDisplayBannerAds = YES;
-                                
+                                                                
                                 [sSelf FSM_startTimerBegin];
                                 [[sSelf countDownView] removeFromSuperview];
                                 sSelf.countDownView = nil;
@@ -582,7 +564,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
         
     } else {
         [self FSM_startTimerBegin];
-        self.canDisplayBannerAds = YES;
     }
 }
 
@@ -673,7 +654,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    self.canDisplayBannerAds = NO;
     if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStart]) { //should only happen in idle state
         [self moveOutExtraButtonsView:YES];
     }
@@ -682,7 +662,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if ([self.navItem.rightBarButtonItem.title isEqualToString:kStop]) {
-        self.canDisplayBannerAds = YES;
     }
 	_blurb = self.nameTextField.text;
 	[self enableNavItemButtons:YES];

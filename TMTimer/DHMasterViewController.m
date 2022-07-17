@@ -108,7 +108,6 @@ NSString *const UserDefaultsKey_NewVersion = @"newVersion";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    self.canDisplayBannerAds = YES;
     if (self.customStartDict) {
         [self beginCustomStartTopic];
     }
@@ -126,24 +125,11 @@ NSString *const UserDefaultsKey_NewVersion = @"newVersion";
     DHDLog(nil, @"TMTimer view did appear");
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    self.canDisplayBannerAds = NO;
-    [super viewWillDisappear:animated];
-}
-
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:kChangedFlagGraphicNotification
                                                   object:nil];
 
-}
-
-- (void)setCanDisplayBannerAds:(BOOL)b {
-    if ([[TMIAPHelper sharedInstance] canDisplayAds]) {
-        if (UIDevice.currentDevice.systemVersion.floatValue >= 7) {
-            [super setCanDisplayBannerAds:b];
-        }
-    }
 }
 
 - (void)didReceiveMemoryWarning
