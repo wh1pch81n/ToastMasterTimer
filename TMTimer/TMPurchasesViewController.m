@@ -77,18 +77,15 @@
         if (success) {
         
             NSMutableArray *arr = [NSMutableArray new];
-            //Only iOS 7+ uses ads.
-            if (UIDevice.currentDevice.systemVersion.floatValue >= 7) {
-                
-                [arr addObjectsFromArray:[products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.productIdentifier = %@", kRemoveAdvertisements]]];
-            }
             [arr addObjectsFromArray:[products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.productIdentifier = %@", kPlainTimerFlags]]];
             [arr addObjectsFromArray:[products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.productIdentifier = %@", kWineTimerFlags]]];
             
             weakSelf.products = arr;
-            [self.tableView reloadData];
         }
-        [self.refreshControl endRefreshing];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.tableView reloadData];
+            [weakSelf.refreshControl endRefreshing];
+        });
     }];
 }
 

@@ -88,17 +88,9 @@ NSString *const kChangedFlagGraphicNotification = @"kChangedFlagGraphicNotificat
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSString *rowName =  ((TMChangeFlagTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).cellName;
     if ([rowName isEqualToString:kFlagSelectionPlain]) {
-        if ([[TMIAPHelper sharedInstance] canPlainFlags]) {
-            [[NSUserDefaults standardUserDefaults] setObject:rowName forKey:kUserDefaultsCurrentTimerFlagName];
-        } else {
-            [self goToIAPStore];
-        }
+        [[NSUserDefaults standardUserDefaults] setObject:rowName forKey:kUserDefaultsCurrentTimerFlagName];
     } else if ([rowName isEqualToString:kFlagSelectionWine]) {
-        if ([[TMIAPHelper sharedInstance] canWineFlags]) {
-            [[NSUserDefaults standardUserDefaults] setObject:rowName forKey:kUserDefaultsCurrentTimerFlagName];
-        } else {
-            [self goToIAPStore];
-        }
+        [[NSUserDefaults standardUserDefaults] setObject:rowName forKey:kUserDefaultsCurrentTimerFlagName];
     } else {
         [[NSUserDefaults standardUserDefaults] setObject:rowName forKey:kUserDefaultsCurrentTimerFlagName];
     }
@@ -108,22 +100,6 @@ NSString *const kChangedFlagGraphicNotification = @"kChangedFlagGraphicNotificat
 }
 
 - (void)refreshCells {
-    const float kLockedAlpha = 0.1;
-    const float kUnlockedAlpha = 1;
-    
-    self.plainGreenFlag.alpha =
-    self.plainYellowFlag.alpha =
-    self.plainRedFlag.alpha =
-    ([TMIAPHelper sharedInstance].canPlainFlags)?kUnlockedAlpha
-    :kLockedAlpha;
-    
-    self.wineGreenFlag.alpha =
-    self.wineYellowFlag.alpha =
-    self.wineRedFlag.alpha =
-    ([TMIAPHelper sharedInstance].canWineFlags)?kUnlockedAlpha
-    :kLockedAlpha;
-  
-    
     [self.plainCell setUserInteractionEnabled:YES];
     [self.wineCell setUserInteractionEnabled:YES];
     [self.gaugeCell setUserInteractionEnabled:YES];
@@ -143,18 +119,6 @@ NSString *const kChangedFlagGraphicNotification = @"kChangedFlagGraphicNotificat
         [self.gaugeCell setAccessoryType:UITableViewCellAccessoryCheckmark];
         [self.gaugeCell setUserInteractionEnabled:NO];
     }
-}
-
-- (void) goToIAPStore {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Currently Locked" message:@"Would you like to unlock this?" preferredStyle:UIAlertControllerStyleAlert];
-    __weak TMChangeFlagGraphicTableViewController *weakSelf = self;
-    [alert addAction:[UIAlertAction actionWithTitle:@"Sure" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-        TMPurchasesViewController *pvc = [[TMPurchasesViewController alloc] initWithNibName:nil bundle:nil];
-        [weakSelf.navigationController pushViewController:pvc animated:YES];
-    }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"No Thanks" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}]];
-    
-    [self presentViewController:alert animated:YES completion:^{}];
 }
 
 @end

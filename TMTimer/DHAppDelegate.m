@@ -32,17 +32,6 @@ NSString *const kHost = @"tmtimer328";
     DHMasterViewController *controller = (DHMasterViewController *)navigationController.topViewController;
     controller.managedObjectContext = self.managedObjectContext;
     
-	
-	[[UINavigationBar appearance] setTitleTextAttributes:
-     @{
-       NSFontAttributeName: [UIFont systemFontOfSize:kNavBarFontSize],
-       NSForegroundColorAttributeName: [TMTimerStyleKit tM_ThemeBlue]
-       }];
-    [[UIBarButtonItem appearance] setTitleTextAttributes:
-     @{NSForegroundColorAttributeName: [TMTimerStyleKit tM_ThemeBlue]}
-                                                forState:UIControlStateNormal];
-	
-    
 	[self registeringUserPreferences];
 	
 	return YES;

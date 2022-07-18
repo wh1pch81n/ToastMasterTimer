@@ -110,8 +110,7 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
     }
     CGRect imageFrame = CGRectMake(self.view.center.x -150, self.view.center.y -150, 300, 300);
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:imageFrame];
-    dispatch_queue_t loadAnimationQueue = infoQueue;
-    dispatch_async(loadAnimationQueue, ^{
+    dispatch_async(infoQueue, ^{
         NSURL *pathToInfoImages = [[NSBundle mainBundle] URLForResource:@"ManualFlagInfoAnimationImageNames"
                                                           withExtension:@"plist"];
         NSDictionary *InfoDict = [NSDictionary dictionaryWithContentsOfURL:pathToInfoImages];

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2265E1BF2884AEA000645F78 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2265E1BE2884AEA000645F78 /* Launch Screen.storyboard */; };
+		22FC17CD2884E9E300C55C0E /* TMLaunchImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 22FC17CC2884E9E300C55C0E /* TMLaunchImage.png */; };
 		50143EA118C55A6700350947 /* Default_1536x2048.png in Resources */ = {isa = PBXBuildFile; fileRef = 50143E9C18C55A6700350947 /* Default_1536x2048.png */; };
 		50143EA218C55A6700350947 /* Default_768x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 50143E9D18C55A6700350947 /* Default_768x1024.png */; };
 		50143EA318C55A6700350947 /* Default_320x480.png in Resources */ = {isa = PBXBuildFile; fileRef = 50143E9E18C55A6700350947 /* Default_320x480.png */; };
@@ -30,7 +32,6 @@
 		507112AD18C51DBA000790E1 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 507112AB18C51DBA000790E1 /* Icon-57.png */; };
 		507112AE18C51DBA000790E1 /* Icon-57@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 507112AC18C51DBA000790E1 /* Icon-57@2x.png */; };
 		5095B4B318AE7C440023210E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5095B4B218AE7C440023210E /* Foundation.framework */; };
-		5095B4B518AE7C440023210E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5095B4B418AE7C440023210E /* CoreGraphics.framework */; };
 		5095B4B718AE7C440023210E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5095B4B618AE7C440023210E /* UIKit.framework */; };
 		5095B4B918AE7C440023210E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5095B4B818AE7C440023210E /* CoreData.framework */; };
 		5095B4BF18AE7C440023210E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5095B4BD18AE7C440023210E /* InfoPlist.strings */; };
@@ -47,10 +48,7 @@
 		5095B4E018AE7C440023210E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5095B4B818AE7C440023210E /* CoreData.framework */; };
 		5095B4E818AE7C440023210E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5095B4E618AE7C440023210E /* InfoPlist.strings */; };
 		5095B4EA18AE7C440023210E /* TMTimerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5095B4E918AE7C440023210E /* TMTimerTests.m */; };
-		7F01E15B19C93A64006C1263 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F01E15A19C93A64006C1263 /* StoreKit.framework */; };
-		7F01E15D19C93B8E006C1263 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F01E15C19C93B8E006C1263 /* GameKit.framework */; };
 		7F0C3FCB18CBCD3D0068B26C /* Release Notes in Resources */ = {isa = PBXBuildFile; fileRef = 7F0C3FCA18CBCD3D0068B26C /* Release Notes */; };
-		7F23E8FC1FBC2CE700BE2F25 /* LaunchImage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F23E8FB1FBC2CE700BE2F25 /* LaunchImage.xib */; };
 		7F23E9011FBCC53800BE2F25 /* DHLatestFeaturesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F23E9001FBCC53800BE2F25 /* DHLatestFeaturesViewController.m */; };
 		7F2AC6BC19A8149E00C9DAE7 /* User_Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2AC6BB19A8149E00C9DAE7 /* User_Profile.m */; };
 		7F407F5719A1F4E200E37E1B /* DHUserProfileCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F407F5619A1F4E200E37E1B /* DHUserProfileCollectionViewCell.m */; };
@@ -110,6 +108,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2265E1BE2884AEA000645F78 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		22FC17CC2884E9E300C55C0E /* TMLaunchImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TMLaunchImage.png; path = Images/TMLaunchImage.png; sourceTree = "<group>"; };
 		50143E9C18C55A6700350947 /* Default_1536x2048.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default_1536x2048.png; sourceTree = "<group>"; };
 		50143E9D18C55A6700350947 /* Default_768x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default_768x1024.png; sourceTree = "<group>"; };
 		50143E9E18C55A6700350947 /* Default_320x480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default_320x480.png; sourceTree = "<group>"; };
@@ -167,7 +167,6 @@
 		7F01E15A19C93A64006C1263 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		7F01E15C19C93B8E006C1263 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		7F0C3FCA18CBCD3D0068B26C /* Release Notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Release Notes"; path = "TMTimer/Release Notes"; sourceTree = "<group>"; };
-		7F23E8FB1FBC2CE700BE2F25 /* LaunchImage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchImage.xib; sourceTree = "<group>"; };
 		7F23E8FF1FBCC53800BE2F25 /* DHLatestFeaturesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DHLatestFeaturesViewController.h; sourceTree = "<group>"; };
 		7F23E9001FBCC53800BE2F25 /* DHLatestFeaturesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DHLatestFeaturesViewController.m; sourceTree = "<group>"; };
 		7F2AC6B919A813CA00C9DAE7 /* TMTimer 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TMTimer 7.xcdatamodel"; sourceTree = "<group>"; };
@@ -253,12 +252,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F91B7471964C491002FC63E /* AudioToolbox.framework in Frameworks */,
-				7F01E15B19C93A64006C1263 /* StoreKit.framework in Frameworks */,
-				5095B4B518AE7C440023210E /* CoreGraphics.framework in Frameworks */,
 				5095B4B918AE7C440023210E /* CoreData.framework in Frameworks */,
 				5095B4B718AE7C440023210E /* UIKit.framework in Frameworks */,
 				5095B4B318AE7C440023210E /* Foundation.framework in Frameworks */,
-				7F01E15D19C93B8E006C1263 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,7 +328,7 @@
 				5095B4C318AE7C440023210E /* DHAppDelegate.h */,
 				5095B4C418AE7C440023210E /* DHAppDelegate.m */,
 				5095B4C618AE7C440023210E /* Main_iPhone.storyboard */,
-				7F23E8FB1FBC2CE700BE2F25 /* LaunchImage.xib */,
+				2265E1BE2884AEA000645F78 /* Launch Screen.storyboard */,
 				7FD4ABDD18E0F488004DA1DF /* DHNavigationItem.h */,
 				7FD4ABDE18E0F488004DA1DF /* DHNavigationItem.m */,
 				7FBB1D1019C3851B00387FBD /* SpeakerListView */,
@@ -343,6 +339,7 @@
 				7FD4ABE018E0FD99004DA1DF /* DHNavigationBar.h */,
 				7FD4ABE118E0FD99004DA1DF /* DHNavigationBar.m */,
 				5095B4D518AE7C440023210E /* Images.xcassets */,
+				22FC17CC2884E9E300C55C0E /* TMLaunchImage.png */,
 				7FBB1D1219C385AB00387FBD /* UserProfiles */,
 				7FBB1D1419C385EA00387FBD /* ModifyUserProfiles */,
 				7FBB1D1619C3862200387FBD /* CoreData */,
@@ -737,8 +734,8 @@
 				7F0C3FCB18CBCD3D0068B26C /* Release Notes in Resources */,
 				5095B4C818AE7C440023210E /* Main_iPhone.storyboard in Resources */,
 				7F8EEA7A194629ED006B4C53 /* Icon50x50.png in Resources */,
-				7F23E8FC1FBC2CE700BE2F25 /* LaunchImage.xib in Resources */,
 				507112A918C51B3C000790E1 /* Icon@2x.png in Resources */,
+				22FC17CD2884E9E300C55C0E /* TMLaunchImage.png in Resources */,
 				7F8CD810199FAAAE00FC177F /* fingers2_no_touch.png in Resources */,
 				507112AD18C51DBA000790E1 /* Icon-57.png in Resources */,
 				7F8EEA761946289F006B4C53 /* (null) in Resources */,
@@ -752,6 +749,7 @@
 				7F8CD813199FAAAE00FC177F /* fingers3_touch.png in Resources */,
 				7F8CD819199FFEBB00FC177F /* fingers.pxm in Resources */,
 				5071129F18C51B3C000790E1 /* Icon-40.png in Resources */,
+				2265E1BF2884AEA000645F78 /* Launch Screen.storyboard in Resources */,
 				507112A618C51B3C000790E1 /* Icon-Small.png in Resources */,
 				7F8EEA7B194629ED006B4C53 /* Icon50x50@2x.png in Resources */,
 				507112A418C51B3C000790E1 /* Icon-Small-50.png in Resources */,
@@ -977,6 +975,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 4;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TMTimer/TMTimer-Prefix.pch";
 				INFOPLIST_FILE = "TMTimer/TMTimer-Info.plist";
@@ -996,6 +995,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 4;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TMTimer/TMTimer-Prefix.pch";
 				INFOPLIST_FILE = "TMTimer/TMTimer-Info.plist";
