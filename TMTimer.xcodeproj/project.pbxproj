@@ -110,6 +110,7 @@
 /* Begin PBXFileReference section */
 		2265E1BE2884AEA000645F78 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		22FC17CC2884E9E300C55C0E /* TMLaunchImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TMLaunchImage.png; path = Images/TMLaunchImage.png; sourceTree = "<group>"; };
+		22FC17CE2885021500C55C0E /* TMTimer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TMTimer.entitlements; sourceTree = "<group>"; };
 		50143E9C18C55A6700350947 /* Default_1536x2048.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default_1536x2048.png; sourceTree = "<group>"; };
 		50143E9D18C55A6700350947 /* Default_768x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default_768x1024.png; sourceTree = "<group>"; };
 		50143E9E18C55A6700350947 /* Default_320x480.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default_320x480.png; sourceTree = "<group>"; };
@@ -140,7 +141,6 @@
 		5089961F18B2E9FB0012F659 /* TMTimer 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TMTimer 4.xcdatamodel"; sourceTree = "<group>"; };
 		5095B4AF18AE7C440023210E /* TMTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TMTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5095B4B218AE7C440023210E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		5095B4B418AE7C440023210E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		5095B4B618AE7C440023210E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5095B4B818AE7C440023210E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		5095B4BC18AE7C440023210E /* TMTimer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TMTimer-Info.plist"; sourceTree = "<group>"; };
@@ -164,8 +164,6 @@
 		5095B4F318AE7DC80023210E /* TMTimer 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TMTimer 2.xcdatamodel"; sourceTree = "<group>"; };
 		50A3ECE718BF10FF00DB3981 /* DHGlobalConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHGlobalConstants.h; sourceTree = "<group>"; };
 		50B0FC5F18B2FFC0007694F3 /* TMTimer 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TMTimer 5.xcdatamodel"; sourceTree = "<group>"; };
-		7F01E15A19C93A64006C1263 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		7F01E15C19C93B8E006C1263 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		7F0C3FCA18CBCD3D0068B26C /* Release Notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Release Notes"; path = "TMTimer/Release Notes"; sourceTree = "<group>"; };
 		7F23E8FF1FBCC53800BE2F25 /* DHLatestFeaturesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DHLatestFeaturesViewController.h; sourceTree = "<group>"; };
 		7F23E9001FBCC53800BE2F25 /* DHLatestFeaturesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DHLatestFeaturesViewController.m; sourceTree = "<group>"; };
@@ -184,7 +182,6 @@
 		7F407FA519A407C600E37E1B /* fetch.php.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = fetch.php.jpeg; path = ../../fetch.php.jpeg; sourceTree = "<group>"; };
 		7F7145FC19AA9A4400DAEBF8 /* TMTimerStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMTimerStyleKit.h; sourceTree = "<group>"; };
 		7F7145FD19AA9A4400DAEBF8 /* TMTimerStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMTimerStyleKit.m; sourceTree = "<group>"; };
-		7F75F66C18C9142F0040986B /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		7F86594F18D3C4C50045F9F2 /* DHUserPreferenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHUserPreferenceViewController.h; sourceTree = "<group>"; };
 		7F86595018D3C4C50045F9F2 /* DHUserPreferenceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHUserPreferenceViewController.m; sourceTree = "<group>"; };
 		7F86595218D3D0090045F9F2 /* DHCountDownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHCountDownView.h; sourceTree = "<group>"; };
@@ -309,12 +306,8 @@
 		5095B4B118AE7C440023210E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7F01E15C19C93B8E006C1263 /* GameKit.framework */,
-				7F01E15A19C93A64006C1263 /* StoreKit.framework */,
 				7F91B7461964C491002FC63E /* AudioToolbox.framework */,
-				7F75F66C18C9142F0040986B /* iAd.framework */,
 				5095B4B218AE7C440023210E /* Foundation.framework */,
-				5095B4B418AE7C440023210E /* CoreGraphics.framework */,
 				5095B4B618AE7C440023210E /* UIKit.framework */,
 				5095B4B818AE7C440023210E /* CoreData.framework */,
 				5095B4DC18AE7C440023210E /* XCTest.framework */,
@@ -325,6 +318,7 @@
 		5095B4BA18AE7C440023210E /* TMTimer */ = {
 			isa = PBXGroup;
 			children = (
+				22FC17CE2885021500C55C0E /* TMTimer.entitlements */,
 				5095B4C318AE7C440023210E /* DHAppDelegate.h */,
 				5095B4C418AE7C440023210E /* DHAppDelegate.m */,
 				5095B4C618AE7C440023210E /* Main_iPhone.storyboard */,
@@ -973,17 +967,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TMTimer/TMTimer.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TMTimer/TMTimer-Prefix.pch";
 				INFOPLIST_FILE = "TMTimer/TMTimer-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.4.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dnthome.TMTimer328;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -993,17 +989,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TMTimer/TMTimer.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TMTimer/TMTimer-Prefix.pch";
 				INFOPLIST_FILE = "TMTimer/TMTimer-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.4.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dnthome.TMTimer328;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

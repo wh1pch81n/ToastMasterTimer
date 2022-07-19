@@ -55,6 +55,10 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
     [self stylizeToLookLikeButton:self.greenView];
     [self stylizeToLookLikeButton:self.yellowView];
     [self stylizeToLookLikeButton:self.redView];
+    
+    if ([NSProcessInfo.processInfo isMacCatalystApp]) {
+        self.navigationItem.rightBarButtonItems = nil;
+    }
 }
 
 - (void)stylizeToLookLikeButton:(UIView *)view {
@@ -70,7 +74,11 @@ NSString *const kUIAlertDemoRepeatButtonTitle = @"Repeat";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self loadAnimationImagesInBackground];
+    if ([NSProcessInfo.processInfo isMacCatalystApp]) {
+        // noop.  do not show animation
+    } else {
+        [self loadAnimationImagesInBackground];
+    }
 }
 
 - (void)didReceiveMemoryWarning

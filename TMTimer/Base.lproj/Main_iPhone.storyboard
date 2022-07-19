@@ -327,21 +327,13 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hky-3I-8Pk" userLabel="Label - user name">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hky-3I-8Pk" userLabel="Label - user name">
                                             <rect key="frame" x="31" y="9" width="251.5" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="M7D-iD-vP3"/>
                                             </constraints>
-                                            <attributedString key="attributedText">
-                                                <fragment content="Label">
-                                                    <attributes>
-                                                        <color key="NSBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <color key="NSColor" systemColor="darkTextColor"/>
-                                                        <font key="NSFont" size="17" name="BradleyHandITCTT-Bold"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" systemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fetch.php.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="Kqf-to-stP">
@@ -455,7 +447,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="ix8-A8-r12" kind="presentation" identifier="segueToManualFlags" id="ab1-KI-AaP"/>
+                                            <segue destination="ix8-A8-r12" kind="presentation" identifier="segueToManualFlags" modalPresentationStyle="fullScreen" id="ab1-KI-AaP"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -870,11 +862,11 @@
             <objects>
                 <viewController storyboardIdentifier="manualFlagVC" id="kj2-3m-HyC" customClass="DHManualFlagViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="J5b-1z-T4w">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vpg-Fh-vIs" customClass="UIControl">
-                                <rect key="frame" x="20" y="577" width="50" height="50"/>
+                                <rect key="frame" x="20" y="597" width="50" height="50"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="CjE-gr-P6g"/>
@@ -882,7 +874,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EGf-tn-ghO" customClass="UIControl">
-                                <rect key="frame" x="305" y="577" width="50" height="50"/>
+                                <rect key="frame" x="305" y="597" width="50" height="50"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="255-8P-Odz"/>
@@ -890,7 +882,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WQm-9S-tQf" customClass="UIControl">
-                                <rect key="frame" x="162.5" y="577" width="50" height="50"/>
+                                <rect key="frame" x="162.5" y="597" width="50" height="50"/>
                                 <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="mKP-QJ-0WJ"/>
@@ -918,7 +910,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" id="N3s-i8-Fua">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="nLQ-Yo-x7N">
-                                <rect key="frame" x="333" y="15" width="26" height="26"/>
+                                <rect key="frame" x="333" y="9" width="26" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="tappedInfoButton:" destination="kj2-3m-HyC" eventType="touchUpInside" id="cg0-gp-EEa"/>
@@ -1286,7 +1278,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ix8-A8-r12" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="VeB-sV-wsf">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

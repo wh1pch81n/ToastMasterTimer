@@ -10,7 +10,7 @@
 
 enum Mode {UserProfileMode_NEW_PROFILE, UserProfileMode_MODIFY_PROFILE};
 
-@interface DHEditUserProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UISearchBarDelegate, NSFetchedResultsControllerDelegate,UIImagePickerControllerDelegate, UIActionSheetDelegate, UINavigationControllerDelegate>
+@interface DHEditUserProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UISearchBarDelegate, NSFetchedResultsControllerDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) NSManagedObjectID *objectID;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;

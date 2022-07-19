@@ -235,7 +235,9 @@
     vc.objectID = up.objectID;
     vc.managedObjectContext = tempMoc;
     vc.EditingMode = UserProfileMode_NEW_PROFILE;
-    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:vc] animated:YES completion:nil];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    nav.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)editProfileWithObject:(User_Profile *)up {
@@ -246,7 +248,9 @@
     vc.managedObjectContext = tempMoc;
     vc.objectID = up.objectID;
     vc.EditingMode = UserProfileMode_MODIFY_PROFILE;
-    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:vc] animated:YES completion:nil];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    nav.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 @end
