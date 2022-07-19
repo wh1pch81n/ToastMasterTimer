@@ -108,27 +108,11 @@ NSString *const UserDefaultsKey_NewVersion = @"newVersion";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    self.canDisplayBannerAds = YES;
     if (self.customStartDict) {
         [self beginCustomStartTopic];
     }
     
-    NSString *lastVersion = [[NSUserDefaults standardUserDefaults] objectForKey:UserDefaultsKey_NewVersion];
-    NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    
-    if (![lastVersion isEqualToString:appVersionString]) {
-        DHLatestFeaturesViewController *vc = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"DHLatestFeaturesViewController"];
-        vc.modalPresentationStyle = UIModalPresentationCustom;
-        
-        [self presentViewController:vc animated:true completion:^{}];
-    }
-    
     DHDLog(nil, @"TMTimer view did appear");
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    self.canDisplayBannerAds = NO;
-    [super viewWillDisappear:animated];
 }
 
 - (void)dealloc {
@@ -136,14 +120,6 @@ NSString *const UserDefaultsKey_NewVersion = @"newVersion";
                                                     name:kChangedFlagGraphicNotification
                                                   object:nil];
 
-}
-
-- (void)setCanDisplayBannerAds:(BOOL)b {
-    if ([[TMIAPHelper sharedInstance] canDisplayAds]) {
-        if (UIDevice.currentDevice.systemVersion.floatValue >= 7) {
-            [super setCanDisplayBannerAds:b];
-        }
-    }
 }
 
 - (void)didReceiveMemoryWarning

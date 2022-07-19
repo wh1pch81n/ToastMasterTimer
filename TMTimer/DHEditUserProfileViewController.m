@@ -270,27 +270,32 @@
 - (void)saveEdits {
     User_Profile *up = (User_Profile *)[_managedObjectContext objectWithID:_objectID];
     if ([self.textFieldName.text isEqualToString:@""]) {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Name Required" message:@"Speaker's name can not be blank" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [alert show];
-        //[[(DHAppDelegate *)[[UIApplication sharedApplication] delegate] arrOfAlerts] addObject:alert];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Name Required" message:@"Speaker's name can not be blank" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}]];
+        [self presentViewController:alert animated:YES completion:^{}];
         return;// don't let them save
     }
     
+    NSString *textFieldText = [self.textFieldName.text stringByTrimmingCharactersInSet:
+                    [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    __weak DHEditUserProfileViewController *weakSelf = self;
     [_managedObjectContext performBlock:^{
-        up.user_name = [self.textFieldName.text stringByTrimmingCharactersInSet:
-                        [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        up.user_name = textFieldText;
         
         if (self.didSetImage) {
-            [self saveImageFileToDisk];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self saveImageFileToDisk];
+            });
         }
         NSError *error;
-        if(![_managedObjectContext save:&error]) {
+        if(![weakSelf.managedObjectContext save:&error]) {
             [DHError displayValidationError:error];
         }
         
-        [_managedObjectContext.parentContext performBlock:^{
+        [weakSelf.managedObjectContext.parentContext performBlock:^{
             NSError *error;
-            if (![_managedObjectContext.parentContext save:&error]) {
+            if (![weakSelf.managedObjectContext.parentContext save:&error]) {
                 [DHError displayValidationError:error];
             }
         }];
@@ -363,29 +368,32 @@
     if ([self.textFieldName isFirstResponder]) {
         [self.textFieldName resignFirstResponder];
     }
+
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    [picker setDelegate:self];
+    [picker setAllowsEditing:YES];
+
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         DHDLog(nil, @"This device has a camera.  Asking the user what they want to use.");
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Select Photo"
+                                            message:nil
+                                     preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Take new Photo" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            [self presentViewController:picker animated:YES completion:nil];
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Choose Existing Photo" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            [self presentViewController:picker animated:YES completion:nil];
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}]];
         
-        UIActionSheet *photoSourceSheet = [[UIActionSheet alloc]
-                                           initWithTitle:@"Select Photo"
-                                           delegate:self
-                                           cancelButtonTitle:@"Cancel"
-                                           destructiveButtonTitle:nil
-                                           otherButtonTitles:@"Take new Photo", @"Choose Existing Photo", nil];
+        [self presentViewController:alert animated:YES completion:^{}];
         
-        //show the action sheet near the add image button.
-        [photoSourceSheet showInView:self.view];
     } else { //no camera. Just use the library
-        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
         picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        picker.allowsEditing = YES;
-        picker.delegate = self;
-        
-        [self presentViewController:picker
-                           animated:YES completion:nil];
-        
+        [self presentViewController:picker animated:YES completion:nil];
     }
-    
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -397,36 +405,6 @@
     
     self.didSetImage = YES;
     [picker dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - UITextViewDelegate
-
-#pragma mark - UIActionSheetDelegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == actionSheet.cancelButtonIndex) {
-        DHDLog(nil, @"Cancled Action Sheet");
-        return;
-    }
-    
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    [picker setDelegate:self];
-    [picker setAllowsEditing:YES];
-    
-    switch (buttonIndex) {
-        case 0:
-            DHDLog(nil, @"user wants to take a new picture");
-            picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            break;
-            
-        default:
-            DHDLog(nil, @"user want to get photo from library");
-        
-            picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            break;
-    }
-    
-    [self presentViewController:picker animated:YES completion:nil];
 }
 
 - (void)didEnterBG:(NSNotification *)notification {

@@ -63,8 +63,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture1f1t;
 @property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *swipeGesture;
 
-@property (strong, nonatomic) UIPopoverController *masterPopoverController;
-
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *presetTimesSegment;
@@ -78,6 +76,9 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 @property int secondsUntilOnTheFlyEditingEnds;
 @property BOOL isOnTheFlyEditing;
+
+@property (strong, nonatomic) NSLayoutConstraint *rightExtraButtonsConstraint;
+@property (strong, nonatomic) NSLayoutConstraint *leftExtraButtonsConstraint;
 
 //---
 @property (strong, nonatomic) NSDate *endDate, *startDate;
@@ -109,10 +110,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 		
 		// Update the view.
 		[self configureView];
-	}
-	
-	if (self.masterPopoverController != nil) {
-		[self.masterPopoverController dismissPopoverAnimated:YES];
 	}
 }
 
@@ -200,9 +197,13 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     
     [self setLocalDetailPropertiesWithDetail:self.detailItem];
     
-	[self configureView];
-	[self FSM_idle];
-	
+    [self configureView];
+    [self FSM_idle];
+    
+    [self.view addSubview:self.extraButtonsView];
+    [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.extraButtonsView.topAnchor].active = YES;
+    self.rightExtraButtonsConstraint = [self.view.rightAnchor constraintEqualToAnchor:self.extraButtonsView.rightAnchor];
+    self.leftExtraButtonsConstraint = [self.view.rightAnchor constraintEqualToAnchor:self.extraButtonsView.leftAnchor];
     [self moveOutExtraButtonsView:NO];
     
 	//Default values
@@ -213,14 +214,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
-}
-
-- (void)setCanDisplayBannerAds:(BOOL)b {
-    if ([[TMIAPHelper sharedInstance] canDisplayAds]) {
-        if (UIDevice.currentDevice.systemVersion.floatValue >= 7) {
-            [super setCanDisplayBannerAds:b];
-        }
-    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -270,22 +263,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
 	// Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Split view
-
-- (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
-{
-	barButtonItem.title = NSLocalizedString(@"Master", @"Master");
-	[self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
-	self.masterPopoverController = popoverController;
-}
-
-- (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
-{
-	// Called when the view is shown again in the split view, invalidating the button and popover controller.
-	[self.navigationItem setLeftBarButtonItem:nil animated:YES];
-	self.masterPopoverController = nil;
 }
 
 #pragma mark - picker datasource
@@ -510,8 +487,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)FSM_idle {
-    self.canDisplayBannerAds = NO;
-
 	[self enableNavItemButtons:YES];
 	[self.nameTextField setHidden:NO];
 	[self.timeChooserParentView setHidden:NO];
@@ -520,11 +495,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     __weak typeof(self)wSelf = self;
 	[UIView animateWithDuration:0.5 animations:^{
         __strong typeof(wSelf)sSelf = wSelf;
-        if ([sSelf respondsToSelector:@selector(originalContentView)]) {
-            [sSelf.originalContentView setBackgroundColor:[UIColor whiteColor]]; //reset to default color
-        } else {
             [sSelf.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
-        }
 		
 		[sSelf.nameTextField setAlpha:1];
         [sSelf.timeChooserParentView setAlpha:1];
@@ -555,8 +526,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     BOOL delayIsEnabled = [NSUserDefaults.standardUserDefaults boolForKey:kUserDefault3SecondDelay];
     
     if (delayIsEnabled) {
-        self.canDisplayBannerAds = NO;
-        
         CGRect rect;
         rect = CGRectMake(0, 0,
                           CGRectGetWidth(self.view.frame),
@@ -570,9 +539,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
                  stringOfCharactersToCountDown:@" 321"
                             completedCountDown:^{
                                 __strong typeof(wSelf)sSelf = wSelf;
-                                
-                                sSelf.canDisplayBannerAds = YES;
-                                
+                                                                
                                 [sSelf FSM_startTimerBegin];
                                 [[sSelf countDownView] removeFromSuperview];
                                 sSelf.countDownView = nil;
@@ -582,7 +549,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
         
     } else {
         [self FSM_startTimerBegin];
-        self.canDisplayBannerAds = YES;
     }
 }
 
@@ -673,7 +639,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    self.canDisplayBannerAds = NO;
     if ([self.navigationItem.rightBarButtonItem.title isEqualToString:kStart]) { //should only happen in idle state
         [self moveOutExtraButtonsView:YES];
     }
@@ -682,7 +647,6 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if ([self.navItem.rightBarButtonItem.title isEqualToString:kStop]) {
-        self.canDisplayBannerAds = YES;
     }
 	_blurb = self.nameTextField.text;
 	[self enableNavItemButtons:YES];
@@ -909,21 +873,24 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
  moves the extrabuttonsview to the visible part of the view
  */
 - (void)moveInExtraButtonsView:(BOOL)animated {
-    CGRect destinationFrame0 = CGRectMake(CGRectGetWidth(self.view.frame) - CGRectGetWidth(self.extraButtonsView.frame) - 20, 0, CGRectGetWidth(self.extraButtonsView.frame), CGRectGetHeight(self.extraButtonsView.frame));
-    CGRect destinationFrame1 = CGRectOffset(destinationFrame0, 20, 0);
-    
     self.extraButtonsView.hidden = NO;
+    self.leftExtraButtonsConstraint.active = NO;
     
     if (animated) {
-        [UIView animateWithDuration:0.2 animations:^{
-            self.extraButtonsView.frame = destinationFrame0;
+        [UIView animateWithDuration:0.7
+                              delay:0
+             usingSpringWithDamping:0.4
+              initialSpringVelocity:0
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+            self.rightExtraButtonsConstraint.active = YES;
+            [self.view layoutIfNeeded];
+            
         } completion:^(BOOL finished) {
-            [UIView animateWithDuration:0.3 animations:^{
-                self.extraButtonsView.frame = destinationFrame1;
-            }];
+            
         }];
     } else {
-        self.extraButtonsView.frame = destinationFrame1;
+        self.rightExtraButtonsConstraint.active = YES;
     }
 }
 
@@ -931,17 +898,16 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
  moves the extrabuttonsview off screen.
  */
 - (void)moveOutExtraButtonsView:(BOOL)animated {
-    CGRect destinationFrame = CGRectMake(CGRectGetWidth(self.view.frame), 0,
-                                         CGRectGetWidth(self.extraButtonsView.frame),
-                                         CGRectGetHeight(self.extraButtonsView.frame));
+    self.rightExtraButtonsConstraint.active = NO;
     if (animated) {
         [UIView animateWithDuration:0.5 animations:^{
-            self.extraButtonsView.frame = destinationFrame;
+            self.leftExtraButtonsConstraint.active = YES;
+            [self.view layoutIfNeeded];
         } completion:^(BOOL finished) {
             self.extraButtonsView.hidden = YES;
         }];
     } else {
-        self.extraButtonsView.frame = destinationFrame;
+        self.leftExtraButtonsConstraint.active = YES;
         self.extraButtonsView.hidden = YES;
     }
 }

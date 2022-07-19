@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface DHUserPreferenceViewController : UITableViewController <UIAlertViewDelegate>
+@interface DHUserPreferenceViewController : UITableViewController 
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 

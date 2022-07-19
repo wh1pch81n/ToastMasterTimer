@@ -70,24 +70,22 @@
 }
 
 - (void)reload {
-    _products = nil;
+    self.products = nil;
     [self.tableView reloadData];
+    __weak TMPurchasesViewController *weakSelf = self;
     [TMIAPHelper.sharedInstance requestProductWithCompletionHandler:^(BOOL success, NSArray *products) {
         if (success) {
         
             NSMutableArray *arr = [NSMutableArray new];
-            //Only iOS 7+ uses ads.
-            if (UIDevice.currentDevice.systemVersion.floatValue >= 7) {
-                
-                [arr addObjectsFromArray:[products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.productIdentifier = %@", kRemoveAdvertisements]]];
-            }
             [arr addObjectsFromArray:[products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.productIdentifier = %@", kPlainTimerFlags]]];
             [arr addObjectsFromArray:[products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.productIdentifier = %@", kWineTimerFlags]]];
             
-            _products = arr;
-            [self.tableView reloadData];
+            weakSelf.products = arr;
         }
-        [self.refreshControl endRefreshing];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.tableView reloadData];
+            [weakSelf.refreshControl endRefreshing];
+        });
     }];
 }
 

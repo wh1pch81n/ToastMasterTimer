@@ -14,6 +14,6 @@ extern NSString *const kFlagSelectionWine;
 
 extern NSString *const kChangedFlagGraphicNotification;
 
-@interface TMChangeFlagGraphicTableViewController : UITableViewController <UIAlertViewDelegate>
+@interface TMChangeFlagGraphicTableViewController : UITableViewController 
 
 @end

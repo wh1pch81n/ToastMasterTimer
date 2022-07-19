@@ -27,21 +27,21 @@ void DHRLog(void(^action)(void), NSString *format, ...) {
 }
 
 void DHDLog(void(^action)(void), NSString *format, ...) {
-#if DEBUG
-    if (action) {
-        action();
-    }
-    if (format) {
-        va_list argumentList;
-        va_start(argumentList, format);
-        NSMutableString * message = [[NSMutableString alloc] initWithFormat:format
-                                                                  arguments:argumentList];
-        
-        [message appendString:@"Our Logger!"]; // Our custom Message!
-        NSLogv(format, argumentList); // Originally NSLog is a wrapper around NSLogv.
-        va_end(argumentList);
-    }
-
-#endif
+//#if DEBUG
+//    if (action) {
+//        action();
+//    }
+//    if (format) {
+//        va_list argumentList;
+//        va_start(argumentList, format);
+//        NSMutableString * message = [[NSMutableString alloc] initWithFormat:format
+//                                                                  arguments:argumentList];
+//
+//        [message appendString:@"Our Logger!"]; // Our custom Message!
+//        NSLogv(format, argumentList); // Originally NSLog is a wrapper around NSLogv.
+//        va_end(argumentList);
+//    }
+//
+//#endif
 }
 

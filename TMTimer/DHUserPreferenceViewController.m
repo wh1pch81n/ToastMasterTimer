@@ -126,12 +126,15 @@
 
 - (IBAction)tappedClearSpeakerList:(id)sender {
     //launch alert and if select yes, then call clearListOfSpeakers
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Delete Data?"
-                                                    message:@"Selecting YES will clear the entire list of speech times."
-                                                   delegate:self
-                                          cancelButtonTitle:@"NO"
-                                          otherButtonTitles:@"YES", nil];
-    [alert show];
+
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Delete Data?" message:@"Selecting YES will clear the entire list of speech times." preferredStyle:UIAlertControllerStyleAlert];
+    __weak DHUserPreferenceViewController *weakSelf = self;
+    [alert addAction:[UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        [weakSelf clearListOfSpeechTimes];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}]];
+    
+    [self presentViewController:alert animated:YES completion:^{}];
 }
 
 
@@ -163,16 +166,6 @@
     
     DHDLog(nil, @"finished clearing list of speech times");
     
-}
-
-#pragma mark - uialertviewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    DHAppDelegate *appDelegate = (DHAppDelegate *)[[UIApplication sharedApplication] delegate];
-    [[appDelegate arrOfAlerts] removeObject:alertView];
-    if (buttonIndex == 1) {
-        [self clearListOfSpeechTimes];
-    }
 }
 
 - (IBAction)unwindBackToUserPreferences:(UIStoryboardSegue *)sender {
