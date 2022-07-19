@@ -970,7 +970,7 @@
 				CODE_SIGN_ENTITLEMENTS = TMTimer/TMTimer.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TMTimer/TMTimer-Prefix.pch";
 				INFOPLIST_FILE = "TMTimer/TMTimer-Info.plist";
@@ -992,7 +992,7 @@
 				CODE_SIGN_ENTITLEMENTS = TMTimer/TMTimer.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TMTimer/TMTimer-Prefix.pch";
 				INFOPLIST_FILE = "TMTimer/TMTimer-Info.plist";
