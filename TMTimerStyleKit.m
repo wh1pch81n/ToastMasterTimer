@@ -34,9 +34,9 @@ static UIImage* _imageOfNo_Ads = nil;
 + (void)initialize
 {
     // Colors Initialization
-    _g_LowPressureColor = [UIColor colorWithRed: 0.389 green: 0.8 blue: 0.32 alpha: 1];
-    _g_MediumPressureColor = [UIColor colorWithRed: 0.972 green: 0.924 blue: 0 alpha: 1];
-    _g_HighPressureColor = [UIColor colorWithRed: 1 green: 0.106 blue: 0 alpha: 1];
+    _g_LowPressureColor = [UIColor systemGreenColor];
+    _g_MediumPressureColor = [UIColor systemYellowColor];
+    _g_HighPressureColor = [UIColor systemRedColor];
     _tM_ThemeAqua = [UIColor colorWithRed: 0.211 green: 0.868 blue: 0.869 alpha: 1];
     CGFloat tM_ThemeAquaRGBA[4];
     [_tM_ThemeAqua getRed: &tM_ThemeAquaRGBA[0] green: &tM_ThemeAquaRGBA[1] blue: &tM_ThemeAquaRGBA[2] alpha: &tM_ThemeAquaRGBA[3]];

@@ -300,7 +300,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
         label.attributedText = [[NSAttributedString alloc]
                                 initWithString:text
                                 attributes:@{
-                                             NSForegroundColorAttributeName: kPickerViewTextColor,
+                                             NSForegroundColorAttributeName: [UIColor labelColor],
                                              NSFontAttributeName: [UIFont
                                                                    systemFontOfSize:kNavBarFontSize]
                                              }];
@@ -310,15 +310,15 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     }
     UIColor *color;
     if (component == kTimeGreen) {
-        color = kPickerViewMinColumnColor;
+        color = [UIColor systemGreenColor];
     } else if (component == kTimeRed) {
-        color = kPickerViewMaxColumnColor;
+        color = [UIColor systemRedColor];
     } else {
-        color = [UIColor whiteColor];
+        color = [UIColor systemBackgroundColor];
     }
 	
 	NSDictionary *attr = @{
-                           NSForegroundColorAttributeName: kPickerViewTextColor,
+                           NSForegroundColorAttributeName: [UIColor labelColor],
                            NSFontAttributeName: [UIFont systemFontOfSize:kNavBarFontSize]
                            };
 	
@@ -495,7 +495,7 @@ NSString *const kDelayTitle = @"3-2-1 Delay";
     __weak typeof(self)wSelf = self;
 	[UIView animateWithDuration:0.5 animations:^{
         __strong typeof(wSelf)sSelf = wSelf;
-            [sSelf.view setBackgroundColor:[UIColor whiteColor]]; //reset to default color
+            [sSelf.view setBackgroundColor:[UIColor systemBackgroundColor]]; //reset to default color
 		
 		[sSelf.nameTextField setAlpha:1];
         [sSelf.timeChooserParentView setAlpha:1];

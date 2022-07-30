@@ -400,9 +400,9 @@ NSString *const UserDefaultsKey_NewVersion = @"newVersion";
          [today year] == [otherDay year] &&
          [today era] == [otherDay era])) {
         //This cell is not today
-        dhCell.cellBG.backgroundColor = [UIColor clearColor];
+        dhCell.creationDate.textColor = [UIColor labelColor];
     } else {
-        dhCell.cellBG.backgroundColor = [TMTimerStyleKit tM_ThemeAqua_bg];
+        dhCell.creationDate.textColor = [UIColor systemBlueColor];
     }
     
 	[[dhCell blurb] setText:[object blurb]];
