@@ -15,7 +15,6 @@ static const int kCellSideMargin = 10;
 
 -(void)drawRect:(CGRect)rect {
     self.layer.cornerRadius = kThemeCornerRadius;
-    self.backgroundColor = [TMTimerStyleKit tM_ThemeAqua_bg];
     [self.layer setMasksToBounds:YES];
     [self.layer setBounds:CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height - kCellBottomMargin)];
 }

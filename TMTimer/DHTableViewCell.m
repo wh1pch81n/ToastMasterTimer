@@ -27,11 +27,8 @@
 }
 
 - (void)drawRect:(CGRect)rect {
-    self.elapsedTime.textColor = [TMTimerStyleKit tM_ThemeBlue];
-    
     [self.userImageIcon.layer setCornerRadius:2];
     [self.userImageIcon.layer setBorderWidth:1];
-    [self.userImageIcon.layer setBorderColor:[TMTimerStyleKit tM_ThemeBlue].CGColor];
     [self.userImageIcon.layer setMasksToBounds:YES];
     
     {//make the rounded corders of cells and a the margins
